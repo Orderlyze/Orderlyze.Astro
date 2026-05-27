@@ -5,6 +5,8 @@ description: Use this skill when building or extending the Orderlyze Astro marke
 
 # Astro Marketing SEO
 
+Use `$astro-seo-governor` first for hard gates and deterministic auditing. Use this skill for the local implementation pattern in this repository.
+
 ## Workflow
 
 1. Start with search intent: define the primary keyword, funnel stage, canonical path, and page owner before writing UI.

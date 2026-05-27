@@ -10,7 +10,8 @@
     "build": "astro build",
     "check": "astro check",
     "verify:seo": "node scripts/verify-seo.mjs",
-    "verify": "npm run check && npm run build && npm run verify:seo",
+    "verify:skill-seo": "node .codex/skills/astro-seo-governor/scripts/audit-astro-site.mjs",
+    "verify": "npm run check && npm run build && npm run verify:seo && npm run verify:skill-seo",
     "preview": "astro preview",
     "astro": "astro"
   },

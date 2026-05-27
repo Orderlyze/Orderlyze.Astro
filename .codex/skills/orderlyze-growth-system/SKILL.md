@@ -5,6 +5,8 @@ description: Use this skill when planning scalable Orderlyze marketing architect
 
 # Orderlyze Growth System
 
+Use `$orderlyze-source-rebuilder` when the work must follow `orderlyze.com` as the source website. Use `$astro-seo-governor` before implementation so SEO gates stay enforced.
+
 ## Strategy
 
 Build the website as a search-led publishing system, not a one-off landing page.

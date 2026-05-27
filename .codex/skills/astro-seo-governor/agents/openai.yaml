@@ -1,0 +1,8 @@
+interface:
+  display_name: "Astro SEO Governor"
+  short_description: "Enforce SEO-first Astro site gates"
+  brand_color: "#027A63"
+  default_prompt: "Use $astro-seo-governor to audit and extend this Astro marketing site without breaking SEO."
+
+policy:
+  allow_implicit_invocation: true
