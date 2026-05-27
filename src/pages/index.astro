@@ -1,12 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import {
-  contentBlocks,
-  pageDescription,
-  pageSchema,
-  pageTitle,
-} from '../lib/orderlyze-pages';
+import { pageDescription, pageSchema, pageTitle } from '../lib/orderlyze-pages';
 import { absoluteSiteUrl, withBasePath } from '../lib/url';
 
 const pages = await getCollection('orderlyzePages');
@@ -19,44 +14,6 @@ if (!home) {
 const title = pageTitle(home);
 const description = pageDescription(home);
 const siteUrl = absoluteSiteUrl(Astro.site);
-const blocks = contentBlocks(home);
-const highlights = [
-  {
-    title: 'Einfach kassieren',
-    copy: 'Rechnungen in Sekundenschnelle erstellen, Produkte bearbeiten und Bestellungen unkompliziert stornieren.',
-    href: '/kassensystem/',
-  },
-  {
-    title: '100% finanzamtkonform',
-    copy: 'Orderlyze bleibt konform und exportiert wichtige Berichte fuer den Steuerberater mit wenigen Klicks.',
-    href: '/finanzamt-konform/',
-  },
-  {
-    title: 'Kartenzahlung bereit',
-    copy: 'EC, Maestro/V Pay, MasterCard, Visa, Apple Pay und kontaktlose Zahlungen per NFC sind Teil des Systems.',
-    href: '/kartenzahlung/',
-  },
-];
-
-const industries = [
-  ['Gastronomie', '/gastronomie/'],
-  ['Restaurant', '/restaurant/'],
-  ['Cafe', '/cafe/'],
-  ['Bar', '/bar/'],
-  ['Friseur', '/friseur/'],
-  ['Beauty', '/beauty/'],
-  ['Sonstige Branchen', '/sonstige/'],
-];
-
-const featureLinks = [
-  ['Funktionen', '/funktionen/'],
-  ['Funkbonieren', '/funkbonieren/'],
-  ['Verwaltung', '/verwaltung/'],
-  ['Datenexport fuer Steuerberater', '/datenexport-steuerberater/'],
-  ['Technische Sicherheitseinrichtung', '/technische-sicherheitseinrichtung/'],
-  ['Bestellsystem', '/bestellsystem/'],
-];
-
 const jsonLd = [
   ...pageSchema(home, siteUrl),
   {
@@ -81,64 +38,106 @@ const jsonLd = [
     description,
   },
 ];
+
+const trustCards = [
+  {
+    image: '/images/orderlyze/konform-1.png',
+    title: 'Zuverlässig',
+    copy: 'Einmal eingerichtet, läuft das Kassensystem einwandfrei. Und sonst hilft dir unser kostenloser Support weiter.',
+  },
+  {
+    image: '/images/orderlyze/konform-2.png',
+    title: 'Konform',
+    copy: 'Mit Orderlyze bist du zu 100% finanzamtkonform und sendest Berichte mit wenigen Klicks an deinen Steuerberater.',
+  },
+  {
+    image: '/images/orderlyze/funktionen-illustration.png',
+    title: 'Alle Funktionen',
+    copy: 'Alles, was für deinen Alltag wichtig ist, in einem einfachen Kassensystem zu einem fairen Preis.',
+  },
+];
+
+const branches = [
+  ['Restaurant', '/restaurant/', '/images/orderlyze/branch-restaurant.jpg'],
+  ['Cafe', '/cafe/', '/images/orderlyze/branch-cafe.jpg'],
+  ['Bar', '/bar/', '/images/orderlyze/branch-bar.jpg'],
+  ['Friseur', '/friseur/', '/images/orderlyze/branch-friseur.jpg'],
+  ['Beauty', '/beauty/', '/images/orderlyze/branch-beauty.jpg'],
+  ['Physio', '/sonstige/', '/images/orderlyze/branch-physio.jpg'],
+];
+
+const functionCards = [
+  ['Rechnungen', '/images/orderlyze/icon-rechnung.png', 'Rechnungen erstellen, splitten und stornieren.'],
+  ['Kartenzahlung', '/images/orderlyze/icon-kartenzahlung.png', 'Alle gängigen Karten und kontaktloses Bezahlen.'],
+  ['Verwaltung', '/images/orderlyze/icon-verwaltung.png', 'Produkte, Mitarbeiter und Filialen verwalten.'],
+  ['Datenexporte', '/images/orderlyze/funktionen-illustration.png', 'Berichte für Steuerberater schnell exportieren.'],
+];
+
+const testimonials = [
+  {
+    image: '/images/orderlyze/customer-carlo.jpg',
+    name: 'Carlo M.',
+    role: 'Pizzeria',
+    copy: 'Seit dem wir Orderlyze verwenden, haben wir kaum noch Probleme gehabt. Alles geht super einfach und wir haben eine enorme Flexibilität.',
+  },
+  {
+    image: '/images/orderlyze/customer-helene.jpg',
+    name: 'Helene S.',
+    role: 'Kosmetikerin',
+    copy: 'Orderlyze hat mir den Alltag deutlich erleichtert. Ich gelange sehr viel schneller an wichtige Informationen.',
+  },
+];
 ---
 
-<BaseLayout title={title} description={description} canonical="/" jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} canonical="/" image="/images/orderlyze/hero-system.png" jsonLd={jsonLd}>
   <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Orderlyze Kassensystem</p>
-        <h1>Registrierkasse einfach. schnell. effizient.</h1>
-        <p class="hero-lede">
-          Einfach zu bedienen, schnell eingerichtet und so effizient, dass du viel mehr
-          Zeit fuer deine KundInnen hast. 100% finanzamtkonform.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
-          <a class="button secondary" href={withBasePath('/so-funktionierts/')}>So funktioniert's</a>
-        </div>
-      </div>
-      <figure class="hero-visual">
-        <img
-          src={withBasePath('/images/orderlyze/hero-system.png')}
-          alt="Orderlyze Kassensystem auf Tablet, Smartphone und Bondrucker"
-          width="1096"
-          height="914"
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
+    <div class="hero-media">
+      <img
+        class="hero-photo"
+        src={withBasePath('/images/orderlyze/home-hero-person.jpg')}
+        alt="Orderlyze Kassensystem im Einsatz in einem Betrieb"
+        width="765"
+        height="808"
+        loading="eager"
+        decoding="async"
+      />
+      <img
+        class="hero-product"
+        src={withBasePath('/images/orderlyze/hero-system.png')}
+        alt="Orderlyze Kassensystem auf Smartphone, Tablet und Bondrucker"
+        width="1096"
+        height="914"
+        loading="eager"
+        decoding="async"
+      />
     </div>
-  </section>
-
-  <section class="section trust-band">
-    <div class="container trust-grid">
-      <div>
-        <strong>100%</strong>
-        <span>finanzamtkonform</span>
-      </div>
-      <div>
-        <strong>0800</strong>
-        <span>kostenlose Hotline</span>
-      </div>
-      <div>
-        <strong>NFC</strong>
-        <span>kontaktlos bezahlen</span>
+    <div class="hero-copy">
+      <p class="eyebrow">Orderlyze Kassensystem</p>
+      <h1>Registrierkasse einfach. schnell. effizient.</h1>
+      <p>
+        Einfach zu bedienen, schnell eingerichtet und so effizient, dass du viel mehr
+        Zeit für deine KundInnen hast. 100% finanzamtkonform.
+      </p>
+      <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+      <div class="hero-proof" aria-label="Orderlyze Vertrauenssignale">
+        <span>RKSV</span>
+        <span>KassenSichV</span>
+        <span>Sicherheit</span>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <p class="eyebrow">Bei uns bist du einfach richtig</p>
-      <h2 class="section-title">Wirklich einfach. Wirklich zuverlaessig. Mit allem, was du brauchst.</h2>
-      <div class="feature-grid">
+  <section class="section intro-section">
+    <div class="container center">
+      <h2>Bei uns bist du einfach richtig</h2>
+      <p>Orderlyze Kassensystem. Wirklich einfach. Wirklich zuverlässig. Mit allem, was du brauchst.</p>
+      <div class="trust-grid">
         {
-          highlights.map((item) => (
-            <article class="card feature-card">
-              <h3>{item.title}</h3>
-              <p>{item.copy}</p>
-              <a href={withBasePath(item.href)}>Mehr erfahren</a>
+          trustCards.map((card) => (
+            <article class="trust-card">
+              <img src={withBasePath(card.image)} alt="" width="300" height="220" loading="eager" />
+              <h3>{card.title}</h3>
+              <p>{card.copy}</p>
             </article>
           ))
         }
@@ -146,279 +145,542 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="section soft-section">
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Branchen</p>
-        <h2 class="section-title">Perfekt fuer Gastronomie und Dienstleistungen.</h2>
-        <p class="section-copy">
-          Orderlyze passt zu Restaurants, Cafes, Bars, Friseuren, Beauty-Angeboten und
-          weiteren Branchen, die ein schnelles und flexibles Kassensystem brauchen.
-        </p>
-      </div>
-      <div class="link-grid">
+  <section class="feature-row">
+    <div class="feature-copy">
+      <h2>Sekundenschnell kassieren</h2>
+      <p>
+        Mit Orderlyze kannst du Rechnungen in Sekundenschnelle erstellen. Produkte
+        hinzufügen, löschen und bearbeiten, Extras beifügen und Bestellungen einfach stornieren.
+      </p>
+      <a class="button secondary" href={withBasePath('/so-funktionierts/')}>So funktioniert's</a>
+    </div>
+    <video autoplay muted loop playsinline src={withBasePath('/images/orderlyze/home-video.mp4')} poster={withBasePath('/images/orderlyze/checkout-counter.jpg')} aria-label="Kassieren mit Orderlyze am Tresen"></video>
+  </section>
+
+  <section class="feature-row reverse">
+    <img src={withBasePath('/images/orderlyze/app-phone.png')} alt="Orderlyze App auf Smartphone" width="712" height="707" loading="eager" />
+    <div class="feature-copy">
+      <h2>Kinderleicht & mühelos bedienen</h2>
+      <p>
+        Sofort zu verstehen, einfach zu bedienen und immer auf dem neuesten Stand.
+        Rechnungen erstellen, Produkte hinzufügen und Mitarbeiter verwalten funktioniert bequem.
+      </p>
+      <a class="button secondary" href={withBasePath('/funktionen/')}>Alle Funktionen</a>
+    </div>
+  </section>
+
+  <section class="feature-row">
+    <div class="feature-copy">
+      <h2>Kartenzahlung? Kein Problem</h2>
+      <p>
+        EC, Maestro/V Pay, MasterCard und Visa, Apple Pay sowie kontaktlose Zahlung per NFC:
+        Mit Orderlyze bist du für bargeldloses Bezahlen vorbereitet.
+      </p>
+      <a class="button secondary" href={withBasePath('/kartenzahlung/')}>Mehr erfahren</a>
+    </div>
+    <img src={withBasePath('/images/orderlyze/card-payment.jpg')} alt="Kartenzahlung im Restaurant mit Orderlyze" width="712" height="711" loading="eager" />
+  </section>
+
+  <section class="section branches-section">
+    <div class="container center">
+      <h2>Perfekt für die Gastronomie und Dienstleistungen</h2>
+      <div class="blue-line" aria-hidden="true"></div>
+      <div class="branches-grid">
         {
-          industries.map(([label, href]) => (
-            <a class="card link-card" href={withBasePath(href)}>{label}</a>
+          branches.map(([label, href, image]) => (
+            <a class="branch-card" href={withBasePath(href)}>
+              <img src={withBasePath(image)} alt={`${label} mit Orderlyze Kassensystem`} width="411" height="452" loading="eager" />
+              <span>{label}</span>
+            </a>
+          ))
+        }
+      </div>
+      <a class="button secondary all-branches" href={withBasePath('/branchen/')}>Alle Branchen</a>
+    </div>
+  </section>
+
+  <section class="black-cta">
+    <h2>Hol dir jetzt ein kostenloses Angebot!</h2>
+    <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+  </section>
+
+  <section class="feature-row">
+    <div class="feature-copy">
+      <h2>Arbeite nach deinen Vorstellungen</h2>
+      <p>
+        Ob Standkasse oder mehrere Geräte: Orderlyze ist flexibel und passt sich deinem Betrieb an.
+      </p>
+      <a class="button secondary" href={withBasePath('/verwaltung/')}>Zur Verwaltung</a>
+    </div>
+    <img src={withBasePath('/images/orderlyze/devices-small.jpg')} alt="Orderlyze Kassensystem Geräte" width="712" height="723" loading="eager" />
+  </section>
+
+  <section class="feature-row reverse">
+    <img src={withBasePath('/images/orderlyze/accounting.jpg')} alt="Buchhaltung mit Orderlyze" width="712" height="761" loading="eager" />
+    <div class="feature-copy">
+      <h2>Buchhaltung ohne viel Mühe</h2>
+      <p>
+        Im stressigen Alltag auch noch die Buchhaltung machen? Kein Thema.
+        Mit wenigen Klicks bereitest du Umsätze und wichtige Berichte sauber vor.
+      </p>
+      <a class="button secondary" href={withBasePath('/datenexport-steuerberater/')}>Mehr erfahren</a>
+    </div>
+  </section>
+
+  <section class="feature-row">
+    <div class="feature-copy">
+      <h2>Kostenloser Support für alle Kunden</h2>
+      <p>
+        Falls du Unterstützung brauchst, hilft dir Orderlyze weiter. Genau wie auf der Originalseite
+        bleibt der Support als Vertrauenssignal sichtbar, ohne den Hilfe-Bereich zu verlinken.
+      </p>
+      <a class="button secondary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+    </div>
+    <img src={withBasePath('/images/orderlyze/support.jpg')} alt="Kostenloser Support für Orderlyze Kunden" width="712" height="693" loading="eager" />
+  </section>
+
+  <section class="section functions-section">
+    <div class="container center">
+      <h2>Viele Funktionen warten auf dich</h2>
+      <div class="function-grid">
+        {
+          functionCards.map(([title, image, copy]) => (
+            <article class="function-card">
+              <img src={withBasePath(image)} alt="" width="61" height="61" loading="eager" />
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))
+        }
+      </div>
+      <a class="button secondary" href={withBasePath('/funktionen/')}>Alle Funktionen</a>
+    </div>
+  </section>
+
+  <section class="section testimonials-section">
+    <div class="container center">
+      <h2>Unzählige Kunden schenken uns ihr Vertrauen</h2>
+      <div class="testimonial-grid">
+        {
+          testimonials.map((testimonial, index) => (
+            <article class:list={['testimonial-row', { reverse: index % 2 === 1 }]}>
+              <img src={withBasePath(testimonial.image)} alt={`${testimonial.name} nutzt Orderlyze`} width="685" height="531" loading="eager" />
+              <div class="testimonial-copy">
+                <span aria-hidden="true">”</span>
+                <h3>{testimonial.name}</h3>
+                <strong>{testimonial.role}</strong>
+                <p>{testimonial.copy}</p>
+              </div>
+            </article>
           ))
         }
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Funktionen</p>
-        <h2 class="section-title">Alles vorbereitet fuer deinen Alltag.</h2>
-        <p class="section-copy">
-          Von Verwaltung ueber Funkbonieren bis zum Datenexport fuer Steuerberater:
-          Die wichtigsten Funktionen sind als eigene SEO-Seiten verfuegbar.
-        </p>
-      </div>
-      <div class="link-grid">
-        {
-          featureLinks.map(([label, href]) => (
-            <a class="card link-card" href={withBasePath(href)}>{label}</a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section source-section">
-    <div class="container">
-      <p class="eyebrow">Originalinhalt</p>
-      <h2 class="section-title">Inhalte aus orderlyze.com als Astro-Seite.</h2>
-      <div class="source-copy">
-        {
-          blocks.slice(0, 24).map((line) => (
-            line.length < 64 ? <h3>{line}</h3> : <p>{line}</p>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section image-band">
-    <div class="container image-grid">
-      <img src={withBasePath('/images/orderlyze/konform-1.png')} alt="Orderlyze Illustration zur Kassensystem-Konformitaet" width="300" height="220" loading="eager" />
-      <img src={withBasePath('/images/orderlyze/konform-2.png')} alt="Orderlyze Illustration zur Finanzamt-Konformitaet" width="300" height="220" loading="eager" />
-      <img src={withBasePath('/images/orderlyze/funktionen-illustration.png')} alt="Orderlyze Illustration der Kassensystem-Funktionen" width="300" height="220" loading="eager" />
-    </div>
-  </section>
-
-  <section class="section cta-section">
-    <div class="container cta">
-      <p class="eyebrow">Kostenlos und unverbindlich</p>
-      <h2>Hol dir jetzt ein kostenloses Angebot.</h2>
-      <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
-    </div>
+  <section class="black-cta final">
+    <h2>Interessiert? Dann hol dir ein unverbindliches Angebot!</h2>
+    <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
   </section>
 </BaseLayout>
 
 <style>
   .hero {
-    min-height: calc(100vh - 72px);
     display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(380px, 0.9fr);
+    min-height: 820px;
     align-items: center;
-    padding: 70px 0;
-    border-bottom: 1px solid var(--line);
-    background:
-      radial-gradient(circle at 72% 34%, var(--blue-soft), transparent 34%),
-      #ffffff;
+    gap: 48px;
+    padding: 28px max(24px, calc((100vw - 1120px) / 2)) 70px;
+    background: #f7f8fb;
   }
 
-  .hero-grid,
-  .split {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(340px, 0.78fr);
-    gap: 44px;
-    align-items: center;
+  .hero-media {
+    position: relative;
+    min-height: 710px;
+  }
+
+  .hero-photo {
+    width: min(100%, 720px);
+    height: 710px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-product {
+    position: absolute;
+    right: -28px;
+    bottom: 20px;
+    width: min(70%, 520px);
+    filter: drop-shadow(0 24px 40px rgb(0 0 0 / 18%));
+  }
+
+  .hero-copy {
+    max-width: 450px;
   }
 
   h1 {
-    max-width: 820px;
     margin: 0;
-    overflow-wrap: anywhere;
-    hyphens: auto;
-    font-size: clamp(3rem, 7vw, 6.7rem);
-    line-height: 0.92;
+    color: #000000;
+    font-size: clamp(2.4rem, 4.8vw, 4.4rem);
+    line-height: 0.95;
     letter-spacing: 0;
   }
 
-  .hero-lede {
-    max-width: 680px;
-    margin: 28px 0 0;
-    color: #374151;
-    font-size: clamp(1.14rem, 2vw, 1.42rem);
+  .hero-copy p:not(.eyebrow) {
+    margin: 26px 0 26px;
+    color: #383838;
+    font-size: 1.15rem;
   }
 
-  .hero-actions {
+  .hero-proof {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 34px;
+    gap: 8px;
+    margin-top: 24px;
   }
 
-  .hero-visual {
-    margin: 0;
-  }
-
-  .hero-visual img {
-    width: min(100%, 620px);
-    margin-inline: auto;
-    filter: drop-shadow(0 28px 50px rgb(6 89 169 / 22%));
-  }
-
-  .trust-band {
-    padding: 28px 0;
-    background: var(--accent);
-    color: white;
-  }
-
-  .trust-grid,
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
-
-  .trust-grid div {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
-
-  .trust-grid strong {
-    font-size: clamp(2rem, 5vw, 3.4rem);
-    line-height: 1;
-  }
-
-  .trust-grid span {
-    color: #d1d5db;
-    font-weight: 800;
-  }
-
-  .feature-grid {
-    margin-top: 34px;
-  }
-
-  .feature-card {
-    padding: 24px;
-  }
-
-  .feature-card h3 {
-    margin: 0 0 12px;
-  }
-
-  .feature-card p {
-    margin: 0 0 18px;
-    color: var(--muted);
-  }
-
-  .feature-card a,
-  .link-card {
+  .hero-proof span {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: white;
     color: var(--accent);
+    font-size: 0.82rem;
     font-weight: 900;
   }
 
-  .soft-section,
-  .source-section {
-    background: var(--soft);
+  .center {
+    text-align: center;
   }
 
-  .image-band {
-    background: #ffffff;
+  .center h2,
+  .black-cta h2 {
+    margin: 0;
+    color: #000000;
+    font-size: clamp(1.8rem, 3.2vw, 3rem);
+    line-height: 1.04;
   }
 
-  .image-grid {
+  .center > p {
+    max-width: 720px;
+    margin: 14px auto 0;
+    color: #383838;
+  }
+
+  .trust-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    align-items: center;
+    gap: 34px;
+    margin-top: 44px;
   }
 
-  .image-grid img {
-    width: 100%;
-    border-radius: 8px;
-    background: var(--soft);
-  }
-
-  .link-grid {
+  .trust-card {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
-  .link-card {
-    display: flex;
-    min-height: 68px;
-    align-items: center;
-    padding: 18px;
-  }
-
-  .source-copy {
-    display: grid;
+    justify-items: center;
     gap: 14px;
-    max-width: 820px;
+  }
+
+  .trust-card img {
+    width: 150px;
+    height: 110px;
+    object-fit: contain;
+  }
+
+  .trust-card h3,
+  .trust-card p {
+    margin: 0;
+  }
+
+  .trust-card p {
+    max-width: 280px;
+    color: #383838;
+    font-size: 0.95rem;
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    align-items: stretch;
+    min-height: 640px;
+    background: white;
+  }
+
+  .feature-row.reverse {
+    grid-template-columns: 1.25fr 0.75fr;
+  }
+
+  .feature-row > img,
+  .feature-row > video {
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    object-fit: cover;
+  }
+
+  .feature-row.reverse > img {
+    object-fit: contain;
+    background: #f5f7ff;
+  }
+
+  .feature-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: clamp(34px, 7vw, 88px);
+    background: #f5f7ff;
+  }
+
+  .feature-copy h2,
+  .feature-copy p {
+    margin: 0;
+  }
+
+  .feature-copy h2 {
+    color: #000000;
+    font-size: clamp(1.8rem, 3.6vw, 3.4rem);
+    line-height: 1;
+  }
+
+  .feature-copy p {
+    margin-top: 20px;
+    color: #383838;
+    font-size: 1.05rem;
+  }
+
+  .feature-copy .button {
+    margin-top: 28px;
+  }
+
+  .branches-section {
+    background: white;
+  }
+
+  .blue-line {
+    width: 88px;
+    height: 3px;
+    margin: 18px auto 42px;
+    background: var(--accent);
+  }
+
+  .branches-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .branch-card {
+    position: relative;
+    display: block;
+    min-height: 452px;
+    overflow: hidden;
+    color: #000000;
+  }
+
+  .branch-card img {
+    width: 100%;
+    height: 452px;
+    object-fit: cover;
+  }
+
+  .branch-card span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    min-width: 62%;
+    padding: 16px 18px;
+    background: white;
+    font-weight: 900;
+  }
+
+  .all-branches {
     margin-top: 34px;
   }
 
-  .source-copy h3,
-  .source-copy p {
-    margin: 0;
+  .black-cta {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding: 78px 20px;
+    background: #000000;
+    text-align: center;
   }
 
-  .source-copy p {
-    color: #374151;
-  }
-
-  .cta-section {
-    background: var(--accent);
+  .black-cta h2 {
     color: white;
   }
 
-  .cta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+  .final {
+    padding: 96px 20px;
   }
 
-  .cta h2 {
-    max-width: 680px;
+  .functions-section {
+    background: white;
+  }
+
+  .function-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 34px;
+    margin: 54px 0 38px;
+  }
+
+  .function-card {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+  }
+
+  .function-card img {
+    width: 61px;
+    height: 61px;
+    object-fit: contain;
+  }
+
+  .function-card h3,
+  .function-card p {
     margin: 0;
-    font-size: clamp(2.2rem, 5vw, 4.4rem);
-    line-height: 1.02;
   }
 
-  .cta .eyebrow {
-    color: #67e8f9;
+  .function-card p {
+    color: #383838;
+    font-size: 0.92rem;
   }
 
-  @media (max-width: 900px) {
-    .hero-grid,
-    .split,
-    .feature-grid,
-    .trust-grid,
-    .image-grid {
+  .testimonial-grid {
+    display: grid;
+    gap: 28px;
+    margin-top: 44px;
+  }
+
+  .testimonial-row {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .testimonial-row.reverse {
+    grid-template-columns: 0.92fr 1.08fr;
+  }
+
+  .testimonial-row.reverse img {
+    order: 2;
+  }
+
+  .testimonial-row img {
+    width: 100%;
+    min-height: 420px;
+    object-fit: cover;
+  }
+
+  .testimonial-copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(34px, 5vw, 74px);
+    background: #f5f7ff;
+  }
+
+  .testimonial-copy span {
+    position: absolute;
+    top: 28px;
+    right: 44px;
+    color: #000000;
+    font-size: 5rem;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .testimonial-copy h3,
+  .testimonial-copy p {
+    margin: 0;
+  }
+
+  .testimonial-copy h3 {
+    color: #000000;
+    font-size: clamp(1.7rem, 2.6vw, 2.6rem);
+  }
+
+  .testimonial-copy strong {
+    margin: 7px 0 22px;
+    color: var(--accent);
+    font-size: 0.92rem;
+  }
+
+  .testimonial-copy p {
+    color: #383838;
+  }
+
+  @media (max-width: 980px) {
+    .hero,
+    .feature-row,
+    .feature-row.reverse {
       grid-template-columns: 1fr;
     }
 
     .hero {
       min-height: auto;
+      padding-top: 32px;
     }
-  }
 
-  @media (max-width: 620px) {
-    .link-grid {
+    .hero-media {
+      min-height: 560px;
+      order: 2;
+    }
+
+    .hero-photo {
+      height: 520px;
+    }
+
+    .hero-copy {
+      max-width: none;
+      order: 1;
+    }
+
+    .feature-row > img,
+    .feature-row > video {
+      min-height: 420px;
+    }
+
+    .trust-grid,
+    .branches-grid,
+    .function-grid,
+    .testimonial-row,
+    .testimonial-row.reverse {
       grid-template-columns: 1fr;
     }
 
-    .cta {
-      align-items: flex-start;
-      flex-direction: column;
+    .testimonial-row.reverse img {
+      order: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hero {
+      gap: 24px;
+    }
+
+    .hero-media {
+      min-height: 380px;
+    }
+
+    .hero-photo {
+      height: 340px;
+    }
+
+    .hero-product {
+      width: 82%;
+      right: -10px;
+      bottom: -4px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 13vw, 3.5rem);
+      overflow-wrap: anywhere;
+      hyphens: auto;
     }
   }
 </style>
