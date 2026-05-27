@@ -35,7 +35,6 @@
     "https://www.orderlyze.com/angebot-google",
     "https://www.orderlyze.com/bar",
     "https://www.orderlyze.com/beauty",
-    "https://www.orderlyze.com/bestellen",
     "https://www.orderlyze.com/bestellsystem",
     "https://www.orderlyze.com/branchen",
     "https://www.orderlyze.com/cafe",
@@ -56,17 +55,12 @@
     "https://www.orderlyze.com/kassensoftware",
     "https://www.orderlyze.com/kassensystem",
     "https://www.orderlyze.com/preise",
-    "https://www.orderlyze.com/product-page/25-thermorollen",
-    "https://www.orderlyze.com/product-page/30-thermorollen-%C3%B6kopapier",
-    "https://www.orderlyze.com/product-page/thermorollen-30",
-    "https://www.orderlyze.com/product-page/thermorollen-50",
     "https://www.orderlyze.com/registrierkasse",
     "https://www.orderlyze.com/restaurant",
     "https://www.orderlyze.com/so-funktionierts",
     "https://www.orderlyze.com/sonstige",
     "https://www.orderlyze.com/technische-sicherheitseinrichtung",
     "https://www.orderlyze.com/testen",
-    "https://www.orderlyze.com/thermorollen",
     "https://www.orderlyze.com/verwaltung"
   ],
   "files": [
@@ -104,11 +98,6 @@
       "url": "https://www.orderlyze.com/beauty",
       "file": "beauty.md",
       "title": "Beauty | Orderlyze"
-    },
-    {
-      "url": "https://www.orderlyze.com/bestellen",
-      "file": "bestellen.md",
-      "title": "Bestellen | Orderlyze"
     },
     {
       "url": "https://www.orderlyze.com/bestellsystem",
@@ -211,26 +200,6 @@
       "title": "Preise | Orderlyze"
     },
     {
-      "url": "https://www.orderlyze.com/product-page/25-thermorollen",
-      "file": "product-page-25-thermorollen.md",
-      "title": "25 Thermorollen | Orderlyze"
-    },
-    {
-      "url": "https://www.orderlyze.com/product-page/30-thermorollen-%C3%B6kopapier",
-      "file": "product-page-30-thermorollen-ökopapier.md",
-      "title": "30 Thermorollen Ökopapier | Orderlyze"
-    },
-    {
-      "url": "https://www.orderlyze.com/product-page/thermorollen-30",
-      "file": "product-page-thermorollen-30.md",
-      "title": "30 Thermorollen – hochwertig und schnell geliefert"
-    },
-    {
-      "url": "https://www.orderlyze.com/product-page/thermorollen-50",
-      "file": "product-page-thermorollen-50.md",
-      "title": "50 Thermorollen | Orderlyze"
-    },
-    {
       "url": "https://www.orderlyze.com/registrierkasse",
       "file": "registrierkasse.md",
       "title": "Orderlyze - Registrierkasse - Einfach und Schnell"
@@ -259,11 +228,6 @@
       "url": "https://www.orderlyze.com/testen",
       "file": "testen.md",
       "title": "Testen | Orderlyze"
-    },
-    {
-      "url": "https://www.orderlyze.com/thermorollen",
-      "file": "thermorollen.md",
-      "title": "Thermorollen hochwertig & phenolfrei | schnell und günstig bestellen"
     },
     {
       "url": "https://www.orderlyze.com/verwaltung",

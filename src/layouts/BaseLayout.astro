@@ -12,10 +12,16 @@ type Props = {
 };
 
 const { title, description, canonical, image, jsonLd } = Astro.props;
+const withBase = (href: string) => {
+  if (href.startsWith('#') || href.startsWith('http') || href.startsWith('tel:') || href.startsWith('mailto:')) {
+    return href;
+  }
+  return `${import.meta.env.BASE_URL}${href.replace(/^\/+/, '')}`;
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <Seo
       title={title}
@@ -35,11 +41,11 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
         <nav aria-label="Primary navigation">
           {
             NAVIGATION.map((item) => (
-              <a href={item.href}>{item.label}</a>
+              <a href={withBase(item.href)}>{item.label}</a>
             ))
           }
         </nav>
-        <a class="button secondary header-cta" href="#contact">Start audit</a>
+        <a class="button secondary header-cta" href={withBase('/angebot/')}>Angebot</a>
       </div>
     </header>
     <main>
@@ -47,8 +53,12 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
     </main>
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>{SITE.name} builds searchable, measurable operations systems.</p>
-        <a href={SITE.repository}>GitHub</a>
+        <p>{SITE.name} Kassensystem. Einfach zu bedienen, schnell eingerichtet und finanzamtkonform.</p>
+        <div class="footer-links">
+          <a href={withBase('/impressum/')}>Impressum</a>
+          <a href={withBase('/datenschutzerklaerung/')}>Datenschutz</a>
+          <a href={withBase('/agb/')}>AGB</a>
+        </div>
       </div>
     </footer>
   </body>
@@ -116,6 +126,12 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
   .footer-inner a {
     font-weight: 800;
     color: var(--ink);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
   }
 
   @media (max-width: 840px) {

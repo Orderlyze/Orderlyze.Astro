@@ -47,6 +47,11 @@ const legalOrUtilityPaths = new Set([
   '/impressum',
 ]);
 
+const shopPaths = new Set([
+  '/bestellen',
+  '/thermorollen',
+]);
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function normalizeUrl(input) {
@@ -203,6 +208,8 @@ async function main() {
   const urlsToScrape = [...allUrls]
     .filter((url) => !supportUrls.has(url))
     .filter((url) => !new URL(url).pathname.startsWith('/support'))
+    .filter((url) => !new URL(url).pathname.startsWith('/product-page/'))
+    .filter((url) => !shopPaths.has(new URL(url).pathname))
     .sort((a, b) => slugFor(a).localeCompare(slugFor(b), 'de'));
 
   if (existsSync(OUT_DIR)) {

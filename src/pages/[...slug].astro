@@ -1,0 +1,251 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  canonicalFromPage,
+  contentBlocks,
+  funnelStage,
+  pageDescription,
+  pageKeyword,
+  pageSchema,
+  pageTitle,
+  slugParamFromPage,
+} from '../lib/orderlyze-pages';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('orderlyzePages');
+  return pages
+    .filter((page) => page.id !== 'home')
+    .map((page) => ({
+      params: { slug: slugParamFromPage(page) },
+      props: { page },
+    }));
+}
+
+const { page } = Astro.props;
+const title = pageTitle(page);
+const description = pageDescription(page);
+const canonical = canonicalFromPage(page);
+const keyword = pageKeyword(page);
+const stage = funnelStage(page);
+const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).toString();
+const blocks = contentBlocks(page);
+const withBase = (href: string) => `${import.meta.env.BASE_URL}${href.replace(/^\/+/, '')}`;
+const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={pageSchema(page, siteUrl)}
+>
+  <article class="page">
+    <header class="page-hero">
+      <div class="container hero-inner">
+        <p class="eyebrow">{keyword}</p>
+        <h1>{title.replace(/\s+\|\s+Orderlyze$/, '')}</h1>
+        <p>{description}</p>
+        <div class="hero-actions">
+          <a class="button primary" href={withBase('/angebot/')}>Kostenloses Angebot</a>
+          <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="meta-band">
+      <div class="container meta-grid">
+        <div>
+          <span>Suchintention</span>
+          <strong>{stage}</strong>
+        </div>
+        <div>
+          <span>Quelle</span>
+          <strong>orderlyze.com</strong>
+        </div>
+        <div>
+          <span>Status</span>
+          <strong>finanzamtkonform</strong>
+        </div>
+      </div>
+    </section>
+
+    {
+      headingBlocks.length > 0 && (
+        <section class="section">
+          <div class="container">
+            <p class="eyebrow">Auf dieser Seite</p>
+            <div class="topic-grid">
+              {headingBlocks.map((item) => <div class="card topic-card">{item}</div>)}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="section content-section">
+      <div class="container content-grid">
+        <div class="content-main">
+          {
+            blocks.map((line) => (
+              line.length < 72 ? <h2>{line}</h2> : <p>{line}</p>
+            ))
+          }
+        </div>
+        <aside class="card side-panel">
+          <p class="eyebrow">Orderlyze</p>
+          <h2>Kassensystem einfach anfragen.</h2>
+          <p>
+            Lass dich kostenlos beraten und pruefe, welches Kassensystem zu deinem
+            Betrieb passt.
+          </p>
+          <a class="button primary" href={withBase('/angebot/')}>Angebot anfordern</a>
+        </aside>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 82px 0 64px;
+    border-bottom: 1px solid var(--line);
+    background: #fbfcfe;
+  }
+
+  .hero-inner {
+    max-width: 920px;
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    font-size: clamp(2.8rem, 6vw, 5.8rem);
+    line-height: 0.96;
+    letter-spacing: 0;
+  }
+
+  .page-hero p:not(.eyebrow) {
+    max-width: 760px;
+    margin: 24px 0 0;
+    color: #374151;
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .meta-band {
+    padding: 22px 0;
+    background: #111827;
+    color: white;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .meta-grid div {
+    display: grid;
+    gap: 4px;
+  }
+
+  .meta-grid span {
+    color: #d1d5db;
+    font-size: 0.86rem;
+    font-weight: 800;
+  }
+
+  .meta-grid strong {
+    font-size: 1.2rem;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .topic-card {
+    min-height: 76px;
+    padding: 18px;
+    color: var(--accent);
+    font-weight: 900;
+  }
+
+  .content-section {
+    background: var(--soft);
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .content-main {
+    display: grid;
+    gap: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: clamp(22px, 4vw, 42px);
+    background: white;
+  }
+
+  .content-main h2,
+  .content-main p {
+    margin: 0;
+  }
+
+  .content-main h2 {
+    padding-top: 10px;
+    color: #111827;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .content-main h2:first-child {
+    padding-top: 0;
+  }
+
+  .content-main p {
+    color: #374151;
+    font-size: 1.04rem;
+  }
+
+  .side-panel {
+    position: sticky;
+    top: 92px;
+    padding: 22px;
+  }
+
+  .side-panel h2 {
+    margin: 0 0 12px;
+    font-size: 1.45rem;
+  }
+
+  .side-panel p {
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .meta-grid,
+    .topic-grid,
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .side-panel {
+      position: static;
+    }
+  }
+</style>

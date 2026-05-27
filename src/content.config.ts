@@ -26,7 +26,18 @@ const caseStudy = defineCollection({
   }),
 });
 
+const orderlyzePage = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './content-source/orderlyze.com' }),
+  schema: z.object({
+    source_url: z.string().min(1),
+    title: z.string(),
+    description: z.string().optional(),
+    scraped_at: z.string(),
+  }),
+});
+
 export const collections = {
   seoPages: seoPage,
   caseStudies: caseStudy,
+  orderlyzePages: orderlyzePage,
 };
