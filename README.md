@@ -1,43 +1,42 @@
-# Astro Starter Kit: Minimal
+# Orderlyze Astro Marketing Site
+
+SEO-first Astro foundation for the Orderlyze marketing website.
+
+## Stack
+
+- Astro 6 with static output
+- Tailwind CSS 4 via `@tailwindcss/vite`
+- Astro Content Collections with `glob()` loaders
+- `@astrojs/sitemap` for sitemap generation
+- MDX-ready content layer
+- GitHub Actions for CI and GitHub Pages deployment
+- Project skills in `.codex/skills/`
+
+## Commands
+
+Use Node `22.22.3` from `.nvmrc`.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
+npm run verify
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+`npm run verify` runs Astro type checks, production build, and the SEO artifact verifier.
 
-## 🚀 Project Structure
+## SEO Foundation
 
-Inside of your Astro project, you'll see the following folders and files:
+- Reusable metadata and JSON-LD live in `src/components/Seo.astro`.
+- Shared layout and navigation live in `src/layouts/BaseLayout.astro`.
+- Page metadata and editorial governance live in `src/content/seoPages/`.
+- The sitemap is generated during `astro build`.
+- `public/robots.txt` points crawlers to the GitHub Pages sitemap URL.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Deployment
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+The repo includes:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `.github/workflows/ci.yml` for checks on push and pull request.
+- `.github/workflows/deploy-pages.yml` for GitHub Pages deployment from `dist`.
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The default deploy target is `https://orderlyze.github.io/Orderlyze.Astro/`.

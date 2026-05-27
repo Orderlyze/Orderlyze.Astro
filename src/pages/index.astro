@@ -1,17 +1,430 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../site.config';
 
+const seoPages = await getCollection('seoPages');
+const home = seoPages.find((entry) => entry.id === 'home')?.data;
+const title = home?.title ?? SITE.title;
+const description = home?.description ?? SITE.description;
+const baseUrl = import.meta.env.BASE_URL;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE.name,
+    url: new URL(baseUrl, Astro.site).toString(),
+    sameAs: [SITE.repository],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: new URL(baseUrl, Astro.site).toString(),
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${new URL(baseUrl, Astro.site).toString()}search/?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: SITE.name,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/PreOrder',
+    },
+  },
+];
+
+const metrics = [
+  ['42%', 'faster campaign handoffs'],
+  ['18', 'SEO checks in the release path'],
+  ['3x', 'more reusable page patterns'],
+];
+
+const features = [
+  {
+    title: 'Search-first architecture',
+    copy: 'Structured pages, canonical URLs, Open Graph data, JSON-LD, sitemap generation, and content ownership live in the default path.',
+  },
+  {
+    title: 'Workflow intelligence',
+    copy: 'Map repeated operating rhythms into scorecards, handoffs, approvals, and automations that can be measured per team.',
+  },
+  {
+    title: 'Composable growth pages',
+    copy: 'Launch feature, solution, comparison, and case-study pages from validated content models instead of isolated templates.',
+  },
+];
+
+const seoStack = [
+  'Astro 6 static-first rendering',
+  'Content Collections for typed editorial data',
+  'Sitemap generation with canonical base URLs',
+  'Reusable SEO component for metadata parity',
+  'JSON-LD for Organization, WebSite, and SoftwareApplication',
+  'GitHub Actions for build and SEO verification',
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={title} description={description} canonical="/" jsonLd={jsonLd}>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">SEO-first Astro marketing system</p>
+        <h1>Orderlyze</h1>
+        <p class="hero-lede">
+          Build a searchable operations website that turns messy workflows into
+          measurable growth pages, proof points, and automation journeys.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#contact">Plan the SEO system</a>
+          <a class="button secondary" href="#platform">Explore platform</a>
+        </div>
+      </div>
+      <figure class="hero-visual" aria-label="Orderlyze operations command center">
+        <img
+          src={`${baseUrl}images/orderlyze-hero.png`}
+          alt="Modern operations command center with dashboards and workflow boards"
+          width="1672"
+          height="941"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section metrics-band" aria-label="Operating impact">
+    <div class="container metrics">
+      {
+        metrics.map(([value, label]) => (
+          <div>
+            <strong>{value}</strong>
+            <span>{label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section" id="platform">
+    <div class="container">
+      <p class="eyebrow">Platform</p>
+      <h2 class="section-title">A marketing foundation that can keep growing.</h2>
+      <p class="section-copy">
+        The site starts with static performance, typed content, reusable SEO primitives,
+        and a design system that can expand into solution pages, case studies, and
+        product-led growth experiences.
+      </p>
+      <div class="feature-grid">
+        {
+          features.map((feature) => (
+            <article class="card feature-card">
+              <h3>{feature.title}</h3>
+              <p>{feature.copy}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section seo-section" id="seo">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">SEO system</p>
+        <h2 class="section-title">Technical SEO is built into the release path.</h2>
+        <p class="section-copy">
+          Every page can ship with validated metadata, canonical structure, structured
+          data, sitemap coverage, and CI checks before it reaches GitHub Pages.
+        </p>
+      </div>
+      <div class="card stack-list">
+        {
+          seoStack.map((item) => (
+            <div>
+              <span aria-hidden="true"></span>
+              <p>{item}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="proof">
+    <div class="container proof">
+      <p class="eyebrow">Proof</p>
+      <h2 class="section-title">Designed for marketing teams that publish often.</h2>
+      <div class="proof-grid">
+        <article class="card proof-card">
+          <h3>Editorial governance</h3>
+          <p>
+            Content entries carry funnel stage, ownership, status, keyword focus,
+            and canonical path so growth work stays auditable.
+          </p>
+        </article>
+        <article class="card proof-card">
+          <h3>Fast iteration</h3>
+          <p>
+            Astro keeps the initial surface static and fast while leaving room for
+            integrations, islands, search, analytics, and personalization.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section roadmap" id="roadmap">
+    <div class="container">
+      <p class="eyebrow">Roadmap</p>
+      <h2 class="section-title">Next pages are already modeled.</h2>
+      <ol>
+        <li>Solution pages for operations automation, SOP governance, and content ops.</li>
+        <li>Comparison pages targeting high-intent alternatives and migration queries.</li>
+        <li>Case studies with measurable workflow outcomes and schema-ready proof.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section contact-section" id="contact">
+    <div class="container contact">
+      <p class="eyebrow">Start</p>
+      <h2>Audit the first 20 search-led pages.</h2>
+      <a class="button primary" href="mailto:hello@orderlyze.com?subject=Orderlyze%20SEO%20audit">
+        hello@orderlyze.com
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    min-height: calc(100vh - 72px);
+    display: grid;
+    align-items: center;
+    padding: 56px 0 44px;
+    border-bottom: 1px solid var(--line);
+    background:
+      linear-gradient(90deg, rgb(251 252 254 / 96%) 0%, rgb(251 252 254 / 82%) 48%, rgb(251 252 254 / 48%) 100%),
+      #fbfcfe;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1.14fr);
+    gap: 42px;
+    align-items: center;
+  }
+
+  h1 {
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    font-size: clamp(4rem, 6.4vw, 5.8rem);
+    line-height: 0.95;
+    letter-spacing: 0;
+  }
+
+  .hero-lede {
+    max-width: 620px;
+    margin: 28px 0 0;
+    color: #374151;
+    font-size: clamp(1.1rem, 2vw, 1.36rem);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .hero-visual {
+    margin: 0;
+  }
+
+  .hero-visual img {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border: 1px solid rgb(217 222 231 / 88%);
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 24px 80px rgb(17 24 39 / 18%);
+  }
+
+  .metrics-band {
+    padding: 26px 0;
+    background: #111827;
+    color: white;
+  }
+
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .metrics div {
+    display: flex;
+    min-height: 74px;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .metrics strong {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1;
+  }
+
+  .metrics span {
+    max-width: 180px;
+    color: #d1d5db;
+    font-weight: 700;
+  }
+
+  .feature-grid,
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 36px;
+  }
+
+  .feature-card,
+  .proof-card {
+    padding: 24px;
+  }
+
+  .feature-card h3,
+  .proof-card h3 {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
+  }
+
+  .feature-card p,
+  .proof-card p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .seo-section {
+    background: var(--soft);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 0.8fr);
+    gap: 42px;
+    align-items: start;
+  }
+
+  .stack-list {
+    padding: 10px;
+  }
+
+  .stack-list div {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stack-list div:last-child {
+    border-bottom: 0;
+  }
+
+  .stack-list span {
+    width: 10px;
+    height: 10px;
+    margin-top: 7px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+
+  .stack-list p {
+    margin: 0;
+    color: #374151;
+    font-weight: 750;
+  }
+
+  .proof-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .roadmap {
+    background: #ffffff;
+  }
+
+  .roadmap ol {
+    display: grid;
+    gap: 14px;
+    max-width: 760px;
+    margin: 28px 0 0;
+    padding-left: 24px;
+    color: #374151;
+    font-size: 1.08rem;
+    font-weight: 700;
+  }
+
+  .contact-section {
+    background: #111827;
+    color: white;
+  }
+
+  .contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .contact h2 {
+    max-width: 650px;
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.02;
+  }
+
+  .contact .eyebrow {
+    color: #67e8f9;
+  }
+
+  @media (max-width: 980px) {
+    .hero-grid,
+    .split {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      min-height: auto;
+    }
+
+    .feature-grid,
+    .metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .proof-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

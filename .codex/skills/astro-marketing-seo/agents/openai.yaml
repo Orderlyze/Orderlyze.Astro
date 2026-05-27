@@ -1,0 +1,8 @@
+interface:
+  display_name: "Astro Marketing SEO"
+  short_description: "Build SEO-first Astro marketing pages"
+  brand_color: "#027A63"
+  default_prompt: "Use $astro-marketing-seo to add an SEO-first marketing page to the Orderlyze Astro site."
+
+policy:
+  allow_implicit_invocation: true

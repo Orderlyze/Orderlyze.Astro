@@ -1,0 +1,16 @@
+{
+  "name": "Orderlyze",
+  "short_name": "Orderlyze",
+  "description": "SEO-first operations marketing system.",
+  "start_url": "/Orderlyze.Astro/",
+  "display": "standalone",
+  "background_color": "#fbfcfe",
+  "theme_color": "#027a63",
+  "icons": [
+    {
+      "src": "/Orderlyze.Astro/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
