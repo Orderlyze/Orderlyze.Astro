@@ -97,21 +97,135 @@ export function bodyLines(page: OrderlyzePage) {
     });
 }
 
-export function contentBlocks(page: OrderlyzePage) {
-  const navigationNoise = new Set([
-    'Kassensystem',
-    'Branchen',
-    'Preise',
-    'Hilfe',
-    'SHOP',
-    'KOSTENLOSES ANGEBOT',
-    'top of page',
-  ]);
+const NAV_NOISE = new Set([
+  'Kassensystem',
+  'Branchen',
+  'Preise',
+  'Hilfe',
+  'SHOP',
+  'Shop',
+  'KOSTENLOSES ANGEBOT',
+  'Kostenloses Angebot',
+  'top of page',
+  'Angebot',
+  'Angebot anfordern',
+  'Angebot anforden',
+  'Angebot anfordern.',
+  'Mehr dazu',
+  'Mehr erfahren',
+  'jetzt bestellen',
+  'Kostenlos und Unverbindlich.',
+  'Kostenlos und unverbindlich.',
+  '0800 400 4511',
+  '100% finanzamtkonform',
+  'So funktioniert\'s',
+  'Funktionen',
+  'Kartenzahlung',
+  'Funkbonieren',
+  'Verwaltung',
+  'Cafe',
+  'Bar',
+  'Restaurant',
+  'Friseursalon',
+  'Friseur',
+  'Beauty',
+  'Sonstige Dienstleistungen',
+  'Sonstige',
+  'Hilfe und Support',
+  'Erste Schritte',
+  'Drucker verbinden',
+  'Zahlungsarten',
+  'Berichte & Exporte',
+  'Tischplan gestalten',
+  'Datenexport für Steuerberater',
+  'AGB',
+  'Impressum',
+  'Datenschutzerklärung',
+  '+',
+]);
 
-  return bodyLines(page)
+const FOOTER_MARKERS = ['Hilfe und Support', 'Datenschutzerklärung'];
+
+function trimToContentEnd(lines: string[]): string[] {
+  for (let i = 0; i < lines.length; i += 1) {
+    if (FOOTER_MARKERS.includes(lines[i])) {
+      return lines.slice(0, i);
+    }
+    if (lines[i] === 'AGB' && lines.slice(i, i + 6).includes('Impressum')) {
+      return lines.slice(0, i);
+    }
+  }
+  return lines;
+}
+
+const NAV_NOISE_LOWER = new Set([...NAV_NOISE].map((line) => line.toLowerCase()));
+
+function isNavNoise(line: string) {
+  return NAV_NOISE_LOWER.has(line.toLowerCase());
+}
+
+export function contentBlocks(page: OrderlyzePage) {
+  const cleaned = bodyLines(page)
     .map((line) => line.replace(/^#+\s*/, '').trim())
-    .filter((line) => line.length > 0)
-    .filter((line) => !navigationNoise.has(line));
+    .filter((line) => line.length > 0);
+  return trimToContentEnd(cleaned)
+    .filter((line) => !isNavNoise(line))
+    .filter((line) => !/^\d{1,2}$/.test(line))
+    .filter((line) => line !== '+');
+}
+
+export type ContentSection = { heading: string; paragraphs: string[] };
+
+const HEADING_MAX_LEN = 80;
+const HEADING_MIN_LEN = 6;
+
+function looksLikeHeading(line: string) {
+  if (line.length > HEADING_MAX_LEN) return false;
+  if (line.length < HEADING_MIN_LEN) return false;
+  if (/[.!?:]$/.test(line)) return false;
+  if (/^\d+(?:[,.]\d+)?\s*€/.test(line)) return false;
+  return true;
+}
+
+export function contentSections(page: OrderlyzePage): ContentSection[] {
+  const lines = contentBlocks(page);
+  const merged: string[] = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    const prev = merged[merged.length - 1];
+    if (
+      prev !== undefined &&
+      looksLikeHeading(prev) &&
+      looksLikeHeading(line) &&
+      prev.length < 32 &&
+      line.length < 32 &&
+      /[a-z]\s*$/i.test(prev)
+    ) {
+      merged[merged.length - 1] = `${prev} ${line}`;
+    } else {
+      merged.push(line);
+    }
+  }
+
+  const sections: ContentSection[] = [];
+  let current: ContentSection | null = null;
+
+  for (const line of merged) {
+    if (looksLikeHeading(line)) {
+      if (current && (current.paragraphs.length > 0 || current.heading.length > 0)) {
+        sections.push(current);
+      }
+      current = { heading: line, paragraphs: [] };
+    } else if (current) {
+      current.paragraphs.push(line);
+    } else {
+      current = { heading: '', paragraphs: [line] };
+    }
+  }
+
+  if (current) sections.push(current);
+
+  return sections.filter((section) => section.heading.length > 0 || section.paragraphs.length > 0);
 }
 
 export function pageSchema(page: OrderlyzePage, siteUrl: string) {

@@ -3,8 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   canonicalFromPage,
-  contentBlocks,
-  funnelStage,
+  contentSections,
   pageDescription,
   pageKeyword,
   pageSchema,
@@ -28,256 +27,306 @@ const title = pageTitle(page);
 const description = pageDescription(page);
 const canonical = canonicalFromPage(page);
 const keyword = pageKeyword(page);
-const stage = funnelStage(page);
 const siteUrl = absoluteSiteUrl(Astro.site);
-const blocks = contentBlocks(page);
-const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
+const sections = contentSections(page);
+
+const heroHeading = title.replace(/\s+\|\s+Orderlyze$/, '').replace(/^Orderlyze\s+[-|]\s+/i, '');
+
+const heroIntro = sections.find((s) => s.paragraphs.length > 0)?.paragraphs[0] || description;
+const heroHeadingLower = heroHeading.toLowerCase();
+
+const featureSections = sections
+  .filter((s) => s.heading && s.heading.toLowerCase() !== heroHeadingLower)
+  .filter((s) => s.paragraphs.length > 0)
+  .filter((s) => s.heading.length >= 10 || s.heading.split(/\s+/).length >= 2)
+  .slice(0, 6);
+
+const bulletSections = sections
+  .filter((s) => s.heading && s.paragraphs.length === 0)
+  .map((s) => s.heading)
+  .filter((heading) => heading.toLowerCase() !== heroHeadingLower)
+  .filter((heading) => heading.length >= 8 && heading.length <= 60)
+  .filter((heading) => heading.split(/\s+/).length >= 2)
+  .slice(0, 9);
+
+const featureImages = [
+  '/images/orderlyze/checkout-counter.jpg',
+  '/images/orderlyze/app-phone.png',
+  '/images/orderlyze/card-payment.jpg',
+  '/images/orderlyze/accounting.jpg',
+  '/images/orderlyze/devices-small.jpg',
+  '/images/orderlyze/support.jpg',
+];
+
 const pageImage = page.id === 'kassensystem'
   ? '/images/orderlyze/kassensystem-showcase.png'
   : page.id === 'kartenzahlung'
-    ? '/images/orderlyze/icon-kartenzahlung.png'
+    ? '/images/orderlyze/card-payment.jpg'
     : page.id === 'verwaltung'
-      ? '/images/orderlyze/icon-verwaltung.png'
-      : '/images/orderlyze/hero-system.png';
+      ? '/images/orderlyze/accounting.jpg'
+      : page.id === 'funktionen'
+        ? '/images/orderlyze/funktionen-illustration.png'
+        : page.id === 'preise'
+          ? '/images/orderlyze/hero-system.png'
+          : page.id === 'restaurant'
+            ? '/images/orderlyze/branch-restaurant.jpg'
+            : page.id === 'cafe'
+              ? '/images/orderlyze/branch-cafe.jpg'
+              : page.id === 'bar'
+                ? '/images/orderlyze/branch-bar.jpg'
+                : page.id === 'friseur' || page.id === 'friseure'
+                  ? '/images/orderlyze/branch-friseur.jpg'
+                  : page.id === 'beauty'
+                    ? '/images/orderlyze/branch-beauty.jpg'
+                    : '/images/orderlyze/hero-system.png';
 ---
 
 <BaseLayout
   title={title}
   description={description}
   canonical={canonical}
+  image={pageImage}
   jsonLd={pageSchema(page, siteUrl)}
 >
-  <article class="page">
-    <header class="page-hero">
-      <div class="container hero-inner">
-        <div class="hero-copy">
-          <p class="eyebrow">{keyword}</p>
-          <h1>{title.replace(/\s+\|\s+Orderlyze$/, '')}</h1>
-          <p>{description}</p>
-          <div class="hero-actions">
-            <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
-            <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
+  <section class="page-hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">{keyword}</p>
+        <h1>{heroHeading}</h1>
+        <p class="lead">{heroIntro}</p>
+        <div class="hero-actions">
+          <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+          <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
+        </div>
+        <p class="hero-trust">Kostenlos und unverbindlich • 100% finanzamtkonform</p>
+      </div>
+      <figure class="hero-visual">
+        <img src={withBasePath(pageImage)} alt={`${heroHeading} - Orderlyze`} width="1080" height="900" loading="eager" decoding="async" />
+      </figure>
+    </div>
+  </section>
+
+  {
+    bulletSections.length >= 3 && (
+      <section class="section bullets-section">
+        <div class="container center">
+          <h2>Auf einen Blick</h2>
+          <div class="bullet-grid">
+            {bulletSections.map((item) => (
+              <div class="bullet-card">
+                <span class="bullet-dot" aria-hidden="true"></span>
+                {item}
+              </div>
+            ))}
           </div>
         </div>
-        <figure class="page-visual">
-          <img src={withBasePath(pageImage)} alt={`${title} - Orderlyze Produktbild`} width="1200" height="1000" loading="eager" decoding="async" />
+      </section>
+    )
+  }
+
+  {
+    featureSections.map((section, index) => (
+      <section class:list={['feature-row', { reverse: index % 2 === 1 }]}>
+        <div class="feature-copy">
+          <h2>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+        <figure class="feature-visual">
+          <img
+            src={withBasePath(featureImages[index % featureImages.length])}
+            alt=""
+            width="900"
+            height="700"
+            loading="eager"
+            decoding="async"
+          />
         </figure>
-      </div>
-    </header>
+      </section>
+    ))
+  }
 
-    <section class="meta-band">
-      <div class="container meta-grid">
-        <div>
-          <span>Suchintention</span>
-          <strong>{stage}</strong>
-        </div>
-        <div>
-          <span>Quelle</span>
-          <strong>orderlyze.com</strong>
-        </div>
-        <div>
-          <span>Status</span>
-          <strong>finanzamtkonform</strong>
-        </div>
-      </div>
-    </section>
-
-    {
-      headingBlocks.length > 0 && (
-        <section class="section">
-          <div class="container">
-            <p class="eyebrow">Auf dieser Seite</p>
-            <div class="topic-grid">
-              {headingBlocks.map((item) => <div class="card topic-card">{item}</div>)}
-            </div>
-          </div>
-        </section>
-      )
-    }
-
-    <section class="section content-section">
-      <div class="container content-grid">
-        <div class="content-main">
-          {
-            blocks.map((line) => (
-              line.length < 72 ? <h2>{line}</h2> : <p>{line}</p>
-            ))
-          }
-        </div>
-        <aside class="card side-panel">
-          <p class="eyebrow">Orderlyze</p>
-          <h2>Kassensystem einfach anfragen.</h2>
-          <p>
-            Lass dich kostenlos beraten und pruefe, welches Kassensystem zu deinem
-            Betrieb passt.
-          </p>
-          <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
-        </aside>
-      </div>
-    </section>
-  </article>
+  <section class="black-cta">
+    <h2>Hol dir jetzt ein kostenloses Angebot!</h2>
+    <p>Lass dich kostenlos beraten und finde heraus, wie Orderlyze deinen Betrieb einfacher macht.</p>
+    <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+  </section>
 </BaseLayout>
 
 <style>
   .page-hero {
-    padding: 82px 0 64px;
+    padding: clamp(48px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    background: #f7f8fb;
     border-bottom: 1px solid var(--line);
-    background:
-      radial-gradient(circle at 78% 30%, var(--blue-soft), transparent 32%),
-      #ffffff;
   }
 
   .hero-inner {
     display: grid;
-    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.78fr);
-    gap: 48px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 80px);
     align-items: center;
   }
 
   h1 {
     margin: 0;
-    max-width: 100%;
-    overflow-wrap: anywhere;
-    hyphens: auto;
-    font-size: clamp(2.6rem, 5vw, 5rem);
+    color: var(--ink);
+    font-size: clamp(2.4rem, 5vw, 4.4rem);
     line-height: 1;
     letter-spacing: 0;
+    overflow-wrap: anywhere;
+    hyphens: auto;
   }
 
-  .hero-copy > p:not(.eyebrow) {
-    max-width: 760px;
+  .lead {
     margin: 24px 0 0;
-    color: #374151;
-    font-size: clamp(1.08rem, 2vw, 1.28rem);
-  }
-
-  .page-visual {
-    margin: 0;
-  }
-
-  .page-visual img {
-    width: min(100%, 540px);
-    margin-inline: auto;
-    border-radius: 8px;
-    filter: drop-shadow(0 24px 44px rgb(6 89 169 / 20%));
+    max-width: 540px;
+    color: var(--muted);
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
   }
 
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 30px;
+    gap: 14px;
+    margin-top: 32px;
   }
 
-  .meta-band {
-    padding: 22px 0;
-    background: var(--accent);
-    color: white;
-  }
-
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-  }
-
-  .meta-grid div {
-    display: grid;
-    gap: 4px;
-  }
-
-  .meta-grid span {
-    color: #d1d5db;
+  .hero-trust {
+    margin: 18px 0 0;
+    color: var(--accent);
     font-size: 0.86rem;
     font-weight: 800;
   }
 
-  .meta-grid strong {
-    font-size: 1.2rem;
+  .hero-visual {
+    margin: 0;
   }
 
-  .topic-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+  .hero-visual img {
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
+    border-radius: 12px;
+    object-fit: cover;
   }
 
-  .topic-card {
-    min-height: 76px;
-    padding: 18px;
-    color: var(--accent);
-    font-weight: 900;
-  }
-
-  .content-section {
-    background: var(--soft);
-  }
-
-  .content-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 320px;
-    gap: 28px;
-    align-items: start;
-  }
-
-  .content-main {
-    display: grid;
-    gap: 16px;
-    min-width: 0;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: clamp(22px, 4vw, 42px);
+  .bullets-section {
     background: white;
   }
 
-  .content-main h2,
-  .content-main p {
-    margin: 0;
-    overflow-wrap: anywhere;
-    word-break: normal;
+  .center h2 {
+    margin: 0 0 36px;
+    color: var(--ink);
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    line-height: 1.05;
   }
 
-  .content-main h2 {
-    padding-top: 10px;
-    color: #111827;
-    font-size: clamp(1.35rem, 3vw, 2rem);
-    line-height: 1.1;
+  .bullet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    text-align: left;
   }
 
-  .content-main h2:first-child {
-    padding-top: 0;
+  .bullet-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--soft);
+    color: var(--ink);
+    font-weight: 700;
   }
 
-  .content-main p {
-    color: #374151;
-    font-size: 1.04rem;
+  .bullet-dot {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: var(--accent);
   }
 
-  .side-panel {
-    position: sticky;
-    top: 92px;
-    padding: 22px;
+  .feature-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    padding: clamp(48px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    background: white;
   }
 
-  .side-panel h2 {
-    margin: 0 0 12px;
-    font-size: 1.45rem;
+  .feature-row.reverse {
+    background: var(--soft);
   }
 
-  .side-panel p {
+  .feature-row.reverse .feature-copy {
+    order: 2;
+  }
+
+  .feature-copy h2 {
+    margin: 0 0 18px;
+    color: var(--ink);
+    font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+    line-height: 1.05;
+  }
+
+  .feature-copy p {
+    margin: 0 0 14px;
     color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 540px;
+  }
+
+  .feature-visual {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .feature-visual img {
+    width: 100%;
+    max-width: 540px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 30px 60px rgb(15 23 42 / 12%);
+  }
+
+  .black-cta {
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+    padding: clamp(64px, 9vw, 96px) 20px;
+    background: #000000;
+    color: white;
+    text-align: center;
+  }
+
+  .black-cta h2 {
+    margin: 0;
+    color: white;
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+  }
+
+  .black-cta p {
+    margin: 0;
+    max-width: 600px;
+    color: #d1d5db;
   }
 
   @media (max-width: 900px) {
     .hero-inner,
-    .meta-grid,
-    .topic-grid,
-    .content-grid {
+    .feature-row {
       grid-template-columns: 1fr;
     }
 
-    .side-panel {
-      position: static;
+    .feature-row.reverse .feature-copy {
+      order: 0;
     }
   }
 </style>

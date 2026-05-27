@@ -39,19 +39,53 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
             ))
           }
         </nav>
-        <a class="button secondary header-cta" href={withBasePath('/angebot/')}>Angebot</a>
+        <div class="header-actions">
+          <a class="header-phone" href="tel:08004004511" aria-label="Telefon 0800 400 4511">
+            <strong>0800 400 4511</strong>
+            <span>Kostenlose Beratung</span>
+          </a>
+          <a class="button primary header-cta" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+        </div>
       </div>
     </header>
     <main>
       <slot />
     </main>
     <footer class="site-footer">
-      <div class="container footer-inner">
-        <p>{SITE.name} Kassensystem. Einfach zu bedienen, schnell eingerichtet und finanzamtkonform.</p>
-        <div class="footer-links">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <img src={withBasePath('/images/orderlyze/logo.png')} alt="Orderlyze" width="180" height="46" />
+          <p>Orderlyze Kassensystem. Einfach zu bedienen, schnell eingerichtet und 100% finanzamtkonform.</p>
+          <a class="footer-phone" href="tel:08004004511">0800 400 4511</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kassensystem</h4>
+          <a href={withBasePath('/kassensystem/')}>Kassensystem</a>
+          <a href={withBasePath('/funktionen/')}>Funktionen</a>
+          <a href={withBasePath('/kartenzahlung/')}>Kartenzahlung</a>
+          <a href={withBasePath('/preise/')}>Preise</a>
+          <a href={withBasePath('/hardware/')}>Hardware</a>
+        </div>
+        <div class="footer-col">
+          <h4>Branchen</h4>
+          <a href={withBasePath('/restaurant/')}>Restaurant</a>
+          <a href={withBasePath('/cafe/')}>Cafe</a>
+          <a href={withBasePath('/bar/')}>Bar</a>
+          <a href={withBasePath('/friseur/')}>Friseur</a>
+          <a href={withBasePath('/beauty/')}>Beauty</a>
+        </div>
+        <div class="footer-col">
+          <h4>Unternehmen</h4>
+          <a href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+          <a href={withBasePath('/so-funktionierts/')}>So funktioniert's</a>
           <a href={withBasePath('/impressum/')}>Impressum</a>
           <a href={withBasePath('/datenschutzerklaerung/')}>Datenschutz</a>
           <a href={withBasePath('/agb/')}>AGB</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <span>© {new Date().getFullYear()} {SITE.name}. Alle Rechte vorbehalten.</span>
         </div>
       </div>
     </footer>
@@ -64,77 +98,160 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
     top: 0;
     z-index: 20;
     border-bottom: 1px solid rgb(217 222 231 / 78%);
-    background: rgb(251 252 254 / 88%);
+    background: rgb(255 255 255 / 92%);
     backdrop-filter: blur(16px);
   }
 
   .header-inner {
     display: flex;
-    min-height: 72px;
+    min-height: 80px;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 32px;
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
+    flex-shrink: 0;
   }
 
   .brand img {
-    width: 146px;
+    width: 152px;
     height: auto;
   }
 
   nav {
     display: flex;
     align-items: center;
-    gap: 22px;
-    color: #374151;
-    font-size: 0.94rem;
-    font-weight: 750;
+    gap: 28px;
+    margin-inline: auto;
+    color: #111827;
+    font-size: 0.98rem;
+    font-weight: 700;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .header-phone {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .header-phone strong {
+    font-size: 1rem;
+    font-weight: 900;
+  }
+
+  .header-phone span {
+    color: var(--accent);
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .header-cta {
+    white-space: nowrap;
   }
 
   .site-footer {
     border-top: 1px solid var(--line);
-    background: white;
+    background: #0b1220;
+    color: #d1d5db;
   }
 
-  .footer-inner {
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+    gap: 36px;
+    padding: 64px 0 32px;
+  }
+
+  .footer-brand img {
+    width: 168px;
+    height: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer-brand p {
+    margin: 18px 0;
+    color: #9ca3af;
+    font-size: 0.95rem;
+    max-width: 320px;
+  }
+
+  .footer-phone {
+    display: inline-block;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
+
+  .footer-col {
     display: flex;
-    min-height: 96px;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    color: var(--muted);
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .footer-inner a {
-    font-weight: 800;
-    color: var(--ink);
+  .footer-col h4 {
+    margin: 0 0 6px;
+    color: white;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
-  .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+  .footer-col a {
+    color: #d1d5db;
+    font-size: 0.95rem;
   }
 
-  @media (max-width: 840px) {
+  .footer-col a:hover {
+    color: white;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgb(255 255 255 / 8%);
+    padding: 20px 0;
+    color: #9ca3af;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 980px) {
     nav {
       display: none;
     }
-  }
 
-  @media (max-width: 520px) {
-    .header-cta {
+    .header-phone {
       display: none;
     }
 
-    .footer-inner {
-      align-items: flex-start;
-      flex-direction: column;
-      justify-content: center;
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .header-cta {
+      padding: 0 14px;
+      font-size: 0.88rem;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
