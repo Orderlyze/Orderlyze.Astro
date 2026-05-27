@@ -6,7 +6,7 @@ export const SITE = {
   locale: 'de_DE',
   url: 'https://orderlyze.github.io',
   repository: 'https://github.com/Orderlyze/Orderlyze.Astro',
-  image: '/images/orderlyze-hero.png',
+  image: '/images/orderlyze/hero-system.png',
 };
 
 export const NAVIGATION = [

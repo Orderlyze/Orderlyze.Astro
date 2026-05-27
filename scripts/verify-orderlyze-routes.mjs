@@ -51,11 +51,23 @@ for (const route of expected) {
 }
 
 const unexpected = forbidden.filter((route) => existsSync(join(dist, route)));
+const brokenBaseLinks = [];
 
-if (missing.length > 0 || badSeo.length > 0 || unexpected.length > 0) {
+for (const route of expected) {
+  const file = join(dist, route);
+  if (!existsSync(file)) continue;
+  const html = readFileSync(file, 'utf8');
+  const matches = [...html.matchAll(/href="([^"]*Orderlyze\.Astro[^/"#?][^"]*)"/g)];
+  for (const match of matches) {
+    brokenBaseLinks.push(`${route}: ${match[1]}`);
+  }
+}
+
+if (missing.length > 0 || badSeo.length > 0 || unexpected.length > 0 || brokenBaseLinks.length > 0) {
   if (missing.length > 0) console.error(`Missing routes:\n${missing.join('\n')}`);
   if (badSeo.length > 0) console.error(`Bad SEO routes:\n${badSeo.join('\n')}`);
   if (unexpected.length > 0) console.error(`Unexpected excluded routes:\n${unexpected.join('\n')}`);
+  if (brokenBaseLinks.length > 0) console.error(`Broken base links:\n${brokenBaseLinks.join('\n')}`);
   process.exit(1);
 }
 

@@ -2,14 +2,15 @@
 
 :root {
   color-scheme: light;
-  --ink: #111827;
-  --muted: #5b6473;
-  --line: #d9dee7;
+  --ink: #000000;
+  --muted: #383838;
+  --line: #d5dfff;
   --panel: #ffffff;
-  --soft: #f5f7fb;
-  --accent: #027a63;
-  --accent-2: #0369a1;
-  --warning: #b45309;
+  --soft: #f5f7ff;
+  --accent: #0659a9;
+  --accent-2: #3567fd;
+  --warning: #9c2426;
+  --blue-soft: #eaefff;
 }
 
 * {
@@ -23,10 +24,10 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background: #fbfcfe;
+  background: #ffffff;
   color: var(--ink);
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Avenir, "Avenir Next", Montserrat, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   line-height: 1.5;
 }
@@ -99,14 +100,14 @@ img {
 }
 
 .button.primary {
-  background: var(--accent);
+  background: var(--accent-2);
   color: white;
 }
 
 .button.secondary {
-  border-color: var(--line);
+  border-color: var(--accent);
   background: white;
-  color: var(--ink);
+  color: var(--accent);
 }
 
 .grid {

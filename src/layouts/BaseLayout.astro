@@ -1,5 +1,6 @@
 ---
 import Seo from '../components/Seo.astro';
+import { withBasePath } from '../lib/url';
 import { NAVIGATION, SITE } from '../site.config';
 import '../styles/global.css';
 
@@ -12,12 +13,6 @@ type Props = {
 };
 
 const { title, description, canonical, image, jsonLd } = Astro.props;
-const withBase = (href: string) => {
-  if (href.startsWith('#') || href.startsWith('http') || href.startsWith('tel:') || href.startsWith('mailto:')) {
-    return href;
-  }
-  return `${import.meta.env.BASE_URL}${href.replace(/^\/+/, '')}`;
-};
 ---
 
 <!doctype html>
@@ -34,18 +29,17 @@ const withBase = (href: string) => {
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href={import.meta.env.BASE_URL} aria-label={`${SITE.name} home`}>
-          <span class="brand-mark" aria-hidden="true">O</span>
-          <span>{SITE.name}</span>
+        <a class="brand" href={withBasePath('/')} aria-label={`${SITE.name} home`}>
+          <img src={withBasePath('/images/orderlyze/logo.png')} alt="Orderlyze" width="205" height="52" />
         </a>
         <nav aria-label="Primary navigation">
           {
             NAVIGATION.map((item) => (
-              <a href={withBase(item.href)}>{item.label}</a>
+              <a href={withBasePath(item.href)}>{item.label}</a>
             ))
           }
         </nav>
-        <a class="button secondary header-cta" href={withBase('/angebot/')}>Angebot</a>
+        <a class="button secondary header-cta" href={withBasePath('/angebot/')}>Angebot</a>
       </div>
     </header>
     <main>
@@ -55,9 +49,9 @@ const withBase = (href: string) => {
       <div class="container footer-inner">
         <p>{SITE.name} Kassensystem. Einfach zu bedienen, schnell eingerichtet und finanzamtkonform.</p>
         <div class="footer-links">
-          <a href={withBase('/impressum/')}>Impressum</a>
-          <a href={withBase('/datenschutzerklaerung/')}>Datenschutz</a>
-          <a href={withBase('/agb/')}>AGB</a>
+          <a href={withBasePath('/impressum/')}>Impressum</a>
+          <a href={withBasePath('/datenschutzerklaerung/')}>Datenschutz</a>
+          <a href={withBasePath('/agb/')}>AGB</a>
         </div>
       </div>
     </footer>
@@ -85,19 +79,11 @@ const withBase = (href: string) => {
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-weight: 900;
   }
 
-  .brand-mark {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    place-items: center;
-    border-radius: 8px;
-    background: #111827;
-    color: white;
-    font-size: 0.92rem;
+  .brand img {
+    width: 146px;
+    height: auto;
   }
 
   nav {

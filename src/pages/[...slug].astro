@@ -11,6 +11,7 @@ import {
   pageTitle,
   slugParamFromPage,
 } from '../lib/orderlyze-pages';
+import { absoluteSiteUrl, withBasePath } from '../lib/url';
 
 export async function getStaticPaths() {
   const pages = await getCollection('orderlyzePages');
@@ -28,10 +29,16 @@ const description = pageDescription(page);
 const canonical = canonicalFromPage(page);
 const keyword = pageKeyword(page);
 const stage = funnelStage(page);
-const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).toString();
+const siteUrl = absoluteSiteUrl(Astro.site);
 const blocks = contentBlocks(page);
-const withBase = (href: string) => `${import.meta.env.BASE_URL}${href.replace(/^\/+/, '')}`;
 const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
+const pageImage = page.id === 'kassensystem'
+  ? '/images/orderlyze/kassensystem-showcase.png'
+  : page.id === 'kartenzahlung'
+    ? '/images/orderlyze/icon-kartenzahlung.png'
+    : page.id === 'verwaltung'
+      ? '/images/orderlyze/icon-verwaltung.png'
+      : '/images/orderlyze/hero-system.png';
 ---
 
 <BaseLayout
@@ -43,13 +50,18 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
   <article class="page">
     <header class="page-hero">
       <div class="container hero-inner">
-        <p class="eyebrow">{keyword}</p>
-        <h1>{title.replace(/\s+\|\s+Orderlyze$/, '')}</h1>
-        <p>{description}</p>
-        <div class="hero-actions">
-          <a class="button primary" href={withBase('/angebot/')}>Kostenloses Angebot</a>
-          <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
+        <div class="hero-copy">
+          <p class="eyebrow">{keyword}</p>
+          <h1>{title.replace(/\s+\|\s+Orderlyze$/, '')}</h1>
+          <p>{description}</p>
+          <div class="hero-actions">
+            <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+            <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
+          </div>
         </div>
+        <figure class="page-visual">
+          <img src={withBasePath(pageImage)} alt={`${title} - Orderlyze Produktbild`} width="1200" height="1000" loading="eager" decoding="async" />
+        </figure>
       </div>
     </header>
 
@@ -99,7 +111,7 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
             Lass dich kostenlos beraten und pruefe, welches Kassensystem zu deinem
             Betrieb passt.
           </p>
-          <a class="button primary" href={withBase('/angebot/')}>Angebot anfordern</a>
+          <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
         </aside>
       </div>
     </section>
@@ -110,11 +122,16 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
   .page-hero {
     padding: 82px 0 64px;
     border-bottom: 1px solid var(--line);
-    background: #fbfcfe;
+    background:
+      radial-gradient(circle at 78% 30%, var(--blue-soft), transparent 32%),
+      #ffffff;
   }
 
   .hero-inner {
-    max-width: 920px;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.78fr);
+    gap: 48px;
+    align-items: center;
   }
 
   h1 {
@@ -122,16 +139,27 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
     max-width: 100%;
     overflow-wrap: anywhere;
     hyphens: auto;
-    font-size: clamp(2.8rem, 6vw, 5.8rem);
-    line-height: 0.96;
+    font-size: clamp(2.6rem, 5vw, 5rem);
+    line-height: 1;
     letter-spacing: 0;
   }
 
-  .page-hero p:not(.eyebrow) {
+  .hero-copy > p:not(.eyebrow) {
     max-width: 760px;
     margin: 24px 0 0;
     color: #374151;
     font-size: clamp(1.08rem, 2vw, 1.28rem);
+  }
+
+  .page-visual {
+    margin: 0;
+  }
+
+  .page-visual img {
+    width: min(100%, 540px);
+    margin-inline: auto;
+    border-radius: 8px;
+    filter: drop-shadow(0 24px 44px rgb(6 89 169 / 20%));
   }
 
   .hero-actions {
@@ -143,7 +171,7 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
 
   .meta-band {
     padding: 22px 0;
-    background: #111827;
+    background: var(--accent);
     color: white;
   }
 
@@ -195,6 +223,7 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
   .content-main {
     display: grid;
     gap: 16px;
+    min-width: 0;
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: clamp(22px, 4vw, 42px);
@@ -204,6 +233,8 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
   .content-main h2,
   .content-main p {
     margin: 0;
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 
   .content-main h2 {
@@ -238,6 +269,7 @@ const headingBlocks = blocks.filter((line) => line.length < 72).slice(0, 6);
   }
 
   @media (max-width: 900px) {
+    .hero-inner,
     .meta-grid,
     .topic-grid,
     .content-grid {

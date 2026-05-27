@@ -7,6 +7,7 @@ import {
   pageSchema,
   pageTitle,
 } from '../lib/orderlyze-pages';
+import { absoluteSiteUrl, withBasePath } from '../lib/url';
 
 const pages = await getCollection('orderlyzePages');
 const home = pages.find((page) => page.id === 'home');
@@ -17,7 +18,7 @@ if (!home) {
 
 const title = pageTitle(home);
 const description = pageDescription(home);
-const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).toString();
+const siteUrl = absoluteSiteUrl(Astro.site);
 const blocks = contentBlocks(home);
 const highlights = [
   {
@@ -56,7 +57,6 @@ const featureLinks = [
   ['Bestellsystem', '/bestellsystem/'],
 ];
 
-const withBase = (href: string) => `${import.meta.env.BASE_URL}${href.replace(/^\/+/, '')}`;
 const jsonLd = [
   ...pageSchema(home, siteUrl),
   {
@@ -94,19 +94,20 @@ const jsonLd = [
           Zeit fuer deine KundInnen hast. 100% finanzamtkonform.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href={withBase('/angebot/')}>Kostenloses Angebot</a>
-          <a class="button secondary" href={withBase('/so-funktionierts/')}>So funktioniert's</a>
+          <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+          <a class="button secondary" href={withBasePath('/so-funktionierts/')}>So funktioniert's</a>
         </div>
       </div>
-      <div class="hero-panel" aria-label="Orderlyze Vorteile">
-        <strong>0800 400 4511</strong>
-        <span>Kostenlose Beratung</span>
-        <ul>
-          <li>Finanzamtkonform</li>
-          <li>Kartenzahlung integriert</li>
-          <li>Fuer Gastronomie und Dienstleistungen</li>
-        </ul>
-      </div>
+      <figure class="hero-visual">
+        <img
+          src={withBasePath('/images/orderlyze/hero-system.png')}
+          alt="Orderlyze Kassensystem auf Tablet, Smartphone und Bondrucker"
+          width="1096"
+          height="914"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
     </div>
   </section>
 
@@ -137,7 +138,7 @@ const jsonLd = [
             <article class="card feature-card">
               <h3>{item.title}</h3>
               <p>{item.copy}</p>
-              <a href={withBase(item.href)}>Mehr erfahren</a>
+              <a href={withBasePath(item.href)}>Mehr erfahren</a>
             </article>
           ))
         }
@@ -158,7 +159,7 @@ const jsonLd = [
       <div class="link-grid">
         {
           industries.map(([label, href]) => (
-            <a class="card link-card" href={withBase(href)}>{label}</a>
+            <a class="card link-card" href={withBasePath(href)}>{label}</a>
           ))
         }
       </div>
@@ -178,7 +179,7 @@ const jsonLd = [
       <div class="link-grid">
         {
           featureLinks.map(([label, href]) => (
-            <a class="card link-card" href={withBase(href)}>{label}</a>
+            <a class="card link-card" href={withBasePath(href)}>{label}</a>
           ))
         }
       </div>
@@ -199,11 +200,19 @@ const jsonLd = [
     </div>
   </section>
 
+  <section class="section image-band">
+    <div class="container image-grid">
+      <img src={withBasePath('/images/orderlyze/konform-1.png')} alt="Orderlyze Illustration zur Kassensystem-Konformitaet" width="300" height="220" loading="eager" />
+      <img src={withBasePath('/images/orderlyze/konform-2.png')} alt="Orderlyze Illustration zur Finanzamt-Konformitaet" width="300" height="220" loading="eager" />
+      <img src={withBasePath('/images/orderlyze/funktionen-illustration.png')} alt="Orderlyze Illustration der Kassensystem-Funktionen" width="300" height="220" loading="eager" />
+    </div>
+  </section>
+
   <section class="section cta-section">
     <div class="container cta">
       <p class="eyebrow">Kostenlos und unverbindlich</p>
       <h2>Hol dir jetzt ein kostenloses Angebot.</h2>
-      <a class="button primary" href={withBase('/angebot/')}>Angebot anfordern</a>
+      <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
     </div>
   </section>
 </BaseLayout>
@@ -215,7 +224,9 @@ const jsonLd = [
     align-items: center;
     padding: 70px 0;
     border-bottom: 1px solid var(--line);
-    background: #fbfcfe;
+    background:
+      radial-gradient(circle at 72% 34%, var(--blue-soft), transparent 34%),
+      #ffffff;
   }
 
   .hero-grid,
@@ -250,39 +261,19 @@ const jsonLd = [
     margin-top: 34px;
   }
 
-  .hero-panel {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 28px;
-    background: white;
-    box-shadow: 0 24px 80px rgb(17 24 39 / 10%);
+  .hero-visual {
+    margin: 0;
   }
 
-  .hero-panel strong {
-    display: block;
-    font-size: clamp(2.4rem, 5vw, 4.8rem);
-    line-height: 1;
-  }
-
-  .hero-panel span {
-    display: block;
-    margin-top: 8px;
-    color: var(--accent);
-    font-weight: 900;
-  }
-
-  .hero-panel ul {
-    display: grid;
-    gap: 10px;
-    margin: 28px 0 0;
-    padding-left: 20px;
-    color: #374151;
-    font-weight: 750;
+  .hero-visual img {
+    width: min(100%, 620px);
+    margin-inline: auto;
+    filter: drop-shadow(0 28px 50px rgb(6 89 169 / 22%));
   }
 
   .trust-band {
     padding: 28px 0;
-    background: #111827;
+    background: var(--accent);
     color: white;
   }
 
@@ -337,6 +328,23 @@ const jsonLd = [
     background: var(--soft);
   }
 
+  .image-band {
+    background: #ffffff;
+  }
+
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    align-items: center;
+  }
+
+  .image-grid img {
+    width: 100%;
+    border-radius: 8px;
+    background: var(--soft);
+  }
+
   .link-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -367,7 +375,7 @@ const jsonLd = [
   }
 
   .cta-section {
-    background: #111827;
+    background: var(--accent);
     color: white;
   }
 
@@ -393,7 +401,8 @@ const jsonLd = [
     .hero-grid,
     .split,
     .feature-grid,
-    .trust-grid {
+    .trust-grid,
+    .image-grid {
       grid-template-columns: 1fr;
     }
 

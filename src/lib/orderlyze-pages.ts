@@ -78,7 +78,10 @@ export function pageDescription(page: OrderlyzePage) {
 
 export function pageTitle(page: OrderlyzePage) {
   if (page.id === 'home') return page.data.title;
-  const title = page.data.title.replace(/\s+[-|]\s+Orderlyze.*$/i, '').trim();
+  const title = page.data.title
+    .replace(/^Orderlyze\s+[-|]\s+/i, '')
+    .replace(/\s+[-|]\s+Orderlyze.*$/i, '')
+    .trim();
   return title.includes('Orderlyze') ? title : `${title} | Orderlyze`;
 }
 

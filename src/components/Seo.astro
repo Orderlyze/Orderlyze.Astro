@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../site.config';
+import { absoluteUrl, withBasePath } from '../lib/url';
 
 type Props = {
   title?: string;
@@ -19,9 +20,8 @@ const {
   jsonLd = [],
 } = Astro.props;
 
-const siteBase = new URL(Astro.site ?? SITE.url);
-const canonicalUrl = new URL(canonical, siteBase).toString();
-const imageUrl = new URL(image, siteBase).toString();
+const canonicalUrl = absoluteUrl(canonical, Astro.site);
+const imageUrl = absoluteUrl(image, Astro.site);
 const schema = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
 ---
 
@@ -46,8 +46,8 @@ const schema = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
 
-<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
+<link rel="icon" type="image/svg+xml" href={withBasePath('/favicon.svg')} />
+<link rel="icon" href={withBasePath('/favicon.ico')} />
 
 {
   schema.map((item) => (
