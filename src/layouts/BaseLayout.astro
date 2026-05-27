@@ -41,10 +41,15 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
         </nav>
         <div class="header-actions">
           <a class="header-phone" href="tel:08004004511" aria-label="Telefon 0800 400 4511">
-            <strong>0800 400 4511</strong>
-            <span>Kostenlose Beratung</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+              <path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z" />
+            </svg>
+            <div>
+              <strong>0800 400 4511</strong>
+              <span>Kostenlose Beratung</span>
+            </div>
           </a>
-          <a class="button primary header-cta" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+          <a class="button header-cta" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
         </div>
       </div>
     </header>
@@ -142,11 +147,21 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
   }
 
   .header-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  .header-phone svg {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .header-phone div {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    line-height: 1.1;
-    color: var(--ink);
   }
 
   .header-phone strong {
@@ -155,15 +170,26 @@ const { title, description, canonical, image, jsonLd } = Astro.props;
   }
 
   .header-phone span {
-    color: var(--accent);
-    font-size: 0.74rem;
-    font-weight: 800;
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
 
   .header-cta {
+    border: 2px solid var(--ink);
+    background: white;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.82rem;
     white-space: nowrap;
+  }
+
+  .header-cta:hover {
+    background: var(--ink);
+    color: white;
   }
 
   .site-footer {

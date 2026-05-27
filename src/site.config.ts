@@ -11,8 +11,7 @@ export const SITE = {
 
 export const NAVIGATION = [
   { label: 'Kassensystem', href: '/kassensystem/' },
-  { label: 'Funktionen', href: '/funktionen/' },
-  { label: 'Kartenzahlung', href: '/kartenzahlung/' },
   { label: 'Branchen', href: '/branchen/' },
   { label: 'Preise', href: '/preise/' },
+  { label: 'Hilfe', href: '/so-funktionierts/' },
 ] as const;

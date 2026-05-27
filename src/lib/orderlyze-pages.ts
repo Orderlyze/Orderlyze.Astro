@@ -131,27 +131,27 @@ const NAV_NOISE = new Set([
   'Beauty',
   'Sonstige Dienstleistungen',
   'Sonstige',
-  'Hilfe und Support',
   'Erste Schritte',
   'Drucker verbinden',
   'Zahlungsarten',
   'Berichte & Exporte',
   'Tischplan gestalten',
   'Datenexport für Steuerberater',
-  'AGB',
-  'Impressum',
-  'Datenschutzerklärung',
   '+',
 ]);
 
-const FOOTER_MARKERS = ['Hilfe und Support', 'Datenschutzerklärung'];
+const FOOTER_MARKERS = ['Hilfe und Support'];
 
 function trimToContentEnd(lines: string[]): string[] {
+  // First: hard footer markers
   for (let i = 0; i < lines.length; i += 1) {
     if (FOOTER_MARKERS.includes(lines[i])) {
       return lines.slice(0, i);
     }
-    if (lines[i] === 'AGB' && lines.slice(i, i + 6).includes('Impressum')) {
+  }
+  // Then: detect the contiguous footer nav block (AGB + Impressum + Datenschutzerklärung clustered)
+  for (let i = 0; i < lines.length; i += 1) {
+    if (lines[i] === 'AGB' && lines.slice(i, i + 6).includes('Impressum') && lines.slice(i, i + 8).some((l) => l.startsWith('Datenschutz'))) {
       return lines.slice(0, i);
     }
   }
@@ -187,6 +187,19 @@ function looksLikeHeading(line: string) {
   return true;
 }
 
+const HEADING_CONTINUATIONS = new Set([
+  'für', 'und', 'mit', 'oder', 'der', 'die', 'das', 'des', 'dem', 'den',
+  'ein', 'eine', 'einer', 'einem', 'einen', 'eines',
+  'zu', 'von', 'vom', 'im', 'in', 'an', 'auf', 'bei',
+  'als', 'wie', 'um', 'so', 'noch', 'nur', 'aus', 'nach',
+  'mein', 'meine', 'dein', 'deine',
+]);
+
+function endsWithConnector(line: string): boolean {
+  const lastWord = line.trim().split(/\s+/).pop()?.toLowerCase() ?? '';
+  return HEADING_CONTINUATIONS.has(lastWord);
+}
+
 export function contentSections(page: OrderlyzePage): ContentSection[] {
   const lines = contentBlocks(page);
   const merged: string[] = [];
@@ -197,9 +210,9 @@ export function contentSections(page: OrderlyzePage): ContentSection[] {
       prev !== undefined &&
       looksLikeHeading(prev) &&
       looksLikeHeading(line) &&
-      prev.length < 32 &&
-      line.length < 32 &&
-      /[a-z]\s*$/i.test(prev)
+      prev.length < 40 &&
+      line.length < 40 &&
+      endsWithConnector(prev)
     ) {
       merged[merged.length - 1] = `${prev} ${line}`;
     } else {

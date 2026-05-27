@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   canonicalFromPage,
+  contentBlocks,
   contentSections,
   pageDescription,
   pageKeyword,
@@ -30,10 +31,22 @@ const keyword = pageKeyword(page);
 const siteUrl = absoluteSiteUrl(Astro.site);
 const sections = contentSections(page);
 
-const heroHeading = title.replace(/\s+\|\s+Orderlyze$/, '').replace(/^Orderlyze\s+[-|]\s+/i, '');
+const heroHeading = title
+  .replace(/\s+\|\s+Orderlyze$/, '')
+  .replace(/^Orderlyze\s+[-|]\s+/i, '')
+  .trim();
+const heroHeadingLower = heroHeading.toLowerCase();
+
+const LEGAL_IDS = new Set(['agb', 'impressum', 'datenschutzerklaerung']);
+const BRANCHES_ID = 'branchen';
+const PRICING_ID = 'preise';
+const MINIMAL_IDS = new Set(['dank']);
+const isLegal = LEGAL_IDS.has(page.id);
+const isBranches = page.id === BRANCHES_ID;
+const isPricing = page.id === PRICING_ID;
+const isMinimal = MINIMAL_IDS.has(page.id);
 
 const heroIntro = sections.find((s) => s.paragraphs.length > 0)?.paragraphs[0] || description;
-const heroHeadingLower = heroHeading.toLowerCase();
 
 const featureSections = sections
   .filter((s) => s.heading && s.heading.toLowerCase() !== heroHeadingLower)
@@ -79,6 +92,73 @@ const pageImage = page.id === 'kassensystem'
                   : page.id === 'beauty'
                     ? '/images/orderlyze/branch-beauty.jpg'
                     : '/images/orderlyze/hero-system.png';
+
+const testimonials = [
+  {
+    image: '/images/orderlyze/customer-carlo.jpg',
+    name: 'Carlo M.',
+    role: 'Pizzeria',
+    copy: 'Seit dem wir Orderlyze verwenden, haben wir kaum noch Probleme gehabt. Alles geht super einfach und wir haben eine enorme Flexibilität.',
+  },
+  {
+    image: '/images/orderlyze/customer-helene.jpg',
+    name: 'Helene S.',
+    role: 'Kosmetikerin',
+    copy: 'Orderlyze hat mir den Alltag deutlich erleichtert. Ich gelange sehr viel schneller an wichtige Informationen.',
+  },
+];
+
+const gastroBranches = [
+  ['Restaurant', '/restaurant/', '/images/orderlyze/branch-restaurant.jpg'],
+  ['Cafe', '/cafe/', '/images/orderlyze/branch-cafe.jpg'],
+  ['Bar', '/bar/', '/images/orderlyze/branch-bar.jpg'],
+];
+const serviceBranches = [
+  ['Friseur', '/friseur/', '/images/orderlyze/branch-friseur.jpg'],
+  ['Beauty', '/beauty/', '/images/orderlyze/branch-beauty.jpg'],
+  ['Sonstige', '/sonstige/', '/images/orderlyze/branch-physio.jpg'],
+];
+
+const pricingTiers = [
+  {
+    name: 'Dienstleistungen',
+    price: '39€',
+    period: 'pro Monat',
+    bullets: [
+      'alle Funktionen enthalten',
+      'kostenloser Support',
+      'Finanzamt Signatur inkl.',
+      'keine zusätzlichen Kosten!',
+    ],
+  },
+  {
+    name: 'Gastronomie',
+    price: '49€',
+    period: 'pro Monat',
+    featured: true,
+    bullets: [
+      'alle Funktionen enthalten',
+      'kostenloser Support',
+      'Finanzamt Signatur inkl.',
+      'keine zusätzlichen Kosten!',
+    ],
+  },
+  {
+    name: 'Gastronomie +',
+    price: '75€',
+    period: 'pro Monat',
+    bullets: [
+      'alle Funktionen enthalten',
+      'kostenloser Support',
+      'mit Küchenkommunikation',
+      'unbegrenzt viele Geräte',
+      'Finanzamt Signatur inkl.',
+      'keine zusätzlichen Kosten!',
+    ],
+  },
+];
+
+const legalBlocks = isLegal ? contentBlocks(page).filter((line) => line.toLowerCase() !== heroHeadingLower) : [];
 ---
 
 <BaseLayout
@@ -88,26 +168,104 @@ const pageImage = page.id === 'kassensystem'
   image={pageImage}
   jsonLd={pageSchema(page, siteUrl)}
 >
-  <section class="page-hero">
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <p class="eyebrow">{keyword}</p>
-        <h1>{heroHeading}</h1>
-        <p class="lead">{heroIntro}</p>
-        <div class="hero-actions">
-          <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
-          <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
+  {
+    isLegal ? (
+      <>
+        <section class="legal-banner">
+          <div class="container">
+            <h1>{heroHeading}</h1>
+          </div>
+        </section>
+        <section class="legal-body">
+          <div class="container">
+            {legalBlocks.map((line) => <p>{line}</p>)}
+          </div>
+        </section>
+      </>
+    ) : (
+      <section class="page-hero">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">{keyword}</p>
+            <h1>{heroHeading}</h1>
+            <p class="lead">{heroIntro}</p>
+            <div class="hero-actions">
+              <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
+              <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
+            </div>
+            <p class="hero-trust">Kostenlos und unverbindlich • 100% finanzamtkonform</p>
+          </div>
+          <figure class="hero-visual">
+            <img src={withBasePath(pageImage)} alt={`${heroHeading} - Orderlyze`} width="1080" height="900" loading="eager" decoding="async" />
+          </figure>
         </div>
-        <p class="hero-trust">Kostenlos und unverbindlich • 100% finanzamtkonform</p>
-      </div>
-      <figure class="hero-visual">
-        <img src={withBasePath(pageImage)} alt={`${heroHeading} - Orderlyze`} width="1080" height="900" loading="eager" decoding="async" />
-      </figure>
-    </div>
-  </section>
+      </section>
+    )
+  }
 
   {
-    bulletSections.length >= 3 && (
+    isBranches && (
+      <>
+        <section class="section branches-section">
+          <div class="container center">
+            <h2>Gastronomie</h2>
+            <div class="branches-grid">
+              {gastroBranches.map(([label, href, image]) => (
+                <a class="branch-card" href={withBasePath(href)}>
+                  <img src={withBasePath(image)} alt={`${label} mit Orderlyze Kassensystem`} width="411" height="452" loading="eager" />
+                  <span>{label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section class="section branches-section soft">
+          <div class="container center">
+            <h2>Dienstleistungen</h2>
+            <div class="branches-grid">
+              {serviceBranches.map(([label, href, image]) => (
+                <a class="branch-card" href={withBasePath(href)}>
+                  <img src={withBasePath(image)} alt={`${label} mit Orderlyze Kassensystem`} width="411" height="452" loading="eager" />
+                  <span>{label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      </>
+    )
+  }
+
+  {
+    isPricing && (
+      <section class="section pricing-section">
+        <div class="container center">
+          <h2>Unsere Preise</h2>
+          <p class="section-lead">Die Kosten für das Orderlyze Kassensystem bestehen aus monatlicher Software-Lizenz und einmaliger Hardware.</p>
+          <div class="pricing-grid">
+            {pricingTiers.map((tier) => (
+              <article class:list={['pricing-card', { featured: tier.featured }]}>
+                <h3>{tier.name}</h3>
+                <ul>
+                  {tier.bullets.map((b) => <li>{b}</li>)}
+                </ul>
+                <div class="pricing-total">
+                  <span>GESAMT</span>
+                  <strong>{tier.price}</strong>
+                  <small>{tier.period}</small>
+                </div>
+                <a class="button primary" href={withBasePath('/angebot/')}>Kassensystem bestellen</a>
+              </article>
+            ))}
+          </div>
+          <p class="pricing-note">*Preise exkl. MwSt. Einmalige Aktivierungsgebühr € 199,-</p>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    !isLegal && !isBranches && !isPricing && bulletSections.length >= 3 && (
       <section class="section bullets-section">
         <div class="container center">
           <h2>Auf einen Blick</h2>
@@ -125,33 +283,58 @@ const pageImage = page.id === 'kassensystem'
   }
 
   {
-    featureSections.map((section, index) => (
-      <section class:list={['feature-row', { reverse: index % 2 === 1 }]}>
-        <div class="feature-copy">
-          <h2>{section.heading}</h2>
-          {section.paragraphs.map((paragraph) => (
-            <p>{paragraph}</p>
-          ))}
-        </div>
-        <figure class="feature-visual">
-          <img
-            src={withBasePath(featureImages[index % featureImages.length])}
-            alt=""
-            width="900"
-            height="700"
-            loading="eager"
-            decoding="async"
-          />
-        </figure>
-      </section>
-    ))
+    !isLegal && !isBranches && !isPricing &&
+      featureSections.map((section, index) => (
+        <section class:list={['feature-row', { reverse: index % 2 === 1 }]}>
+          <div class="feature-copy">
+            <h2>{section.heading}</h2>
+            {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          <figure class="feature-visual">
+            <img
+              src={withBasePath(featureImages[index % featureImages.length])}
+              alt=""
+              width="900"
+              height="700"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        </section>
+      ))
   }
 
-  <section class="black-cta">
-    <h2>Hol dir jetzt ein kostenloses Angebot!</h2>
-    <p>Lass dich kostenlos beraten und finde heraus, wie Orderlyze deinen Betrieb einfacher macht.</p>
-    <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
-  </section>
+  {
+    !isLegal && !isMinimal && (
+      <section class="section testimonials-section">
+        <div class="container">
+          <h2 class="testimonials-title">Unzählige Kunden schenken uns ihr Vertrauen</h2>
+          <div class="testimonial-grid">
+            {testimonials.map((t, i) => (
+              <article class:list={['testimonial-row', { reverse: i % 2 === 1 }]}>
+                <img src={withBasePath(t.image)} alt={`${t.name} nutzt Orderlyze`} width="685" height="531" loading="eager" />
+                <div class="testimonial-copy">
+                  <span aria-hidden="true">”</span>
+                  <h3>{t.name}</h3>
+                  <strong>{t.role}</strong>
+                  <p>{t.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    !isLegal && (
+      <section class="black-cta">
+        <h2>Interessiert? Dann hol dir ein unverbindliches Angebot!</h2>
+        <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
@@ -211,8 +394,42 @@ const pageImage = page.id === 'kassensystem'
     object-fit: cover;
   }
 
-  .bullets-section {
+  .legal-banner {
+    padding: 56px 0;
+    background: var(--accent);
+    color: white;
+    text-align: center;
+  }
+
+  .legal-banner h1 {
+    color: white;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .legal-body {
+    padding: 56px 0;
     background: white;
+  }
+
+  .legal-body .container {
+    max-width: 920px;
+  }
+
+  .legal-body p {
+    margin: 0 0 12px;
+    color: #1f2937;
+    font-size: 0.96rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  .bullets-section,
+  .branches-section {
+    background: white;
+  }
+
+  .branches-section.soft {
+    background: var(--soft);
   }
 
   .center h2 {
@@ -220,6 +437,14 @@ const pageImage = page.id === 'kassensystem'
     color: var(--ink);
     font-size: clamp(1.8rem, 3.2vw, 2.6rem);
     line-height: 1.05;
+    text-align: center;
+  }
+
+  .section-lead {
+    margin: -20px auto 32px;
+    max-width: 720px;
+    text-align: center;
+    color: var(--muted);
   }
 
   .bullet-grid {
@@ -248,6 +473,121 @@ const pageImage = page.id === 'kassensystem'
     margin-top: 8px;
     border-radius: 999px;
     background: var(--accent);
+  }
+
+  .branches-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .branch-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 12px;
+    color: var(--ink);
+  }
+
+  .branch-card img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+  }
+
+  .branch-card span {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    min-width: 64%;
+    padding: 14px 18px;
+    background: white;
+    font-weight: 900;
+  }
+
+  .pricing-section {
+    background: white;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 32px 24px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 16px 36px rgb(15 23 42 / 6%);
+  }
+
+  .pricing-card.featured {
+    border-color: var(--accent);
+    box-shadow: 0 20px 44px rgb(6 89 169 / 16%);
+    transform: translateY(-8px);
+  }
+
+  .pricing-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .pricing-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .pricing-card li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pricing-card li:last-child {
+    border-bottom: 0;
+  }
+
+  .pricing-total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .pricing-total span {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pricing-total strong {
+    font-size: 2.4rem;
+    color: var(--accent);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .pricing-total small {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .pricing-note {
+    margin-top: 28px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
   }
 
   .feature-row {
@@ -297,6 +637,80 @@ const pageImage = page.id === 'kassensystem'
     box-shadow: 0 30px 60px rgb(15 23 42 / 12%);
   }
 
+  .testimonials-section {
+    padding: clamp(56px, 8vw, 96px) 0;
+    background: white;
+  }
+
+  .testimonials-title {
+    margin: 0 0 36px;
+    text-align: center;
+    color: var(--ink);
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  }
+
+  .testimonial-grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .testimonial-row {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: stretch;
+  }
+
+  .testimonial-row.reverse {
+    grid-template-columns: 0.95fr 1.05fr;
+  }
+
+  .testimonial-row.reverse img {
+    order: 2;
+  }
+
+  .testimonial-row img {
+    width: 100%;
+    min-height: 380px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .testimonial-copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(28px, 4vw, 60px);
+    background: var(--soft);
+    border-radius: 12px;
+  }
+
+  .testimonial-copy span {
+    position: absolute;
+    top: 18px;
+    right: 28px;
+    color: var(--ink);
+    font-size: 4rem;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .testimonial-copy h3 {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+  }
+
+  .testimonial-copy strong {
+    margin: 6px 0 16px;
+    color: var(--accent);
+    font-size: 0.9rem;
+  }
+
+  .testimonial-copy p {
+    margin: 0;
+    color: var(--muted);
+  }
+
   .black-cta {
     display: grid;
     justify-items: center;
@@ -321,12 +735,21 @@ const pageImage = page.id === 'kassensystem'
 
   @media (max-width: 900px) {
     .hero-inner,
-    .feature-row {
+    .feature-row,
+    .branches-grid,
+    .pricing-grid,
+    .testimonial-row,
+    .testimonial-row.reverse {
       grid-template-columns: 1fr;
     }
 
-    .feature-row.reverse .feature-copy {
+    .feature-row.reverse .feature-copy,
+    .testimonial-row.reverse img {
       order: 0;
+    }
+
+    .pricing-card.featured {
+      transform: none;
     }
   }
 </style>
