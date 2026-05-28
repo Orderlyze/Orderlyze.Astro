@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlueCta from '../../components/orderlyze/BlueCta.astro';
+import Testimonials from '../../components/orderlyze/Testimonials.astro';
 import { absoluteSiteUrl, withBasePath } from '../../lib/url';
 import { thermoRollen } from '../../lib/thermorollen';
 
@@ -35,60 +35,112 @@ const canonical = `/product-page/${encodeURIComponent(product.slug)}/`;
     },
   }}
 >
+  <section class="usp-strip">
+    <span>★ gratis Lieferung nach Deutschland und Österreich</span>
+    <span>★ nur für kurze Zeit: -10% Rabatt</span>
+    <span>★ Lieferzeit: 1–3 Werktage</span>
+  </section>
+
   <section class="product-band">
     <div class="product-detail">
       <div class="product-visual">
-        <svg viewBox="0 0 240 320" width="240" height="320" aria-hidden="true">
-          <rect x="18" y="20" width="204" height="280" rx="12" ry="12" fill="#f3f4f6" stroke="#d1d5db" stroke-width="2" />
-          <g transform="translate(36 50)">
-            <rect width="168" height="6" fill="#9ca3af" />
-            <rect y="20" width="120" height="6" fill="#9ca3af" />
-            <rect y="40" width="140" height="6" fill="#9ca3af" />
-            <rect y="60" width="100" height="6" fill="#9ca3af" />
-            <rect y="80" width="160" height="6" fill="#9ca3af" />
-            <rect y="100" width="130" height="6" fill="#9ca3af" />
-            <rect y="120" width="150" height="6" fill="#9ca3af" />
-          </g>
+        <svg viewBox="0 0 96 96" width="280" height="280" aria-hidden="true">
+          <defs>
+            <radialGradient id="roll" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="70%" stop-color="#e5e7eb" />
+              <stop offset="100%" stop-color="#9ca3af" />
+            </radialGradient>
+          </defs>
+          <ellipse cx="32" cy="34" rx="22" ry="22" fill="url(#roll)" />
+          <ellipse cx="60" cy="50" rx="22" ry="22" fill="url(#roll)" />
+          <ellipse cx="40" cy="64" rx="22" ry="22" fill="url(#roll)" />
+          <circle cx="32" cy="34" r="6" fill="#e5e7eb" />
+          <circle cx="60" cy="50" r="6" fill="#e5e7eb" />
+          <circle cx="40" cy="64" r="6" fill="#e5e7eb" />
         </svg>
+        <p class="thumb-caption">Thermorollen mit Maße 80x80x12 und gängige Druckerlayouts für Kassensystem<br/>100% phenolfrei</p>
       </div>
       <div class="product-info">
         <a class="back" href={withBasePath('/thermorollen/')}>← zum Shop</a>
         <h1>{product.name}</h1>
-        <p class="pack">{product.pack}</p>
-        <div class="price">
-          {product.oldPrice && <span class="old">{product.oldPrice}</span>}
-          <strong>{product.price}</strong>
+        <div class="price-row">
+          {product.oldPrice && <span class="old">€&nbsp;{product.oldPrice.replace('€','').trim()}</span>}
+          <strong>€&nbsp;{product.price.replace('€','').trim()}</strong>
         </div>
-        <p class="desc">{product.description}</p>
-        <ul class="features">
-          <li>Phenolfrei, BPA-frei</li>
-          <li>Hochwertige Druckqualität</li>
-          <li>Lieferzeit 1–3 Werktage</li>
-          <li>Gratis Lieferung in DE & AT</li>
-        </ul>
-        <a class="buy-cta" href="mailto:office@orderlyze.com?subject=Bestellung+Thermorollen">Jetzt bestellen</a>
+        <p class="incl">inklusive Lieferkosten</p>
+        <div class="qty-row">
+          <label>Anzahl:</label>
+          <div class="qty-control">
+            <button type="button" aria-label="-">−</button>
+            <input type="number" min="1" value="1" />
+            <button type="button" aria-label="+">+</button>
+          </div>
+        </div>
+        <a class="cart-cta" href="mailto:office@orderlyze.com?subject=Bestellung+Thermorollen">In den Warenkorb</a>
+        <a class="buy-cta" href="mailto:office@orderlyze.com?subject=Sofortbestellung+Thermorollen">Jetzt bestellen</a>
+
+        <details class="specs">
+          <summary>PRODUKTINFO</summary>
+          <ul>
+            <li><strong>Rollendurchm.:</strong> 80 mm</li>
+            <li><strong>Rollenbreite:</strong> 80 mm</li>
+            <li><strong>Hülsendurchm.:</strong> 12 mm</li>
+            <li><strong>Papiergewicht:</strong> 50 g/m² oder 60 g/m²</li>
+            <li><strong>Verpackungseinheit:</strong> {product.pack}</li>
+            <li><strong>Qualität:</strong> Mittlere dynamische Sensitivität</li>
+            <li><strong>Lagerung:</strong> Hergestellt ohne Verwendung von Phenolen</li>
+            <li><strong>Haltbarkeit:</strong> bei korrekter Lagerung 10 Jahre</li>
+            <li><strong>Durchmesser:</strong> 75 Millimeter</li>
+          </ul>
+        </details>
       </div>
     </div>
   </section>
 
-  <BlueCta
-    title="Du brauchst auch ein Kassensystem?"
-    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
-    note="Kostenlos und Unverbindlich."
+  <Testimonials
+    title=""
+    items={[
+      {
+        name: 'Marlene R.',
+        role: 'Cafe-Inhaberin',
+        copy: 'Sehr einfache Bestellung und hab die Lieferung in 2 Tagen erhalten. Kaufe gerne wieder!',
+        image: '/images/orderlyze/customer-helene.jpg',
+      },
+      {
+        name: 'Thomas M.',
+        role: 'Restaurantleiter',
+        copy: 'Thermorollen haben eine gute Qualität und wurden schnell geliefert.',
+        image: '/images/orderlyze/customer-carlo.jpg',
+      },
+    ]}
   />
 </BaseLayout>
 
 <style>
+  .usp-strip {
+    background: var(--accent);
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
   .product-band {
-    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+    padding: clamp(32px, 5vw, 64px) max(24px, calc((100vw - 1180px) / 2));
     background: white;
   }
 
   .product-detail {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(28px, 4vw, 56px);
-    align-items: center;
+    align-items: start;
     max-width: 1080px;
     margin: 0 auto;
   }
@@ -98,89 +150,144 @@ const canonical = `/product-page/${encodeURIComponent(product.slug)}/`;
     border: 1px solid #e5e7eb;
     border-radius: 4px;
     padding: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
+  }
+
+  .thumb-caption {
+    margin: 12px 0 0;
+    color: #6b7280;
+    font-size: 0.82rem;
+    text-align: center;
+    line-height: 1.4;
   }
 
   .product-info .back {
     color: var(--accent);
     font-weight: 800;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     text-decoration: none;
   }
 
   .product-info h1 {
-    margin: 10px 0 6px;
+    margin: 8px 0 12px;
     color: var(--ink);
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    line-height: 1.15;
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    line-height: 1.2;
   }
 
-  .pack {
-    color: #6b7280;
-    margin: 0 0 14px;
-    font-size: 0.92rem;
-  }
-
-  .price {
+  .price-row {
     display: flex;
     align-items: baseline;
     gap: 12px;
-    margin: 0 0 18px;
+    margin: 0 0 4px;
   }
 
-  .price .old { color: #9ca3af; text-decoration: line-through; font-size: 1rem; }
-  .price strong { color: var(--accent); font-size: 2rem; font-weight: 900; }
+  .price-row .old { color: #9ca3af; text-decoration: line-through; font-size: 1rem; }
+  .price-row strong { color: #16a34a; font-size: 1.8rem; font-weight: 900; }
 
-  .desc {
-    margin: 0 0 18px;
-    color: #4b5563;
-    font-size: 1rem;
-    line-height: 1.55;
-  }
-
-  .features {
-    list-style: none;
+  .incl {
     margin: 0 0 22px;
+    color: #6b7280;
+    font-size: 0.82rem;
+  }
+
+  .qty-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 18px;
+  }
+
+  .qty-row label {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 0.9rem;
+  }
+
+  .qty-control {
+    display: inline-flex;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .qty-control button {
+    border: 0;
+    background: #f3f4f6;
+    width: 32px;
+    height: 36px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .qty-control input {
+    border: 0;
+    width: 50px;
+    text-align: center;
+    font: inherit;
+    font-weight: 700;
+  }
+
+  .cart-cta,
+  .buy-cta {
+    display: block;
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin: 0 0 10px;
+  }
+
+  .cart-cta {
+    background: #16a34a;
+    color: white;
+  }
+
+  .cart-cta:hover { background: #15803d; }
+
+  .buy-cta {
+    background: white;
+    color: var(--ink);
+    border: 1px solid #111827;
+  }
+
+  .buy-cta:hover {
+    background: #111827;
+    color: white;
+  }
+
+  .specs {
+    margin-top: 18px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 16px;
+  }
+
+  .specs summary {
+    cursor: pointer;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    font-size: 0.85rem;
+  }
+
+  .specs ul {
+    list-style: none;
+    margin: 14px 0 0;
     padding: 0;
     display: grid;
     gap: 6px;
-    color: var(--ink);
-  }
-
-  .features li {
-    padding-left: 22px;
-    position: relative;
-    font-size: 0.95rem;
-  }
-
-  .features li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-weight: 900;
-  }
-
-  .buy-cta {
-    display: inline-flex;
-    align-items: center;
-    height: 50px;
-    padding: 0 32px;
-    background: var(--accent);
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 800;
+    color: #4b5563;
     font-size: 0.9rem;
-    border-radius: 999px;
-    text-decoration: none;
   }
 
-  .buy-cta:hover { background: #044d8c; }
+  .specs li strong { color: var(--ink); }
 
   @media (max-width: 800px) {
     .product-detail { grid-template-columns: 1fr; }
+    .usp-strip { gap: 14px; font-size: 0.78rem; }
   }
 </style>

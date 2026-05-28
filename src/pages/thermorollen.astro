@@ -1,12 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
 import Testimonials from '../components/orderlyze/Testimonials.astro';
-import BlueCta from '../components/orderlyze/BlueCta.astro';
 import { thermoRollen } from '../lib/thermorollen';
 import { absoluteSiteUrl, withBasePath } from '../lib/url';
 
-const title = 'Thermorollen Shop | Orderlyze';
+const title = 'Thermorollen hochwertig & phenolfrei | schnell und günstig bestellen';
 const description =
   'Hochwertige Thermorollen einfach und günstig bestellen. Phenolfrei, schnelle Lieferung nach Deutschland und Österreich.';
 const canonical = '/thermorollen/';
@@ -27,51 +25,53 @@ const siteUrl = absoluteSiteUrl(Astro.site);
     inLanguage: 'de-DE',
   }}
 >
-  <HeroPhoto
-    image="/images/orderlyze/checkout-counter.jpg"
-    title={'Hochwertige Thermorollen einfach und günstig bestellen'}
-    overlay="dark"
-  />
-
-  <section class="band band-soft">
-    <div class="usp-row">
-      <div class="usp">Gratis Lieferung nach DE & AT</div>
-      <div class="usp">-10% Rabatt nur kurze Zeit</div>
-      <div class="usp">Lieferzeit 1–3 Werktage</div>
-    </div>
-    <p class="intro-lead">
-      Unsere Bonrollen garantieren nicht nur eine reibungslose und effiziente Transaktionsabwicklung,
-      sondern setzen auch neue Maßstäbe in puncto Qualität und Zuverlässigkeit.
-    </p>
+  <section class="usp-strip">
+    <span>★ gratis Lieferung nach Deutschland und Österreich</span>
+    <span>★ nur für kurze Zeit: -10% Rabatt</span>
+    <span>★ Lieferzeit: 1–3 Werktage</span>
   </section>
 
-  <section class="band band-white">
+  <section class="shop-band">
+    <h1>Hochwertige Thermorollen<br/>einfach und günstig bestellen</h1>
+    <p class="shop-lead">
+      Unsere Bonrollen garantieren nicht nur eine reibungslose und effiziente Transaktionsabwicklung, sondern setzen auch neue Maßstäbe in puncto Qualität und Zuverlässigkeit.
+    </p>
+
     <div class="product-grid">
       {thermoRollen.map((p) => (
         <a class="product" href={withBasePath(`/product-page/${encodeURIComponent(p.slug)}/`)}>
+          {p.oldPrice && <span class="badge">-20%</span>}
           <div class="product-img">
-            <svg viewBox="0 0 64 80" width="80" height="100" aria-hidden="true">
-              <rect x="4" y="6" width="56" height="68" rx="6" ry="6" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5" />
-              <rect x="10" y="14" width="44" height="3" fill="#9ca3af" />
-              <rect x="10" y="22" width="36" height="3" fill="#9ca3af" />
-              <rect x="10" y="30" width="40" height="3" fill="#9ca3af" />
-              <rect x="10" y="38" width="30" height="3" fill="#9ca3af" />
-              <rect x="10" y="46" width="44" height="3" fill="#9ca3af" />
+            <svg viewBox="0 0 96 96" width="120" height="120" aria-hidden="true">
+              <defs>
+                <radialGradient id="roll" cx="50%" cy="40%" r="50%">
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="70%" stop-color="#e5e7eb" />
+                  <stop offset="100%" stop-color="#9ca3af" />
+                </radialGradient>
+              </defs>
+              <ellipse cx="32" cy="34" rx="22" ry="22" fill="url(#roll)" />
+              <ellipse cx="60" cy="50" rx="22" ry="22" fill="url(#roll)" />
+              <ellipse cx="40" cy="64" rx="22" ry="22" fill="url(#roll)" />
+              <circle cx="32" cy="34" r="6" fill="#e5e7eb" />
+              <circle cx="60" cy="50" r="6" fill="#e5e7eb" />
+              <circle cx="40" cy="64" r="6" fill="#e5e7eb" />
             </svg>
           </div>
           <h3>{p.name}</h3>
-          <p>{p.pack}</p>
-          <div class="price">
-            {p.oldPrice && <span class="old">{p.oldPrice}</span>}
-            <strong>{p.price}</strong>
+          <div class="price-row">
+            {p.oldPrice && <span class="old">€&nbsp;{p.oldPrice.replace('€','').trim()}</span>}
+            <strong>€&nbsp;{p.price.replace('€','').trim()}</strong>
           </div>
+          <p class="incl">inklusive Lieferkosten</p>
+          <span class="cart-btn">In den Warenkorb</span>
         </a>
       ))}
     </div>
   </section>
 
   <Testimonials
-    title="Was Kunden über unsere Thermorollen sagen"
+    title=""
     items={[
       {
         name: 'Marlene R.',
@@ -87,65 +87,59 @@ const siteUrl = absoluteSiteUrl(Astro.site);
       },
     ]}
   />
-
-  <BlueCta
-    title="Direkt zum Kassensystem-Angebot?"
-    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
-    note="Kostenlos und Unverbindlich."
-  />
 </BaseLayout>
 
 <style>
-  .band {
-    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+  .usp-strip {
+    background: var(--accent);
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
   }
-  .band-soft { background: #fafafa; }
-  .band-white { background: white; }
 
-  .usp-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-    max-width: 880px;
-    margin: 0 auto 22px;
-  }
-
-  .usp {
+  .shop-band {
+    padding: clamp(36px, 5vw, 64px) max(24px, calc((100vw - 1180px) / 2));
     background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
-    padding: 14px 16px;
     text-align: center;
-    color: var(--accent);
-    font-weight: 800;
-    font-size: 0.92rem;
   }
 
-  .intro-lead {
-    max-width: 760px;
-    margin: 0 auto;
+  .shop-band h1 {
+    margin: 0 0 14px;
+    color: var(--ink);
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1.15;
+  }
+
+  .shop-lead {
+    margin: 0 auto 36px;
     color: #4b5563;
-    text-align: center;
-    font-size: 1rem;
-    line-height: 1.6;
+    max-width: 720px;
+    font-size: 0.96rem;
+    line-height: 1.55;
   }
 
   .product-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
+    gap: 20px;
     max-width: 1180px;
     margin: 0 auto;
   }
 
   .product {
+    position: relative;
     background: white;
     border: 1px solid #e5e7eb;
     border-radius: 4px;
-    padding: 20px;
+    padding: 18px;
     text-decoration: none;
     color: inherit;
-    transition: border-color 140ms, box-shadow 140ms;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,56 +148,83 @@ const siteUrl = absoluteSiteUrl(Astro.site);
 
   .product:hover {
     border-color: var(--accent);
-    box-shadow: 0 12px 28px rgb(6 89 169 / 12%);
+    box-shadow: 0 14px 30px rgb(15 23 42 / 10%);
+  }
+
+  .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.74rem;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.03em;
   }
 
   .product-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fafafa;
-    border-radius: 4px;
-    padding: 18px;
-    margin-bottom: 12px;
     width: 100%;
+    height: 150px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 12px;
   }
 
   .product h3 {
-    margin: 0 0 4px;
-    color: var(--ink);
-    font-size: 1rem;
-    font-weight: 800;
-  }
-
-  .product p {
     margin: 0 0 12px;
-    color: #6b7280;
-    font-size: 0.85rem;
+    color: var(--ink);
+    font-size: 0.95rem;
+    font-weight: 700;
   }
 
-  .price {
+  .price-row {
     display: flex;
     align-items: baseline;
     gap: 8px;
+    margin: 0 0 4px;
   }
 
-  .price .old {
+  .price-row .old {
     color: #9ca3af;
     text-decoration: line-through;
-    font-size: 0.85rem;
+    font-size: 0.86rem;
   }
 
-  .price strong {
-    color: var(--accent);
+  .price-row strong {
+    color: #16a34a;
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+  }
+
+  .incl {
+    margin: 0 0 14px;
+    color: #6b7280;
+    font-size: 0.78rem;
+  }
+
+  .cart-btn {
+    background: #16a34a;
+    color: white;
+    text-transform: none;
+    font-weight: 700;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 0.86rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .product:hover .cart-btn {
+    background: #15803d;
   }
 
   @media (max-width: 900px) {
     .product-grid { grid-template-columns: repeat(2, 1fr); }
-    .usp-row { grid-template-columns: 1fr; }
   }
-  @media (max-width: 560px) {
+  @media (max-width: 540px) {
     .product-grid { grid-template-columns: 1fr; }
+    .usp-strip { gap: 14px; font-size: 0.78rem; }
   }
 </style>
