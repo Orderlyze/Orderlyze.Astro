@@ -329,9 +329,9 @@ const legalBlocks = isLegal ? contentBlocks(page).filter((line) => line.toLowerC
 
   {
     !isLegal && (
-      <section class="black-cta">
+      <section class="accent-cta">
         <h2>Interessiert? Dann hol dir ein unverbindliches Angebot!</h2>
-        <a class="button primary" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+        <a class="button accent-cta-btn" href={withBasePath('/angebot/')}>Angebot anfordern</a>
       </section>
     )
   }
@@ -711,26 +711,35 @@ const legalBlocks = isLegal ? contentBlocks(page).filter((line) => line.toLowerC
     color: var(--muted);
   }
 
-  .black-cta {
+  .accent-cta {
     display: grid;
     justify-items: center;
-    gap: 18px;
-    padding: clamp(64px, 9vw, 96px) 20px;
-    background: #000000;
+    gap: 22px;
+    padding: clamp(56px, 8vw, 88px) 20px;
+    background: var(--accent);
     color: white;
     text-align: center;
   }
 
-  .black-cta h2 {
+  .accent-cta h2 {
     margin: 0;
+    max-width: 760px;
     color: white;
-    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    line-height: 1.2;
   }
 
-  .black-cta p {
-    margin: 0;
-    max-width: 600px;
-    color: #d1d5db;
+  .accent-cta-btn {
+    background: white;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 800;
+  }
+
+  .accent-cta-btn:hover {
+    background: #e5edf7;
+    color: var(--accent);
   }
 
   @media (max-width: 900px) {

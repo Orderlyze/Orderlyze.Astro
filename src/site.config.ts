@@ -9,9 +9,37 @@ export const SITE = {
   image: '/images/orderlyze/hero-system.png',
 };
 
-export const NAVIGATION = [
-  { label: 'Kassensystem', href: '/kassensystem/' },
-  { label: 'Branchen', href: '/branchen/' },
+export type NavItem = {
+  label: string;
+  href: string;
+  children?: ReadonlyArray<{ label: string; href: string }>;
+};
+
+export const NAVIGATION: ReadonlyArray<NavItem> = [
+  {
+    label: 'Kassensystem',
+    href: '/kassensystem/',
+    children: [
+      { label: "So funktioniert's", href: '/so-funktionierts/' },
+      { label: 'Funktionen', href: '/funktionen/' },
+      { label: 'Kartenzahlung', href: '/kartenzahlung/' },
+      { label: 'Funkbonieren', href: '/funkbonieren/' },
+      { label: 'Verwaltung', href: '/verwaltung/' },
+      { label: 'Datenexport für Steuerberater', href: '/datenexport-steuerberater/' },
+    ],
+  },
+  {
+    label: 'Branchen',
+    href: '/branchen/',
+    children: [
+      { label: 'Bar', href: '/bar/' },
+      { label: 'Cafe', href: '/cafe/' },
+      { label: 'Restaurant', href: '/restaurant/' },
+      { label: 'Friseur', href: '/friseur/' },
+      { label: 'Beauty', href: '/beauty/' },
+      { label: 'Sonstige', href: '/sonstige/' },
+    ],
+  },
   { label: 'Preise', href: '/preise/' },
   { label: 'Hilfe', href: '/so-funktionierts/' },
-] as const;
+];
