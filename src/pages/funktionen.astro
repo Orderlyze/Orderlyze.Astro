@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import SectionHeading from '../components/orderlyze/SectionHeading.astro';
+import FeatureGrid from '../components/orderlyze/FeatureGrid.astro';
+import SplitCard from '../components/orderlyze/SplitCard.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Funktionen | Orderlyze';
+const description =
+  'Orderlyze bietet alle Funktionen, die du für ein modernes Kassensystem brauchst: Kartenzahlung, Funkbonieren, Verwaltung, Datenexport, Kundenmanagement und vieles mehr.';
+const canonical = '/funktionen/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+
+const allFeatures = [
+  'Rechnungen erstellen und bearbeiten',
+  'Kartenzahlung und Kassenlade',
+  'Verwaltung von Produkten etc.',
+  'Datenexporte für Steuerberater',
+  'Gutscheine & Rabatte',
+  'Kundenmanagement',
+  'Mitarbeiterverwaltung',
+  'Stornobuchungen',
+];
+
+const gastroFeatures = ['Funkbonieren', 'Tischplan', 'Gängesystem', 'Bewirtungsbeleg'];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Startseite', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Funktionen', item: new URL(canonical, siteUrl).toString() },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/checkout-counter.jpg"
+  jsonLd={jsonLd}
+>
+  <HeroPhoto
+    image="/images/orderlyze/checkout-counter.jpg"
+    title="Funktionen"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <SectionHeading title="All das, was du wirklich brauchst." />
+    <FeatureGrid title="Für alle" items={allFeatures} columns={4} />
+    <FeatureGrid title="für die Gastronomie" items={gastroFeatures} columns={4} />
+  </section>
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/card-payment.jpg"
+    imageSide="right"
+    title="Umsatz steigern. Mit Kartenzahlung."
+    body="Bist du bereits für jede Zahlungsmethode gerüstet? Immer mehr Kunden bevorzugen es, bargeldlos zu bezahlen, vor allem weil es bequem, schnell und sicher ist. Mit Orderlyze kannst du deinen KundInnen genau das bieten. Kartenzahlung ist bei uns wirklich einfach und ist schnell eingerichtet."
+    cta={{ label: 'Mehr erfahren', href: '/kartenzahlung/', style: 'outline' }}
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/checkout-counter.jpg"
+    imageSide="left"
+    title={'So effizient, wie noch nie. Mit Funkbonieren.'}
+    body="Bestellungen vom Tisch in die Küche oder zur Bar zu senden ist mit Orderlyze so einfach wie noch nie. Egal ob mit Smartphone oder All-in-One Gerät (integrierter Drucker + Kartenzahlung), mit der Orderlyze App können deine KellnerInnen super effizient arbeiten – ohne viel Einarbeitungszeit."
+    bullets={['Schneller und effizienter aufnehmen', 'Minimiert Fehler bei Bestellaufnahme']}
+    cta={{ label: 'Mehr erfahren', href: '/funkbonieren/', style: 'outline' }}
+  />
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/accounting.jpg"
+    imageSide="right"
+    title="Verwaltung. Einfach übersichtlich. Mit orderlyze web."
+    body="Von der Einrichtung über die Verwaltung bis zu den Auswertungen. orderlyze web erleichtert dir, dein Unternehmen zu verwalten und organisieren. Preisänderungen durchführen, Tages- und Monatsberichte erstellen sowie Statistiken und Umsätze ansehen sind ab sofort kein Problem mehr."
+    bullets={[
+      'Super einfach und bequem von überall verwalten',
+      'Einstellungen für deine Wünsche anpassen',
+      'Exporte für SteuerberaterInnen mit nur wenigen Klicks',
+      'Diverse Berichte und Statistiken',
+    ]}
+    cta={{ label: 'Mehr erfahren', href: '/verwaltung/', style: 'outline' }}
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/konform-1.png"
+    imageSide="left"
+    title="Spar dir deine Sorgen und Mühen."
+    body="Mit Orderlyze bist du zu 100% finanzamtkonform und musst dich um nichts kümmern."
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+  />
+
+  <BlueCta
+    title="Interessiert? Dann hol dir ein unverbindliches Angebot"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(56px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+  }
+
+  .band-soft {
+    background: #f7f8fb;
+  }
+</style>

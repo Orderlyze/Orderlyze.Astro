@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import SplitCard from '../components/orderlyze/SplitCard.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Verwaltung | Orderlyze';
+const description =
+  'Mit orderlyze web verwaltest du dein Unternehmen einfach und von überall. Produkte verwalten, Statistiken ansehen und Datenexporte für deinen Steuerberater herunterladen.';
+const canonical = '/verwaltung/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Startseite', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Verwaltung', item: new URL(canonical, siteUrl).toString() },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/accounting.jpg"
+  jsonLd={jsonLd}
+>
+  <HeroPhoto
+    image="/images/orderlyze/accounting.jpg"
+    title="Verwaltung"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <p class="intro-lead">
+      Mit orderlyze web kannst du dein Unternehmen einfach und von überall managen und organisieren. Sei es
+      Produkte verwalten, wichtige (Umsatz-) Statistiken ansehen oder Datenexporte für deinen Steuerberater
+      herunterladen.
+    </p>
+  </section>
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/accounting.jpg"
+    imageSide="right"
+    title={'Mehr Erfolg mit deinen Mitarbeitern'}
+    body="Mit orderlyze web hast du dein Unternehmen immer voll im Griff – von überall aus. Egal ob mit Smartphone, Tablet oder PC, du hast in wenigen Sekunden Zugriff auf alle deine Unternehmensdaten, kannst diese bearbeiten und siehst, was in deinem Unternehmen vor sich geht. Analysiere deine Umsätze und finde heraus, welche Produkte sich besonders gut verkaufen."
+    bullets={[
+      'Einfache Verwaltung von überall',
+      'Mit wenigen Klicks wichtige Änderungen vornehmen',
+      'Wichtige Berichte und Statistiken',
+      'Übersichtlicher Einblick in dein Unternehmen',
+    ]}
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/devices-small.jpg"
+    imageSide="left"
+    title="Welche Produkte lieben deine Kunden?"
+    body="orderlyze web verrät dir, welche Produkte und Dienstleistungen deine KundInnen am liebsten in Anspruch nehmen. Anhand dieser Einsichten kannst du zum Beispiel entscheiden, welche Preise für welche Produkte am wirtschaftlichsten sind und welche neuen Möglichkeiten sich daraus ergeben können."
+  />
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/support.jpg"
+    imageSide="right"
+    title="Berichte für den Steuerberater? Kein Problem!"
+    body="Mit orderlyze web hast du alle notwendigen Berichte für deinen Steuerberater griffbereit. So kannst du Tages-, Monats- und Jahresberichte in wenigen Sekunden herunterladen und versenden. Außerdem stehen dir Datenexporte für diverse Buchhaltungsprogramme zur Verfügung (Datev, BMD, RZL)."
+    cta={{ label: 'Mehr erfahren', href: '/datenexport-steuerberater/', style: 'outline' }}
+  />
+
+  <BlueCta
+    title={'Alles im Blick, alles im Griff. Hol dir jetzt ein unverbindliches Angebot!'}
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(48px, 6vw, 72px) max(24px, calc((100vw - 1180px) / 2));
+  }
+
+  .band-soft {
+    background: #f7f8fb;
+  }
+
+  .intro-lead {
+    max-width: 760px;
+    margin: 0 auto;
+    color: var(--muted);
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+</style>

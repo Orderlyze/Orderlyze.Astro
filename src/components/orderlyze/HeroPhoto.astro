@@ -1,0 +1,108 @@
+---
+import { withBasePath } from '../../lib/url';
+
+type Props = {
+  image: string;
+  title: string;
+  cta?: { label: string; href: string };
+  alignment?: 'center' | 'left';
+  overlay?: 'light' | 'medium' | 'dark';
+};
+
+const { image, title, cta, alignment = 'center', overlay = 'medium' } = Astro.props;
+const overlayBg =
+  overlay === 'light'
+    ? 'linear-gradient(180deg, rgb(11 18 32 / 18%) 0%, rgb(11 18 32 / 40%) 100%)'
+    : overlay === 'dark'
+      ? 'linear-gradient(180deg, rgb(11 18 32 / 45%) 0%, rgb(11 18 32 / 78%) 100%)'
+      : 'linear-gradient(180deg, rgb(11 18 32 / 32%) 0%, rgb(11 18 32 / 60%) 100%)';
+---
+
+<section class="hero-photo" data-align={alignment}>
+  <img class="hero-photo-image" src={withBasePath(image)} alt={title} width="1920" height="900" loading="eager" decoding="async" />
+  <div class="hero-photo-overlay" aria-hidden="true" style={`background:${overlayBg}`}></div>
+  <div class="hero-photo-content">
+    <h1>{title}</h1>
+    {cta && <a class="hero-photo-cta" href={withBasePath(cta.href)}>{cta.label}</a>}
+  </div>
+</section>
+
+<style>
+  .hero-photo {
+    position: relative;
+    min-height: clamp(420px, 60vh, 620px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #0b1220;
+    color: white;
+    isolation: isolate;
+  }
+
+  .hero-photo[data-align='left'] {
+    place-items: center start;
+    text-align: left;
+  }
+
+  .hero-photo[data-align='center'] {
+    text-align: center;
+  }
+
+  .hero-photo-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .hero-photo-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero-photo-content {
+    display: grid;
+    gap: 28px;
+    padding: clamp(56px, 9vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    max-width: 1180px;
+    width: 100%;
+    justify-items: var(--align-items, center);
+  }
+
+  .hero-photo[data-align='left'] .hero-photo-content {
+    --align-items: start;
+  }
+
+  .hero-photo h1 {
+    margin: 0;
+    color: white;
+    font-size: clamp(2.6rem, 5.6vw, 4.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 24px rgb(0 0 0 / 38%);
+    max-width: 16ch;
+  }
+
+  .hero-photo-cta {
+    background: var(--accent);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    padding: 0 32px;
+    height: 52px;
+    line-height: 52px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .hero-photo-cta:hover {
+    background: #044d8c;
+  }
+</style>

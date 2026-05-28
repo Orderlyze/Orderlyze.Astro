@@ -1,0 +1,78 @@
+---
+type Step = { title: string; description: string };
+
+type Props = { steps: Step[] };
+
+const { steps } = Astro.props;
+---
+
+<div class="step-cards">
+  {steps.map((step, i) => (
+    <article class="step-card">
+      <div class="step-number">{i + 1}</div>
+      <h3>{step.title}</h3>
+      <p>{step.description}</p>
+    </article>
+  ))}
+</div>
+
+<style>
+  .step-cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .step-card {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding: 32px 22px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgb(15 23 42 / 8%);
+    text-align: center;
+  }
+
+  .step-number {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    font-weight: 900;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .step-card h3 {
+    margin: 6px 0 0;
+    color: var(--ink);
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  .step-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .step-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 520px) {
+    .step-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

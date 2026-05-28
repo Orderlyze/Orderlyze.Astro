@@ -1,0 +1,74 @@
+---
+type Props = {
+  appStoreHref?: string;
+  playStoreHref?: string;
+};
+
+const {
+  appStoreHref = 'https://apps.apple.com/at/app/orderlyze/id1495015799',
+  playStoreHref = 'https://play.google.com/store/apps/details?id=orderlyze.com',
+} = Astro.props;
+---
+
+<div class="app-badges">
+  <a class="app-badge" href={appStoreHref} target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+      <path fill="currentColor" d="M17.05 12.04c.02-2.13 1.75-3.16 1.83-3.21-1-1.46-2.55-1.66-3.1-1.68-1.32-.14-2.58.78-3.25.78-.68 0-1.71-.76-2.81-.74-1.45.02-2.78.84-3.53 2.13-1.5 2.6-.38 6.45 1.08 8.56.72 1.04 1.57 2.2 2.69 2.16 1.08-.05 1.49-.7 2.8-.7 1.3 0 1.67.7 2.81.68 1.16-.02 1.9-1.05 2.6-2.1.83-1.2 1.16-2.37 1.18-2.43-.03-.01-2.27-.87-2.3-3.45zM14.93 5.55c.6-.72 1-1.72.89-2.72-.86.04-1.9.58-2.52 1.29-.55.63-1.03 1.64-.9 2.62.96.07 1.94-.49 2.53-1.19z" />
+    </svg>
+    <div>
+      <span class="badge-overline">Download on the</span>
+      <span class="badge-name">App Store</span>
+    </div>
+  </a>
+  <a class="app-badge" href={playStoreHref} target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+      <path fill="currentColor" d="M3.6 2.3a1.6 1.6 0 0 0-.6 1.3v16.8c0 .5.2 1 .6 1.3l9.8-9.7zM14.4 13l2.2 2.2-9.4 5.4 7.2-7.6zm0-2.2L7.2 3.4l9.4 5.4-2.2 2zm6 .2-2.2-1.3L15.9 12l2.3 2.3 2.2-1.3a1.7 1.7 0 0 0 0-3z" />
+    </svg>
+    <div>
+      <span class="badge-overline">Get it on</span>
+      <span class="badge-name">Google Play</span>
+    </div>
+  </a>
+</div>
+
+<style>
+  .app-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .app-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 22px 10px 18px;
+    background: #0b1220;
+    color: white;
+    border-radius: 10px;
+    line-height: 1;
+    min-width: 200px;
+    text-decoration: none;
+  }
+
+  .app-badge:hover {
+    background: #1f2937;
+  }
+
+  .badge-overline {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+
+  .badge-name {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+</style>

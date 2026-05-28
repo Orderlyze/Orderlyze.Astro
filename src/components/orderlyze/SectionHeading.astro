@@ -1,0 +1,59 @@
+---
+type Props = {
+  title: string;
+  eyebrow?: string;
+  align?: 'center' | 'left';
+  size?: 'lg' | 'md';
+};
+
+const { title, eyebrow, align = 'center', size = 'lg' } = Astro.props;
+const lines = title.split(/\n+/).filter(Boolean);
+---
+
+<header class="sect-heading" data-align={align} data-size={size}>
+  {eyebrow && <p class="sect-eyebrow">{eyebrow}</p>}
+  <h2>
+    {lines.map((line, i) => (
+      <Fragment>{line}{i < lines.length - 1 && <br />}</Fragment>
+    ))}
+  </h2>
+</header>
+
+<style>
+  .sect-heading {
+    display: grid;
+    gap: 14px;
+    margin: 0 auto 36px;
+    max-width: 880px;
+  }
+
+  .sect-heading[data-align='center'] {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .sect-heading[data-align='left'] {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .sect-eyebrow {
+    margin: 0;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .sect-heading h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    line-height: 1.15;
+  }
+
+  .sect-heading[data-size='md'] h2 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+  }
+</style>

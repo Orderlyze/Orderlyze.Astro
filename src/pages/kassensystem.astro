@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import SectionHeading from '../components/orderlyze/SectionHeading.astro';
+import SplitCard from '../components/orderlyze/SplitCard.astro';
+import FeatureGrid from '../components/orderlyze/FeatureGrid.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Kassensystem | Orderlyze';
+const description =
+  'Das Nr 1 Kassensystem für jeden Bedarf. Sekundenschnell kassieren, einfach bedienen, übersichtlich verwalten und 100% finanzamtkonform.';
+const canonical = '/kassensystem/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+
+const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', 'tägliches Backup', 'EU-Datenschutz'];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/kassensystem-showcase.png"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <HeroPhoto
+    image="/images/orderlyze/checkout-counter.jpg"
+    title={'Das Nr 1. Kassensystem für\njeden Bedarf'}
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <SectionHeading title="Wir haben genau das Richtige für dich" />
+    <p class="intro-lead">
+      Egal ob Gastronomie, Friseursalon oder eine sonstige Dienstleistung. Mit dem Orderlyze Kassensystem
+      arbeitest du einfach und schnell, damit du dich auf das Wichtigste konzentrieren kannst: Deine Kunden!
+    </p>
+  </section>
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/checkout-counter.jpg"
+    imageSide="right"
+    title="Sekundenschnell kassieren"
+    body="Mit dem Orderlyze Kassensystem kannst du Rechnungen in Sekundenschnelle erstellen, ganz ohne langes Einarbeiten. Produkte mit nur zwei Klicks hinzufügen, löschen und bearbeiten – inklusive Extras und Kommentare. Schnell und unkompliziert abrechnen, Bestellungen stornieren. So geht Kassieren heute!"
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/app-phone.png"
+    imageSide="left"
+    title="Bequem und mühelos bedienen"
+    body="Eine App, wie sie sein sollte: Sofort zu verstehen, einfach zu bedienen, effizient und das Wichtigste, immer auf dem neuesten Stand. Orderlyze hilft dir, indem es deinen Alltag erleichtert und vereinfacht."
+  />
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/accounting.jpg"
+    imageSide="right"
+    title="Übersichtlich und transparent"
+    body="Orderlyze bietet dir die Möglichkeit, dein Unternehmen zu verwalten, zu analysieren und zu organisieren – alles individuell und nach deinem Geschmack. Mitarbeiter verwalten, Umsätze analysieren, Tages-, Monats- oder Jahresberichte unkompliziert downloaden."
+    cta={{ label: 'Mehr erfahren', href: '/verwaltung/', style: 'outline' }}
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/accounting.jpg"
+    imageSide="left"
+    title="Buchhaltung ohne viel Mühe."
+    body="Im stressigen Alltag auch noch die Buchhaltung machen? Nicht bei uns. Mit wenigen Klicks kannst du schnell und einfach diverse Berichte für deine SteuerberaterIn exportieren. Außerdem stehen dir Exporte für Buchhaltungsprogramme zur Verfügung."
+    bullets={[
+      'Tages-, Monats- und Jahresberichte als PDF',
+      'Kategorieberichte, Produktberichte, Berichte nach Zahlungsart uvm.',
+      'CSV Exporte für Buchhaltungsprogramme BMD und RZL',
+    ]}
+    cta={{ label: 'Mehr erfahren', href: '/datenexport-steuerberater/', style: 'outline' }}
+  />
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/card-payment.jpg"
+    imageSide="right"
+    title="Integrierte Kartenzahlung."
+    body="Für schnelles und effizientes Abrechnen. Mit Orderlyze nimmst du jede Zahlungsmethode entgegen – EC, Apple Pay, kontaktlos und mehr."
+    cta={{ label: 'Mehr erfahren', href: '/kartenzahlung/', style: 'outline' }}
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/checkout-counter.jpg"
+    imageSide="left"
+    title="Kommunikation mit der Küche"
+    body="Mit nur einem Klick kannst du die gerade eben aufgenommenen Bestellungen an die Küche senden. Diese können auf einem Tablet oder größeren Bildschirm angezeigt oder als Belege gedruckt werden. So sparst du dir enorm viele Wege für die KellnerInnen, Zeit und Geld."
+    cta={{ label: 'Mehr erfahren', href: '/funkbonieren/', style: 'outline' }}
+  />
+
+  <section class="band band-white compliance-section">
+    <SectionHeading title="Bei uns sind deine Daten sicher und konform" />
+    <p class="intro-lead">Erfahre, was GoBD, RKSV und KassenSichV bedeutet, und welche Vorteile unsere Zertifizierungen haben.</p>
+    <FeatureGrid items={compliance} columns={3} />
+  </section>
+
+  <BlueCta
+    title={'Hol dir ein individuelles Angebot für das Kassensystem.'}
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(48px, 6vw, 80px) max(24px, calc((100vw - 1180px) / 2));
+  }
+
+  .band-soft { background: #f7f8fb; }
+  .band-white { background: white; }
+
+  .intro-lead {
+    max-width: 760px;
+    margin: -10px auto 28px;
+    color: var(--muted);
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+</style>

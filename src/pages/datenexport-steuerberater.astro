@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import SectionHeading from '../components/orderlyze/SectionHeading.astro';
+import SplitCard from '../components/orderlyze/SplitCard.astro';
+import FeatureGrid from '../components/orderlyze/FeatureGrid.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Datenexport für Steuerberater | Orderlyze';
+const description =
+  'Berichte und Auswertungen für deinen Steuerberater mit wenigen Klicks exportieren. Exporte für DATEV, BMD und RZL stehen direkt zur Verfügung.';
+const canonical = '/datenexport-steuerberater/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+
+const items = [
+  'Tages-, Monats- und Jahresberichte',
+  'Produktberichte, Berichte nach Zahlungsart uvm.',
+  'Exporte für Buchhaltungsprogramme (DATEV, BMD, RZL)',
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Startseite', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Datenexport für Steuerberater', item: new URL(canonical, siteUrl).toString() },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/accounting.jpg"
+  jsonLd={jsonLd}
+>
+  <HeroPhoto
+    image="/images/orderlyze/accounting.jpg"
+    title="Datenexport für Steuerberater"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <p class="intro-lead">
+      Mit Orderlyze arbeitest du effizient mit deinem Steuerberater zusammen. Ohne viel Aufwand kannst du
+      Berichte und Auswertungen an deinen Steuerberater übermitteln.
+    </p>
+  </section>
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/accounting.jpg"
+    imageSide="right"
+    title="Buchhaltung ohne viel Mühe"
+    body="Im stressigen Alltag auch noch die Buchhaltung machen? Nicht bei uns. Mit wenigen Klicks kannst du schnell und einfach diverse Berichte für die Steuerberaterin oder den Steuerberater exportieren."
+  />
+
+  <section class="band band-soft">
+    <SectionHeading title="Perfekt für alle!" />
+    <FeatureGrid items={items} columns={3} />
+  </section>
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/support.jpg"
+    imageSide="left"
+    title="Spare wertvolle Ressourcen"
+    body="Nicht nur du selbst sparst dir viel Zeit und Aufwand. Auch dein Steuerberater kann effizienter arbeiten, weil er deine Berichte viel leichter einarbeiten bzw. importieren kann. Das erleichtert die Zusammenarbeit enorm. Besonders durch die Datenexporte im DATEV Format können deine Daten ganz einfach in ein Buchhaltungsprogramm eingespielt werden."
+  />
+
+  <BlueCta
+    title={'Hol dir ein kostenloses Angebot. Dein Steuerberater wird sich freuen!'}
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(48px, 6vw, 72px) max(24px, calc((100vw - 1180px) / 2));
+  }
+
+  .band-soft {
+    background: #f7f8fb;
+  }
+
+  .intro-lead {
+    max-width: 760px;
+    margin: 0 auto;
+    color: var(--muted);
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BranchPage from '../components/orderlyze/BranchPage.astro';
+import { branchBySlug } from '../lib/orderlyze-branches';
+import { absoluteSiteUrl } from '../lib/url';
+
+const branch = branchBySlug('beauty')!;
+const siteUrl = absoluteSiteUrl(Astro.site);
+const canonical = '/beauty/';
+---
+
+<BaseLayout
+  title={branch.title}
+  description={branch.description}
+  canonical={canonical}
+  image={branch.heroImage}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: branch.title,
+    description: branch.description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <BranchPage
+    heroTitle={branch.heroTitle}
+    heroImage={branch.heroImage}
+    introHeading={branch.introHeading}
+    introBody={branch.introBody}
+    cards={branch.cards}
+    ctaTitle={branch.ctaTitle}
+  />
+</BaseLayout>

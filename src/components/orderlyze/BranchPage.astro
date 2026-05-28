@@ -1,0 +1,74 @@
+---
+import HeroPhoto from './HeroPhoto.astro';
+import SectionHeading from './SectionHeading.astro';
+import SplitCard from './SplitCard.astro';
+import BlueCta from './BlueCta.astro';
+
+type Props = {
+  heroTitle: string;
+  heroImage: string;
+  introHeading: string;
+  introBody?: string;
+  cards: Array<{
+    title: string;
+    body: string;
+    image: string;
+    bullets?: string[];
+    cta?: { label: string; href: string; style?: 'solid' | 'outline' };
+  }>;
+  ctaTitle?: string;
+};
+
+const {
+  heroTitle,
+  heroImage,
+  introHeading,
+  introBody,
+  cards,
+  ctaTitle = 'Interessiert? Dann hol dir ein unverbindliches Angebot!',
+} = Astro.props;
+---
+
+<HeroPhoto image={heroImage} title={heroTitle} cta={{ label: 'Angebot anfordern', href: '/angebot/' }} overlay="dark" />
+
+<section class="band band-soft">
+  <SectionHeading title={introHeading} />
+  {introBody && <p class="intro-lead">{introBody}</p>}
+</section>
+
+{cards.map((card, i) => (
+  <SplitCard
+    background={i % 2 === 0 ? 'white' : 'soft'}
+    image={card.image}
+    imageSide={i % 2 === 0 ? 'right' : 'left'}
+    title={card.title}
+    body={card.body}
+    bullets={card.bullets}
+    cta={card.cta}
+  />
+))}
+
+<BlueCta
+  title={ctaTitle}
+  cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+  note="Kostenlos und Unverbindlich."
+/>
+
+<style>
+  .band {
+    padding: clamp(48px, 6vw, 80px) max(24px, calc((100vw - 1180px) / 2));
+  }
+
+  .band-soft {
+    background: #f7f8fb;
+  }
+
+  .intro-lead {
+    max-width: 760px;
+    margin: -10px auto 0;
+    color: var(--muted);
+    text-align: center;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+</style>

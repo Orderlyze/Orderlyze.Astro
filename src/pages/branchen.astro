@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/orderlyze/SectionHeading.astro';
+import FeatureGrid from '../components/orderlyze/FeatureGrid.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { branches } from '../lib/orderlyze-branches';
+import { absoluteSiteUrl, withBasePath } from '../lib/url';
+
+const title = 'Branchen | Orderlyze';
+const description =
+  'Egal ob Gastronomie oder Dienstleistung, Orderlyze hat das passende Kassensystem für deine Bedürfnisse. Restaurant, Cafe, Bar, Friseur, Beauty und mehr.';
+const canonical = '/branchen/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+
+const gastroSlugs = new Set(['restaurant', 'cafe', 'bar']);
+const gastroBranches = branches.filter((b) => gastroSlugs.has(b.slug));
+const serviceBranches = branches.filter((b) => !gastroSlugs.has(b.slug));
+
+const benefits = [
+  'Sekundenschnell kassieren',
+  'Wirklich einfach in der Bedienung',
+  '100% finanzamtkonform',
+  'Lukrativste Konditionen',
+  'Kostenloser Support',
+  'Geeignet für alle Branchen',
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/branch-restaurant.jpg"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <section class="branchen-intro">
+    <div class="container">
+      <h1>Branchen</h1>
+      <p>Egal ob Gastronomie oder Dienstleistung, wir haben genau das richtige Kassensystem für deine Bedürfnisse.</p>
+      <a class="primary-cta" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+    </div>
+  </section>
+
+  <section class="band band-soft">
+    <SectionHeading title="Gastronomie" />
+    <div class="branch-grid">
+      {gastroBranches.map((b) => (
+        <a class="branch-tile" href={withBasePath(`/${b.slug}/`)}>
+          <img src={withBasePath(b.heroImage)} alt={`${b.slug} Kassensystem`} width="500" height="380" loading="lazy" />
+          <span class="branch-label">{b.slug === 'cafe' ? 'Cafe' : b.slug === 'bar' ? 'Bar' : 'Restaurant'}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="band band-white">
+    <SectionHeading title="Dienstleistungen" />
+    <div class="branch-grid">
+      {serviceBranches.map((b) => (
+        <a class="branch-tile" href={withBasePath(`/${b.slug}/`)}>
+          <img src={withBasePath(b.heroImage)} alt={`${b.slug} Kassensystem`} width="500" height="380" loading="lazy" />
+          <span class="branch-label">{b.slug === 'friseur' ? 'Friseur' : b.slug === 'beauty' ? 'Beauty' : 'Sonstige'}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="band band-soft">
+    <div class="benefits-card">
+      <h2>Das bedeutet Arbeiten mit Orderlyze</h2>
+      <FeatureGrid items={benefits} columns={3} />
+    </div>
+  </section>
+
+  <BlueCta
+    title="Hol dir ein kostenloses Angebot. Dein Steuerberater wird sich freuen!"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>
+
+<style>
+  .branchen-intro {
+    padding: clamp(64px, 9vw, 110px) max(24px, calc((100vw - 1180px) / 2)) clamp(40px, 5vw, 64px);
+    text-align: center;
+    background: white;
+  }
+
+  .branchen-intro .container {
+    max-width: 760px;
+    margin: 0 auto;
+    display: grid;
+    gap: 18px;
+    justify-items: center;
+  }
+
+  .branchen-intro h1 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    line-height: 1;
+  }
+
+  .branchen-intro p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  .primary-cta {
+    display: inline-flex;
+    align-items: center;
+    background: var(--accent);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 800;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.88rem;
+  }
+
+  .primary-cta:hover {
+    background: #044d8c;
+  }
+
+  .band {
+    padding: clamp(48px, 6vw, 80px) max(24px, calc((100vw - 1180px) / 2));
+  }
+
+  .band-soft { background: #f7f8fb; }
+  .band-white { background: white; }
+
+  .branch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .branch-tile {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 14px 36px rgb(15 23 42 / 10%);
+  }
+
+  .branch-tile img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: transform 220ms ease;
+  }
+
+  .branch-tile:hover img {
+    transform: scale(1.04);
+  }
+
+  .branch-label {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    min-width: 62%;
+    padding: 14px 22px;
+    background: white;
+    color: var(--ink);
+    font-weight: 900;
+    font-size: 1.05rem;
+  }
+
+  .benefits-card {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: clamp(28px, 4vw, 48px);
+    background: white;
+    border: 1px solid rgb(15 23 42 / 6%);
+    border-radius: 18px;
+    box-shadow: 0 14px 40px rgb(15 23 42 / 8%);
+    text-align: center;
+  }
+
+  .benefits-card h2 {
+    margin: 0 0 18px;
+    color: var(--ink);
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  }
+
+  @media (max-width: 800px) {
+    .branch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 520px) {
+    .branch-grid { grid-template-columns: 1fr; }
+  }
+</style>
