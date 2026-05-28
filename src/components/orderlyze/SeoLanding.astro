@@ -103,6 +103,14 @@ const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', '
   cta={{ label: 'Mehr zum Funkbonieren', href: '/funkbonieren/', style: 'outline' }}
 />
 
+<section class="mid-banner">
+  <div class="mid-banner-inner">
+    <h2>Hol dir ein kostenloses Angebot</h2>
+    <a class="mid-cta" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+    <p>Kostenlos und Unverbindlich.</p>
+  </div>
+</section>
+
 <section class="band band-white">
   <SectionHeading title="Bei uns sind deine Daten sicher und konform" />
   <p class="intro-lead">Erfahre, was GoBD, RKSV und KassenSichV bedeutet, und welche Vorteile unsere Zertifizierungen haben.</p>
@@ -119,6 +127,27 @@ const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', '
     },
   ]}
 />
+
+<section class="band band-soft">
+  <SectionHeading title="Viele Funktionen warten auf dich" />
+  <div class="fn-tiles">
+    <a class="fn-tile" href={withBasePath('/kartenzahlung/')}><h3>Kartenzahlung</h3><p>EC, Apple Pay, kontaktlos</p></a>
+    <a class="fn-tile" href={withBasePath('/funkbonieren/')}><h3>Funkbonieren</h3><p>Bestellungen in Küche & Bar</p></a>
+    <a class="fn-tile" href={withBasePath('/verwaltung/')}><h3>Verwaltung</h3><p>Produkte, Berichte, Personal</p></a>
+    <a class="fn-tile" href={withBasePath('/datenexport-steuerberater/')}><h3>Datenexport</h3><p>DATEV, BMD, RZL</p></a>
+  </div>
+</section>
+
+<section class="band band-white">
+  <div class="support-card">
+    <div>
+      <h2>Entdecke eine bessere Art zu arbeiten</h2>
+      <p>Unser Team unterstützt dich bei Einrichtung, Verwaltung und im Alltag — telefonisch, per E-Mail und WhatsApp. Kostenloser Premium Support für alle.</p>
+      <a class="solid-cta" href={withBasePath('/so-funktionierts/')}>So funktioniert's</a>
+    </div>
+    <img src={withBasePath('/images/orderlyze/support.jpg')} alt="Premium Support" width="640" height="440" loading="lazy" />
+  </div>
+</section>
 
 <BlueCta
   title={ctaTitle}
@@ -171,7 +200,131 @@ const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', '
     line-height: 1.5;
   }
 
-  @media (max-width: 800px) {
+  .mid-banner {
+    padding: clamp(36px, 5vw, 56px) 24px;
+    background: #fafafa;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .mid-banner-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .mid-banner h2 {
+    margin: 0 0 16px;
+    color: var(--ink);
+    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  }
+
+  .mid-cta {
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+    padding: 0 26px;
+    background: var(--accent);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    font-size: 0.84rem;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+
+  .mid-cta:hover { background: #044d8c; }
+
+  .mid-banner p {
+    margin: 12px 0 0;
+    color: #6b7280;
+    font-size: 0.86rem;
+  }
+
+  .fn-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .fn-tile {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 20px 18px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .fn-tile:hover { border-color: var(--accent); }
+
+  .fn-tile h3 {
+    margin: 0 0 4px;
+    color: var(--accent);
+    font-size: 1rem;
+  }
+
+  .fn-tile p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 0.86rem;
+  }
+
+  .support-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(24px, 4vw, 48px);
+    align-items: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .support-card h2 {
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    line-height: 1.2;
+  }
+
+  .support-card p {
+    margin: 0 0 18px;
+    color: #4b5563;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    max-width: 480px;
+  }
+
+  .support-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .solid-cta {
+    display: inline-flex;
+    align-items: center;
+    background: var(--accent);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.82rem;
+  }
+
+  .solid-cta:hover { background: #044d8c; }
+
+  @media (max-width: 900px) {
     .icon-row { grid-template-columns: 1fr; }
+    .fn-tiles { grid-template-columns: repeat(2, 1fr); }
+    .support-card { grid-template-columns: 1fr; }
   }
 </style>
