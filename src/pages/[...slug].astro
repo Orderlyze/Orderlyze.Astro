@@ -13,29 +13,28 @@ import {
 } from '../lib/orderlyze-pages';
 import { absoluteSiteUrl, withBasePath } from '../lib/url';
 
-const DEDICATED_PAGE_IDS = new Set([
-  'kassensystem',
-  'so-funktionierts',
-  'funktionen',
-  'kartenzahlung',
-  'funkbonieren',
-  'verwaltung',
-  'datenexport-steuerberater',
-  'branchen',
-  'restaurant',
-  'cafe',
-  'bar',
-  'friseur',
-  'friseure',
-  'beauty',
-  'sonstige',
-]);
-
 export async function getStaticPaths() {
+  const dedicatedPageIds = new Set([
+    'kassensystem',
+    'so-funktionierts',
+    'funktionen',
+    'kartenzahlung',
+    'funkbonieren',
+    'verwaltung',
+    'datenexport-steuerberater',
+    'branchen',
+    'restaurant',
+    'cafe',
+    'bar',
+    'friseur',
+    'friseure',
+    'beauty',
+    'sonstige',
+  ]);
   const pages = await getCollection('orderlyzePages');
   return pages
     .filter((page) => page.id !== 'home')
-    .filter((page) => !DEDICATED_PAGE_IDS.has(page.id))
+    .filter((page) => !dedicatedPageIds.has(page.id))
     .map((page) => ({
       params: { slug: slugParamFromPage(page) },
       props: { page },
