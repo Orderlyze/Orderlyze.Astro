@@ -46,8 +46,6 @@ const isBranches = page.id === BRANCHES_ID;
 const isPricing = page.id === PRICING_ID;
 const isMinimal = MINIMAL_IDS.has(page.id);
 
-const heroIntro = sections.find((s) => s.paragraphs.length > 0)?.paragraphs[0] || description;
-
 const featureSections = sections
   .filter((s) => s.heading && s.heading.toLowerCase() !== heroHeadingLower)
   .filter((s) => s.paragraphs.length > 0)
@@ -71,27 +69,26 @@ const featureImages = [
   '/images/orderlyze/support.jpg',
 ];
 
-const pageImage = page.id === 'kassensystem'
-  ? '/images/orderlyze/kassensystem-showcase.png'
-  : page.id === 'kartenzahlung'
-    ? '/images/orderlyze/card-payment.jpg'
-    : page.id === 'verwaltung'
-      ? '/images/orderlyze/accounting.jpg'
-      : page.id === 'funktionen'
-        ? '/images/orderlyze/funktionen-illustration.png'
-        : page.id === 'preise'
-          ? '/images/orderlyze/hero-system.png'
-          : page.id === 'restaurant'
-            ? '/images/orderlyze/branch-restaurant.jpg'
-            : page.id === 'cafe'
-              ? '/images/orderlyze/branch-cafe.jpg'
-              : page.id === 'bar'
-                ? '/images/orderlyze/branch-bar.jpg'
-                : page.id === 'friseur' || page.id === 'friseure'
-                  ? '/images/orderlyze/branch-friseur.jpg'
-                  : page.id === 'beauty'
-                    ? '/images/orderlyze/branch-beauty.jpg'
-                    : '/images/orderlyze/hero-system.png';
+const heroImageMap: Record<string, string> = {
+  kassensystem: '/images/orderlyze/checkout-counter.jpg',
+  'so-funktionierts': '/images/orderlyze/home-hero-person.jpg',
+  funktionen: '/images/orderlyze/checkout-counter.jpg',
+  kartenzahlung: '/images/orderlyze/card-payment.jpg',
+  funkbonieren: '/images/orderlyze/checkout-counter.jpg',
+  verwaltung: '/images/orderlyze/accounting.jpg',
+  'datenexport-steuerberater': '/images/orderlyze/accounting.jpg',
+  branchen: '/images/orderlyze/home-hero-person.jpg',
+  restaurant: '/images/orderlyze/branch-restaurant.jpg',
+  cafe: '/images/orderlyze/branch-cafe.jpg',
+  bar: '/images/orderlyze/branch-bar.jpg',
+  friseur: '/images/orderlyze/branch-friseur.jpg',
+  friseure: '/images/orderlyze/branch-friseur.jpg',
+  beauty: '/images/orderlyze/branch-beauty.jpg',
+  sonstige: '/images/orderlyze/branch-physio.jpg',
+  preise: '/images/orderlyze/hero-system.png',
+};
+
+const pageImage = heroImageMap[page.id] ?? '/images/orderlyze/home-hero-person.jpg';
 
 const testimonials = [
   {
@@ -184,20 +181,19 @@ const legalBlocks = isLegal ? contentBlocks(page).filter((line) => line.toLowerC
       </>
     ) : (
       <section class="page-hero">
-        <div class="hero-inner">
-          <div class="hero-copy">
-            <p class="eyebrow">{keyword}</p>
-            <h1>{heroHeading}</h1>
-            <p class="lead">{heroIntro}</p>
-            <div class="hero-actions">
-              <a class="button primary" href={withBasePath('/angebot/')}>Kostenloses Angebot</a>
-              <a class="button secondary" href="tel:08004004511">0800 400 4511</a>
-            </div>
-            <p class="hero-trust">Kostenlos und unverbindlich • 100% finanzamtkonform</p>
-          </div>
-          <figure class="hero-visual">
-            <img src={withBasePath(pageImage)} alt={`${heroHeading} - Orderlyze`} width="1080" height="900" loading="eager" decoding="async" />
-          </figure>
+        <img
+          class="page-hero-image"
+          src={withBasePath(pageImage)}
+          alt={`${heroHeading} - Orderlyze`}
+          width="1920"
+          height="900"
+          loading="eager"
+          decoding="async"
+        />
+        <div class="page-hero-overlay" aria-hidden="true"></div>
+        <div class="page-hero-content">
+          <h1>{heroHeading}</h1>
+          <a class="button hero-cta" href={withBasePath('/angebot/')}>Jetzt loslegen</a>
         </div>
       </section>
     )
@@ -283,25 +279,35 @@ const legalBlocks = isLegal ? contentBlocks(page).filter((line) => line.toLowerC
   }
 
   {
-    !isLegal && !isBranches && !isPricing &&
-      featureSections.map((section, index) => (
-        <section class:list={['feature-row', { reverse: index % 2 === 1 }]}>
-          <div class="feature-copy">
-            <h2>{section.heading}</h2>
-            {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    !isLegal && !isBranches && !isPricing && featureSections.length > 0 && (
+      <section class="feature-stack">
+        <div class="feature-stack-inner">
+          <p class="section-eyebrow">{keyword}</p>
+          <h2 class="section-title">{heroHeading}</h2>
+          <div class="feature-cards">
+            {featureSections.map((section, index) => (
+              <article class:list={['feature-card', { 'has-media': index % 2 === 1 }]}>
+                {index % 2 === 1 && (
+                  <img
+                    class="feature-card-image"
+                    src={withBasePath(featureImages[index % featureImages.length])}
+                    alt=""
+                    width="900"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div class="feature-card-body">
+                  <h3>{section.heading}</h3>
+                  {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                </div>
+              </article>
+            ))}
           </div>
-          <figure class="feature-visual">
-            <img
-              src={withBasePath(featureImages[index % featureImages.length])}
-              alt=""
-              width="900"
-              height="700"
-              loading="eager"
-              decoding="async"
-            />
-          </figure>
-        </section>
-      ))
+        </div>
+      </section>
+    )
   }
 
   {
@@ -339,59 +345,67 @@ const legalBlocks = isLegal ? contentBlocks(page).filter((line) => line.toLowerC
 
 <style>
   .page-hero {
-    padding: clamp(48px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
-    background: #f7f8fb;
-    border-bottom: 1px solid var(--line);
+    position: relative;
+    min-height: clamp(360px, 52vh, 540px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #0b1220;
+    text-align: center;
+    color: white;
+    isolation: isolate;
   }
 
-  .hero-inner {
+  .page-hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .page-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(11 18 32 / 35%) 0%, rgb(11 18 32 / 60%) 100%);
+    z-index: -1;
+  }
+
+  .page-hero-content {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 80px);
-    align-items: center;
+    justify-items: center;
+    gap: 24px;
+    padding: clamp(56px, 9vw, 96px) 24px;
+    max-width: 960px;
   }
 
   h1 {
     margin: 0;
-    color: var(--ink);
+    color: white;
     font-size: clamp(2.4rem, 5vw, 4.4rem);
-    line-height: 1;
-    letter-spacing: 0;
+    line-height: 1.05;
+    text-shadow: 0 4px 24px rgb(0 0 0 / 35%);
     overflow-wrap: anywhere;
     hyphens: auto;
   }
 
-  .lead {
-    margin: 24px 0 0;
-    max-width: 540px;
-    color: var(--muted);
-    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 32px;
-  }
-
-  .hero-trust {
-    margin: 18px 0 0;
-    color: var(--accent);
-    font-size: 0.86rem;
+  .hero-cta {
+    background: var(--accent);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     font-weight: 800;
+    padding: 0 32px;
+    height: 52px;
+    line-height: 52px;
+    border-radius: 999px;
+    font-size: 0.95rem;
   }
 
-  .hero-visual {
-    margin: 0;
-  }
-
-  .hero-visual img {
-    width: 100%;
-    max-width: 560px;
-    margin-inline: auto;
-    border-radius: 12px;
-    object-fit: cover;
+  .hero-cta:hover {
+    background: #044d8c;
+    color: white;
   }
 
   .legal-banner {
@@ -590,51 +604,85 @@ const legalBlocks = isLegal ? contentBlocks(page).filter((line) => line.toLowerC
     text-align: center;
   }
 
-  .feature-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: clamp(32px, 6vw, 80px);
-    align-items: center;
-    padding: clamp(48px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
-    background: white;
+  .feature-stack {
+    padding: clamp(56px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    background: #f7f8fb;
   }
 
-  .feature-row.reverse {
-    background: var(--soft);
+  .feature-stack-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    text-align: center;
   }
 
-  .feature-row.reverse .feature-copy {
-    order: 2;
-  }
-
-  .feature-copy h2 {
-    margin: 0 0 18px;
-    color: var(--ink);
-    font-size: clamp(1.8rem, 3.4vw, 2.8rem);
-    line-height: 1.05;
-  }
-
-  .feature-copy p {
-    margin: 0 0 14px;
+  .section-eyebrow {
+    margin: 0 0 12px;
     color: var(--muted);
-    font-size: 1.05rem;
-    line-height: 1.6;
-    max-width: 540px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
 
-  .feature-visual {
-    margin: 0;
-    display: flex;
-    justify-content: center;
+  .section-title {
+    margin: 0 0 48px;
+    color: var(--ink);
+    font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+    line-height: 1.1;
   }
 
-  .feature-visual img {
+  .feature-cards {
+    display: grid;
+    gap: 28px;
+    text-align: left;
+  }
+
+  .feature-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgb(15 23 42 / 8%);
+  }
+
+  .feature-card.has-media {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .feature-card.has-media:nth-of-type(odd) {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+
+  .feature-card-image {
     width: 100%;
-    max-width: 540px;
-    aspect-ratio: 4 / 3;
+    height: 100%;
+    min-height: 240px;
     object-fit: cover;
-    border-radius: 14px;
-    box-shadow: 0 30px 60px rgb(15 23 42 / 12%);
+    display: block;
+  }
+
+  .feature-card-body {
+    padding: clamp(28px, 4vw, 48px);
+    align-self: center;
+  }
+
+  .feature-card-body h3 {
+    margin: 0 0 14px;
+    color: var(--ink);
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    line-height: 1.2;
+  }
+
+  .feature-card-body p {
+    margin: 0 0 12px;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .feature-card-body p:last-child {
+    margin-bottom: 0;
   }
 
   .testimonials-section {

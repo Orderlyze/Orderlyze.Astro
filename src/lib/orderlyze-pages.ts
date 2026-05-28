@@ -138,6 +138,19 @@ const NAV_NOISE = new Set([
   'Tischplan gestalten',
   'Datenexport für Steuerberater',
   '+',
+  'JETZT LOSLEGEN',
+  'Jetzt loslegen',
+  'jetzt loslegen',
+  'jetzt Unternehmen verwalten',
+  'jetzt bestellen',
+  'Angebot anfordern',
+  'ANGEBOT ANFORDERN',
+  'Hier kannst du die App herunterladen',
+  'Und hier gehts zur Verwaltung',
+  'Mehr dazu',
+  'Mehr erfahren',
+  'Hardware',
+  'Hilfe und Support',
 ]);
 
 const FOOTER_MARKERS = ['Hilfe und Support'];
