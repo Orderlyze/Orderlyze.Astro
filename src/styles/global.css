@@ -12,7 +12,8 @@
   --soft: #f5f7ff;
   --accent: #0659a9;
   --accent-2: #3567fd;
-  --brand-blue: #6ea4ca;
+  --brand-blue: #6ea4ca; /* Light – used for page H1 on white */
+  --brand-blue-dark: #39729b; /* Dark – used for section H2/H3 */
   --warning: #9c2426;
   --blue-soft: #eaefff;
 }
