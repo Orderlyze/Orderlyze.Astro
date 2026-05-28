@@ -90,7 +90,13 @@ const keyword = pageKeyword(page);
 const siteUrl = absoluteSiteUrl(Astro.site);
 const sections = contentSections(page);
 
-const heroHeading = title
+const LEGAL_HEADINGS: Record<string, string> = {
+  agb: 'Allgemeine Geschäftsbedingungen',
+  impressum: 'Impressum',
+  datenschutzerklaerung: 'Datenschutzerklärung',
+};
+
+const heroHeading = LEGAL_HEADINGS[page.id] ?? title
   .replace(/\s+\|\s+Orderlyze$/, '')
   .replace(/^Orderlyze\s+[-|]\s+/i, '')
   .trim();

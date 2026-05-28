@@ -47,26 +47,26 @@ const gastroCards = (extraImage: string): BranchCard[] => [
 const serviceCards: BranchCard[] = [
   {
     title: 'Sekundenschnell kassieren',
-    body: 'Mit Orderlyze kannst du Rechnungen blitzschnell erstellen, ganz ohne langes Einarbeiten. Produkte und Dienstleistungen mit nur zwei Klicks anlegen, bearbeiten und in Rechnung stellen.',
+    body: 'Mit Orderlyze kannst du Rechnungen in Sekundenschnelle erstellen, ganz ohne langes Einarbeiten. Produkte und Dienstleistungen mit nur zwei Klicks hinzufügen, löschen und bearbeiten. Schnell und unkompliziert abrechnen.',
     image: '/images/orderlyze/checkout-counter.jpg',
   },
   {
-    title: 'Kundenmanagement leicht gemacht',
-    body: 'Behalte den Überblick über deine Stammkunden, Termine und Vorlieben. Mit Orderlyze führst du Kundendaten, Behandlungen und Verkäufe an einer Stelle.',
+    title: 'Kinderleicht & mühelos bedienen',
+    body: 'Ein Kassensystem, wie es sein sollte: Sofort zu verstehen, einfach zu bedienen, effizient und das Wichtigste, immer auf dem neuesten Stand. Orderlyze hilft dir, indem es deinen Alltag erleichtert und vereinfacht.',
     image: '/images/orderlyze/customer-helene.jpg',
   },
   {
     title: 'Kartenzahlung? Kein Problem',
-    body: 'Biete deinen KundInnen jede Zahlungsmethode an – schnell, einfach und sicher. Apple Pay, Maestro, Visa und mehr.',
+    body: 'Bargeldlos zu bezahlen wird immer beliebter und hat für dich und deine KundInnen viele Vorteile. Mit Orderlyze bist du für jede Zahlungsmethode gerüstet.',
     image: '/images/orderlyze/card-payment.jpg',
     bullets: ['EC, Maestro/V Pay, MasterCard und Visa', 'Apple Pay', 'Kontaktlose Zahlung per NFC'],
     cta: { label: 'Mehr erfahren', href: '/kartenzahlung/', style: 'outline' },
   },
   {
-    title: 'Verwalte dein Unternehmen von überall',
-    body: 'Mit orderlyze web hast du Berichte, Statistiken und Steuerexporte jederzeit griffbereit – egal ob am Smartphone, Tablet oder PC.',
+    title: 'Buchhaltung ohne viel Mühe',
+    body: 'Im stressigen Alltag auch noch die Buchhaltung machen? Nicht bei uns. Mit wenigen Klicks kannst du diverse Berichte für deine SteuerberaterIn exportieren – DATEV, BMD und RZL.',
     image: '/images/orderlyze/accounting.jpg',
-    cta: { label: 'Mehr erfahren', href: '/verwaltung/', style: 'outline' },
+    cta: { label: 'Mehr erfahren', href: '/datenexport-steuerberater/', style: 'outline' },
   },
 ];
 
