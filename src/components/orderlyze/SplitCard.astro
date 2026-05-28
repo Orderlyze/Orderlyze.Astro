@@ -61,11 +61,11 @@ const ctaStyle = cta?.style ?? 'solid';
 
 <style>
   .split-section {
-    padding: clamp(56px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
   }
 
   .split-section[data-bg='soft'] {
-    background: #f7f8fb;
+    background: #fafafa;
   }
 
   .split-section[data-bg='white'] {
@@ -75,9 +75,9 @@ const ctaStyle = cta?.style ?? 'solid';
   .split {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(28px, 5vw, 64px);
+    gap: clamp(20px, 4vw, 48px);
     align-items: center;
-    max-width: 1180px;
+    max-width: 1080px;
     margin: 0 auto;
   }
 
@@ -87,16 +87,9 @@ const ctaStyle = cta?.style ?? 'solid';
 
   .split[data-side='none'] {
     grid-template-columns: 1fr;
-    max-width: 880px;
+    max-width: 760px;
     text-align: center;
     justify-items: center;
-  }
-
-  .split[data-variant='card'] {
-    padding: clamp(24px, 3vw, 40px);
-    background: white;
-    border-radius: 18px;
-    box-shadow: 0 18px 44px rgb(15 23 42 / 8%);
   }
 
   .split-figure {
@@ -105,24 +98,23 @@ const ctaStyle = cta?.style ?? 'solid';
 
   .split-figure img {
     width: 100%;
-    height: 100%;
-    max-height: 460px;
+    aspect-ratio: 16 / 11;
     object-fit: cover;
-    border-radius: 14px;
+    display: block;
   }
 
   .split-body h2 {
-    margin: 0 0 16px;
+    margin: 0 0 12px;
     color: var(--ink);
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
     line-height: 1.2;
   }
 
   .split-body p {
     margin: 0;
-    color: var(--muted);
-    font-size: 1rem;
-    line-height: 1.65;
+    color: #4b5563;
+    font-size: 0.96rem;
+    line-height: 1.6;
   }
 
   .split-bullets {

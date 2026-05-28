@@ -30,7 +30,7 @@ const overlayBg =
 <style>
   .hero-photo {
     position: relative;
-    min-height: clamp(420px, 60vh, 620px);
+    min-height: clamp(240px, 32vh, 340px);
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -65,8 +65,8 @@ const overlayBg =
 
   .hero-photo-content {
     display: grid;
-    gap: 28px;
-    padding: clamp(56px, 9vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    gap: 18px;
+    padding: clamp(32px, 5vw, 56px) max(24px, calc((100vw - 1180px) / 2));
     max-width: 1180px;
     width: 100%;
     justify-items: var(--align-items, center);
@@ -79,11 +79,11 @@ const overlayBg =
   .hero-photo h1 {
     margin: 0;
     color: white;
-    font-size: clamp(2.6rem, 5.6vw, 4.8rem);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    text-shadow: 0 4px 24px rgb(0 0 0 / 38%);
-    max-width: 16ch;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    text-shadow: 0 2px 12px rgb(0 0 0 / 35%);
+    max-width: 22ch;
   }
 
   .hero-photo-cta {
@@ -92,11 +92,11 @@ const overlayBg =
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 800;
-    padding: 0 32px;
-    height: 52px;
-    line-height: 52px;
+    padding: 0 26px;
+    height: 44px;
+    line-height: 44px;
     border-radius: 999px;
-    font-size: 0.95rem;
+    font-size: 0.82rem;
     display: inline-flex;
     align-items: center;
     text-decoration: none;

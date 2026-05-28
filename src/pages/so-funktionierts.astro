@@ -78,22 +78,18 @@ const jsonLd = [
     body="Orderlyze ist ein App Kassensystem. Das heißt, du kannst es dir auf jedes Android und iOS Smartphone und Tablet herunterladen. Sobald du deinen Kassensystem Account von uns erhalten hast, kannst du die App auf einem beliebigen Gerät installieren und sofort loslegen. Schnell und einfach kannst du jetzt das Kassensystem individuell für dein Unternehmen einrichten. Und so funktioniert's:"
   />
 
-  <SplitCard
-    background="soft"
-    image="/images/orderlyze/app-phone.png"
-    imageSide="right"
-    title="Arbeiten - Orderlyze App"
-    body="Die Orderlyze App ist dein Kassensystem, mit der du die Rechnungen erstellst. Diese installierst du auf den Geräten, mit denen du arbeitest. Die App ist das, mit dem du täglich arbeitest und wodurch du effizienter und zeitsparender vorgehen kannst. Um dein Unternehmen zu verwalten oder Einstellungen zu treffen, kannst du im Menü zu der Verwaltung wechseln."
-  />
-
-  <SplitCard
-    background="white"
-    image="/images/orderlyze/kassensystem-showcase.png"
-    imageSide="left"
-    title="Verwalten - orderlyze web"
-    body="orderlyze web ist eine Website, die du mit jedem Browser (z. B. Google Chrome, Firefox, Safari) oder im Menü der App (Verwaltung) öffnen kannst. Dort kannst du zum Beispiel deine Produktgruppen und Produkte anlegen oder deine Berichte für die Steuerberatung herunterladen. Außerdem kannst du einstellen, wie deine Rechnung aussehen soll."
-    cta={{ label: 'web.orderlyze.com', href: 'https://web.orderlyze.com', style: 'outline' }}
-  />
+  <section class="band band-white">
+    <div class="two-col-cards">
+      <article class="info-card">
+        <h2>Arbeiten - Orderlyze App</h2>
+        <p>Die Orderlyze App ist dein Kassensystem, mit der du die Rechnungen erstellst. Diese installierst du auf den Geräten, mit denen du arbeitest. Die App ist das, mit dem du täglich arbeitest und wodurch du effizienter und zeitsparender vorgehen kannst. Um dein Unternehmen zu verwalten oder Einstellungen zu treffen, kannst du im Menü zu der Verwaltung wechseln.</p>
+      </article>
+      <article class="info-card">
+        <h2>Verwalten - orderlyze web</h2>
+        <p>orderlyze web ist eine Website, die du mit jedem Browser (z. B. Google Chrome, Firefox, Safari) oder im Menü der App (Verwaltung) öffnen kannst. Dort kannst du zum Beispiel deine Produktgruppen und Produkte anlegen oder deine Berichte für die Steuerberatung herunterladen. Außerdem kannst du einstellen, wie deine Rechnung aussehen soll.</p>
+      </article>
+    </div>
+  </section>
 
   <section class="band band-soft">
     <div class="two-cta-row">
@@ -140,11 +136,50 @@ const jsonLd = [
 
 <style>
   .band {
-    padding: clamp(56px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
   }
 
   .band-soft {
-    background: #f7f8fb;
+    background: #fafafa;
+  }
+
+  .band-white {
+    background: white;
+  }
+
+  .two-col-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .info-card {
+    padding: 28px 30px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+  }
+
+  .info-card h2 {
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  .info-card p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 800px) {
+    .two-col-cards {
+      grid-template-columns: 1fr;
+    }
   }
 
   .two-cta-row {

@@ -1,0 +1,126 @@
+---
+import { withBasePath } from '../../lib/url';
+
+type Testimonial = {
+  name: string;
+  role: string;
+  copy: string;
+  image: string;
+};
+
+type Props = {
+  title?: string;
+  items: Testimonial[];
+};
+
+const { title = 'Unzählige Kunden schenken uns ihr Vertrauen', items } = Astro.props;
+---
+
+<section class="testimonials-band">
+  <div class="testimonials-inner">
+    <h2>{title}</h2>
+    <div class="testimonials-grid">
+      {items.map((t) => (
+        <article class="testimonial">
+          <img src={withBasePath(t.image)} alt={`${t.name} nutzt Orderlyze`} width="240" height="240" loading="lazy" />
+          <div class="testimonial-body">
+            <span aria-hidden="true">"</span>
+            <h3>{t.name}</h3>
+            <strong>{t.role}</strong>
+            <p>{t.copy}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-band {
+    padding: clamp(32px, 5vw, 64px) max(24px, calc((100vw - 1180px) / 2));
+    background: white;
+  }
+
+  .testimonials-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .testimonials-band h2 {
+    margin: 0 0 28px;
+    color: var(--ink);
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    gap: 22px;
+  }
+
+  .testimonial {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 20px;
+  }
+
+  .testimonial img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .testimonial-body {
+    position: relative;
+  }
+
+  .testimonial-body span {
+    position: absolute;
+    top: -8px;
+    right: 0;
+    color: var(--accent);
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 900;
+    opacity: 0.18;
+  }
+
+  .testimonial-body h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1.2rem;
+  }
+
+  .testimonial-body strong {
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .testimonial-body p {
+    margin: 10px 0 0;
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 700px) {
+    .testimonial {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .testimonial img {
+      max-width: 200px;
+      margin-inline: auto;
+    }
+  }
+</style>

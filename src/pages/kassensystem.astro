@@ -4,7 +4,9 @@ import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
 import SectionHeading from '../components/orderlyze/SectionHeading.astro';
 import SplitCard from '../components/orderlyze/SplitCard.astro';
 import FeatureGrid from '../components/orderlyze/FeatureGrid.astro';
+import Testimonials from '../components/orderlyze/Testimonials.astro';
 import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { withBasePath } from '../lib/url';
 import { absoluteSiteUrl } from '../lib/url';
 
 const title = 'Kassensystem | Orderlyze';
@@ -43,6 +45,29 @@ const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', '
       Egal ob Gastronomie, Friseursalon oder eine sonstige Dienstleistung. Mit dem Orderlyze Kassensystem
       arbeitest du einfach und schnell, damit du dich auf das Wichtigste konzentrieren kannst: Deine Kunden!
     </p>
+    <div class="icon-row">
+      <article class="icon-tile">
+        <svg viewBox="0 0 32 32" width="42" height="42" aria-hidden="true">
+          <path fill="currentColor" d="M16 4a12 12 0 1 0 12 12h-3a9 9 0 1 1-2.64-6.36l-2.83 2.83A5 5 0 1 0 21 16h-5l4-4 4 4h3a12 12 0 0 0-11-12z" />
+        </svg>
+        <h3>Synchronisation</h3>
+        <p>zwischen mehreren Geräten</p>
+      </article>
+      <article class="icon-tile">
+        <svg viewBox="0 0 32 32" width="42" height="42" aria-hidden="true">
+          <path fill="currentColor" d="M6 6h8v8H6zm12 0h8v8h-8zM6 18h8v8H6zm12 0h8v8h-8z" />
+        </svg>
+        <h3>Berichte</h3>
+        <p>Tages-, Monats- und Jahresberichte</p>
+      </article>
+      <article class="icon-tile">
+        <svg viewBox="0 0 32 32" width="42" height="42" aria-hidden="true">
+          <path fill="currentColor" d="M4 8h24v16H4zm4 4v8h16v-8z" />
+        </svg>
+        <h3>Produkte</h3>
+        <p>und vieles mehr verwalten</p>
+      </article>
+    </div>
   </section>
 
   <SplitCard
@@ -108,6 +133,66 @@ const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', '
     <FeatureGrid items={compliance} columns={3} />
   </section>
 
+  <Testimonials
+    items={[
+      {
+        name: 'Verena S.',
+        role: 'Salonbesitzerin',
+        copy: 'Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware sehr günstig gewesen.',
+        image: '/images/orderlyze/customer-helene.jpg',
+      },
+    ]}
+  />
+
+  <section class="band band-soft">
+    <SectionHeading title="Viele Funktionen warten auf dich" />
+    <div class="function-tiles">
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Kartenzahlung</h3>
+        <p>EC, Apple Pay, kontaktlos via NFC.</p>
+      </a>
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Funkbonieren</h3>
+        <p>Bestellungen direkt in Küche & Bar.</p>
+      </a>
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Verwaltung</h3>
+        <p>Produkte, Berichte, Mitarbeiter.</p>
+      </a>
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Datenexport</h3>
+        <p>DATEV, BMD, RZL Export.</p>
+      </a>
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Gutscheine</h3>
+        <p>Rabatte und Gutscheine vergeben.</p>
+      </a>
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Kunden</h3>
+        <p>Kundenmanagement an einer Stelle.</p>
+      </a>
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Stornos</h3>
+        <p>Buchungen einfach stornieren.</p>
+      </a>
+      <a class="function-tile" href={withBasePath('/funktionen/')}>
+        <h3>Tischplan</h3>
+        <p>Tisch- und Gängesystem nutzen.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="band band-white">
+    <div class="support-card">
+      <div>
+        <h2>Kostenloser Premium Support für alle</h2>
+        <p>Entdecke eine bessere Art zu arbeiten. Unser Team unterstützt dich bei Einrichtung, Verwaltung und im Alltag – telefonisch, per E-Mail und WhatsApp.</p>
+        <a class="solid-cta" href={withBasePath('/so-funktionierts/')}>So funktioniert's</a>
+      </div>
+      <img src={withBasePath('/images/orderlyze/support.jpg')} alt="Premium Support" width="640" height="440" loading="lazy" />
+    </div>
+  </section>
+
   <BlueCta
     title={'Hol dir ein individuelles Angebot für das Kassensystem.'}
     cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
@@ -117,10 +202,10 @@ const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', '
 
 <style>
   .band {
-    padding: clamp(48px, 6vw, 80px) max(24px, calc((100vw - 1180px) / 2));
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
   }
 
-  .band-soft { background: #f7f8fb; }
+  .band-soft { background: #fafafa; }
   .band-white { background: white; }
 
   .intro-lead {
@@ -130,5 +215,135 @@ const compliance = ['GoBD', 'RKSV', 'KassenSichV', '256-bit Verschlüsselung', '
     text-align: center;
     font-size: 1.05rem;
     line-height: 1.6;
+  }
+
+  .icon-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .icon-tile {
+    text-align: center;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 24px 18px;
+    color: var(--accent);
+  }
+
+  .icon-tile h3 {
+    margin: 12px 0 4px;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  .icon-tile p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .function-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .function-tile {
+    display: block;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 22px 20px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .function-tile:hover {
+    border-color: var(--accent);
+  }
+
+  .function-tile h3 {
+    margin: 0 0 6px;
+    color: var(--accent);
+    font-size: 1.05rem;
+  }
+
+  .function-tile p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .support-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(24px, 4vw, 48px);
+    align-items: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .support-card h2 {
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .support-card p {
+    margin: 0 0 18px;
+    color: #4b5563;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  .support-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .solid-cta {
+    display: inline-flex;
+    align-items: center;
+    background: var(--accent);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 26px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.82rem;
+  }
+
+  .solid-cta:hover {
+    background: #044d8c;
+  }
+
+  @media (max-width: 900px) {
+    .icon-row {
+      grid-template-columns: 1fr;
+    }
+
+    .function-tiles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .support-card {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

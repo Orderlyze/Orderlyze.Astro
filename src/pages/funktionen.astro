@@ -4,6 +4,7 @@ import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
 import SectionHeading from '../components/orderlyze/SectionHeading.astro';
 import FeatureGrid from '../components/orderlyze/FeatureGrid.astro';
 import SplitCard from '../components/orderlyze/SplitCard.astro';
+import Testimonials from '../components/orderlyze/Testimonials.astro';
 import BlueCta from '../components/orderlyze/BlueCta.astro';
 import { absoluteSiteUrl } from '../lib/url';
 
@@ -109,6 +110,23 @@ const jsonLd = [
     cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
   />
 
+  <Testimonials
+    items={[
+      {
+        name: 'Carlo M.',
+        role: 'Pizzeria',
+        copy: 'Seit dem ich Orderlyze verwende, habe ich keine Probleme gehabt. Alles geht super einfach und ich kann alle meine Produkte unkompliziert bearbeiten. Einfach toll!',
+        image: '/images/orderlyze/customer-carlo.jpg',
+      },
+      {
+        name: 'Helene S.',
+        role: 'Kosmetikerin',
+        copy: 'Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware sehr günstig gewesen.',
+        image: '/images/orderlyze/customer-helene.jpg',
+      },
+    ]}
+  />
+
   <BlueCta
     title="Interessiert? Dann hol dir ein unverbindliches Angebot"
     cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
@@ -118,10 +136,10 @@ const jsonLd = [
 
 <style>
   .band {
-    padding: clamp(56px, 8vw, 96px) max(24px, calc((100vw - 1180px) / 2));
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
   }
 
   .band-soft {
-    background: #f7f8fb;
+    background: #fafafa;
   }
 </style>
