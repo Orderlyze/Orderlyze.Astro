@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
 import SectionHeading from '../components/orderlyze/SectionHeading.astro';
-import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { withBasePath } from '../lib/url';
 import { absoluteSiteUrl } from '../lib/url';
 
 const title = 'Preise | Orderlyze';
@@ -99,15 +98,9 @@ const zubehoer = [
     inLanguage: 'de-DE',
   }}
 >
-  <HeroPhoto
-    image="/images/orderlyze/checkout-counter.jpg"
-    title="Unsere Preise"
-    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
-    overlay="dark"
-  />
-
-  <section class="band band-white">
-    <SectionHeading title="Die Kosten für das Orderlyze Kassensystem bestehen aus 2 Teilen" />
+  <section class="band band-white preise-intro">
+    <h1>Unsere Preise</h1>
+    <p class="intro-text">Die Kosten für das Orderlyze Kassensystem bestehen aus 2 Teilen:</p>
     <div class="cost-parts">
       <div class="cost-part">
         <div class="cost-step">1</div>
@@ -242,11 +235,11 @@ const zubehoer = [
     </div>
   </section>
 
-  <BlueCta
-    title="Hol dir dein individuelles Angebot"
-    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
-    note="Kostenlos und Unverbindlich."
-  />
+  <section class="dark-cta">
+    <h2>Hol dir dein individuelles Angebot</h2>
+    <a class="dark-cta-btn" href={withBasePath('/angebot/')}>Angebot anfordern</a>
+    <p>Kostenlos und Unverbindlich.</p>
+  </section>
 </BaseLayout>
 
 <style>
@@ -256,6 +249,25 @@ const zubehoer = [
 
   .band-soft { background: #fafafa; }
   .band-white { background: white; }
+
+  .preise-intro {
+    text-align: center;
+    padding-top: clamp(36px, 5vw, 64px);
+  }
+
+  .preise-intro h1 {
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+  }
+
+  .intro-text {
+    margin: 0 auto 28px;
+    color: #4b5563;
+    max-width: 620px;
+    font-size: 1rem;
+  }
 
   .intro-lead {
     max-width: 760px;
@@ -354,18 +366,26 @@ const zubehoer = [
     border-bottom: 0;
   }
 
+  .tier-total {
+    background: #16a34a;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 4px;
+    margin: 8px -24px;
+  }
+
   .tier-total span {
     display: block;
-    color: #9ca3af;
-    font-size: 0.7rem;
+    color: rgb(255 255 255 / 80%);
+    font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .tier-total strong {
     display: block;
-    color: var(--accent);
+    color: white;
     font-size: 2.2rem;
     font-weight: 900;
     line-height: 1;
@@ -373,7 +393,7 @@ const zubehoer = [
   }
 
   .tier-total small {
-    color: #6b7280;
+    color: rgb(255 255 255 / 85%);
     font-size: 0.82rem;
   }
 
@@ -443,8 +463,8 @@ const zubehoer = [
   .hw-base-cell {
     flex: 1 1 200px;
     min-width: 180px;
-    background: white;
-    border: 1px solid #e5e7eb;
+    background: #e6f0fb;
+    border: 1px solid #c8def4;
     border-radius: 4px;
     padding: 14px 18px;
     text-align: center;
@@ -453,7 +473,7 @@ const zubehoer = [
   .hw-base-cell strong { display: block; color: var(--ink); font-size: 0.98rem; }
   .hw-base-cell span { color: var(--accent); font-size: 1.1rem; font-weight: 800; }
 
-  .hw-base-cell.total { background: var(--accent); border-color: var(--accent); }
+  .hw-base-cell.total { background: #16a34a; border-color: #15803d; }
   .hw-base-cell.total strong, .hw-base-cell.total span { color: white; }
 
   .hw-base-plus, .hw-base-eq {
@@ -471,8 +491,8 @@ const zubehoer = [
   }
 
   .paket {
-    background: white;
-    border: 1px solid #e5e7eb;
+    background: #e6f0fb;
+    border: 1px solid #c8def4;
     border-radius: 4px;
     padding: 22px;
     text-align: center;
@@ -495,9 +515,13 @@ const zubehoer = [
   .paket li { padding: 4px 0; }
 
   .paket-total {
-    color: var(--accent);
-    font-size: 1.5rem;
+    color: white;
+    background: #16a34a;
+    font-size: 1.4rem;
     font-weight: 900;
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: inline-block;
   }
 
   .zubehoer-grid {
@@ -551,6 +575,46 @@ const zubehoer = [
   .all-in-one h3 { margin: 0 0 4px; color: var(--ink); }
   .all-in-one p { margin: 0 0 12px; color: #6b7280; font-size: 0.92rem; }
   .all-in-one strong { color: var(--accent); font-size: 1.5rem; font-weight: 900; }
+
+  .dark-cta {
+    padding: clamp(48px, 6vw, 80px) 20px;
+    background: #0b1220;
+    color: white;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+  }
+
+  .dark-cta h2 {
+    margin: 0;
+    color: white;
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    line-height: 1.2;
+    max-width: 720px;
+  }
+
+  .dark-cta-btn {
+    background: white;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    padding: 0 28px;
+    height: 48px;
+    line-height: 48px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.88rem;
+  }
+
+  .dark-cta-btn:hover { background: #e5e7eb; }
+
+  .dark-cta p {
+    margin: 0;
+    color: rgb(255 255 255 / 70%);
+    font-size: 0.9rem;
+  }
 
   @media (max-width: 800px) {
     .cost-parts, .tiers, .paket-grid { grid-template-columns: 1fr; }
