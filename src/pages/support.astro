@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { supportTiles } from '../lib/help-articles';
+import { absoluteSiteUrl, withBasePath } from '../lib/url';
+
+const title = 'Hilfe | Orderlyze';
+const description =
+  'Hilfe und Support für dein Orderlyze Kassensystem. Erste Schritte, Drucker verbinden, Berichte, Zahlungsarten und vieles mehr.';
+const canonical = '/support/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/support.jpg"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <HeroPhoto
+    image="/images/orderlyze/support.jpg"
+    title="Support"
+    cta={{ label: 'Kontaktiere uns', href: 'tel:08004004511' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <div class="tile-grid">
+      {supportTiles.map((t) => (
+        <a class="tile" href={withBasePath(t.href)}>
+          <h3>{t.title}</h3>
+          <p>{t.description}</p>
+          <span class="tile-cta">jetzt loslegen</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <BlueCta
+    title="Du brauchst Hilfe? Kontaktiere uns. Wir helfen dir kostenlos weiter."
+    cta={{ label: '0800 400 4511', href: 'tel:08004004511' }}
+    note="Telefonisch, per E-Mail und WhatsApp erreichbar."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+  }
+
+  .band-soft { background: #fafafa; }
+
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 22px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 140ms, box-shadow 140ms;
+  }
+
+  .tile:hover {
+    border-color: var(--accent);
+    box-shadow: 0 12px 26px rgb(6 89 169 / 12%);
+  }
+
+  .tile h3 {
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  .tile p {
+    margin: 0 0 16px;
+    color: #4b5563;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+
+  .tile-cta {
+    align-self: flex-start;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .tile-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .tile-grid { grid-template-columns: 1fr; }
+  }
+</style>

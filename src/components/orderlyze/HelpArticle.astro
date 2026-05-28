@@ -1,0 +1,65 @@
+---
+import HeroPhoto from './HeroPhoto.astro';
+import BlueCta from './BlueCta.astro';
+import { withBasePath } from '../../lib/url';
+import type { HelpArticle } from '../../lib/help-articles';
+
+type Props = { article: HelpArticle };
+const { article } = Astro.props;
+---
+
+<HeroPhoto image="/images/orderlyze/support.jpg" title={article.shortTitle} overlay="dark" />
+
+<section class="article-band">
+  <article class="article-body">
+    <p class="lead">{article.description}</p>
+    {article.body.map((para) => <p>{para}</p>)}
+    <a class="back-link" href={withBasePath('/support/')}>← zurück zur Hilfe-Übersicht</a>
+  </article>
+</section>
+
+<BlueCta
+  title="Du brauchst Hilfe? Kontaktiere uns."
+  cta={{ label: '0800 400 4511', href: 'tel:08004004511' }}
+  note="Telefonisch, per E-Mail und WhatsApp erreichbar."
+/>
+
+<style>
+  .article-band {
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+    background: white;
+  }
+
+  .article-body {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .article-body .lead {
+    color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.45;
+    margin: 0 0 22px;
+  }
+
+  .article-body p {
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--accent);
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 0.92rem;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>

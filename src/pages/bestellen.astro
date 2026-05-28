@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Kassensystem Bestellanfrage | Orderlyze';
+const description = 'Einfach ausfüllen und in Kürze meldet sich ein Mitarbeiter bezüglich deiner Bestellung.';
+const canonical = '/bestellen/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} image="/images/orderlyze/checkout-counter.jpg"
+  jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: new URL(canonical, siteUrl).toString(), inLanguage: 'de-DE' }}>
+  <HeroPhoto
+    image="/images/orderlyze/checkout-counter.jpg"
+    title="Kassensystem Bestellanfrage"
+    overlay="dark"
+  />
+
+  <section class="band">
+    <div class="form-wrap">
+      <p class="lead">Einfach ausfüllen und in Kürze meldet sich ein Mitarbeiter bezüglich deiner Bestellung.</p>
+      <form class="order-form" action="mailto:office@orderlyze.com?subject=Bestellanfrage" method="post" enctype="text/plain">
+        <label>
+          Name *
+          <input type="text" name="Name" required />
+        </label>
+        <label>
+          Firma
+          <input type="text" name="Firma" />
+        </label>
+        <label>
+          E-Mail *
+          <input type="email" name="E-Mail" required />
+        </label>
+        <label>
+          Telefon *
+          <input type="tel" name="Telefon" required />
+        </label>
+        <label class="full">
+          Welches Paket?
+          <select name="Paket" required>
+            <option value="">Bitte wählen</option>
+            <option>Samsung Paket 1 (448,80€)</option>
+            <option>Samsung Paket 2 (534,40€)</option>
+            <option>Ipad Paket 1 (612,80€)</option>
+            <option>Ipad Paket 2 (698,40€)</option>
+            <option>All-In-One Sunmi V2 Pro (399€)</option>
+            <option>Individuell</option>
+          </select>
+        </label>
+        <label class="full">
+          Nachricht
+          <textarea name="Nachricht" rows="4" placeholder="Hardware-Wünsche, Lieferadresse, Anmerkungen ..."></textarea>
+        </label>
+        <button type="submit">Bestellanfrage senden</button>
+        <p class="legal">Vielen Dank für deine Bestellanfrage! Wir melden uns innerhalb von 24 Stunden.</p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+    background: #fafafa;
+  }
+
+  .form-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: clamp(24px, 4vw, 40px);
+  }
+
+  .lead {
+    margin: 0 0 22px;
+    color: #4b5563;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .order-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 18px;
+  }
+
+  .order-form label {
+    display: grid;
+    gap: 6px;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .order-form label.full { grid-column: span 2; }
+
+  .order-form input,
+  .order-form select,
+  .order-form textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--ink);
+    background: white;
+    font-weight: 400;
+  }
+
+  .order-form button {
+    grid-column: span 2;
+    margin-top: 8px;
+    height: 48px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+
+  .order-form button:hover { background: #044d8c; }
+
+  .legal {
+    grid-column: span 2;
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 0.78rem;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .order-form { grid-template-columns: 1fr; }
+    .order-form label.full, .order-form button, .legal { grid-column: span 1; }
+  }
+</style>

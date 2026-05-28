@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HelpArticle from '../components/orderlyze/HelpArticle.astro';
+import { helpArticles } from '../lib/help-articles';
+import { absoluteSiteUrl } from '../lib/url';
+
+const article = helpArticles.find((a) => a.slug === 'steuer-aendern')!;
+const canonical = '/steuer-aendern/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  canonical={canonical}
+  image="/images/orderlyze/support.jpg"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.shortTitle,
+    description: article.description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <HelpArticle article={article} />
+</BaseLayout>

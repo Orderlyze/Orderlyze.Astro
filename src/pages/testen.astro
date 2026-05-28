@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import Testimonials from '../components/orderlyze/Testimonials.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl, withBasePath } from '../lib/url';
+
+const title = 'Testen | Orderlyze';
+const description =
+  '30 Tage kostenlos das Orderlyze Kassensystem testen. Formular ausfüllen und schon kann es losgehen.';
+const canonical = '/testen/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/checkout-counter.jpg"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <HeroPhoto
+    image="/images/orderlyze/checkout-counter.jpg"
+    title="30 Tage kostenlos Testen"
+    cta={{ label: 'Jetzt loslegen', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <div class="testen-wrap">
+      <h2>Kontaktiere uns und teste die ganze App kostenlos</h2>
+      <p>Formular ausfüllen, und schon kann es losgehen.</p>
+      <ul class="testen-points">
+        <li>Kostenlose Beratung durch einen Experten</li>
+        <li>30 Tage volle Funktionalität</li>
+        <li>Keine Kreditkarte erforderlich</li>
+      </ul>
+      <a class="testen-cta" href={withBasePath('/angebot/')}>Jetzt kostenlos testen</a>
+      <p class="testen-note">Kostenlos und Unverbindlich.</p>
+    </div>
+  </section>
+
+  <Testimonials
+    title="Sieh dir an, was sie zu sagen haben"
+    items={[
+      {
+        name: 'Verena S.',
+        role: 'Salonbesitzerin',
+        copy: 'Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware sehr günstig gewesen.',
+        image: '/images/orderlyze/customer-helene.jpg',
+      },
+    ]}
+  />
+
+  <BlueCta
+    title="Bereit zu starten?"
+    cta={{ label: 'Jetzt kostenlos testen', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+  }
+  .band-soft { background: #fafafa; }
+
+  .testen-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: clamp(24px, 4vw, 40px);
+    text-align: center;
+  }
+
+  .testen-wrap h2 {
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  }
+
+  .testen-wrap p {
+    margin: 0 0 18px;
+    color: #4b5563;
+    font-size: 0.96rem;
+  }
+
+  .testen-points {
+    list-style: none;
+    margin: 0 0 22px;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    text-align: left;
+    max-width: 380px;
+    margin-inline: auto;
+  }
+
+  .testen-points li {
+    color: var(--ink);
+    font-size: 0.96rem;
+    padding-left: 22px;
+    position: relative;
+  }
+
+  .testen-points li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 900;
+  }
+
+  .testen-cta {
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 28px;
+    background: var(--accent);
+    color: white;
+    border-radius: 999px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    font-size: 0.88rem;
+  }
+
+  .testen-cta:hover { background: #044d8c; }
+
+  .testen-note {
+    margin: 10px 0 0;
+    color: #6b7280;
+    font-size: 0.85rem;
+  }
+</style>

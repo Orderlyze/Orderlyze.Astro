@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import SectionHeading from '../components/orderlyze/SectionHeading.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Hardware | Orderlyze';
+const description =
+  'Die passende Hardware für dein Orderlyze Kassensystem. Tablet-Sets, All-In-One Geräte und Zubehör zu fairen Preisen.';
+const canonical = '/hardware/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+
+const samsung = [
+  { name: 'Samsung Kassensystem Paket 1', items: ['Samsung Tab A9+', 'Bondrucker', 'Tablet Ständer'], total: '448,80€' },
+  { name: 'Samsung Kassensystem Paket 2', items: ['Samsung Tab A9+', 'Tablet Ständer', 'Bondrucker', 'Kassenlade K-2'], total: '534,40€' },
+];
+const ipad = [
+  { name: 'Ipad Kassensystem Paket 1', items: ['Ipad 9. Generation', 'Bondrucker', 'Tablet Ständer'], total: '612,80€' },
+  { name: 'Ipad Kassensystem Paket 2', items: ['Ipad 9. Generation', 'Tablet Ständer', 'Bondrucker', 'Kassenlade K-2'], total: '698,40€' },
+];
+const allInOne = [
+  { name: 'Sunmi V2 Pro', desc: 'inkl. Bondrucker und Kartenlesegerät', price: '399,00€' },
+  { name: 'Sunmi T2s', desc: 'inkl. Bondrucker', price: '685,90€' },
+];
+const zubehoer = [
+  { name: 'Tablet Ständer', price: '22,90€' },
+  { name: 'Kassenlade K-2', price: '85,60€' },
+  { name: 'Kassenlade K-4', price: '69,90€' },
+  { name: 'Kassenlade APG', price: '85,60€' },
+  { name: 'Cloud Drucker', price: '265,00€' },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/devices-small.jpg"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <HeroPhoto
+    image="/images/orderlyze/devices-small.jpg"
+    title="Die passende Hardware für dein Unternehmen"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <SectionHeading title="Samsung Tablet Kassensystem" />
+    <div class="grid-2">
+      {samsung.map((p) => (
+        <article class="paket">
+          <h3>{p.name}</h3>
+          <ul>{p.items.map((it) => <li>{it}</li>)}</ul>
+          <strong>{p.total}</strong>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="band band-white">
+    <SectionHeading title="Ipad Kassensystem" />
+    <div class="grid-2">
+      {ipad.map((p) => (
+        <article class="paket">
+          <h3>{p.name}</h3>
+          <ul>{p.items.map((it) => <li>{it}</li>)}</ul>
+          <strong>{p.total}</strong>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="band band-soft">
+    <SectionHeading title="All-In-One Geräte" />
+    <div class="grid-2">
+      {allInOne.map((p) => (
+        <article class="paket">
+          <h3>{p.name}</h3>
+          <p>{p.desc}</p>
+          <strong>{p.price}</strong>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="band band-white">
+    <SectionHeading title="Zubehör" />
+    <div class="zubehoer-grid">
+      {zubehoer.map((z) => (
+        <article class="z-card">
+          <h4>{z.name}</h4>
+          <strong>{z.price}</strong>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <BlueCta
+    title="Hol dir dein individuelles Hardware-Paket"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich. *Preise exkl. MwSt."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+  }
+  .band-soft { background: #fafafa; }
+  .band-white { background: white; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .paket {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 22px;
+    text-align: center;
+  }
+
+  .band-soft .paket { background: white; }
+  .band-white .paket { background: #fafafa; }
+
+  .paket h3 {
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+
+  .paket p {
+    margin: 0 0 12px;
+    color: #6b7280;
+    font-size: 0.92rem;
+  }
+
+  .paket ul {
+    list-style: none;
+    margin: 0 0 14px;
+    padding: 0;
+    color: #4b5563;
+    font-size: 0.92rem;
+  }
+
+  .paket li { padding: 4px 0; }
+
+  .paket strong {
+    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+
+  .zubehoer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .z-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 18px;
+    text-align: center;
+  }
+
+  .z-card h4 {
+    margin: 0 0 8px;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+
+  .z-card strong {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+
+  @media (max-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+</style>

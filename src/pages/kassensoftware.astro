@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoLanding from '../components/orderlyze/SeoLanding.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Kassensoftware | Orderlyze';
+const description = 'Die Nr 1. Kassensoftware für jeden Bedarf. RKSV, KassenSichV und TSE konform.';
+const canonical = '/kassensoftware/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} image="/images/orderlyze/checkout-counter.jpg"
+  jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: new URL(canonical, siteUrl).toString(), inLanguage: 'de-DE' }}>
+  <SeoLanding
+    term="Kassensoftware"
+    termArticle="die"
+    heroTitle={'Die Nr 1. Kassensoftware für jeden Bedarf'}
+    introHeading="Wir haben genau das Richtige für dich"
+    ctaTitle="Hol dir ein individuelles Angebot für die Kassensoftware"
+  />
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SeoLanding from '../components/orderlyze/SeoLanding.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Bestellsystem | Orderlyze';
+const description = 'Das Nr 1. Bestellsystem für jeden Bedarf. Mit Funkbonieren, Kartenzahlung und Küchenkommunikation.';
+const canonical = '/bestellsystem/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} image="/images/orderlyze/checkout-counter.jpg"
+  jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: new URL(canonical, siteUrl).toString(), inLanguage: 'de-DE' }}>
+  <SeoLanding
+    term="Bestellsystem"
+    termArticle="dem"
+    heroTitle={'Das Nr 1. Bestellsystem für jeden Bedarf'}
+    introHeading="Wir haben genau das Richtige für dich"
+    ctaTitle="Hol dir ein individuelles Angebot für das Bestellsystem"
+  />
+</BaseLayout>

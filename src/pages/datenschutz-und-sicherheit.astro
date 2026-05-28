@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import SplitCard from '../components/orderlyze/SplitCard.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = 'Datenschutz und Sicherheit | Orderlyze';
+const description =
+  'Sichere Datenübermittlung, TLS-Verschlüsselung und Server-Standort Deutschland. So schützen wir deine Daten bei Orderlyze.';
+const canonical = '/datenschutz-und-sicherheit/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/support.jpg"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <HeroPhoto
+    image="/images/orderlyze/support.jpg"
+    title={'Datenschutz und Sicherheit'}
+    cta={{ label: 'Demoversion anfordern', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/konform-1.png"
+    imageSide="right"
+    title="Datenschutz bei Orderlyze"
+    body={'Von Anfang an war uns der Schutz von Kundendaten besonders wichtig. Unsere Lösungen wurden mit dem Ansatz „security by design“ entwickelt – alle gesammelten Daten werden sicher verwahrt. Unsere Infrastruktur (IAAS und PAAS) teilen wir mit unserem Partner Microsoft Azure: sie kümmern sich um Datenhosting, Netzwerke und physische Server-Sicherheit.'}
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/konform-2.png"
+    imageSide="left"
+    title="Sicherste Datenübermittlung"
+    body="Deine Verbindung zu Orderlyze ist über TLS-Verschlüsselung gesichert. TLS (Transport Layer Security) ist ein hybrides Verschlüsselungsprotokoll zur sicheren Datenübertragung. Zusätzlich sind deine Daten durch mehrere Hardware-Firewalls gesichert. Server-Standort: Deutschland – damit unterliegen wir den strengen deutschen Datenschutzgesetzen."
+    bullets={['Standardprotokoll-konforme Verschlüsselung bei Speicherung', 'Keine Weitergabe an Dritte', 'Server-Standort Deutschland']}
+  />
+
+  <BlueCta
+    title="Kostenlose Demoversion anfordern"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>

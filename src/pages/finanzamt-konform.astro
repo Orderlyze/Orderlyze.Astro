@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroPhoto from '../components/orderlyze/HeroPhoto.astro';
+import SectionHeading from '../components/orderlyze/SectionHeading.astro';
+import SplitCard from '../components/orderlyze/SplitCard.astro';
+import BlueCta from '../components/orderlyze/BlueCta.astro';
+import { absoluteSiteUrl } from '../lib/url';
+
+const title = '100% Finanzamt konform | Orderlyze';
+const description =
+  'Mit Orderlyze bist du zu 100% RKSV, KassenSichV und TSE konform – wir kümmern uns darum.';
+const canonical = '/finanzamt-konform/';
+const siteUrl = absoluteSiteUrl(Astro.site);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  image="/images/orderlyze/konform-1.png"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: new URL(canonical, siteUrl).toString(),
+    inLanguage: 'de-DE',
+  }}
+>
+  <HeroPhoto
+    image="/images/orderlyze/checkout-counter.jpg"
+    title="100% Finanzamt konform"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    overlay="dark"
+  />
+
+  <section class="band band-soft">
+    <SectionHeading title={'Warum diese Zertifikate für dich wichtig sind und welche Vorteile dir Orderlyze bietet'} />
+  </section>
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/konform-1.png"
+    imageSide="right"
+    title="RKSV konform"
+    body="Die Registrierkassensicherheitsverordnung (kurz RKSV) definiert, welche Anforderungen an Registrierkassen gestellt werden und was eine Registrierkasse in Österreich können muss. Mit Orderlyze musst du dir darüber keine Sorgen machen, weil wir zu 100% RKSV konform sind – und das bleibt auch so."
+  />
+
+  <SplitCard
+    background="soft"
+    image="/images/orderlyze/konform-2.png"
+    imageSide="left"
+    title="KassenSichV konform"
+    body="Die Kassensicherungsverordnung (kurz KassenSichV) gilt seit dem 01.01.2020. Ab diesem Zeitpunkt müssen in Deutschland Registrierkassen mit einer zertifizierten technischen Sicherheitseinrichtung (TSE) versehen sein. Diese ist für die Erfassung von Belegen verantwortlich und schließt Manipulationen im Nachhinein aus. Mit Orderlyze bist du zu 100% KassenSichV konform."
+  />
+
+  <SplitCard
+    background="white"
+    image="/images/orderlyze/konform-1.png"
+    imageSide="right"
+    title="TSE konform"
+    body="TSE steht für Technische Sicherheitseinrichtung und ist eine technische Schutzmaßnahme vor Manipulationen an digitalen Aufzeichnungen. Mit Orderlyze musst du dir keine Sorgen über die TSE machen – wir kümmern uns um alles."
+    cta={{ label: 'Mehr zur TSE', href: '/technische-sicherheitseinrichtung/', style: 'outline' }}
+  />
+
+  <BlueCta
+    title="Keine Sorge, mit uns bist du konform!"
+    cta={{ label: 'Angebot anfordern', href: '/angebot/' }}
+    note="Kostenlos und Unverbindlich."
+  />
+</BaseLayout>
+
+<style>
+  .band {
+    padding: clamp(28px, 4vw, 56px) max(24px, calc((100vw - 1180px) / 2));
+  }
+  .band-soft { background: #fafafa; }
+</style>
