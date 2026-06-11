@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Seiten, die live auf orderlyze.com existieren, aber NICHT in den Original-Wix-Sitemaps stehen.
+     Manuell gepflegt (2026-06-11). Die Original-Sitemaps (pages-sitemap.xml, store-products-sitemap.xml)
+     bleiben unverändert als Referenz. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://www.orderlyze.com/dank-angebot</loc>
+<lastmod>2026-06-11</lastmod>
+</url>
+</urlset>
