@@ -54,24 +54,24 @@ const eventClass = event ? `plausible-event-name=${event.replaceAll(' ', '+')}` 
   }
 
   .btn--primary {
-    background: var(--color-brand);
+    background: var(--color-cta);
     color: #fff;
   }
 
   .btn--primary:hover {
-    background: var(--color-brand-dark);
+    background: var(--color-cta-dark);
     color: #fff;
     transform: translateY(-2px);
   }
 
   .btn--secondary {
     background: transparent;
-    color: var(--color-brand);
-    border-color: var(--color-brand);
+    color: var(--color-cta-dark);
+    border-color: var(--color-cta);
   }
 
   .btn--secondary:hover {
-    background: var(--color-brand);
+    background: var(--color-cta);
     color: #fff;
   }
 
@@ -85,7 +85,7 @@ const eventClass = event ? `plausible-event-name=${event.replaceAll(' ', '+')}` 
     color: var(--color-brand-dark);
   }
 
-  /* Auf Navy-/Orange-Flächen */
+  /* Auf Navy-Flächen */
   .btn--on-dark {
     background: #fff;
     color: var(--color-navy);

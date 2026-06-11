@@ -1,7 +1,7 @@
 /* ──────────────────────────────────────────────────────────────────────────
    Orderlyze — globale Basis-Styles
    Design-Richtung: „Klar & Verlässlich“ — ruhiger B2B-Minimalismus,
-   Navy-Color-Blocking, Orange als präziser Akzent, Kassenbon-Signatur.
+   weißer Grund, Orderlyze-Blau als Akzent, Grün für CTAs, Kassenbon-Signatur.
    ────────────────────────────────────────────────────────────────────────── */
 
 @import './tokens.css';
@@ -113,7 +113,7 @@ strong {
   border: 0;
 }
 
-/* Markiertes Wort in Headlines (Orange-Akzent mit handgesetztem Unterstrich) */
+/* Markiertes Wort in Headlines (Blau-Akzent mit handgesetztem Unterstrich) */
 .mark {
   position: relative;
   white-space: nowrap;
@@ -151,7 +151,7 @@ strong {
 
 /* ── Fokus ── */
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--color-brand);
   outline-offset: 2px;
   border-radius: 2px;
 }
