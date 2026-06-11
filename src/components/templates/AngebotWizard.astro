@@ -10,8 +10,10 @@
  *
  * Die Seiten unterscheiden sich nur im ersten Intro-Slide (Props).
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../Icon.astro';
+import logoWhite from '../../assets/logos/orderlyze-logo-weiss.png';
 import { SITE, EVENTS } from '../../config/site';
 
 interface Props {
@@ -62,9 +64,7 @@ const marketingSlides = [
     <header class="wizard-header">
       <div class="container wizard-header__inner">
         <a href="/" class="wizard-header__back" aria-label="Zur Startseite">
-          <svg width="124" height="32" viewBox="0 0 124 32" aria-hidden="true">
-            <text x="0" y="23" font-family="Raleway, sans-serif" font-weight="800" font-size="20" fill="currentColor">ORDERLYZE</text>
-          </svg>
+          <Image src={logoWhite} alt="Orderlyze Logo" width={140} densities={[1, 2]} loading="eager" />
         </a>
         <a href={SITE.phoneHref} class:list={['wizard-header__phone', phoneEventClass]}>
           <Icon name="phone" size={15} />
@@ -337,12 +337,16 @@ const marketingSlides = [
   }
 
   .wizard-header__back {
-    color: #fff;
     display: flex;
   }
 
+  .wizard-header__back img {
+    width: 140px;
+    height: auto;
+  }
+
   .wizard-header__back:hover {
-    color: var(--color-heading);
+    opacity: 0.85;
   }
 
   .wizard-header__phone {
