@@ -26,6 +26,8 @@ von der Live-Seite muss erneut gescrapt werden.
 | `planning/bilder-strategie.md` | Bild-Beschaffung, Dateinamen-Konvention, Astro-`<Picture/>`-Vorgaben |
 | `planning/seo-tools.md` | Plausible/Ahrefs/Bing-Anforderungen + Bau-Checkliste |
 | `planning/angebot-flow.md` | Backend-Logik des Angebots-Formulars (einzige echte Logik der Seite) |
+| `planning/assets/wix-media/` | **Alle Medien der alten Webseite, lokal:** 370 Bilder (`images/`) + 21 Videos (`videos/`) in Originalauflösung. Gitignored — falls der Ordner fehlt: `node planning/scripts/wix-media-download.mjs` lädt alles neu |
+| `planning/wix-media-inventory.json` | Inventar dazu (Name, URL, Auflösung, Größe je Datei) |
 
 ## Harte Anforderungen
 
@@ -50,11 +52,16 @@ von der Live-Seite muss erneut gescrapt werden.
    `#F6F9FC` Flächen; Raleway für Headings, Open Sans für Fließtext; Buttons 5px Radius).
    Es ist ein **Redesign erlaubt und erwünscht** (moderner, schneller, sauberer als Wix),
    aber im bestehenden Markenbild.
-6. **Bilder:** Strategie aus `planning/bilder-strategie.md`: echte App-Screenshots
-   (hilfe.orderlyze.com, werden vom Nutzer bereitgestellt) auf Geräte-Mockups; AVIF/WebP via
-   Astro `<Picture/>`; beschreibende deutsche Dateinamen; Alt-Texte überall; keine
-   fotorealistischen AI-Bilder. Wo Bilder noch fehlen: strukturierte Platzhalter einsetzen
-   und eine Liste benötigter Bilder führen.
+6. **Bilder & Videos: primär aus `planning/assets/wix-media/` nehmen** (alle 370 Bilder +
+   21 Videos der alten Webseite liegen dort lokal in Originalauflösung; sprechende Dateinamen,
+   Inventar in `planning/wix-media-inventory.json`). Passende Dateien von dort nach
+   `src/assets/` übernehmen — dabei Dateinamen gemäß SEO-Konvention normalisieren
+   (klein, Bindestriche, deutsch-beschreibend). Die Anleitungs-Videos (`videos/`) können
+   auf den Feature-Sektionen eingesetzt werden (lazy, ohne Autoplay-Ton). Ergänzend:
+   App-Screenshots von hilfe.orderlyze.com auf Geräte-Mockups. Verarbeitung als AVIF/WebP
+   via Astro `<Picture/>`; Alt-Texte überall; keine fotorealistischen AI-Bilder. Nur wo
+   nichts Passendes im Ordner liegt: strukturierte Platzhalter + Liste benötigter Bilder
+   führen. Details: `planning/bilder-strategie.md`.
 7. **SEO-Tool-Integration** gemäß `planning/seo-tools.md`: Plausible-Snippet + Event-fähige
    CTA-Komponenten, Verify-Slots für Ahrefs/Bing im Head, `robots.txt` + `@astrojs/sitemap`,
    `public/`-Root-Dateien, IndexNow-Vorbereitung im Deploy.
