@@ -1,0 +1,348 @@
+---
+/**
+ * /funkbonieren — Funkboniersystem für die Gastronomie
+ * Inhalt: planning/content/pages/funkbonieren.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import DeviceMockup from '../components/DeviceMockup.astro';
+import { EVENTS } from '../config/site';
+
+import kueche from '../assets/screenshots/kommunikation-kueche-funkbonieren.png';
+import sunmiV2 from '../assets/hardware/sunmi-v2-pro-mobiles-kassengeraet.png';
+
+const meta = {
+  title: 'Funkbonieren | Orderlyze',
+  description:
+    'Mehr Erfolg mit Funkbonieren: Bestellungen per Smartphone aufnehmen und sofort in Küche und Bar drucken. Umsatz steigern, Wartezeiten und Personalkosten senken.',
+  canonical: 'https://www.orderlyze.com/funkbonieren',
+};
+
+/* Funk-Netzwerk-Diagramm: Geräte der alten Seite */
+const geraete = [
+  { icon: 'devices', label: 'Standkasse 1' },
+  { icon: 'devices', label: 'Standkasse 2' },
+  { icon: 'phone', label: 'Kellner 1' },
+  { icon: 'phone', label: 'Kellner 2' },
+  { icon: 'phone', label: 'Kellner 3' },
+  { icon: 'printer', label: 'Küchendrucker' },
+  { icon: 'printer', label: 'Bardrucker' },
+] as const;
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>Funkbonieren</h1>
+      <p class="page-hero__lead">
+        Mehr <span class="mark">Erfolg</span> mit Funkbonieren
+      </p>
+      <p class="page-hero__text">
+        Damit dein Unternehmen gut läuft, ist es wichtig, dass alles beim Bedienen der Gäste und in
+        der Küche reibungslos funktioniert. Wenn alles schnell und einfach geht, sind die Gäste
+        glücklicher und kommen gerne wieder. Eine Gastronomie, die gut läuft, spart Zeit und Geld
+        und macht mehr Gewinn.
+      </p>
+      <ul class="page-hero__benefits">
+        <li><Icon name="clock" size={18} /> Mehr Zeit</li>
+        <li><Icon name="chart" size={18} /> Höherer Umsatz</li>
+        <li><Icon name="euro" size={18} /> Geringere Kosten</li>
+        <li><Icon name="users" size={18} /> Zufriedene KundInnen</li>
+      </ul>
+      <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+    </div>
+  </section>
+
+  <!-- ── Was ist Funkbonieren ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Grundlagen" title="Was ist Funkbonieren?" mark="Funkbonieren">
+      <Fragment slot="text">
+        <p>
+          Stift und Kellnerblock gehören der Vergangenheit an. Heute nimmst du die Bestellungen
+          ganz einfach per Smartphone oder All-In-One Gerät (integrierter Drucker &amp;
+          Kartenzahlung) auf. Mit einem Fingertipp werden die Bestellungen des Tisches sofort bei
+          der Bar und in der Küche gedruckt. So können viele Wege vermieden, Zeit gespart und der
+          Umsatz gesteigert werden.
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/angebot" variant="secondary" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      </Fragment>
+      <DeviceMockup type="tablet">
+        <video
+          src="/videos/funkbonieren.mp4"
+          muted
+          loop
+          playsinline
+          autoplay
+          preload="none"
+          aria-label="Video: Funkbonieren mit Orderlyze in der Praxis"
+        ></video>
+      </DeviceMockup>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Geräte-Netzwerk ── -->
+  <Section variant="navy">
+    <SectionHead
+      eyebrow="Unbegrenzt viele Geräte"
+      title="Arbeite genau so, wie du es brauchst"
+      lead="Mit dem Orderlyze Gastronomie+ Paket kannst du mit so vielen Geräten arbeiten, wie du benötigst. Egal wie viele Standkassen, wie viele mobile Geräte für die KellnerInnen und wie viele Drucker du benötigst – du bezahlst keinen Aufpreis. Wo deine Bestellungen gedruckt werden, kannst du ganz individuell einrichten und organisieren. Genau so, wie du es dir vorstellst."
+    />
+    <div class="funk-netz reveal" role="img" aria-label="Funk-Netzwerk: Standkassen, Kellner-Geräte und Drucker kommunizieren kabellos miteinander">
+      <div class="funk-netz__hub">
+        <Icon name="wifi" size={36} />
+        <span>Orderlyze<br />Funk</span>
+      </div>
+      {
+        geraete.map((g, i) => (
+          <div class="funk-netz__node" style={`--i:${i}`}>
+            <Icon name={g.icon} size={24} />
+            <span>{g.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ── Stats ── -->
+  <Section variant="surface">
+    <div class="stats">
+      <article class="stat reveal">
+        <p class="stat__nr">+20<span>%</span></p>
+        <h2 class="stat__title">Umsatz um bis zu 20% steigern</h2>
+        <p class="stat__text">
+          Mobiles Bonieren hilft dabei, schnelleren Service für Gäste, zufriedenere Mitarbeiter und
+          einen erfolgreichen Betrieb für Gastronomen zu erreichen. Durch die reduzierten
+          Wartezeiten kannst du schneller Tische wechseln und mehr Umsatz in Stoßzeiten erzielen.
+          Deine Mitarbeiter haben dadurch mehr Zeit für die Gästebewirtung und steigern das
+          Serviceerlebnis, was wiederum zu höheren Bestellungen führt.
+        </p>
+      </article>
+      <article class="stat reveal">
+        <p class="stat__nr"><Icon name="star" size={40} /></p>
+        <h2 class="stat__title">Bester Service für deine Gäste</h2>
+        <p class="stat__text">
+          Erhöhe die Zufriedenheit deiner Gäste mit Orderlyze. Durch die mobile Bestellaufnahme
+          werden lange Wartezeiten und Laufwege vermieden, wodurch deine Gäste schneller und
+          effizienter bedient werden. Nie wieder vergebliches Warten oder falsch ausgelieferte
+          Bestellungen!
+        </p>
+      </article>
+      <article class="stat reveal">
+        <p class="stat__nr">−50<span>%</span></p>
+        <h2 class="stat__title">Personalkosten um 50% senken</h2>
+        <p class="stat__text">
+          Mit dem Funkboniersystem kannst du dank besserer Arbeitsteilung des Personals Geld
+          sparen. Mobiles Bonieren ermöglicht es, erfahrene Servicekräfte direkt am Gast arbeiten
+          zu lassen, während Einsteiger als Runner agieren. Das führt zu besserem Service und
+          glücklicheren Gästen sowie höherer Auslastung der Tische und Umsatzsteigerungen.
+        </p>
+      </article>
+    </div>
+    <p class="stats__cta">
+      <Button href="/angebot" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+    </p>
+  </Section>
+
+  <!-- ── Einrichtung ── -->
+  <Section variant="paper">
+    <FeatureSplit
+      eyebrow="Wenige Minuten Einarbeitungszeit"
+      title="Funkbonieren super schnell einrichten"
+      mark="super schnell"
+      reverse
+    >
+      <Fragment slot="text">
+        <p>
+          Die Orderlyze App ganz einfach auf dein Android- oder iOS-Gerät installieren, die Drucker
+          einschalten und schon kannst du dir selbst einstellen, wohin welche Bestellungen gedruckt
+          werden. So kannst du die Küchenkommunikation genau so aufbauen, wie es für dein
+          Unternehmen am besten ist und wie du am effizientesten arbeiten kannst. Natürlich
+          unterstützen wir dich bei der Einrichtung, und zwar kostenlos.
+        </p>
+      </Fragment>
+      <Image
+        src={kueche}
+        alt="Bestellungen werden per Funk an die Küche gesendet"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <CtaBanner
+    title="Bringe dein Unternehmen mit Funkbonieren auf das nächste Level!"
+    mark="nächste Level"
+    buttonLabel="Angebot anfordern"
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    max-width: 52rem;
+  }
+
+  .page-hero h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.25em;
+  }
+
+  .page-hero__lead {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-heading-dark);
+    margin-bottom: 0.9rem;
+  }
+
+  .page-hero__text {
+    color: var(--color-text-muted);
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  .page-hero__benefits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem 1.6rem;
+    list-style: none;
+    margin: 1.4rem 0 1.8rem;
+    padding: 0;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-navy);
+  }
+
+  .page-hero__benefits li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .page-hero__benefits :global(svg) {
+    color: var(--color-brand);
+  }
+
+  /* ── Funk-Netzwerk ── */
+  .funk-netz {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.1rem;
+    max-width: 52rem;
+    margin-inline: auto;
+    position: relative;
+    padding: 1rem 0;
+  }
+
+  .funk-netz__hub {
+    display: grid;
+    place-items: center;
+    gap: 0.3rem;
+    width: 9.5rem;
+    height: 9.5rem;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: 1.25;
+    box-shadow: 0 0 0 14px rgba(6, 89, 169, 0.25), 0 0 0 28px rgba(6, 89, 169, 0.1);
+    margin: 1.6rem;
+  }
+
+  .funk-netz__node {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--color-navy-2);
+    border: 1px dashed rgba(255, 255, 255, 0.35);
+    border-radius: var(--radius-pill);
+    padding: 0.7rem 1.2rem;
+    color: var(--color-text-on-dark-muted);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .funk-netz__node :global(svg) {
+    color: var(--color-heading);
+  }
+
+  /* ── Stats ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.4rem, 2vw, 2.2rem);
+  }
+
+  .stat {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.7rem;
+  }
+
+  .stat__nr {
+    font-family: var(--font-mono);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-accent-deep);
+    margin: 0 0 0.4rem;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+  }
+
+  .stat__nr span {
+    font-size: 1.6rem;
+  }
+
+  .stat__nr :global(svg) {
+    color: var(--color-accent-deep);
+  }
+
+  .stat__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5em;
+  }
+
+  .stat__text {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .stats__cta {
+    text-align: center;
+    margin: 2.4rem 0 0;
+  }
+
+  @media (max-width: 900px) {
+    .stats {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

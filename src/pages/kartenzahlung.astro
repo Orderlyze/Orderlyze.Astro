@@ -1,0 +1,322 @@
+---
+/**
+ * /kartenzahlung — integrierte Kartenzahlung
+ * Inhalt: planning/content/pages/kartenzahlung.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { EVENTS } from '../config/site';
+
+import bezahlungTheke from '../assets/branchen/cafe-bezahlung-theke.jpg';
+import terminalHobex from '../assets/hardware/kartenterminal-hobex.png';
+import sunmiV2 from '../assets/hardware/sunmi-v2-pro-mobiles-kassengeraet.png';
+
+const meta = {
+  title: 'Kartenzahlung | Orderlyze',
+  description:
+    'Integrierte Kartenzahlung im Orderlyze Kassensystem: EC, MasterCard, Visa, Apple Pay und NFC. Schnell eingerichtet, voll integriert, mehr Umsatz.',
+  canonical: 'https://www.orderlyze.com/kartenzahlung',
+};
+
+const zahlarten = ['EC', 'Maestro / V Pay', 'MasterCard', 'Visa', 'Apple Pay', 'NFC kontaktlos'];
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner">
+      <div class="page-hero__text reveal">
+        <h1>Kartenzahlung</h1>
+        <p class="page-hero__lead">Bereit, deinen <span class="mark">Umsatz</span> zu steigern?</p>
+        <p>
+          Bist du bereits für jede Zahlungsmethode gerüstet? Immer mehr Kunden bevorzugen es,
+          bargeldlos zu bezahlen, vor allem weil es bequem, schnell und sicher ist. Mit Orderlyze
+          kannst du deinen KundInnen genau das bieten. Kartenzahlung ist bei uns wirklich einfach
+          und ist schnell eingerichtet. Das hat auch für dich große Vorteile:
+        </p>
+        <Checklist items={['Zufriedene KundInnen', 'Mehr Umsatz', 'Mehr Zeit']} />
+        <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      </div>
+      <div class="page-hero__media reveal">
+        <Image
+          src={bezahlungTheke}
+          alt="Kundin bezahlt kontaktlos mit Karte an der Café-Theke"
+          widths={[480, 760, 1100]}
+          sizes="(max-width: 860px) 92vw, 46vw"
+          loading="eager"
+          fetchpriority="high"
+          class="photo-rounded"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Zahlungsarten ── -->
+  <Section variant="navy" size="sm">
+    <SectionHead eyebrow="Alle Zahlungsmethoden" title="Kartenzahlung? Kein Problem" mark="Kein Problem" />
+    <ul class="zahlarten reveal">
+      {
+        zahlarten.map((z) => (
+          <li>
+            <Icon name="card" size={20} />
+            {z}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="zahlarten__note">Effizientes Abrechnen. Für größere Flexibilität und mehr Umsatz.</p>
+  </Section>
+
+  <!-- ── NFC ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Kontaktlos" title="Effizient arbeiten. Und Kunden zufriedenstellen." mark="Effizient">
+      <Fragment slot="text">
+        <p>
+          Die Technologie NFC (Near Field Communication) ermöglicht bargeldloses und kontaktloses
+          Bezahlen über Smartphone-Apps wie Apple Pay oder Google Pay oder durch Berühren des
+          Kartenlesegeräts mit der Karte. Durch den Einsatz von NFC sparen sowohl Gastronomen als
+          auch Gäste Zeit im Vergleich zu Bargeldzahlungen. Zusätzlich erleichtert bargeldloses
+          Bezahlen die Buchhaltung und reduziert den Aufwand für das Beschaffen von Wechselgeld,
+          das Sortieren des Geldes und die Kassenbuchführung.
+        </p>
+        <Checklist items={['Schnellerer Service', 'Geringere Wartezeiten', 'Zufriedene KundInnen']} />
+      </Fragment>
+      <div class="nfc-visual" aria-hidden="true">
+        <div class="nfc-visual__waves">
+          <span></span><span></span><span></span>
+        </div>
+        <Icon name="card" size={72} />
+      </div>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Integration ── -->
+  <Section variant="surface">
+    <SectionHead
+      eyebrow="Voll integriert"
+      title="Bargeldlos und kontaktlos bezahlen. So einfach wie noch nie."
+      mark="So einfach"
+      lead="Mit Orderlyze ist Kartenzahlung wirklich einfach. Verbinde dein Gerät mit dem mobilen Kartenterminal oder verwende ein All-In-One Gerät, wo Kassensystem, Drucker und Kartenzahlung in einem sind."
+    />
+    <div class="terminals">
+      <article class="terminal reveal">
+        <div class="terminal__img">
+          <Image
+            src={terminalHobex}
+            alt="Mobiles Kartenterminal für das Orderlyze Kassensystem"
+            widths={[320, 480, 640]}
+            sizes="(max-width: 640px) 80vw, 320px"
+          />
+        </div>
+        <h2 class="terminal__title">Mobiles Kartenterminal</h2>
+        <p class="terminal__sub">Vollintegrierte Kartenzahlung.</p>
+        <Checklist items={['Kontaktlose Zahlungen', 'WLAN und SIM-Karte']} />
+      </article>
+      <article class="terminal reveal">
+        <div class="terminal__img">
+          <Image
+            src={sunmiV2}
+            alt="Sunmi V2 Pro All-in-One Kassengerät mit integriertem Drucker und Kartenzahlung"
+            widths={[320, 480, 640]}
+            sizes="(max-width: 640px) 80vw, 320px"
+          />
+        </div>
+        <h2 class="terminal__title">Sunmi V2 Pro</h2>
+        <p class="terminal__sub">All-In-One: Kasse, Drucker und Kartenzahlung in einem.</p>
+        <Checklist items={['Kontaktlose Zahlungen', 'WLAN und SIM-Karte']} />
+      </article>
+    </div>
+    <div class="terminals__more">
+      <Button href="/hardware" variant="ghost">Zur Hardware-Übersicht <Icon name="arrow" size={18} /></Button>
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Kassensystem mit Kartenzahlung? Hol dir von uns ein kostenloses Angebot."
+    mark="kostenloses"
+    buttonLabel="Angebot anfordern"
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .page-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+
+  .page-hero h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.25em;
+  }
+
+  .page-hero__lead {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-heading-dark);
+    margin-bottom: 1rem;
+  }
+
+  .page-hero__text p {
+    color: var(--color-text-muted);
+  }
+
+  .page-hero__text :global(.btn) {
+    margin-top: 0.6rem;
+  }
+
+  .photo-rounded {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
+  }
+
+  /* Zahlungsarten */
+  .zahlarten {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .zahlarten li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--color-navy-2);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-pill);
+    padding: 0.65rem 1.25rem;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .zahlarten :global(svg) {
+    color: var(--color-heading);
+  }
+
+  .zahlarten__note {
+    text-align: center;
+    color: var(--color-text-on-dark-muted);
+    margin: 1.6rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  /* NFC-Visual */
+  .nfc-visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 11;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    color: var(--color-brand);
+    overflow: hidden;
+  }
+
+  .nfc-visual__waves {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .nfc-visual__waves span {
+    position: absolute;
+    border: 2px solid var(--color-heading);
+    border-radius: 50%;
+    opacity: 0;
+    animation: nfc-pulse 2.6s ease-out infinite;
+  }
+
+  .nfc-visual__waves span:nth-child(1) { width: 120px; height: 120px; }
+  .nfc-visual__waves span:nth-child(2) { width: 200px; height: 200px; animation-delay: 0.5s; }
+  .nfc-visual__waves span:nth-child(3) { width: 290px; height: 290px; animation-delay: 1s; }
+
+  @keyframes nfc-pulse {
+    0% { transform: scale(0.7); opacity: 0.7; }
+    100% { transform: scale(1.15); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nfc-visual__waves span {
+      animation: none;
+      opacity: 0.25;
+    }
+  }
+
+  /* Terminals */
+  .terminals {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.4rem, 2.5vw, 2.4rem);
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .terminal {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.8rem;
+    text-align: center;
+  }
+
+  .terminal__img {
+    display: grid;
+    place-items: center;
+    height: 230px;
+    margin-bottom: 1.2rem;
+  }
+
+  .terminal__img :global(img) {
+    max-height: 230px;
+    width: auto;
+  }
+
+  .terminal__title {
+    font-size: 1.25rem;
+    margin-bottom: 0.2em;
+  }
+
+  .terminal__sub {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .terminal :global(.checklist) {
+    justify-items: center;
+  }
+
+  .terminals__more {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 860px) {
+    .page-hero__inner,
+    .terminals {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

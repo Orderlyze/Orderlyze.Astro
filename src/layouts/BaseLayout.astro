@@ -1,0 +1,115 @@
+---
+/**
+ * Base-Layout aller Seiten — rendert den kompletten SEO-Head:
+ * Title/Description/OG/Canonical aus Props (Quelle: Frontmatter der
+ * Content-Dateien in planning/content/pages/), Tool-Snippets zentral
+ * aus src/config/site.ts (planning/seo-tools.md).
+ */
+import '@fontsource-variable/raleway';
+import '@fontsource-variable/open-sans';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, PLAUSIBLE, VERIFICATION } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  /** Canonical-Pfad; Default = aktuelle URL ohne Trailing-Slash */
+  canonical?: string;
+  noindex?: boolean;
+  /** Header/Footer ausblenden (z. B. Angebots-Wizard im Fokus-Modus) */
+  chrome?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogTitle = title,
+  ogDescription = description,
+  ogImage,
+  canonical,
+  noindex = false,
+  chrome = true,
+} = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '');
+const canonicalUrl = canonical ?? `${SITE.url}${pathname}`;
+const ogImageUrl = ogImage ? new URL(ogImage, SITE.url).href : undefined;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Tool-Verifizierung (Werte in src/config/site.ts pflegen) -->
+    {VERIFICATION.ahrefs && <meta name="ahrefs-site-verification" content={VERIFICATION.ahrefs} />}
+    {VERIFICATION.bing && <meta name="msvalidate.01" content={VERIFICATION.bing} />}
+    {VERIFICATION.google && <meta name="google-site-verification" content={VERIFICATION.google} />}
+
+    <!-- Plausible Analytics (cookielos) -->
+    <script defer data-domain={PLAUSIBLE.domain} src={PLAUSIBLE.src}></script>
+
+    <!-- Slot für seitenspezifische Head-Einträge (z. B. JSON-LD) -->
+    <slot name="head" />
+
+    <!-- Scroll-Reveal: nur mit JS aktiv, sonst bleibt alles sichtbar -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    {chrome && <Header />}
+    <main id="main">
+      <slot />
+    </main>
+    {chrome && <Footer />}
+
+    <script>
+      // Scroll-Reveal für .reveal-Elemente
+      const els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window && els.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

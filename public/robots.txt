@@ -1,0 +1,7 @@
+# orderlyze.com — robots.txt
+# AhrefsBot/AhrefsSiteAudit und bingbot NICHT blockieren (planning/seo-tools.md)
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.orderlyze.com/sitemap-index.xml

@@ -1,0 +1,476 @@
+---
+/**
+ * /preise — monatliche Pakete + einmalige Hardware-Kosten
+ * Inhalt: planning/content/pages/preise.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ReceiptCard from '../components/ReceiptCard.astro';
+import HardwareBundles from '../components/HardwareBundles.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+
+import staender from '../assets/hardware/tablet-staender.png';
+import kassenladeK2 from '../assets/hardware/kassenlade-k2.png';
+import kassenladeK4 from '../assets/hardware/kassenlade-k4.png';
+import cloudDrucker from '../assets/hardware/bondrucker.png';
+
+const meta = {
+  title: 'Preise | Orderlyze',
+  description:
+    'Transparente Preise für das Orderlyze Kassensystem: Software ab 39€ pro Monat inkl. Finanzamt-Signatur und Support, dazu einmalige Hardware-Kosten.',
+  canonical: 'https://www.orderlyze.com/preise',
+};
+
+const pakete = [
+  {
+    name: 'Dienstleistungen',
+    preis: '39€',
+    highlight: false,
+    tilt: 'left' as const,
+    leistungen: [
+      'alle Funktionen enthalten',
+      'kostenloser Support',
+      'Finanzamt Signatur inkl.',
+      'keine zusätzlichen Kosten!',
+    ],
+  },
+  {
+    name: 'Gastronomie',
+    preis: '49€',
+    highlight: false,
+    tilt: 'none' as const,
+    leistungen: [
+      'alle Funktionen enthalten',
+      'kostenloser Support',
+      'Finanzamt Signatur inkl.',
+      'keine zusätzlichen Kosten!',
+    ],
+  },
+  {
+    name: 'Gastronomie +',
+    preis: '75€',
+    highlight: true,
+    tilt: 'right' as const,
+    leistungen: [
+      'alle Funktionen enthalten',
+      'kostenloser Support',
+      'mit Küchenkommunikation',
+      'unbegrenzt viele Geräte',
+      'Finanzamt Signatur inkl.',
+      'keine zusätzlichen Kosten!',
+    ],
+  },
+];
+
+const zubehoer = [
+  { img: staender, alt: 'Tablet-Ständer', name: 'Tablet Ständer', detail: '', preis: '22,90€' },
+  { img: kassenladeK4, alt: 'Kassenlade K-4', name: 'Kassenlade K-4', detail: '245 × 320 × 105 mm, 3 kg · 3 Münzfächer, 3 Scheinfächer', preis: '69,90€' },
+  { img: cloudDrucker, alt: 'Cloud-Bondrucker', name: 'Cloud Drucker', detail: '', preis: '265,00€' },
+  { img: kassenladeK2, alt: 'Kassenlade K-2', name: 'Kassenlade K-2', detail: '330 × 101 × 330 mm, 5,2 kg · 8 Münz-, 4 Scheinfächer, 1 Scheckfach', preis: '85,60€' },
+];
+
+const kassenbuchLeistungen = [
+  'Finanzamtkonforme Kassenbuchführung',
+  'Daten-Export zur Steuerberatung',
+  'Perfekt ins Kassensystem integriert',
+  'Automatische Übertragung aus der Kasse',
+  'Fortlaufende und automatische Nummerierung',
+  'Alle Einnahmen und Ausgaben erfassen',
+  'Automatischer Verlauf aller Bar-Transaktionen',
+  'Getrennte Mehrwertsteuer-Positionen',
+  'Aktueller Kassenstand jederzeit',
+  'Von allen Geräten abrufbereit',
+];
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>Unsere Preise</h1>
+      <p class="page-hero__lead">
+        Die Kosten für das Orderlyze Kassensystem bestehen aus <strong>2 Teilen</strong>:
+      </p>
+      <div class="kosten-teile">
+        <a href="#monatlich" class="kosten-teil">
+          <span class="kosten-teil__nr">1</span>
+          <span class="kosten-teil__label">monatliche Kosten</span>
+          <span class="kosten-teil__sub">Software-Lizenz + Finanzamt-Signatur</span>
+        </a>
+        <a href="#einmalig" class="kosten-teil">
+          <span class="kosten-teil__nr">2</span>
+          <span class="kosten-teil__label">einmalige Kosten</span>
+          <span class="kosten-teil__sub">Die Hardware/Geräte, die du benötigst</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 1: Monatliche Pakete (Kassenbon-Karten) ── -->
+  <Section variant="surface" id="monatlich">
+    <SectionHead eyebrow="Teil 1 · monatliche Kosten" title="Wähle dein Paket" mark="Paket" />
+    <div class="pakete">
+      {
+        pakete.map((p) => (
+          <ReceiptCard tilt={p.tilt} class:list={['paket reveal', { 'paket--highlight': p.highlight }]}>
+            <p class="receipt-mono">— Orderlyze · {p.name} —</p>
+            <hr class="receipt-rule" />
+            <ul class="paket__leistungen">
+              {p.leistungen.map((l) => (
+                <li>
+                  <Icon name="check" size={18} />
+                  {l}
+                </li>
+              ))}
+            </ul>
+            <hr class="receipt-rule" />
+            <p class="receipt-row paket__summe">
+              <span class="receipt-mono">Gesamt</span>
+              <span class="paket__preis">
+                {p.preis}
+                <small>pro Monat</small>
+              </span>
+            </p>
+            <Button href="/angebot" class="paket__cta" event="CTA Angebot">Angebot anfordern</Button>
+          </ReceiptCard>
+        ))
+      }
+    </div>
+    <p class="pakete__note">* Preise exkl. MwSt. Einmalige Aktivierungsgebühr € 199,–</p>
+  </Section>
+
+  <!-- ── Kassenbuch-Add-on ── -->
+  <Section variant="paper" size="sm">
+    <div class="kassenbuch reveal">
+      <div class="kassenbuch__text">
+        <p class="kassenbuch__eyebrow">Add-on</p>
+        <h2>Kassenbuch</h2>
+        <Checklist items={kassenbuchLeistungen} class="kassenbuch__liste" />
+      </div>
+      <div class="kassenbuch__preisbox">
+        <p class="kassenbuch__preis">13€</p>
+        <p class="kassenbuch__pro">pro Monat</p>
+        <Button href="/angebot" event="CTA Angebot">Angebot anfordern</Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ── 2: Hardware ── -->
+  <Section variant="surface" id="einmalig">
+    <SectionHead
+      eyebrow="Teil 2 · einmalige Kosten"
+      title="Einmalige Kosten für die Hardware"
+      mark="Hardware"
+    />
+    <h3 class="hw-untertitel">Tablet Kassensystem</h3>
+    <HardwareBundles samsungName="Samsung Tab A9+" druckerZusatz=" (Cloud: 265€)" />
+
+    <h3 class="hw-untertitel">Zubehör</h3>
+    <div class="zubehoer">
+      {
+        zubehoer.map((p) => (
+          <article class="zubehoer__item reveal">
+            <div class="zubehoer__img">
+              <Image src={p.img} alt={p.alt} widths={[200, 400]} sizes="150px" />
+            </div>
+            <h4 class="zubehoer__name">{p.name}</h4>
+            {p.detail && <p class="zubehoer__detail">{p.detail}</p>}
+            <p class="zubehoer__preis">{p.preis}</p>
+            <Button href="/bestellen" variant="secondary">Jetzt bestellen</Button>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Unsicher, welches Paket passt? Hol dir ein kostenloses Angebot!"
+    mark="kostenloses"
+    buttonLabel="Angebot anfordern"
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--color-navy);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+
+  .page-hero h1 {
+    color: #fff;
+    font-size: var(--text-h1);
+    margin-bottom: 0.3em;
+  }
+
+  .page-hero__lead {
+    color: var(--color-text-on-dark-muted);
+    font-size: var(--text-lead);
+    margin-bottom: 2rem;
+  }
+
+  .page-hero__lead strong {
+    color: var(--color-accent);
+  }
+
+  .kosten-teile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .kosten-teil {
+    display: grid;
+    justify-items: center;
+    gap: 0.2rem;
+    background: var(--color-navy-2);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-card);
+    padding: 1.4rem 2.2rem;
+    text-decoration: none;
+    transition: border-color var(--transition), transform var(--transition);
+    min-width: 16rem;
+  }
+
+  .kosten-teil:hover {
+    border-color: var(--color-heading);
+    transform: translateY(-3px);
+  }
+
+  .kosten-teil__nr {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: grid;
+    place-items: center;
+    background: var(--color-accent);
+    color: var(--color-navy);
+    font-family: var(--font-heading);
+    font-weight: 800;
+    border-radius: 50%;
+    margin-bottom: 0.3rem;
+  }
+
+  .kosten-teil__label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+  }
+
+  .kosten-teil__sub {
+    font-size: 0.85rem;
+    color: var(--color-text-on-dark-muted);
+  }
+
+  /* Pakete */
+  .pakete {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.4rem, 2.5vw, 2.5rem);
+    align-items: stretch;
+  }
+
+  .pakete :global(.paket--highlight .receipt__paper) {
+    outline: 3px solid var(--color-accent);
+    outline-offset: -3px;
+  }
+
+  .paket__leistungen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+    font-size: 0.95rem;
+  }
+
+  .paket__leistungen li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .paket__leistungen :global(svg) {
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  .paket__summe {
+    align-items: center;
+    margin: 0 0 1.2rem;
+  }
+
+  .paket__preis {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+
+  .paket__preis small {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+  }
+
+  .pakete :global(.paket__cta) {
+    width: 100%;
+  }
+
+  .pakete__note {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 2.2rem 0 0;
+  }
+
+  /* Kassenbuch */
+  .kassenbuch {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(2rem, 3vw, 3.5rem);
+    align-items: center;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: clamp(1.8rem, 3vw, 3rem);
+  }
+
+  .kassenbuch__eyebrow {
+    font-family: var(--font-heading);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-accent-deep);
+    margin: 0 0 0.5rem;
+  }
+
+  .kassenbuch h2 {
+    margin-bottom: 0.8rem;
+  }
+
+  .kassenbuch :global(.kassenbuch__liste) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    font-size: 0.93rem;
+  }
+
+  .kassenbuch__preisbox {
+    text-align: center;
+    background: #fff;
+    border: 2px dashed var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 2.2rem 1.8rem;
+  }
+
+  .kassenbuch__preis {
+    font-family: var(--font-mono);
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .kassenbuch__pro {
+    color: var(--color-text-muted);
+    margin: 0.3rem 0 1.4rem;
+  }
+
+  /* Hardware-Sektion */
+  .hw-untertitel {
+    font-size: var(--text-h3);
+    margin: 3rem 0 1.4rem;
+  }
+
+  .zubehoer {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.3rem;
+  }
+
+  .zubehoer__item {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 1.6rem 1.3rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .zubehoer__img {
+    display: grid;
+    place-items: center;
+    height: 130px;
+    margin-bottom: 0.9rem;
+  }
+
+  .zubehoer__img :global(img) {
+    max-height: 130px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .zubehoer__name {
+    font-size: 1.05rem;
+    margin-bottom: 0.2em;
+  }
+
+  .zubehoer__detail {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+    margin-bottom: 0.4rem;
+  }
+
+  .zubehoer__preis {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin: auto 0 1rem;
+  }
+
+  @media (max-width: 1000px) {
+    .pakete {
+      grid-template-columns: 1fr;
+      max-width: 26rem;
+      margin-inline: auto;
+    }
+
+    .zubehoer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .kassenbuch {
+      grid-template-columns: 1fr;
+    }
+
+    .kassenbuch :global(.kassenbuch__liste) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .zubehoer {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,183 @@
+---
+/**
+ * /technische-sicherheitseinrichtung — TSE-Ratgeberseite (DE)
+ * Inhalt: planning/content/pages/technische-sicherheitseinrichtung.md
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { EVENTS } from '../config/site';
+
+const meta = {
+  title: 'Was ist die TSE und ab wann gilt diese?',
+  description:
+    'Laut der Kassensicherungsverordnung (KassenSichV) muss ab Januar 2023 jede Registrierkasse mit einer Technischen Sicherheitseinrichtung (TSE) ausgestattet sein. Erfahre hier, was du dabei beachten solltest.',
+  canonical: 'https://www.orderlyze.com/technische-sicherheitseinrichtung',
+};
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>Was ist die TSE für Registrierkassen?</h1>
+      <p class="page-hero__hinweis">
+        <Icon name="shield" size={18} /> Achtung: die letzte TSE-Frist endete am 31.12.2022 — seither gilt die Pflicht ohne Ausnahmen!
+      </p>
+      <p class="page-hero__lead">
+        TSE steht für <strong>Technische Sicherheitseinrichtung</strong> und ist eine technische
+        Schutzmaßnahme vor Manipulationen an digitalen Aufzeichnungen. Dadurch soll verhindert
+        werden, dass Aufzeichnungen, die du mit deinem Kassensystem tätigst, nachträglich geändert
+        oder gelöscht werden. Die Verpflichtung, eine TSE-konforme Kasse zu haben, wurde in der
+        Kassensicherungsverordnung (KassenSichV) festgelegt, welche seit 2020 in Deutschland gilt.
+        Aufgrund von Übergangsregelungen gilt die TSE-Pflicht zu 100% seit dem 01.01.2023 — ohne
+        Ausnahmen für Kassensysteme ohne TSE.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Wer ist verpflichtet ── -->
+  <Section variant="paper">
+    <div class="tse-block reveal">
+      <h2>Wer ist verpflichtet, eine TSE zu haben?</h2>
+      <p>
+        Seit dem 01. Januar 2023 müssen elektronische Registrierkassen mit einer zertifizierten
+        Sicherheitseinrichtung ausgestattet sein. Das betrifft <strong>alle Branchen</strong>, auch
+        die Gastronomie.
+      </p>
+      <p>Die Regelung gilt auch dann,</p>
+      <Checklist
+        items={[
+          'wenn deine Kasse zwischen dem 25. November 2010 und dem 01. Januar 2020 angeschafft wurde und der GoBD entspricht,',
+          'wenn deine Kasse nicht umgerüstet werden kann — in diesem Fall musst du ein neues Kassensystem erwerben.',
+        ]}
+      />
+      <p class="tse-block__fazit">
+        Kurz zusammengefasst: <strong>Alle elektronischen Kassensysteme müssen eine TSE aufweisen!</strong>
+      </p>
+    </div>
+  </Section>
+
+  <!-- ── Lösung ── -->
+  <Section variant="navy">
+    <div class="tse-loesung reveal">
+      <Icon name="check" size={52} />
+      <h2>Wir bieten dir alles, was du brauchst</h2>
+      <p>
+        Wenn man deine aktuelle Kasse nicht aufrüsten kann, dann empfehlen wir den Umstieg auf
+        unser Kassensystem. Mit Orderlyze bist du <strong>100% Finanzamt- und KassenSichV-konform</strong>.
+        Über die TSE-Pflicht brauchst du dir also keine Sorgen zu machen.
+      </p>
+      <p>
+        Hol dir ein kostenloses Angebot ein oder buche dir ein kostenloses Beratungsgespräch durch
+        einen Experten.
+      </p>
+      <div class="tse-loesung__actions">
+        <Button href="/angebot" size="lg" variant="on-dark" event={EVENTS.ctaAngebot}>
+          Beratungsgespräch buchen
+        </Button>
+        <a href="/preise" class="tse-loesung__preise">Hier findest du alle Preise!</a>
+      </div>
+    </div>
+  </Section>
+
+  <CtaBanner title="Mit Orderlyze bist du auf der sicheren Seite." mark="sicheren" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    max-width: 50rem;
+  }
+
+  .page-hero h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.55em;
+  }
+
+  .page-hero__hinweis {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: color-mix(in srgb, var(--color-accent) 16%, #fff);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, #fff);
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 1.1rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-navy);
+    margin-bottom: 1.4rem;
+  }
+
+  .page-hero__hinweis :global(svg) {
+    color: var(--color-accent-deep);
+    flex-shrink: 0;
+  }
+
+  .page-hero__lead {
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .tse-block {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  .tse-block p {
+    color: var(--color-text-muted);
+    line-height: 1.75;
+  }
+
+  .tse-block__fazit {
+    background: var(--color-surface);
+    border-left: 4px solid var(--color-brand);
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.3rem;
+    color: var(--color-navy) !important;
+  }
+
+  .tse-loesung {
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .tse-loesung :global(svg) {
+    color: var(--color-accent);
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
+
+  .tse-loesung h2 {
+    color: #fff;
+  }
+
+  .tse-loesung strong {
+    color: #fff;
+  }
+
+  .tse-loesung__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.8rem;
+  }
+
+  .tse-loesung__preise {
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+</style>

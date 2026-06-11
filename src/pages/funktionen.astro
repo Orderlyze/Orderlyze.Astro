@@ -1,0 +1,311 @@
+---
+/**
+ * /funktionen — Funktionsübersicht
+ * Inhalt: planning/content/pages/funktionen.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import Card from '../components/Card.astro';
+import CardGrid from '../components/CardGrid.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import ReceiptCard from '../components/ReceiptCard.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import DeviceMockup from '../components/DeviceMockup.astro';
+import { EVENTS } from '../config/site';
+
+import bezahlungTheke from '../assets/branchen/cafe-bezahlung-theke.jpg';
+import verwaltungMac from '../assets/screenshots/verwaltung-dashboard-mac.png';
+
+const meta = {
+  title: 'Funktionen | Orderlyze',
+  description:
+    'Alle Funktionen des Orderlyze Kassensystems im Überblick: Rechnungen, Kartenzahlung, Verwaltung, Datenexporte, Funkbonieren, Tischplan und mehr.',
+  canonical: 'https://www.orderlyze.com/funktionen',
+};
+
+const fuerAlle = [
+  { icon: 'receipt', title: 'Rechnungen erstellen und bearbeiten' },
+  { icon: 'card', title: 'Kartenzahlung und Kassenlade' },
+  { icon: 'settings', title: 'Verwaltung von Produkten etc.' },
+  { icon: 'export', title: 'Datenexporte für Steuerberater' },
+  { icon: 'star', title: 'Gutscheine & Rabatte' },
+  { icon: 'users', title: 'Kundenmanagement' },
+  { icon: 'users', title: 'Mitarbeiterverwaltung' },
+  { icon: 'sync', title: 'Stornobuchungen' },
+] as const;
+
+const fuerGastro = [
+  { icon: 'wifi', title: 'Funkbonieren', href: '/funkbonieren' },
+  { icon: 'devices', title: 'Tischplan' },
+  { icon: 'clock', title: 'Gängesystem' },
+  { icon: 'printer', title: 'Bewirtungsbeleg' },
+] as const;
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner">
+      <div class="reveal">
+        <h1>Funktionen</h1>
+        <p class="page-hero__lead">All das, was du <span class="mark">wirklich</span> brauchst.</p>
+        <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Für alle ── -->
+  <Section variant="paper">
+    <SectionHead eyebrow="Für alle Branchen" title="Für alle" lead="Die Basis-Funktionen, auf die sich jeder Betrieb verlassen kann." />
+    <CardGrid columns={4}>
+      {
+        fuerAlle.map((f) => (
+          <Card title={f.title} level={3}>
+            <Icon name={f.icon} slot="icon" size={28} />
+          </Card>
+        ))
+      }
+    </CardGrid>
+  </Section>
+
+  <!-- ── Für die Gastronomie ── -->
+  <Section variant="navy" size="sm">
+    <SectionHead eyebrow="Speziell für Gastro" title="Für die Gastronomie" />
+    <CardGrid columns={4}>
+      {
+        fuerGastro.map((f) => (
+          <Card title={f.title} level={3} href={'href' in f ? f.href : undefined}>
+            <Icon name={f.icon} slot="icon" size={28} />
+          </Card>
+        ))
+      }
+    </CardGrid>
+  </Section>
+
+  <!-- ── Kartenzahlung ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Kartenzahlung" title="Umsatz steigern. Mit Kartenzahlung." mark="Kartenzahlung">
+      <Fragment slot="text">
+        <p>
+          Bist du bereits für jede Zahlungsmethode gerüstet? Immer mehr Kunden bevorzugen es,
+          bargeldlos zu bezahlen, vor allem weil es bequem, schnell und sicher ist. Mit Orderlyze
+          kannst du deinen KundInnen genau das bieten. Kartenzahlung ist bei uns wirklich einfach
+          und ist schnell eingerichtet. Das hat auch für dich große Vorteile:
+        </p>
+        <Checklist items={['Zufriedene KundInnen', 'Mehr Umsatz', 'Mehr Zeit']} />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/kartenzahlung" variant="secondary">Mehr erfahren</Button>
+      </Fragment>
+      <Image
+        src={bezahlungTheke}
+        alt="Kundin bezahlt bargeldlos mit Karte an der Theke"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+        class="photo-rounded"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Funkbonieren ── -->
+  <Section variant="surface">
+    <FeatureSplit
+      eyebrow="Funkbonieren"
+      title="So effizient wie noch nie. Gewinne Zeit und steigere deinen Umsatz."
+      mark="effizient"
+      reverse
+    >
+      <Fragment slot="text">
+        <p>
+          Bestellungen vom Tisch in die Küche oder zur Bar zu senden ist mit Orderlyze so einfach
+          wie noch nie. Egal ob mit Smartphone oder All-in-One Gerät (integrierter Drucker +
+          Kartenzahlung), mit der Orderlyze App können deine KellnerInnen super effizient arbeiten,
+          ohne viel Einarbeitungszeit. Mit Funkbonieren holst du das Maximum aus deinem
+          Unternehmen:
+        </p>
+        <Checklist
+          items={[
+            'Schneller und effizienter aufnehmen',
+            'Höhere Kundenzufriedenheit',
+            'Minimiert Fehler bei der Bestellaufnahme',
+            'Geringere Wartezeiten',
+            'Mehr Umsatz, mehr Zeit',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/funkbonieren" variant="secondary">Mehr erfahren</Button>
+      </Fragment>
+      <DeviceMockup type="tablet">
+        <video
+          src="/videos/funkbonieren.mp4"
+          muted
+          loop
+          playsinline
+          autoplay
+          preload="none"
+          aria-label="Video: Funkbonieren mit Orderlyze"
+        ></video>
+      </DeviceMockup>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Verwaltung ── -->
+  <Section variant="paper">
+    <FeatureSplit
+      eyebrow="Verwaltung"
+      title="Einfach übersichtlich. Einfach praktisch. Einfach mehr Zeit. Mit orderlyze web."
+      mark="orderlyze web"
+    >
+      <Fragment slot="text">
+        <p>
+          Von der Einrichtung über die Verwaltung bis zu den Auswertungen. orderlyze web
+          erleichtert dir, dein Unternehmen zu verwalten und organisieren. Preisänderungen
+          durchführen, Tages- und Monatsberichte erstellen sowie Statistiken &amp; Umsätze ansehen
+          sind ab sofort kein Problem mehr.
+        </p>
+        <Checklist
+          items={[
+            'Super einfach und bequem von überall verwalten',
+            'Einstellungen für deine Wünsche anpassen',
+            'Exporte für SteuerberaterInnen mit nur wenigen Klicks',
+            'Diverse Berichte und Statistiken',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/verwaltung" variant="secondary">Mehr erfahren</Button>
+      </Fragment>
+      <Image
+        src={verwaltungMac}
+        alt="orderlyze web Verwaltung am Laptop"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Konform-Statement ── -->
+  <Section variant="accent" size="sm">
+    <div class="konform-statement reveal">
+      <h2>
+        Spar dir deine Sorgen und Mühen. Mit Orderlyze bist du zu
+        <strong>100% finanzamtkonform</strong> und musst dich um nichts kümmern.
+      </h2>
+      <Button href="/angebot" variant="on-dark" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+    </div>
+  </Section>
+
+  <!-- ── Testimonials ── -->
+  <Section variant="paper">
+    <SectionHead eyebrow="Kundenstimmen" title="Unzählige Kunden schenken uns ihr Vertrauen" mark="Vertrauen" />
+    <div class="testimonials">
+      <ReceiptCard tilt="left" class="reveal">
+        <p class="receipt-mono">— Kundenstimme #001 —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="testimonial-quote">
+          Seit dem ich Orderlyze verwende, habe ich keine Probleme gehabt. Alles geht super einfach
+          und ich kann alle meine Produkte unkompliziert bearbeiten. Einfach toll!
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="receipt-row">
+          <strong>Carlo M.</strong>
+          <span class="receipt-mono">Pizzachef</span>
+        </p>
+      </ReceiptCard>
+      <ReceiptCard tilt="right" class="reveal">
+        <p class="receipt-mono">— Kundenstimme #002 —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="testimonial-quote">
+          Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und
+          keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware
+          sehr günstig gewesen.
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="receipt-row">
+          <strong>Helene S.</strong>
+          <span class="receipt-mono">Kosmetikerin</span>
+        </p>
+      </ReceiptCard>
+    </div>
+    <p class="testimonials-cta">
+      <Button href="/angebot" event={EVENTS.ctaAngebot}>Hol dir auch ein Angebot</Button>
+    </p>
+  </Section>
+
+  <CtaBanner title="Interessiert? Dann hol dir ein unverbindliches Angebot" mark="unverbindliches" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--color-navy);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
+  }
+
+  .page-hero h1 {
+    color: #fff;
+    font-size: var(--text-h1);
+    margin-bottom: 0.3em;
+  }
+
+  .page-hero__lead {
+    font-size: var(--text-lead);
+    color: var(--color-text-on-dark-muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .photo-rounded {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
+  }
+
+  .konform-statement {
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) auto;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .konform-statement h2 {
+    font-size: clamp(1.3rem, 1.1rem + 1.2vw, 1.9rem);
+    color: var(--color-navy);
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .testimonial-quote {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  .testimonials-cta {
+    text-align: center;
+    margin: 2.6rem 0 0;
+  }
+
+  @media (max-width: 860px) {
+    .konform-statement,
+    .testimonials {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

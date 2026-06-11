@@ -1,0 +1,98 @@
+---
+/**
+ * Inhalts-Karte: Icon-Slot + Titel + Text. Auf hellen wie dunklen Flächen.
+ */
+interface Props {
+  title: string;
+  href?: string;
+  level?: 3 | 4;
+  class?: string;
+}
+
+const { title, href, level = 3, class: className } = Astro.props;
+const Tag = `h${level}` as 'h3' | 'h4';
+---
+
+<article class:list={['card', { 'card--linked': !!href }, 'reveal', className]}>
+  <div class="card__icon">
+    <slot name="icon" />
+  </div>
+  <Tag class="card__title">
+    {href ? (
+      <a href={href} class="card__link">
+        {title}
+      </a>
+    ) : (
+      title
+    )}
+  </Tag>
+  <div class="card__body">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .card {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 1.8rem 1.6rem;
+    position: relative;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  }
+
+  :global(.section--navy) .card {
+    background: var(--color-navy-2);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .card--linked:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+    border-color: var(--color-heading);
+  }
+
+  .card__icon {
+    color: var(--color-brand);
+    margin-bottom: 1rem;
+  }
+
+  .card__icon:empty {
+    display: none;
+  }
+
+  :global(.section--navy) .card__icon {
+    color: var(--color-heading);
+  }
+
+  .card__title {
+    font-size: 1.18rem;
+    margin-bottom: 0.45em;
+  }
+
+  .card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Klickfläche der ganzen Karte */
+  .card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card__body {
+    color: var(--color-text-muted);
+    font-size: 0.97rem;
+    line-height: 1.65;
+  }
+
+  :global(.section--navy) .card__body {
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .card__body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+/**
+ * Sektions-Container mit Farbflächen-Varianten.
+ * `paper` = weiß, `surface` = helles Blaugrau, `navy` = dunkel (mit
+ * Punktraster-Textur), `accent` = Orange.
+ */
+interface Props {
+  variant?: 'paper' | 'surface' | 'navy' | 'accent';
+  size?: 'md' | 'sm';
+  id?: string;
+  class?: string;
+}
+
+const { variant = 'paper', size = 'md', id, class: className } = Astro.props;
+---
+
+<section {id} class:list={['section', `section--${variant}`, `section--${size}`, className]}>
+  <div class="container">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+
+  .section--sm {
+    padding-block: var(--space-section-sm);
+  }
+
+  .section--surface {
+    background: var(--color-surface);
+  }
+
+  .section--navy {
+    background: var(--color-navy);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .section--navy :global(h1),
+  .section--navy :global(h2),
+  .section--navy :global(h3) {
+    color: #fff;
+  }
+
+  .section--accent {
+    background: var(--color-accent);
+    color: var(--color-navy);
+  }
+</style>

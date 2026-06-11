@@ -1,0 +1,211 @@
+---
+/**
+ * /finanzamt-konform — RKSV, KassenSichV, TSE
+ * Inhalt: planning/content/pages/finanzamt-konform.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+
+import badgeRksv from '../assets/logos/badge-rksv-2025.png';
+import badgeKassenSichV from '../assets/logos/badge-kassensichv-2025.png';
+import badgeSicherheit from '../assets/logos/badge-sicherheit.png';
+
+const meta = {
+  title: 'Finanzamtkonform | Orderlyze',
+  description:
+    '100% finanzamtkonform mit Orderlyze: RKSV (Österreich), KassenSichV und TSE (Deutschland) — was die Zertifikate bedeuten und welche Vorteile sie dir bieten.',
+  canonical: 'https://www.orderlyze.com/finanzamt-konform',
+};
+
+const zertifikate = [
+  {
+    badge: badgeRksv,
+    alt: 'RKSV-konform Badge',
+    flagge: 'Österreich',
+    title: 'RKSV konform',
+    text: [
+      'Die Registrierkassensicherheitsverordnung (kurz RKSV) definiert grundsätzlich, welche Anforderungen an Registrierkassen gestellt werden, und vor allem, was genau eine Registrierkassa in Österreich können muss.',
+      'Mit Orderlyze musst du dir darüber keine Sorgen machen, weil wir zu 100% RKSV konform sind, und das bleibt auch so.',
+    ],
+  },
+  {
+    badge: badgeKassenSichV,
+    alt: 'KassenSichV-konform Badge',
+    flagge: 'Deutschland',
+    title: 'KassenSichV konform',
+    text: [
+      'Die Kassensicherungsverordnung (kurz KassenSichV) gilt seit dem 01.01.2020. Ab diesem Zeitpunkt müssen in Deutschland Registrierkassen mit einer zertifizierten technischen Sicherheitseinrichtung (TSE) versehen sein.',
+      'Diese ist für die Erfassung von Belegen (Einzelaufzeichnungen) verantwortlich, um eine Manipulation im Nachhinein auszuschließen. Es handelt sich einfach ausgedrückt um eine Box, welche die Veränderung von Daten verhindert.',
+      'Mit Orderlyze bist du zu 100% KassenSichV konform und brauchst dir keine Sorgen darüber machen.',
+    ],
+  },
+  {
+    badge: badgeSicherheit,
+    alt: 'TSE-konform Badge',
+    flagge: 'Deutschland',
+    title: 'TSE konform',
+    text: [
+      'TSE steht für Technische Sicherheitseinrichtung und ist eine technische Schutzmaßnahme vor Manipulationen an digitalen Aufzeichnungen. Dadurch soll verhindert werden, dass Aufzeichnungen, die du mit deinem Kassensystem tätigst, nachträglich geändert oder gelöscht werden.',
+      'Die Verpflichtung, eine TSE-konforme Kasse zu haben, wurde in der Kassensicherungsverordnung (KassenSichV) festgelegt, welche seit 2020 in Deutschland gilt. Aufgrund von Übergangsregelungen startet die TSE-Pflicht zu 100% ab 01.01.2023 — ab diesem Zeitpunkt gibt es keine Ausnahmen für Kassensysteme ohne TSE.',
+      'Mit Orderlyze musst du dir keine Sorgen über die TSE machen!',
+    ],
+    link: { href: '/technische-sicherheitseinrichtung', label: 'Mehr zur TSE erfahren' },
+  },
+];
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <p class="page-hero__shield"><Icon name="shield" size={52} /></p>
+      <h1>100% Finanzamt konform</h1>
+      <p class="page-hero__lead">
+        Warum diese Zertifikate für dich wichtig sind und welche Vorteile dir Orderlyze bietet
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Zertifikate ── -->
+  <Section variant="paper">
+    <div class="zerts">
+      {
+        zertifikate.map((z) => (
+          <article class="zert reveal">
+            <div class="zert__badge">
+              <Image src={z.badge} alt={z.alt} widths={[160, 320]} sizes="130px" />
+              <span class="zert__land">{z.flagge}</span>
+            </div>
+            <div class="zert__body">
+              <h2 class="zert__title">{z.title}</h2>
+              {z.text.map((p) => (
+                <p>{p}</p>
+              ))}
+              {z.link && (
+                <a href={z.link.href} class="zert__link">
+                  {z.link.label} <Icon name="arrow" size={16} />
+                </a>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Keine Sorge, mit uns bist du konform!"
+    mark="konform"
+    buttonLabel="Unverbindliches Angebot"
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--color-navy);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    max-width: 50rem;
+  }
+
+  .page-hero__shield {
+    color: var(--color-accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .page-hero__shield :global(svg) {
+    margin-inline: auto;
+  }
+
+  .page-hero h1 {
+    color: #fff;
+    font-size: var(--text-h1);
+    margin-bottom: 0.3em;
+  }
+
+  .page-hero__lead {
+    color: var(--color-text-on-dark-muted);
+    font-size: var(--text-lead);
+    margin: 0;
+  }
+
+  .zerts {
+    display: grid;
+    gap: clamp(2rem, 3vw, 3rem);
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .zert {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: clamp(1.4rem, 3vw, 2.6rem);
+    align-items: start;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+  }
+
+  .zert__badge {
+    display: grid;
+    justify-items: center;
+    gap: 0.6rem;
+  }
+
+  .zert__badge :global(img) {
+    width: 130px;
+    height: auto;
+  }
+
+  .zert__land {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    background: #fff;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.25rem 0.8rem;
+  }
+
+  .zert__title {
+    margin-bottom: 0.5em;
+  }
+
+  .zert__body p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .zert__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  @media (max-width: 700px) {
+    .zert {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .zert__link {
+      justify-content: center;
+    }
+  }
+</style>

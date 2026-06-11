@@ -1,0 +1,114 @@
+---
+/**
+ * Zweispaltige Feature-Sektion: Text links, Medien rechts (oder gespiegelt).
+ * Medien kommen über den Default-Slot (Bild, DeviceMockup, Video …),
+ * Text über die benannten Props/Slots.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  level?: 2 | 3;
+  reverse?: boolean;
+  mark?: string;
+}
+
+const { eyebrow, title, level = 2, reverse = false, mark } = Astro.props;
+const Tag = `h${level}` as 'h2' | 'h3';
+const parts = mark && title.includes(mark) ? title.split(mark) : null;
+---
+
+<div class:list={['split', { 'split--reverse': reverse }, 'reveal']}>
+  <div class="split__text">
+    {eyebrow && <p class="split__eyebrow">{eyebrow}</p>}
+    <Tag class="split__title">
+      {parts ? (
+        <>
+          {parts[0]}<span class="mark">{mark}</span>{parts[1]}
+        </>
+      ) : (
+        title
+      )}
+    </Tag>
+    <div class="split__body">
+      <slot name="text" />
+    </div>
+    <div class="split__actions">
+      <slot name="actions" />
+    </div>
+  </div>
+  <div class="split__media">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    gap: clamp(2.2rem, 2rem + 3vw, 5rem);
+  }
+
+  .split--reverse .split__text {
+    order: 2;
+  }
+
+  .split--reverse .split__media {
+    order: 1;
+  }
+
+  .split__eyebrow {
+    font-family: var(--font-heading);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-accent-deep);
+    margin: 0 0 0.8rem;
+  }
+
+  :global(.section--navy) .split__eyebrow {
+    color: var(--color-accent);
+  }
+
+  .split__body {
+    color: var(--color-text-muted);
+  }
+
+  :global(.section--navy) .split__body {
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .split__body :global(p) {
+    line-height: 1.7;
+  }
+
+  .split__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.6rem;
+  }
+
+  .split__actions:empty {
+    display: none;
+  }
+
+  .split__media {
+    min-width: 0;
+  }
+
+  @media (max-width: 860px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+
+    .split--reverse .split__text {
+      order: 0;
+    }
+
+    .split--reverse .split__media {
+      order: 1;
+    }
+  }
+</style>

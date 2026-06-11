@@ -1,0 +1,86 @@
+---
+/**
+ * /dank — Danke-Seite (Plausible-Goal-Ziel, nicht wegoptimieren!)
+ * Inhalt: planning/content/pages/dank.md
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import CardGrid from '../components/CardGrid.astro';
+import Icon from '../components/Icon.astro';
+
+const meta = {
+  title: 'Dank | Orderlyze',
+  description:
+    'Danke für dein Interesse an Orderlyze! Du erhältst in den nächsten Minuten eine E-Mail von uns.',
+  canonical: 'https://www.orderlyze.com/dank',
+};
+
+const teaser = [
+  { icon: 'receipt', title: 'Rechnungen erstellen und bearbeiten' },
+  { icon: 'card', title: 'Kartenzahlung und Kassenlade' },
+  { icon: 'settings', title: 'Verwaltung von Produkten etc.' },
+  { icon: 'export', title: 'Datenexporte für Steuerberater' },
+] as const;
+---
+
+<BaseLayout {...meta}>
+  <Section variant="navy">
+    <div class="dank reveal">
+      <p class="dank__icon"><Icon name="check" size={64} /></p>
+      <h1>DANKE!</h1>
+      <p class="dank__lead">
+        Wir freuen uns sehr über dein Interesse. Du erhältst in den nächsten 2–3 Minuten eine
+        E-Mail.
+      </p>
+    </div>
+  </Section>
+
+  <Section variant="paper">
+    <h2 class="dank__teaser-head reveal">Das alles wartet auf dich</h2>
+    <CardGrid columns={4}>
+      {
+        teaser.map((f) => (
+          <Card title={f.title} href="/funktionen" level={3}>
+            <Icon name={f.icon} slot="icon" size={28} />
+          </Card>
+        ))
+      }
+    </CardGrid>
+  </Section>
+</BaseLayout>
+
+<style>
+  .dank {
+    text-align: center;
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+
+  .dank__icon {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  .dank__icon :global(svg) {
+    margin-inline: auto;
+  }
+
+  .dank h1 {
+    color: #fff;
+    font-size: var(--text-display);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3em;
+  }
+
+  .dank__lead {
+    color: var(--color-text-on-dark-muted);
+    font-size: var(--text-lead);
+    margin: 0;
+  }
+
+  .dank__teaser-head {
+    text-align: center;
+    margin-bottom: 2.2rem;
+  }
+</style>

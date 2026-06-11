@@ -3,6 +3,10 @@ dist/
 # generated types
 .astro/
 
+# aus redirects.config.mjs generiert (npm run build)
+public/_redirects
+vercel.json
+
 # dependencies
 node_modules/
 

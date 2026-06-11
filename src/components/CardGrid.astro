@@ -1,0 +1,56 @@
+---
+/**
+ * Responsives Karten-Raster.
+ */
+interface Props {
+  columns?: 2 | 3 | 4;
+  class?: string;
+}
+
+const { columns = 3, class: className } = Astro.props;
+---
+
+<div class:list={['card-grid', `card-grid--${columns}`, className]}>
+  <slot />
+</div>
+
+<style>
+  .card-grid {
+    display: grid;
+    gap: clamp(1.2rem, 1rem + 1.5vw, 2rem);
+  }
+
+  .card-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .card-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (max-width: 1000px) {
+    .card-grid--4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 860px) {
+    .card-grid--3 {
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    }
+
+    .card-grid--2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .card-grid--4 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

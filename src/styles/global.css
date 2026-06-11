@@ -1,0 +1,157 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Orderlyze — globale Basis-Styles
+   Design-Richtung: „Klar & Verlässlich“ — ruhiger B2B-Minimalismus,
+   Navy-Color-Blocking, Orange als präziser Akzent, Kassenbon-Signatur.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@import './tokens.css';
+
+/* ── Reset / Basis ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--color-text);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Typografie ── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--color-navy);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.6em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  font-weight: 800;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+p {
+  margin: 0 0 1.1em;
+}
+
+a {
+  color: var(--color-brand);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--color-brand-dark);
+}
+
+strong {
+  font-weight: 700;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-navy);
+}
+
+/* ── Utilities ── */
+.container {
+  width: min(100% - 2.5rem, var(--container));
+  margin-inline: auto;
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Markiertes Wort in Headlines (Orange-Akzent mit handgesetztem Unterstrich) */
+.mark {
+  position: relative;
+  white-space: nowrap;
+  color: inherit;
+}
+
+.mark::after {
+  content: '';
+  position: absolute;
+  left: -0.04em;
+  right: -0.04em;
+  bottom: 0.04em;
+  height: 0.28em;
+  background: color-mix(in srgb, var(--color-accent) 38%, transparent);
+  border-radius: 2px;
+  z-index: -1;
+}
+
+/* ── Scroll-Reveal (IntersectionObserver, siehe BaseLayout) ──
+   Ohne JS / mit Reduced Motion ist alles sofort sichtbar. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s var(--ease-out),
+      transform 0.7s var(--ease-out);
+  }
+
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Fokus ── */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

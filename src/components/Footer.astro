@@ -1,0 +1,211 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '../assets/logos/orderlyze-logo-weiss.png';
+import badgeRksv from '../assets/logos/badge-rksv-2025.png';
+import badgeKassenSichV from '../assets/logos/badge-kassensichv-2025.png';
+import badgeSicherheit from '../assets/logos/badge-sicherheit.png';
+import { FOOTER_NAV } from '../config/nav';
+import { SITE, EVENTS } from '../config/site';
+
+const phoneEventClass = `plausible-event-name=${EVENTS.ctaPhone.replaceAll(' ', '+')}`;
+const year = new Date().getFullYear();
+
+const columns = [
+  { title: 'Kassensystem', links: FOOTER_NAV.kassensystem },
+  { title: 'Branchen', links: FOOTER_NAV.branchen },
+  { title: 'Konformität & Hilfe', links: FOOTER_NAV.compliance },
+] as const;
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <Image src={logoWhite} alt="Orderlyze Logo" width={190} densities={[1, 2]} loading="lazy" />
+        <p class="footer__claim">Das Kassensystem für Gastronomie und Dienstleister.<br />einfach. schnell. effizient.</p>
+        <a href={SITE.phoneHref} class:list={['footer__phone', phoneEventClass]}>
+          {SITE.phone}
+        </a>
+        <p class="footer__phone-note">Kostenlos aus AT &amp; DE</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer-Navigation">
+        {
+          columns.map((col) => (
+            <div class="footer__col">
+              <h2 class="footer__heading">{col.title}</h2>
+              <ul>
+                {col.links.map((link) => (
+                  <li>
+                    <a href={link.href} rel={'external' in link && link.external ? 'noopener' : undefined}>
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </nav>
+
+      <div class="footer__badges">
+        <h2 class="footer__heading">100% konform</h2>
+        <div class="footer__badge-row">
+          <Image src={badgeRksv} alt="RKSV-konform – Registrierkassensicherheitsverordnung Österreich" width={84} densities={[1, 2]} loading="lazy" />
+          <Image src={badgeKassenSichV} alt="KassenSichV-konform – Kassensicherungsverordnung Deutschland" width={84} densities={[1, 2]} loading="lazy" />
+          <Image src={badgeSicherheit} alt="Geprüfte Datensicherheit" width={84} densities={[1, 2]} loading="lazy" />
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© {year} Orderlyze. Alle Rechte vorbehalten.</p>
+      <ul class="footer__legal">
+        {
+          FOOTER_NAV.rechtliches.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-navy);
+    color: var(--color-text-on-dark-muted);
+    padding: clamp(3rem, 2rem + 4vw, 5rem) 0 2rem;
+    /* feine Punktraster-Textur */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  .footer__top {
+    display: grid;
+    grid-template-columns: 1.3fr 2.4fr 0.9fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .footer__brand img {
+    width: 190px;
+    height: auto;
+  }
+
+  .footer__claim {
+    margin: 1.1rem 0 1.6rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .footer__phone {
+    font-family: var(--font-heading);
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+
+  .footer__phone:hover {
+    color: var(--color-heading);
+  }
+
+  .footer__phone-note {
+    font-size: 0.82rem;
+    margin-top: 0.3rem;
+    opacity: 0.75;
+  }
+
+  .footer__nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .footer__heading {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--color-heading);
+    margin: 0 0 1rem;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .footer__col a {
+    color: var(--color-text-on-dark-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color var(--transition);
+  }
+
+  .footer__col a:hover {
+    color: #fff;
+  }
+
+  .footer__badge-row {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .footer__badge-row img {
+    width: 84px;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.6rem;
+    font-size: 0.85rem;
+  }
+
+  .footer__bottom p {
+    margin: 0;
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer__legal a {
+    color: var(--color-text-on-dark-muted);
+    text-decoration: none;
+  }
+
+  .footer__legal a:hover {
+    color: #fff;
+  }
+
+  @media (max-width: 920px) {
+    .footer__top {
+      grid-template-columns: 1fr;
+    }
+
+    .footer__nav {
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    }
+  }
+</style>

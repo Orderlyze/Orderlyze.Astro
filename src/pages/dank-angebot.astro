@@ -1,0 +1,140 @@
+---
+/**
+ * /dank-angebot — Ziel des Angebots-Wizards (Plausible-Goal-Ziel).
+ * Stand alte Seite: nicht in der Sitemap, robots noindex.
+ * Inhalt: planning/content/pages/dank-angebot.md
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import ReceiptCard from '../components/ReceiptCard.astro';
+import Icon from '../components/Icon.astro';
+import { EVENTS } from '../config/site';
+
+const meta = {
+  title: 'dank-angebot | Orderlyze',
+  description:
+    'Vielen Dank für dein Interesse! Du erhältst in wenigen Minuten deinen kostenlosen Testaccount per E-Mail.',
+  canonical: 'https://www.orderlyze.com/dank-angebot',
+  noindex: true,
+};
+---
+
+<BaseLayout {...meta}>
+  <Section variant="navy">
+    <div class="dank reveal">
+      <p class="dank__icon"><Icon name="check" size={64} /></p>
+      <h1>Vielen Dank für dein Interesse!</h1>
+      <p class="dank__lead">
+        Du erhältst in 1–3 Minuten deinen kostenlosen Testaccount per E-Mail (siehe auch Spam).
+        Dort findest du Informationen zum Download der App.
+      </p>
+      <p class="dank__lead">
+        Wir melden uns bald persönlich bei dir, um ein individuelles &amp; unverbindliches
+        Preis-Angebot zu erstellen.
+      </p>
+    </div>
+  </Section>
+
+  <Section variant="paper" size="sm">
+    <div class="preise-hinweis reveal">
+      <h2>Sieh dir unsere Preise an</h2>
+      <Button href="/preise">Jetzt ansehen</Button>
+    </div>
+  </Section>
+
+  <Section variant="surface">
+    <h2 class="dank-testimonials__head reveal">Unzählige Kunden schenken uns ihr Vertrauen</h2>
+    <div class="dank-testimonials">
+      <ReceiptCard tilt="left" class="reveal">
+        <p class="receipt-mono">— Kundenstimme #001 —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="dank-testimonials__quote">
+          Seit dem ich Orderlyze verwende, habe ich keine Probleme gehabt. Alles geht super einfach
+          und ich kann alle meine Produkte unkompliziert bearbeiten. Einfach toll!
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="receipt-row">
+          <strong>Carlo M.</strong>
+          <span class="receipt-mono">Pizzachef</span>
+        </p>
+      </ReceiptCard>
+      <ReceiptCard tilt="right" class="reveal">
+        <p class="receipt-mono">— Kundenstimme #002 —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="dank-testimonials__quote">
+          Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und
+          keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware
+          sehr günstig gewesen.
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="receipt-row">
+          <strong>Helene S.</strong>
+          <span class="receipt-mono">Kosmetikerin</span>
+        </p>
+      </ReceiptCard>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .dank {
+    text-align: center;
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+
+  .dank__icon {
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  .dank__icon :global(svg) {
+    margin-inline: auto;
+  }
+
+  .dank h1 {
+    color: #fff;
+    margin-bottom: 0.4em;
+  }
+
+  .dank__lead {
+    color: var(--color-text-on-dark-muted);
+    font-size: var(--text-lead);
+  }
+
+  .preise-hinweis {
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: 0.6rem;
+  }
+
+  .preise-hinweis h2 {
+    margin: 0;
+  }
+
+  .dank-testimonials__head {
+    text-align: center;
+    margin-bottom: 2.4rem;
+  }
+
+  .dank-testimonials {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .dank-testimonials__quote {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 860px) {
+    .dank-testimonials {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

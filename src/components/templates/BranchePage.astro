@@ -1,0 +1,278 @@
+---
+/**
+ * Template der Branchen-Detailseiten
+ * (/restaurant, /cafe, /bar — Gastro · /friseur, /beauty, /sonstige — Dienstleistung).
+ * Inhalt: planning/content/pages/{restaurant,cafe,bar,friseur,beauty,sonstige}.md
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../Button.astro';
+import Section from '../Section.astro';
+import FeatureSplit from '../FeatureSplit.astro';
+import Checklist from '../Checklist.astro';
+import Icon from '../Icon.astro';
+import CtaBanner from '../CtaBanner.astro';
+import DeviceMockup from '../DeviceMockup.astro';
+import { EVENTS } from '../../config/site';
+
+import kassierenTablet from '../../assets/screenshots/kassieren-rechnung-tablet.png';
+import bedienung from '../../assets/screenshots/kassensystem-kinderleichte-bedienung.png';
+import bezahlungTheke from '../../assets/branchen/cafe-bezahlung-theke.jpg';
+import monatsbericht from '../../assets/screenshots/monatsbericht.png';
+
+interface Props {
+  /** H1, z. B. "Das Nr. 1 Kassensystem für dein Restaurant" */
+  h1: string;
+  /** markiertes Wort in der H1 */
+  h1Mark: string;
+  title: string;
+  description: string;
+  canonical: string;
+  heroImage: ImageMetadata;
+  heroAlt: string;
+  /** Gastro-Variante (Funkbonieren-Sektion + Gastro-Claim) */
+  gastro: boolean;
+}
+
+const { h1, h1Mark, title, description, canonical, heroImage, heroAlt, gastro } = Astro.props;
+
+const parts = h1.includes(h1Mark) ? h1.split(h1Mark) : null;
+
+/* Dienstleister-Variante hat eigenen Kassieren-Text (E-Beleg/QR-Code) */
+const kassierenText = gastro
+  ? 'Mit Orderlyze kannst du Rechnungen in Sekundenschnelle erstellen, ganz ohne langes Einarbeiten. Produkte mit nur zwei Klicks hinzufügen, löschen und bearbeiten, sowie Extras und Kommentare beifügen. Schnell und unkompliziert abrechnen. Bestellungen ganz einfach stornieren. So geht Kassieren heute!'
+  : 'Mit Orderlyze kannst du Rechnungen in Sekundenschnelle erstellen, ganz ohne langes Einarbeiten. Dienstleistungen mit nur zwei Klicks hinzufügen, löschen und bearbeiten. Als Beleg drucken oder QR-Code für den E-Beleg erstellen. Schnell und unkompliziert abrechnen. So geht Kassieren heute!';
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <!-- ── Foto-Hero ── -->
+  <section class="b-hero">
+    <Image
+      src={heroImage}
+      alt={heroAlt}
+      widths={[760, 1200, 1800]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="b-hero__img"
+    />
+    <div class="b-hero__overlay"></div>
+    <div class="container b-hero__content">
+      <h1 class="b-hero__title">
+        {parts ? (
+          <>
+            {parts[0]}<span class="b-hero__mark">{h1Mark}</span>{parts[1]}
+          </>
+        ) : (
+          h1
+        )}
+      </h1>
+      {gastro && <p class="b-hero__claim">Gastronomie – so einfach wie nie!</p>}
+      <div class="b-hero__actions">
+        <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+        <span class="b-hero__note">Kostenlos und unverbindlich.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Kassieren ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Kassieren" title="Sekundenschnell kassieren" mark="Sekundenschnell">
+      <Fragment slot="text">
+        <p>{kassierenText}</p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/so-funktionierts" variant="secondary">So funktioniert's</Button>
+      </Fragment>
+      <Image
+        src={kassierenTablet}
+        alt="Rechnung erstellen mit dem Orderlyze Kassensystem am Tablet"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+        class="photo-rounded"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Bedienung ── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Bedienung" title="Kinderleicht & mühelos bedienen" mark="Kinderleicht" reverse>
+      <Fragment slot="text">
+        <p>
+          Ein Kassensystem, wie es sein sollte: Sofort zu verstehen, einfach zu bedienen, effizient
+          und das Wichtigste, immer auf dem neuesten Stand. Orderlyze hilft dir, indem es deinen
+          Alltag erleichtert und vereinfacht. Sei es durch Rechnungen erstellen, neue Produkte
+          hinzufügen oder Mitarbeiter verwalten. Alles funktioniert bequem und mühelos.
+        </p>
+      </Fragment>
+      <Image
+        src={bedienung}
+        alt="Kinderleichte Bedienung der Orderlyze App"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Kartenzahlung ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Bezahlung" title="Kartenzahlung? Kein Problem" mark="Kartenzahlung">
+      <Fragment slot="text">
+        <Checklist
+          items={[
+            'EC, Maestro/V&nbsp;Pay, MasterCard und Visa',
+            'Apple Pay',
+            'Kontaktlose Zahlung per NFC',
+            'Effizientes Abrechnen — für größere Flexibilität und mehr Umsatz',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/kartenzahlung" variant="secondary">Mehr erfahren</Button>
+      </Fragment>
+      <Image
+        src={bezahlungTheke}
+        alt="Kontaktlose Kartenzahlung an der Theke"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+        class="photo-rounded"
+      />
+    </FeatureSplit>
+  </Section>
+
+  {
+    gastro ? (
+      <Section variant="surface">
+        <FeatureSplit eyebrow="Funkbonieren" title="Umsatz steigern mit Funkbonieren" mark="Funkbonieren" reverse>
+          <Fragment slot="text">
+            <p>
+              Stift und Kellnerblock gehören der Vergangenheit an. Heute nimmst du die Bestellungen
+              ganz einfach per Smartphone oder All-In-One Gerät (integrierter Drucker &amp;
+              Kartenzahlung) auf. Mit einem Fingertipp werden die Bestellungen des Tisches sofort
+              bei der Bar und in der Küche gedruckt. So können viele Wege vermieden, Zeit gespart
+              und der Umsatz gesteigert werden.
+            </p>
+          </Fragment>
+          <Fragment slot="actions">
+            <Button href="/funkbonieren" variant="secondary">Mehr erfahren</Button>
+          </Fragment>
+          <DeviceMockup type="tablet">
+            <video
+              src="/videos/funkbonieren.mp4"
+              muted
+              loop
+              playsinline
+              autoplay
+              preload="none"
+              aria-label="Video: Funkbonieren mit Orderlyze"
+            />
+          </DeviceMockup>
+        </FeatureSplit>
+      </Section>
+    ) : (
+      <Section variant="surface">
+        <FeatureSplit eyebrow="Buchhaltung" title="Buchhaltung ohne viel Mühe" mark="ohne viel Mühe" reverse>
+          <Fragment slot="text">
+            <p>
+              Im stressigen Alltag auch noch die Buchhaltung machen? Nicht bei uns. Mit wenigen
+              Klicks kannst du schnell und einfach diverse Berichte für die Steuerberaterin oder
+              den Steuerberater exportieren.
+            </p>
+            <Checklist
+              items={[
+                'Tages-, Monats- und Jahresberichte',
+                'Produktberichte, Berichte nach Zahlungsart uvm.',
+                'Exporte für Buchhaltungsprogramme (DATEV, BMD, RZL)',
+              ]}
+            />
+          </Fragment>
+          <Fragment slot="actions">
+            <Button href="/datenexport-steuerberater" variant="secondary">Mehr erfahren</Button>
+          </Fragment>
+          <DeviceMockup type="browser">
+            <Image
+              src={monatsbericht}
+              alt="Berichte für den Steuerberater in orderlyze web"
+              widths={[480, 760, 1100]}
+              sizes="(max-width: 860px) 92vw, 50vw"
+            />
+          </DeviceMockup>
+        </FeatureSplit>
+      </Section>
+    )
+  }
+
+  <CtaBanner title="Interessiert? Dann hol dir ein unverbindliches Angebot!" mark="unverbindliches" />
+</BaseLayout>
+
+<style>
+  .b-hero {
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: clamp(24rem, 55vh, 34rem);
+    overflow: hidden;
+  }
+
+  .b-hero__img,
+  .b-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .b-hero :global(.b-hero__img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .b-hero__overlay {
+    background:
+      linear-gradient(to top, rgba(6, 33, 52, 0.92) 0%, rgba(6, 33, 52, 0.35) 55%, rgba(6, 33, 52, 0.25) 100%);
+  }
+
+  .b-hero__content {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+
+  .b-hero__title {
+    color: #fff;
+    font-size: var(--text-h1);
+    max-width: 24ch;
+    margin-bottom: 0.35em;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  .b-hero__mark {
+    color: var(--color-accent);
+  }
+
+  .b-hero__claim {
+    font-family: var(--font-heading);
+    font-size: var(--text-lead);
+    font-weight: 600;
+    color: var(--color-heading);
+    margin-bottom: 1.2rem;
+  }
+
+  .b-hero__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .b-hero__note {
+    color: var(--color-text-on-dark-muted);
+    font-size: 0.9rem;
+  }
+
+  .photo-rounded {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
+  }
+</style>

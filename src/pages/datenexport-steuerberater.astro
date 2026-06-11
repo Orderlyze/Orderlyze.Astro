@@ -1,0 +1,212 @@
+---
+/**
+ * /datenexport-steuerberater
+ * Inhalt: planning/content/pages/datenexport-steuerberater.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import DeviceMockup from '../components/DeviceMockup.astro';
+import { EVENTS } from '../config/site';
+
+import monatsbericht from '../assets/screenshots/monatsbericht.png';
+import jahresbericht from '../assets/screenshots/jahresbericht.png';
+
+const meta = {
+  title: 'Datenexport für Steuerberater | Orderlyze',
+  description:
+    'Berichte und Datenexporte für den Steuerberater mit wenigen Klicks: Tages-, Monats- und Jahresberichte sowie Exporte für DATEV, BMD und RZL.',
+  canonical: 'https://www.orderlyze.com/datenexport-steuerberater',
+};
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>Datenexport für Steuerberater</h1>
+      <p class="page-hero__lead">
+        Unkomplizierte <span class="mark">Zusammenarbeit</span> mit deinem Steuerberater
+      </p>
+      <p class="page-hero__text">
+        Mit Orderlyze arbeitest du effizient mit deinem Steuerberater zusammen. Ohne viel Aufwand
+        kannst du Berichte und Auswertungen an deinen Steuerberater übermitteln.
+      </p>
+      <ul class="page-hero__benefits">
+        <li><Icon name="check" size={18} /> einfach</li>
+        <li><Icon name="bolt" size={18} /> schnell</li>
+        <li><Icon name="shield" size={18} /> sicher</li>
+      </ul>
+      <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+    </div>
+  </section>
+
+  <!-- ── Buchhaltung ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Buchhaltung" title="Buchhaltung ohne viel Mühe" mark="ohne viel Mühe">
+      <Fragment slot="text">
+        <p>
+          Im stressigen Alltag auch noch die Buchhaltung machen? Nicht bei uns. Mit wenigen Klicks
+          kannst du schnell und einfach diverse Berichte für die Steuerberaterin oder den
+          Steuerberater exportieren.
+        </p>
+        <Checklist
+          items={[
+            'Tages-, Monats- und Jahresberichte',
+            'Produktberichte, Berichte nach Zahlungsart uvm.',
+            'Exporte für Buchhaltungsprogramme (DATEV, BMD, RZL)',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/angebot" variant="secondary" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      </Fragment>
+      <DeviceMockup type="browser">
+        <Image
+          src={monatsbericht}
+          alt="Monatsbericht zum Export für den Steuerberater"
+          widths={[480, 760, 1100]}
+          sizes="(max-width: 860px) 92vw, 50vw"
+        />
+      </DeviceMockup>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Für alle ── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Zusammenarbeit" title="Perfekt für alle!" mark="alle" reverse>
+      <Fragment slot="text">
+        <p>
+          Nicht nur du selbst sparst dir viel Zeit und Aufwand. Auch dein Steuerberater kann
+          effizienter arbeiten, weil er deine Berichte viel leichter einarbeiten bzw. importieren
+          kann. Das erleichtert die Zusammenarbeit enorm und spart wertvolle Ressourcen. Besonders
+          durch die Datenexporte im DATEV-Format können deine Daten ganz einfach in ein
+          Buchhaltungsprogramm eingespielt werden.
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/angebot" variant="secondary" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      </Fragment>
+      <DeviceMockup type="browser">
+        <Image
+          src={jahresbericht}
+          alt="Jahresbericht im orderlyze web Dashboard"
+          widths={[480, 760, 1100]}
+          sizes="(max-width: 860px) 92vw, 50vw"
+        />
+      </DeviceMockup>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Export-Formate ── -->
+  <Section variant="paper" size="sm">
+    <div class="formate reveal">
+      <p class="formate__label">Exporte für gängige Buchhaltungsprogramme:</p>
+      <ul class="formate__list">
+        <li>DATEV</li>
+        <li>BMD</li>
+        <li>RZL</li>
+        <li>PDF</li>
+        <li>CSV</li>
+      </ul>
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Hol dir ein kostenloses Angebot. Dein Steuerberater wird sich freuen!"
+    mark="kostenloses"
+    buttonLabel="Angebot anfordern"
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    max-width: 52rem;
+  }
+
+  .page-hero h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.25em;
+  }
+
+  .page-hero__lead {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-heading-dark);
+    margin-bottom: 0.9rem;
+  }
+
+  .page-hero__text {
+    color: var(--color-text-muted);
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+
+  .page-hero__benefits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem 1.8rem;
+    list-style: none;
+    margin: 1.4rem 0 1.8rem;
+    padding: 0;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+
+  .page-hero__benefits li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .page-hero__benefits :global(svg) {
+    color: var(--color-brand);
+  }
+
+  .formate {
+    text-align: center;
+  }
+
+  .formate__label {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 1.1rem;
+  }
+
+  .formate__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .formate__list li {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    background: var(--color-surface);
+    border: 1px dashed var(--color-line);
+    border-radius: 8px;
+    padding: 0.6rem 1.4rem;
+    color: var(--color-navy);
+  }
+</style>

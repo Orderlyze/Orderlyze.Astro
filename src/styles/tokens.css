@@ -1,0 +1,62 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Orderlyze Design-Tokens
+   Quelle: planning/farben.md (erhoben von der Live-Wix-Seite, 2026-06-11)
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Markenfarben */
+  --color-brand: #0659a9;          /* CTA-Blau (Buttons, Links) */
+  --color-brand-dark: #054a8c;     /* CTA hover */
+  --color-brand-deep: #0c3c60;     /* dunkles Markenblau (Wix color_15) */
+  --color-heading: #6ea4ca;        /* helles Heading-Blau (Eyebrows, Display auf Navy) */
+  --color-heading-dark: #39729b;   /* mittleres Blau (sekundäre Headings, Text) */
+  --color-accent: #db9421;         /* Orange-Akzent */
+  --color-accent-deep: #8a5b0c;    /* Orange dunkler (Text auf hell, ≥4.5:1 AA) */
+  --color-navy: #062134;           /* dunkle Sektionen / Hero */
+  --color-navy-2: #0a2e47;        /* Navy aufgehellt (Karten auf Navy) */
+
+  /* Flächen */
+  --color-surface: #f6f9fc;        /* helle Karten/Sektionen */
+  --color-surface-2: #eaf1f8;     /* eine Stufe dunkler (Hover, Borders auf surface) */
+  --color-line: #dbe6f0;           /* Hairlines/Borders */
+  --color-paper: #ffffff;
+
+  /* Text */
+  --color-text: #212121;
+  --color-text-muted: #565662;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: #b6c9d8;
+
+  /* Typografie */
+  --font-heading: 'Raleway Variable', Raleway, 'Segoe UI', sans-serif;
+  --font-body: 'Open Sans Variable', 'Open Sans', 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* Fluid Type Scale */
+  --text-display: clamp(2.5rem, 1.6rem + 4vw, 4.25rem);     /* H1 Hero */
+  --text-h1: clamp(2.25rem, 1.7rem + 2.4vw, 3.4rem);        /* H1 Unterseiten */
+  --text-h2: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-h3: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
+  --text-lead: clamp(1.08rem, 1rem + 0.4vw, 1.3rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.9rem;
+  --text-eyebrow: 0.82rem;
+
+  /* Layout */
+  --container: 73rem;
+  --container-narrow: 50rem;
+  --space-section: clamp(4.5rem, 3rem + 6vw, 8rem);
+  --space-section-sm: clamp(3rem, 2rem + 4vw, 5rem);
+
+  /* Sonstiges */
+  --radius-button: 5px;            /* Brand-Vorgabe */
+  --radius-card: 14px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(6, 33, 52, 0.06), 0 8px 28px rgba(6, 33, 52, 0.09);
+  --shadow-card-lg: 0 2px 6px rgba(6, 33, 52, 0.08), 0 24px 56px rgba(6, 33, 52, 0.16);
+  --shadow-device: 0 24px 64px rgba(6, 33, 52, 0.32);
+
+  /* Übergänge */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: 0.22s var(--ease-out);
+}

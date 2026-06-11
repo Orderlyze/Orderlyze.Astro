@@ -1,0 +1,255 @@
+---
+/**
+ * /testen — 30 Tage kostenlos testen
+ * Inhalt: planning/content/pages/testen.md
+ * Submit: PLATZHALTER (src/lib/lead-submit.ts, Anbindung offen)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import FormField from '../components/FormField.astro';
+import ReceiptCard from '../components/ReceiptCard.astro';
+import Icon from '../components/Icon.astro';
+
+const meta = {
+  title: 'Testen | Orderlyze',
+  description:
+    'Teste das Orderlyze Kassensystem 30 Tage kostenlos: Formular ausfüllen, kostenlosen Testaccount erhalten und unverbindlich von einem Experten beraten lassen.',
+  canonical: 'https://www.orderlyze.com/testen',
+};
+
+const branchen = [
+  'Gastronomie (z.b. Bar, Cafe, Restaurant)',
+  'Dienstleistung (z.b. Friseur, Beauty, Physio)',
+];
+---
+
+<BaseLayout {...meta}>
+  <Section variant="surface">
+    <div class="testen">
+      <div class="testen__text reveal">
+        <h1>Kontaktiere uns und teste die ganze App kostenlos</h1>
+        <p class="testen__badge"><Icon name="clock" size={18} /> 30 Tage kostenlos testen</p>
+        <p class="testen__lead">Formular ausfüllen, und schon kann es losgehen.</p>
+        <ul class="testen__benefits">
+          <li><Icon name="check" size={18} /> Kostenlose Beratung durch einen Experten</li>
+          <li><Icon name="check" size={18} /> Kostenlos und unverbindlich</li>
+          <li><Icon name="check" size={18} /> Voller Funktionsumfang im Test</li>
+        </ul>
+      </div>
+
+      <div class="testen__formwrap">
+        <form class="testen__form reveal" id="testen-form" novalidate>
+          <FormField name="branche" label="Deine Branche" type="select" options={branchen} required />
+          <FormField name="standort" label="Dein Unternehmensstandort" type="select" options={['Österreich', 'Deutschland']} required />
+          <FormField name="email" label="E-Mail-Adresse" type="email" required autocomplete="email" />
+          <button type="submit" class="testen__submit">Kostenlos testen</button>
+          <p class="testen__note">Kostenlos und unverbindlich.</p>
+        </form>
+
+        <div class="testen__danke" id="testen-danke" hidden>
+          <Icon name="check" size={56} />
+          <h2>Danke! Es kann losgehen.</h2>
+          <p>Wir melden uns mit deinem kostenlosen Testaccount bei dir.</p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ── Testimonial ── -->
+  <Section variant="paper" size="sm">
+    <div class="testen-testimonial">
+      <h2 class="testen-testimonial__head">Unzählige Kunden schenken uns ihr Vertrauen</h2>
+      <p class="testen-testimonial__sub">Sieh dir an, was sie zu sagen haben.</p>
+      <ReceiptCard tilt="left" class="reveal">
+        <p class="receipt-mono">— Kundenstimme —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="testen-testimonial__quote">
+          Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und
+          keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware
+          sehr günstig gewesen.
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="receipt-row">
+          <strong>Verena S.</strong>
+          <span class="receipt-mono">Verifizierte Kundin</span>
+        </p>
+      </ReceiptCard>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  import { submitLead, trackGoal } from '../lib/lead-submit';
+
+  const form = document.getElementById('testen-form') as HTMLFormElement | null;
+  const danke = document.getElementById('testen-danke');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    button.disabled = true;
+    button.textContent = 'Wird gesendet …';
+
+    const data = new FormData(form);
+    const fields = [...data.entries()].map(([label, value]) => ({ label, value: String(value) }));
+    const result = await submitLead('Testen', fields);
+
+    if (result.ok) {
+      trackGoal('Test angefordert');
+      form.hidden = true;
+      if (danke) danke.hidden = false;
+    } else {
+      button.disabled = false;
+      button.textContent = 'Kostenlos testen';
+    }
+  });
+</script>
+
+<style>
+  .testen {
+    display: grid;
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    gap: clamp(2.5rem, 4vw, 5rem);
+    align-items: center;
+    max-width: 60rem;
+    margin-inline: auto;
+  }
+
+  .testen h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.7rem;
+  }
+
+  .testen__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: color-mix(in srgb, var(--color-accent) 16%, #fff);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 45%, #fff);
+    border-radius: var(--radius-pill);
+    padding: 0.45rem 1.05rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-navy);
+  }
+
+  .testen__badge :global(svg) {
+    color: var(--color-accent-deep);
+  }
+
+  .testen__lead {
+    color: var(--color-text-muted);
+    font-size: var(--text-lead);
+    margin: 0.8rem 0 1.2rem;
+  }
+
+  .testen__benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+    color: var(--color-text);
+  }
+
+  .testen__benefits li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .testen__benefits :global(svg) {
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  .testen__form {
+    display: grid;
+    gap: 1.1rem;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+    box-shadow: var(--shadow-card);
+  }
+
+  .testen__submit {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: #fff;
+    background: var(--color-brand);
+    border: 0;
+    border-radius: var(--radius-button);
+    padding: 0.9em 2em;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+  }
+
+  .testen__submit:hover {
+    background: var(--color-brand-dark);
+    transform: translateY(-2px);
+  }
+
+  .testen__submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
+  .testen__note {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .testen__danke {
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 2.6rem 1.8rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .testen__danke :global(svg) {
+    color: var(--color-brand);
+    margin-inline: auto;
+    margin-bottom: 0.9rem;
+  }
+
+  .testen__danke p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .testen-testimonial {
+    max-width: 30rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .testen-testimonial__head {
+    margin-bottom: 0.2em;
+  }
+
+  .testen-testimonial__sub {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .testen-testimonial__quote {
+    margin: 0;
+    text-align: left;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 860px) {
+    .testen {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

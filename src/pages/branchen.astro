@@ -1,0 +1,274 @@
+---
+/**
+ * /branchen — Branchen-Hub (Gastronomie + Dienstleistungen)
+ * Inhalt: planning/content/pages/branchen.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { EVENTS } from '../config/site';
+
+import gastroImg from '../assets/branchen/restaurant-service.jpg';
+import dienstImg from '../assets/branchen/friseur-barbershop-app.jpg';
+import barImg from '../assets/branchen/bar-cocktails.jpg';
+import cafeImg from '../assets/branchen/cafe-kassensystem.jpg';
+import restaurantImg from '../assets/branchen/restaurant-gaeste.jpg';
+import friseurImg from '../assets/branchen/friseur-barbershop-tablet.jpg';
+import beautyImg from '../assets/branchen/friseurin-salon.jpg';
+import physioImg from '../assets/branchen/physio-praxis.jpg';
+
+const meta = {
+  title: 'Branchen | Orderlyze',
+  description:
+    'Egal ob Gastronomie oder Dienstleistung — Orderlyze hat genau das richtige Kassensystem für deine Branche: Restaurant, Cafe, Bar, Friseur, Beauty und mehr.',
+  canonical: 'https://www.orderlyze.com/branchen',
+};
+
+const gastro = [
+  { label: 'Restaurant', href: '/restaurant', image: restaurantImg, alt: 'Servicekraft im Restaurant' },
+  { label: 'Cafe', href: '/cafe', image: cafeImg, alt: 'Barista im Café' },
+  { label: 'Bar', href: '/bar', image: barImg, alt: 'Cocktails an der Bar' },
+];
+
+const dienstleistungen = [
+  { label: 'Friseur', href: '/friseur', image: friseurImg, alt: 'Friseur mit Tablet im Barbershop' },
+  { label: 'Beauty', href: '/beauty', image: beautyImg, alt: 'Stylistin im Beauty-Salon' },
+  { label: 'Sonstige', href: '/sonstige', image: physioImg, alt: 'Physiotherapeut in der Praxis' },
+];
+
+const vorteile = [
+  { icon: 'clock', label: 'Mehr Zeit' },
+  { icon: 'users', label: 'Zufriedene KundInnen' },
+  { icon: 'chart', label: 'Höherer Umsatz' },
+  { icon: 'shield', label: '100% finanzamtkonform' },
+  { icon: 'euro', label: 'Geringere Kosten' },
+  { icon: 'cloud', label: 'Kontrolle von überall' },
+] as const;
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>Branchen</h1>
+      <p class="page-hero__lead">
+        Egal ob Gastronomie oder Dienstleistung, wir haben genau das
+        <span class="mark">richtige Kassensystem</span> für deine Bedürfnisse.
+      </p>
+      <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+    </div>
+  </section>
+
+  <!-- ── Gastronomie ── -->
+  <Section variant="paper">
+    <div class="bereich reveal">
+      <div class="bereich__intro">
+        <Image src={gastroImg} alt="Service am Tisch im Restaurant" widths={[480, 760, 1000]} sizes="(max-width: 860px) 92vw, 38vw" class="bereich__img" />
+        <div>
+          <h2 class="bereich__title">Gastronomie</h2>
+          <p class="bereich__text">
+            Vom Bestellen am Tisch bis zum Bon in der Küche: Orderlyze ist für den
+            Gastro-Alltag gebaut — mit Funkbonieren, Tischplan und Gängesystem.
+          </p>
+        </div>
+      </div>
+      <div class="bereich__grid">
+        {
+          gastro.map((b) => (
+            <a href={b.href} class="branche">
+              <Image src={b.image} alt={b.alt} widths={[320, 480, 700]} sizes="(max-width: 640px) 92vw, 30vw" />
+              <span class="branche__label">{b.label} <Icon name="arrow" size={16} /></span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- ── Dienstleistungen ── -->
+  <Section variant="surface">
+    <div class="bereich reveal">
+      <div class="bereich__intro">
+        <Image src={dienstImg} alt="Friseur arbeitet mit der Orderlyze App" widths={[480, 760, 1000]} sizes="(max-width: 860px) 92vw, 38vw" class="bereich__img" />
+        <div>
+          <h2 class="bereich__title">Dienstleistungen</h2>
+          <p class="bereich__text">
+            Termin abgeschlossen, Beleg gedruckt oder als E-Beleg per QR-Code übergeben:
+            Orderlyze macht das Kassieren für Dienstleister so einfach wie den Handgriff danach.
+          </p>
+        </div>
+      </div>
+      <div class="bereich__grid">
+        {
+          dienstleistungen.map((b) => (
+            <a href={b.href} class="branche">
+              <Image src={b.image} alt={b.alt} widths={[320, 480, 700]} sizes="(max-width: 640px) 92vw, 30vw" />
+              <span class="branche__label">{b.label} <Icon name="arrow" size={16} /></span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- ── Vorteile ── -->
+  <Section variant="navy">
+    <SectionHead eyebrow="Deine Vorteile" title="Das bedeutet Arbeiten mit Orderlyze" mark="Orderlyze" />
+    <ul class="vorteile">
+      {
+        vorteile.map((v) => (
+          <li class="reveal">
+            <Icon name={v.icon} size={30} />
+            <span>{v.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <CtaBanner title="Hol dir ein kostenloses Angebot für deine Branche!" mark="kostenloses" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    max-width: 50rem;
+  }
+
+  .page-hero h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.3em;
+  }
+
+  .page-hero__lead {
+    font-size: var(--text-lead);
+    color: var(--color-text-muted);
+    margin-bottom: 1.8rem;
+  }
+
+  /* Bereich (Gastro / Dienstleistungen) */
+  .bereich__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(1.6rem, 3vw, 3rem);
+    align-items: center;
+    margin-bottom: 2.2rem;
+  }
+
+  .bereich__img {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .bereich__title {
+    font-size: var(--text-h2);
+    margin-bottom: 0.35em;
+  }
+
+  .bereich__text {
+    color: var(--color-text-muted);
+    font-size: var(--text-lead);
+    margin: 0;
+    max-width: 38rem;
+  }
+
+  .bereich__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .branche {
+    position: relative;
+    display: block;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    text-decoration: none;
+  }
+
+  .branche :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .branche:hover :global(img) {
+    transform: scale(1.05);
+  }
+
+  .branche::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6, 33, 52, 0.85) 0%, transparent 50%);
+  }
+
+  .branche__label {
+    position: absolute;
+    left: 1.1rem;
+    bottom: 0.9rem;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #fff;
+  }
+
+  /* Vorteile */
+  .vorteile {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 52rem;
+    margin-inline: auto;
+  }
+
+  .vorteile li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: var(--color-navy-2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-card);
+    padding: 1.1rem 1.3rem;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+
+  .vorteile :global(svg) {
+    color: var(--color-heading);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 860px) {
+    .bereich__intro {
+      grid-template-columns: 1fr;
+    }
+
+    .bereich__grid,
+    .vorteile {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

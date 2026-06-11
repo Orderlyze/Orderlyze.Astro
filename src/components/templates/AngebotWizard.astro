@@ -1,0 +1,620 @@
+---
+/**
+ * Angebots-Funnel-Wizard (/angebot, /angebot-de, /angebot-gastro, /angebot-google).
+ *
+ * Ablauf laut planning/angebot-flow.md:
+ *   4 Intro-Slides → 3 Formular-Schritte → Submit → Redirect /dank-angebot
+ *
+ * 🔴 Der Submit läuft gegen den PLATZHALTER in src/lib/lead-submit.ts —
+ * die API-Anbindung (Variante 1/2/3) ist eine OFFENE ENTSCHEIDUNG des Nutzers.
+ *
+ * Die Seiten unterscheiden sich nur im ersten Intro-Slide (Props).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../Icon.astro';
+import { SITE, EVENTS } from '../../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  /** Headline des ersten Slides */
+  introTitle: string;
+  /** optionale Zeile über der Headline (z. B. "Perfekt für deine Gastronomie") */
+  introKicker?: string;
+  introText: string;
+  chips: string[];
+}
+
+const { title, description, canonical, introTitle, introKicker, introText, chips } = Astro.props;
+
+const phoneEventClass = `plausible-event-name=${EVENTS.ctaPhone.replaceAll(' ', '+')}`;
+
+const branchen = [
+  'Dienstleistung (z.b. Friseur, Beauty, Physio)',
+  'Gastronomie (z.b. Bar, Cafe, Restaurant)',
+];
+const standorte = ['Österreich', 'Deutschland'];
+const mitarbeiter = ['0-4', '5-9', '10-19', '20+'];
+
+const marketingSlides = [
+  {
+    icon: 'chart',
+    title: 'Höhere Umsätze',
+    text: 'Mit integrierter Kartenzahlung und Funkbonieren bedienst du mehr Gäste in kürzerer Zeit — weniger Wartezeit, mehr Bestellungen, mehr Umsatz.',
+  },
+  {
+    icon: 'clock',
+    title: 'Mehr Zeit für deine KundInnen',
+    text: 'Kassieren in Sekunden, Berichte mit einem Klick: Orderlyze nimmt dir die lästige Verwaltungsarbeit ab, damit du dich um das Wichtigste kümmern kannst.',
+  },
+  {
+    icon: 'shield',
+    title: 'Sorgenfrei arbeiten',
+    text: 'RKSV- und KassenSichV-konform, automatische Übermittlung ans Finanzamt und kostenloser Support — du musst dich um nichts kümmern.',
+  },
+] as const;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} chrome={false}>
+  <div class="wizard-page">
+    <!-- Minimal-Header im Fokus-Modus -->
+    <header class="wizard-header">
+      <div class="container wizard-header__inner">
+        <a href="/" class="wizard-header__back" aria-label="Zur Startseite">
+          <svg width="124" height="32" viewBox="0 0 124 32" aria-hidden="true">
+            <text x="0" y="23" font-family="Raleway, sans-serif" font-weight="800" font-size="20" fill="currentColor">ORDERLYZE</text>
+          </svg>
+        </a>
+        <a href={SITE.phoneHref} class:list={['wizard-header__phone', phoneEventClass]}>
+          <Icon name="phone" size={15} />
+          {SITE.phone}
+        </a>
+      </div>
+    </header>
+
+    <main class="wizard-main">
+      <div class="container">
+        <!-- Fortschritt -->
+        <div class="wizard-progress" aria-hidden="true">
+          <div class="wizard-progress__bar" id="wizard-bar"></div>
+        </div>
+
+        <section class="wizard" id="wizard" data-total-steps="7">
+          <!-- ── Slide 1: Intro (variantenspezifisch) ── -->
+          <div class="slide is-active" data-step="1">
+            <p class="slide__kicker">kostenlos und unverbindlich</p>
+            {introKicker && <p class="slide__pre">{introKicker}</p>}
+            <h1 class="slide__title">{introTitle}</h1>
+            <p class="slide__text">{introText}</p>
+            <ul class="slide__chips">
+              {chips.map((c) => (
+                <li>
+                  <Icon name="check" size={16} />
+                  {c}
+                </li>
+              ))}
+            </ul>
+            <button class="wizard-next" data-next>Weiter</button>
+          </div>
+
+          <!-- ── Slides 2–4: Marketing ── -->
+          {
+            marketingSlides.map((s, i) => (
+              <div class="slide" data-step={i + 2}>
+                <p class="slide__icon">
+                  <Icon name={s.icon} size={54} />
+                </p>
+                <h2 class="slide__title">{s.title}</h2>
+                <p class="slide__text">{s.text}</p>
+                <div class="slide__nav">
+                  <button class="wizard-back" data-back>Zurück</button>
+                  <button class="wizard-next" data-next>Weiter</button>
+                </div>
+              </div>
+            ))
+          }
+
+          <!-- ── Slide 5: Formular 1 — Unternehmen ── -->
+          <div class="slide" data-step="5">
+            <h2 class="slide__title slide__title--form">Infos zu deinem Unternehmen</h2>
+            <div class="slide__form">
+              <div class="wfield">
+                <label for="w-unternehmen">Unternehmensname</label>
+                <input id="w-unternehmen" name="unternehmensname" type="text" required autocomplete="organization" />
+              </div>
+              <div class="wfield">
+                <label for="w-branche">Branche</label>
+                <select id="w-branche" name="branche" required>
+                  <option value="" disabled selected>Bitte wählen …</option>
+                  {branchen.map((b) => (
+                    <option value={b}>{b}</option>
+                  ))}
+                </select>
+              </div>
+              <div class="wfield">
+                <label for="w-standort">Unternehmensstandort</label>
+                <select id="w-standort" name="standort" required>
+                  <option value="" disabled selected>Bitte wählen …</option>
+                  {standorte.map((s) => (
+                    <option value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div class="slide__nav">
+              <button class="wizard-back" data-back>Zurück</button>
+              <button class="wizard-next" data-next data-validate>Weiter</button>
+            </div>
+          </div>
+
+          <!-- ── Slide 6: Formular 2 — Bedarf ── -->
+          <div class="slide" data-step="6">
+            <h2 class="slide__title slide__title--form">Was benötigst du?</h2>
+            <div class="slide__form">
+              <div class="wfield">
+                <label for="w-mitarbeiter">Wieviele Mitarbeiter*innen sind im Betrieb beschäftigt?</label>
+                <select id="w-mitarbeiter" name="mitarbeiter" required>
+                  <option value="" disabled selected>Bitte wählen …</option>
+                  {mitarbeiter.map((m) => (
+                    <option value={m}>{m}</option>
+                  ))}
+                </select>
+              </div>
+              <div class="wfield">
+                <label for="w-standgeraete">Wie viele Standgeräte benötigst du? (Tablet Kasse)</label>
+                <input id="w-standgeraete" name="standgeraete" type="number" min="0" value="1" required />
+              </div>
+              <div class="wfield">
+                <label for="w-mobil">Wieviele mobile Geräte möchtest du verwenden?</label>
+                <input id="w-mobil" name="mobilgeraete" type="number" min="0" value="0" required />
+              </div>
+              <div class="wfield">
+                <label for="w-drucker">Wieviele Bar- oder Küchendrucker benötigst du?</label>
+                <input id="w-drucker" name="drucker" type="number" min="0" value="0" required />
+              </div>
+            </div>
+            <div class="slide__nav">
+              <button class="wizard-back" data-back>Zurück</button>
+              <button class="wizard-next" data-next data-validate>Weiter</button>
+            </div>
+          </div>
+
+          <!-- ── Slide 7: Formular 3 — Kontakt + Submit ── -->
+          <div class="slide" data-step="7">
+            <h2 class="slide__title slide__title--form">Gleich erhältst du dein Angebot</h2>
+            <div class="slide__form">
+              <div class="wfield">
+                <label for="w-name">Vor- und Nachname</label>
+                <input id="w-name" name="name" type="text" required autocomplete="name" />
+              </div>
+              <div class="wfield">
+                <label for="w-email">E-Mail Adresse</label>
+                <input id="w-email" name="email" type="email" required autocomplete="email" />
+              </div>
+              <div class="wfield">
+                <label for="w-telefon">Telefon</label>
+                <input
+                  id="w-telefon"
+                  name="telefon"
+                  type="tel"
+                  required
+                  autocomplete="tel"
+                  pattern="[0-9]{6,15}"
+                  placeholder="06601234567"
+                />
+                <p class="wfield__hint">Nur Ziffern, ohne Leerzeichen und ohne „+“ (z. B. 06601234567)</p>
+              </div>
+              <p class="wizard-error" id="wizard-error" hidden>
+                Das hat leider nicht geklappt. Bitte prüfe deine Angaben oder ruf uns an:
+                <a href={SITE.phoneHref}>{SITE.phone}</a>
+              </p>
+            </div>
+            <div class="slide__nav">
+              <button class="wizard-back" data-back>Zurück</button>
+              <button class="wizard-next wizard-submit" id="wizard-submit">Zum Angebot</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Minimal-Footer -->
+    <footer class="wizard-footer">
+      <div class="container wizard-footer__inner">
+        <ul>
+          <li><a href="/agb">AGB</a></li>
+          <li><a href="/impressum">Impressum</a></li>
+          <li><a href="/datenschutzerklaerung">Datenschutzerklärung</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>
+
+<script>
+  import { submitLead, trackGoal } from '../../lib/lead-submit';
+
+  const wizard = document.getElementById('wizard')!;
+  const slides = [...wizard.querySelectorAll<HTMLElement>('.slide')];
+  const bar = document.getElementById('wizard-bar')!;
+  const errorBox = document.getElementById('wizard-error')!;
+  const total = slides.length;
+  let step = 1;
+
+  function show(next: number) {
+    step = Math.min(Math.max(next, 1), total);
+    for (const s of slides) {
+      s.classList.toggle('is-active', Number(s.dataset.step) === step);
+    }
+    bar.style.width = `${(step / total) * 100}%`;
+    wizard.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+
+  function validateSlide(slide: HTMLElement): boolean {
+    const fields = slide.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select');
+    for (const f of fields) {
+      if (!f.reportValidity()) return false;
+    }
+    return true;
+  }
+
+  wizard.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const slide = target.closest<HTMLElement>('.slide');
+    if (!slide) return;
+
+    if (target.matches('[data-next]:not(#wizard-submit)')) {
+      if (target.hasAttribute('data-validate') && !validateSlide(slide)) return;
+      show(step + 1);
+    } else if (target.matches('[data-back]')) {
+      show(step - 1);
+    }
+  });
+
+  document.getElementById('wizard-submit')?.addEventListener('click', async () => {
+    const lastSlide = slides[slides.length - 1];
+    if (!validateSlide(lastSlide)) return;
+
+    const button = document.getElementById('wizard-submit') as HTMLButtonElement;
+    button.disabled = true;
+    button.textContent = 'Wird gesendet …';
+    errorBox.hidden = true;
+
+    /* Felder analog zur dokumentierten Wix-Payload (planning/angebot-flow.md) */
+    const value = (id: string) =>
+      (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value;
+
+    const fields = [
+      { label: 'Unternehmensname', value: value('w-unternehmen') },
+      { label: 'Branche', value: value('w-branche') },
+      { label: 'Unternehmensstandort', value: value('w-standort') },
+      { label: 'Wieviele Mitarbeiter*innen sind im Betrieb beschäftigt?', value: value('w-mitarbeiter') },
+      { label: 'Wie viele Standgeräte benötigst du? (Tablet Kasse)', value: value('w-standgeraete') },
+      { label: 'Wieviele mobile Geräte möchtest du verwenden?', value: value('w-mobil') },
+      { label: 'Wieviele Bar- oder Küchendrucker benötigst du?', value: value('w-drucker') },
+      { label: 'Vor- und Nachname', value: value('w-name') },
+      { label: 'E-Mail Adresse', value: value('w-email') },
+      { label: 'Telefon', value: value('w-telefon') },
+    ];
+
+    const result = await submitLead('Angebot', fields);
+
+    if (result.ok) {
+      trackGoal('Angebot abgeschickt');
+      // kleiner Puffer, damit das Plausible-Event rausgeht
+      setTimeout(() => window.location.assign('/dank-angebot'), 150);
+    } else {
+      errorBox.hidden = false;
+      button.disabled = false;
+      button.textContent = 'Zum Angebot';
+    }
+  });
+</script>
+
+<style>
+  .wizard-page {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(ellipse 100% 60% at 50% -10%, rgba(6, 89, 169, 0.5), transparent 60%),
+      radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      var(--color-navy);
+    background-size: auto, 26px 26px, auto;
+  }
+
+  /* Header */
+  .wizard-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .wizard-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3.8rem;
+  }
+
+  .wizard-header__back {
+    color: #fff;
+    display: flex;
+  }
+
+  .wizard-header__back:hover {
+    color: var(--color-heading);
+  }
+
+  .wizard-header__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  .wizard-header__phone:hover {
+    color: var(--color-heading);
+  }
+
+  /* Fortschritt */
+  .wizard-main {
+    flex: 1;
+    display: grid;
+    align-items: start;
+    padding-block: clamp(1.5rem, 4vh, 3rem);
+  }
+
+  .wizard-progress {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 99px;
+    max-width: 34rem;
+    margin: 0 auto clamp(1.5rem, 4vh, 3rem);
+    overflow: hidden;
+  }
+
+  .wizard-progress__bar {
+    height: 100%;
+    width: 14.3%;
+    background: var(--color-accent);
+    border-radius: 99px;
+    transition: width 0.4s var(--ease-out);
+  }
+
+  /* Slides */
+  .wizard {
+    position: relative;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+
+  .slide {
+    display: none;
+    background: #fff;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
+    padding: clamp(1.8rem, 4vw, 3rem);
+    text-align: center;
+  }
+
+  .slide.is-active {
+    display: block;
+    animation: slide-in 0.45s var(--ease-out);
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide.is-active {
+      animation: none;
+    }
+  }
+
+  .slide__kicker {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent-deep);
+    margin: 0 0 1rem;
+  }
+
+  .slide__pre {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-heading-dark);
+    margin: 0 0 0.3rem;
+  }
+
+  .slide__icon {
+    color: var(--color-brand);
+    margin: 0 0 1rem;
+  }
+
+  .slide__icon :global(svg) {
+    margin-inline: auto;
+  }
+
+  .slide__title {
+    font-size: clamp(1.6rem, 1.3rem + 1.6vw, 2.2rem);
+    margin-bottom: 0.5em;
+  }
+
+  .slide__title--form {
+    font-size: clamp(1.4rem, 1.2rem + 1vw, 1.8rem);
+    margin-bottom: 1.2em;
+  }
+
+  .slide__text {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.6rem;
+  }
+
+  .slide__chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    list-style: none;
+    margin: 0 0 1.8rem;
+    padding: 0;
+  }
+
+  .slide__chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 0.95rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: var(--color-navy);
+  }
+
+  .slide__chips :global(svg) {
+    color: var(--color-brand);
+  }
+
+  /* Formulare */
+  .slide__form {
+    display: grid;
+    gap: 1.1rem;
+    text-align: left;
+    margin-bottom: 1.8rem;
+  }
+
+  .wfield {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .wfield label {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--color-navy);
+  }
+
+  .wfield input,
+  .wfield select {
+    font: inherit;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--color-line);
+    border-radius: 8px;
+    width: 100%;
+    background: #fff;
+  }
+
+  .wfield input:focus,
+  .wfield select:focus {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgba(6, 89, 169, 0.15);
+  }
+
+  .wfield__hint {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .wizard-error {
+    background: #fdecea;
+    border: 1px solid #f5c6c0;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    color: #8c2f24;
+  }
+
+  /* Navigation */
+  .slide__nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .wizard-next {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    color: #fff;
+    background: var(--color-brand);
+    border: 0;
+    border-radius: var(--radius-button);
+    padding: 0.85em 2.6em;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(6, 89, 169, 0.3);
+    transition: background var(--transition), transform var(--transition);
+  }
+
+  .wizard-next:hover {
+    background: var(--color-brand-dark);
+    transform: translateY(-2px);
+  }
+
+  .wizard-next:disabled {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+  }
+
+  .wizard-back {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0.85em 1em;
+  }
+
+  .wizard-back:hover {
+    color: var(--color-navy);
+  }
+
+  /* Footer */
+  .wizard-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-block: 1.1rem;
+  }
+
+  .wizard-footer__inner ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wizard-footer a {
+    color: var(--color-text-on-dark-muted);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .wizard-footer a:hover {
+    color: #fff;
+  }
+</style>

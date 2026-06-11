@@ -1,0 +1,371 @@
+---
+/**
+ * /so-funktionierts — Onboarding in 4 Schritten
+ * Inhalt: planning/content/pages/so-funktionierts.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { EVENTS, SITE } from '../config/site';
+
+import appLogin from '../assets/screenshots/app-schritt-1.jpg';
+import appTischplan from '../assets/screenshots/app-schritt-2.jpg';
+import verwaltungMac from '../assets/screenshots/verwaltung-dashboard-mac.png';
+
+const meta = {
+  title: "So funktioniert's | Orderlyze",
+  description:
+    'In nur 4 Schritten zu deinem Kassensystem. Hier kannst du dir durchlesen, wie einfach du mit Orderlyze loslegen kannst.',
+  canonical: 'https://www.orderlyze.com/so-funktionierts',
+};
+
+const schritte = [
+  {
+    nr: '1',
+    title: 'Angebot anfordern',
+    text: 'Hol dir ein unverbindliches Angebot und erhalte einen kostenlosen Testaccount.',
+  },
+  {
+    nr: '2',
+    title: 'App herunterladen',
+    text: 'Lade dir die App aus dem App Store oder von Google Play herunter und installiere sie.',
+  },
+  {
+    nr: '3',
+    title: 'Unternehmen einrichten',
+    text: 'Verwalte mit orderlyze web dein Unternehmen und richte alles ein.',
+  },
+  {
+    nr: '4',
+    title: 'Angebot annehmen',
+    text: 'Wir unterstützen dich bei allem und übernehmen die Finanzamtverbindung.',
+  },
+];
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>So funktioniert's</h1>
+      <p class="page-hero__lead">
+        In nur <span class="page-hero__accent">4 Schritten</span> zum finanzamtkonformen
+        Kassensystem
+      </p>
+      <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Jetzt loslegen</Button>
+    </div>
+  </section>
+
+  <!-- ── 4 Schritte (Bon-Optik) ── -->
+  <Section variant="surface">
+    <ol class="steps">
+      {
+        schritte.map((s) => (
+          <li class="step reveal">
+            <span class="step__nr" aria-hidden="true">{s.nr}</span>
+            <h2 class="step__title">{s.title}</h2>
+            <p class="step__text">{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <!-- ── Ablauf ── -->
+  <Section variant="paper">
+    <SectionHead
+      eyebrow="Der Ablauf"
+      title="So einfach läuft es bei uns ab"
+      mark="einfach"
+      lead="Orderlyze ist ein App-Kassensystem. Das heißt, du kannst es dir auf jedes Android- und iOS-Smartphone und -Tablet herunterladen. Sobald du deinen Kassensystem-Account von uns erhalten hast, kannst du die App auf einem beliebigen Gerät installieren und sofort loslegen. Schnell und einfach kannst du jetzt das Kassensystem individuell für dein Unternehmen einrichten. Und so funktioniert's:"
+    />
+  </Section>
+
+  <!-- ── App ── -->
+  <Section variant="paper" size="sm">
+    <FeatureSplit eyebrow="Arbeiten" title="Arbeiten – Orderlyze App" mark="App">
+      <Fragment slot="text">
+        <p>
+          Die Orderlyze App ist dein Kassensystem, mit der du die Rechnungen erstellst. Diese
+          installierst du auf den Geräten, mit denen du arbeitest. Die App ist das, mit dem du
+          täglich arbeitest und wodurch du effizienter und zeitsparender vorgehen kannst. Um dein
+          Unternehmen zu verwalten oder Einstellungen zu treffen, kannst du im Menü zu der
+          Verwaltung wechseln.
+        </p>
+      </Fragment>
+      <div class="app-shots">
+        <Image
+          src={appLogin}
+          alt="Login-Bildschirm der Orderlyze App am Smartphone"
+          widths={[420, 640, 900]}
+          sizes="(max-width: 860px) 88vw, 26vw"
+        />
+        <Image
+          src={appTischplan}
+          alt="Tischübersicht der Orderlyze App am Smartphone"
+          widths={[420, 640, 900]}
+          sizes="(max-width: 860px) 88vw, 26vw"
+        />
+      </div>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── orderlyze web ── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Verwalten" title="Verwalten – orderlyze web" mark="orderlyze web" reverse>
+      <Fragment slot="text">
+        <p>
+          orderlyze web ist eine Website, die du mit jedem Browser (z.&nbsp;B. Google Chrome,
+          Firefox, Safari) oder im Menü der App (Verwaltung) öffnen kannst. Dort kannst du zum
+          Beispiel deine Produktgruppen und Produkte anlegen, oder deine Berichte für die
+          Steuerberatung herunterladen. Außerdem kannst du einstellen, wie deine Rechnung aussehen
+          soll.
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="https://web.orderlyze.com/" variant="secondary">Jetzt Unternehmen verwalten</Button>
+      </Fragment>
+      <Image
+        src={verwaltungMac}
+        alt="orderlyze web Verwaltung im Browser am Laptop"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Support ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Support" title="Kostenloser Support für alle Kunden" mark="Kostenloser">
+      <Fragment slot="text">
+        <p>
+          Egal ob du Unterstützung bei der Einrichtung oder Hilfe beim laufenden Betrieb benötigst.
+          Wir sind stets erreichbar und unterstützen dich völlig kostenlos.
+        </p>
+        <Checklist
+          items={[
+            'Jederzeit telefonisch, per E-Mail und WhatsApp erreichbar',
+            'Keine zusätzlichen Kosten',
+            'Wir unterstützen dich von Anfang an',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/angebot" variant="secondary" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      </Fragment>
+      <div class="support-card">
+        <Icon name="support" size={56} />
+        <p class="support-card__phone"><a href={SITE.phoneHref}>{SITE.phone}</a></p>
+        <p class="support-card__note">Kostenlos aus Österreich &amp; Deutschland</p>
+        <hr class="support-card__rule" />
+        <p class="support-card__channels">Telefon · E-Mail · WhatsApp</p>
+      </div>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Finanzamtkonform ── -->
+  <Section variant="navy" size="sm">
+    <div class="konform reveal">
+      <Icon name="shield" size={56} />
+      <h2>Mit Orderlyze bist du zu <span class="konform__accent">100% finanzamtkonform</span></h2>
+      <p>
+        Mit Orderlyze musst du dir über das Finanzamt keine Sorgen machen. Am Beginn einmal
+        eingestellt, werden alle Daten automatisch übermittelt und du musst dich um nichts mehr
+        kümmern.
+      </p>
+      <Button href="/angebot" variant="on-dark" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+    </div>
+  </Section>
+
+  <CtaBanner title="Hol dir jetzt das Kassensystem." mark="jetzt" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
+  }
+
+  .page-hero h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.3em;
+  }
+
+  .page-hero__lead {
+    font-size: var(--text-lead);
+    color: var(--color-text-muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .page-hero__accent {
+    color: var(--color-accent-deep);
+    font-weight: 700;
+  }
+
+  /* 4 Schritte */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.4rem;
+    counter-reset: step;
+  }
+
+  .step {
+    position: relative;
+    background: #fff;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-line);
+    padding: 2.4rem 1.5rem 1.7rem;
+    text-align: center;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .step:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .step__nr {
+    position: absolute;
+    top: -1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    background: var(--color-brand);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(6, 89, 169, 0.35);
+  }
+
+  .step__title {
+    font-size: 1.12rem;
+    margin-bottom: 0.4em;
+  }
+
+  .step__text {
+    font-size: 0.94rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* App-Screens nebeneinander */
+  .app-shots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    align-items: center;
+  }
+
+  .app-shots :global(img) {
+    border-radius: 12px;
+  }
+
+  /* Support-Karte (wie Startseite) */
+  .support-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 2.6rem 2rem;
+    text-align: center;
+    color: var(--color-brand);
+    max-width: 24rem;
+    margin-inline: auto;
+  }
+
+  .support-card__phone {
+    margin: 1rem 0 0.2rem;
+  }
+
+  .support-card__phone a {
+    font-family: var(--font-heading);
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--color-navy);
+    text-decoration: none;
+  }
+
+  .support-card__phone a:hover {
+    color: var(--color-brand);
+  }
+
+  .support-card__note {
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    margin: 0;
+  }
+
+  .support-card__rule {
+    border: 0;
+    border-top: 2px dashed var(--color-line);
+    margin: 1.3rem 0;
+  }
+
+  .support-card__channels {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Konform-Block */
+  .konform {
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .konform :global(svg) {
+    color: var(--color-heading);
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
+
+  .konform h2 {
+    color: #fff;
+    margin-bottom: 0.5em;
+  }
+
+  .konform__accent {
+    color: var(--color-accent);
+  }
+
+  .konform p {
+    margin-bottom: 1.6rem;
+  }
+
+  @media (max-width: 1000px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 2.2rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

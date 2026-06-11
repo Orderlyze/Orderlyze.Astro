@@ -1,0 +1,735 @@
+---
+/**
+ * Startseite — Design-Referenz der Site.
+ * Inhalt: planning/content/pages/home.md (URL /, Meta aus Frontmatter)
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import FeatureSplit from '../components/FeatureSplit.astro';
+import Card from '../components/Card.astro';
+import CardGrid from '../components/CardGrid.astro';
+import Checklist from '../components/Checklist.astro';
+import Icon from '../components/Icon.astro';
+import ReceiptCard from '../components/ReceiptCard.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import DeviceMockup from '../components/DeviceMockup.astro';
+import { SITE, EVENTS } from '../config/site';
+
+import heroDevices from '../assets/screenshots/kassensystem-app-smartphone-tablet.png';
+import bedienung from '../assets/screenshots/kassensystem-kinderleichte-bedienung.png';
+import bezahlungTheke from '../assets/branchen/cafe-bezahlung-theke.jpg';
+import webappGeraete from '../assets/screenshots/kassensystem-webapp-alle-geraete.png';
+import monatsbericht from '../assets/screenshots/monatsbericht.png';
+
+import brancheRestaurant from '../assets/branchen/restaurant-gaeste.jpg';
+import brancheCafe from '../assets/branchen/cafe-kassensystem.jpg';
+import brancheBar from '../assets/branchen/bar-cocktails.jpg';
+import brancheFriseur from '../assets/branchen/friseur-barbershop-tablet.jpg';
+import brancheBeauty from '../assets/branchen/friseurin-salon.jpg';
+import branchePhysio from '../assets/branchen/physio-praxis.jpg';
+
+const meta = {
+  title: 'Orderlyze Kassensystem – einfach. schnell. effizient.',
+  description:
+    'Orderlyze Registrierkasse. Einfach zu bedienen, schnell eingerichtet und so effizient, dass du viel mehr Zeit für deine KundInnen hast. 100% finanzamtkonform.',
+  canonical: 'https://www.orderlyze.com',
+};
+
+const branchen = [
+  { label: 'Restaurant', href: '/restaurant', image: brancheRestaurant, alt: 'Gäste im Restaurant' },
+  { label: 'Cafe', href: '/cafe', image: brancheCafe, alt: 'Kassensystem im Café' },
+  { label: 'Bar', href: '/bar', image: brancheBar, alt: 'Cocktails an der Bar' },
+  { label: 'Friseur', href: '/friseur', image: brancheFriseur, alt: 'Friseur im Barbershop mit Tablet' },
+  { label: 'Beauty', href: '/beauty', image: brancheBeauty, alt: 'Stylistin im Beauty-Salon' },
+  { label: 'Physio', href: '/sonstige', image: branchePhysio, alt: 'Physiotherapeut in der Praxis' },
+];
+
+const funktionenTeaser = [
+  { icon: 'receipt', title: 'Rechnungen erstellen und bearbeiten' },
+  { icon: 'card', title: 'Kartenzahlung und Kassenlade' },
+  { icon: 'settings', title: 'Verwaltung von Produkten etc.' },
+  { icon: 'export', title: 'Datenexporte für Steuerberater' },
+] as const;
+
+/* Strukturierte Daten: Organization + SoftwareApplication (PLAN.md Phase 5) */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://www.orderlyze.com/#organization',
+      name: 'Orderlyze GmbH',
+      url: 'https://www.orderlyze.com',
+      logo: 'https://www.orderlyze.com/apple-touch-icon.png',
+      telephone: '+43 800 400 4511',
+      email: 'office@orderlyze.com',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Oberer Stadtplatz 9/2',
+        postalCode: '4710',
+        addressLocality: 'Grieskirchen',
+        addressCountry: 'AT',
+      },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Orderlyze Kassensystem',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Android, iOS, Web',
+      description:
+        'Kassensystem für Gastronomie und Dienstleister. Einfach zu bedienen, schnell eingerichtet, 100% finanzamtkonform (RKSV, KassenSichV).',
+      offers: {
+        '@type': 'Offer',
+        price: '39',
+        priceCurrency: 'EUR',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: '39',
+          priceCurrency: 'EUR',
+          unitText: 'pro Monat',
+        },
+      },
+      publisher: { '@id': 'https://www.orderlyze.com/#organization' },
+    },
+  ],
+};
+---
+
+<BaseLayout {...meta}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" is:inline />
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <p class="hero__eyebrow">Kassensystem für Gastronomie &amp; Dienstleister</p>
+        <h1 class="hero__title">
+          Registrierkasse<br />
+          <span class="hero__title-line">
+            <span class="hero__word">einfach.</span>
+            <span class="hero__word">schnell.</span>
+            <span class="hero__word hero__word--accent">effizient.</span>
+          </span>
+        </h1>
+        <p class="hero__lead">
+          Einfach zu bedienen, schnell eingerichtet und so effizient, dass du viel mehr Zeit für
+          deine KundInnen hast. 100% finanzamtkonform.
+        </p>
+        <div class="hero__actions">
+          <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Kostenloses Angebot</Button>
+          <span class="hero__note">Kostenlos und unverbindlich.</span>
+        </div>
+        <ul class="hero__trust">
+          <li><Icon name="shield" size={18} /> 100% finanzamtkonform (RKSV &amp; KassenSichV)</li>
+          <li><Icon name="support" size={18} /> Kostenloser Support</li>
+          <li><Icon name="devices" size={18} /> Android &amp; iOS</li>
+        </ul>
+      </div>
+      <div class="hero__media">
+        <Image
+          src={heroDevices}
+          alt="Orderlyze Kassensystem App auf Smartphone und Tablet"
+          widths={[480, 760, 1200]}
+          sizes="(max-width: 860px) 92vw, 46vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Drei Versprechen ─────────────────────────────────────────────── -->
+  <Section variant="paper">
+    <SectionHead
+      eyebrow="Warum Orderlyze"
+      title="Bei uns bist du einfach richtig"
+      mark="einfach"
+      lead="Orderlyze Kassensystem. Wirklich einfach. Wirklich zuverlässig. Mit allem, was du brauchst."
+    />
+    <CardGrid columns={3}>
+      <Card title="Zuverlässig">
+        <Icon name="check" slot="icon" size={30} />
+        <p>
+          Auf uns ist Verlass. Einmal eingerichtet, läuft das Kassensystem einwandfrei. Und sonst
+          hilft dir unser kostenloser Support weiter.
+        </p>
+      </Card>
+      <Card title="Konform">
+        <Icon name="shield" slot="icon" size={30} />
+        <p>
+          Mit Orderlyze bist du zu <a href="/finanzamt-konform">100% finanzamtkonform</a>. Außerdem
+          sendest du mit nur wenigen Klicks deinem Steuerberater alle wichtigen Berichte.
+        </p>
+      </Card>
+      <Card title="Alle Funktionen">
+        <Icon name="star" slot="icon" size={30} />
+        <p>
+          Auf alles vorbereitet? Ja! Orderlyze bietet dir <a href="/funktionen">alle Funktionen</a>,
+          die für dich wichtig sind. Und das zu einem super-fairen Preis!
+        </p>
+      </Card>
+    </CardGrid>
+  </Section>
+
+  <!-- ── Sekundenschnell kassieren (Video) ────────────────────────────── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Kassieren" title="Sekundenschnell kassieren" mark="Sekundenschnell">
+      <Fragment slot="text">
+        <p>
+          Mit Orderlyze kannst du Rechnungen in Sekundenschnelle erstellen, ganz ohne langes
+          Einarbeiten. Produkte mit nur zwei Klicks hinzufügen, löschen und bearbeiten, sowie
+          Extras und Kommentare beifügen. Schnell und unkompliziert abrechnen. Bestellungen ganz
+          einfach stornieren. So geht Kassieren heute!
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/so-funktionierts" variant="secondary">So funktioniert's</Button>
+      </Fragment>
+      <DeviceMockup type="phone" class="split-video">
+        <video
+          src="/videos/schnell-kassieren.mp4"
+          muted
+          loop
+          playsinline
+          autoplay
+          preload="none"
+          aria-label="Video: Sekundenschnell kassieren mit Orderlyze"
+        ></video>
+      </DeviceMockup>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Kinderleicht bedienen ────────────────────────────────────────── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Bedienung" title="Kinderleicht & mühelos bedienen" mark="Kinderleicht" reverse>
+      <Fragment slot="text">
+        <p>
+          Ein Kassensystem, wie es sein sollte: Sofort zu verstehen, einfach zu bedienen, effizient
+          und das Wichtigste, immer auf dem neuesten Stand. Orderlyze hilft dir, indem es deinen
+          Alltag erleichtert und vereinfacht. Sei es durch Rechnungen erstellen, neue Produkte
+          hinzufügen oder Mitarbeiter verwalten. Alles funktioniert bequem und mühelos.
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/so-funktionierts" variant="secondary">So funktioniert's</Button>
+      </Fragment>
+      <Image
+        src={bedienung}
+        alt="Kinderleichte Bedienung des Orderlyze Kassensystems am Tablet"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Kartenzahlung ────────────────────────────────────────────────── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Bezahlung" title="Kartenzahlung? Kein Problem" mark="Kartenzahlung">
+      <Fragment slot="text">
+        <p>
+          Bargeldlos zu bezahlen wird immer beliebter und hat für dich und deine KundInnen viele
+          Vorteile. Mit Orderlyze bist du für jede Zahlungsmethode gerüstet und kannst diverse
+          Zahlungen ganz einfach entgegennehmen.
+        </p>
+        <Checklist
+          items={[
+            'EC, Maestro/V&nbsp;Pay, MasterCard und Visa',
+            'Apple Pay',
+            'Kontaktlose Zahlung per NFC',
+            'Effizientes Abrechnen — für größere Flexibilität und mehr Umsatz',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/kartenzahlung" variant="secondary">Mehr erfahren</Button>
+      </Fragment>
+      <Image
+        src={bezahlungTheke}
+        alt="Kundin bezahlt kontaktlos an der Theke eines Cafés"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+        class="photo-rounded"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Branchen ─────────────────────────────────────────────────────── -->
+  <Section variant="navy">
+    <SectionHead
+      eyebrow="Branchen"
+      title="Perfekt für die Gastronomie und Dienstleistungen"
+      lead="Vom Restaurant bis zum Friseursalon: Orderlyze passt sich deinem Betrieb an — nicht umgekehrt."
+    />
+    <div class="branchen-grid">
+      {
+        branchen.map((b) => (
+          <a href={b.href} class="branche reveal">
+            <Image
+              src={b.image}
+              alt={b.alt}
+              widths={[320, 480, 640]}
+              sizes="(max-width: 640px) 46vw, (max-width: 1000px) 30vw, 220px"
+            />
+            <span class="branche__label">{b.label}</span>
+          </a>
+        ))
+      }
+    </div>
+    <div class="branchen-cta">
+      <Button href="/branchen" variant="on-dark">Alle Branchen ansehen</Button>
+    </div>
+  </Section>
+
+  <!-- ── Flexibilität ─────────────────────────────────────────────────── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Flexibel" title="Arbeite nach deinen Vorstellungen" mark="deinen" reverse>
+      <Fragment slot="text">
+        <p>
+          Du benötigst nur eine Standkasse oder doch mehrere Geräte? Kein Problem. Wie und mit
+          welchen Geräten du arbeiten möchtest, ist ganz dir überlassen. Orderlyze ist so flexibel,
+          wie du es bist.
+        </p>
+        <Checklist
+          items={[
+            'Kein Aufpreis bei mehreren Geräten',
+            'Für Android und iOS, Smartphones und Tablets',
+            'Bluetooth- oder Netzwerkkommunikation',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/preise" variant="secondary">Zu den Preisen</Button>
+      </Fragment>
+      <Image
+        src={webappGeraete}
+        alt="Orderlyze Kassensystem auf Tablet, Smartphone und Laptop"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Buchhaltung ──────────────────────────────────────────────────── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Buchhaltung" title="Buchhaltung ohne viel Mühe" mark="ohne viel Mühe">
+      <Fragment slot="text">
+        <p>
+          Im stressigen Alltag auch noch die Buchhaltung machen? Nicht bei uns. Mit wenigen Klicks
+          kannst du schnell und einfach diverse Berichte für die Steuerberaterin oder den
+          Steuerberater exportieren.
+        </p>
+        <Checklist
+          items={[
+            'Tages-, Monats- und Jahresberichte',
+            'Produktberichte, Berichte nach Zahlungsart uvm.',
+            'Exporte für Buchhaltungsprogramme (DATEV, BMD, RZL)',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/datenexport-steuerberater" variant="secondary">Mehr erfahren</Button>
+      </Fragment>
+      <DeviceMockup type="browser">
+        <Image
+          src={monatsbericht}
+          alt="Monatsbericht im Orderlyze Verwaltungs-Dashboard"
+          widths={[480, 760, 1100]}
+          sizes="(max-width: 860px) 92vw, 50vw"
+        />
+      </DeviceMockup>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Support ──────────────────────────────────────────────────────── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Support" title="Kostenloser Support für alle Kunden" mark="Kostenloser" reverse>
+      <Fragment slot="text">
+        <p>
+          Egal ob du Unterstützung bei der Einrichtung oder Hilfe beim laufenden Betrieb benötigst.
+          Wir sind stets erreichbar und unterstützen dich völlig kostenlos.
+        </p>
+        <Checklist
+          items={[
+            'Telefonisch, per E-Mail und WhatsApp erreichbar',
+            'Keine zusätzlichen Kosten',
+            'Wir unterstützen dich von Anfang an',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/angebot" variant="secondary" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      </Fragment>
+      <div class="support-card">
+        <Icon name="support" size={56} />
+        <p class="support-card__phone"><a href={SITE.phoneHref}>{SITE.phone}</a></p>
+        <p class="support-card__note">Kostenlos aus Österreich &amp; Deutschland</p>
+        <hr class="support-card__rule" />
+        <p class="support-card__channels">Telefon · E-Mail · WhatsApp</p>
+      </div>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Funktionen-Teaser ────────────────────────────────────────────── -->
+  <Section variant="surface">
+    <SectionHead
+      eyebrow="Funktionen"
+      title="Viele Funktionen warten auf dich"
+      lead="Alles, was ein modernes Kassensystem können muss — und noch einiges mehr."
+    />
+    <CardGrid columns={4}>
+      {
+        funktionenTeaser.map((f) => (
+          <Card title={f.title} href="/funktionen" level={3}>
+            <Icon name={f.icon} slot="icon" size={28} />
+          </Card>
+        ))
+      }
+    </CardGrid>
+    <div class="funktionen-cta">
+      <Button href="/funktionen" variant="ghost">Alle Funktionen <Icon name="arrow" size={18} /></Button>
+    </div>
+  </Section>
+
+  <!-- ── Testimonials (Kassenbon-Signatur) ────────────────────────────── -->
+  <Section variant="paper">
+    <SectionHead
+      eyebrow="Kundenstimmen"
+      title="Unzählige Kunden schenken uns ihr Vertrauen"
+      mark="Vertrauen"
+    />
+    <div class="testimonials">
+      <ReceiptCard tilt="left" class="reveal">
+        <p class="receipt-mono">— Kundenstimme #001 —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="testimonial__quote">
+          Seit dem ich Orderlyze verwende, habe ich keine Probleme gehabt. Alles geht super einfach
+          und ich kann alle meine Produkte unkompliziert bearbeiten. Einfach toll!
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="testimonial__name receipt-row">
+          <strong>Carlo M.</strong>
+          <span class="receipt-mono">Pizzachef</span>
+        </p>
+      </ReceiptCard>
+      <ReceiptCard tilt="right" class="reveal">
+        <p class="receipt-mono">— Kundenstimme #002 —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="testimonial__quote">
+          Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und
+          keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware
+          sehr günstig gewesen.
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="testimonial__name receipt-row">
+          <strong>Helene S.</strong>
+          <span class="receipt-mono">Kosmetikerin</span>
+        </p>
+      </ReceiptCard>
+    </div>
+    <p class="testimonials__cta">
+      <Button href="/angebot" event={EVENTS.ctaAngebot}>Hol dir auch ein Angebot</Button>
+    </p>
+  </Section>
+
+  <!-- ── Abschluss-CTA ────────────────────────────────────────────────── -->
+  <CtaBanner title="Interessiert? Dann hol dir ein unverbindliches Angebot!" mark="unverbindliches" buttonLabel="Angebot anfordern" />
+</BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    background: var(--color-navy);
+    background-image:
+      radial-gradient(ellipse 90% 70% at 75% 10%, rgba(6, 89, 169, 0.45), transparent 60%),
+      radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: auto, 26px 26px;
+    overflow: hidden;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-block: clamp(3.5rem, 2.5rem + 5vw, 7rem);
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-heading);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-heading);
+    margin: 0 0 1.2rem;
+  }
+
+  .hero__title {
+    font-size: var(--text-display);
+    color: #fff;
+    margin-bottom: 1.2rem;
+    line-height: 1.04;
+  }
+
+  .hero__title-line {
+    display: block;
+  }
+
+  .hero__word {
+    display: inline-block;
+  }
+
+  .hero__word--accent {
+    color: var(--color-accent);
+  }
+
+  .hero__lead {
+    font-size: var(--text-lead);
+    color: var(--color-text-on-dark-muted);
+    max-width: 34rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+
+  .hero__note {
+    color: var(--color-text-on-dark-muted);
+    font-size: 0.9rem;
+  }
+
+  .hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    list-style: none;
+    margin: 2.4rem 0 0;
+    padding: 1.1rem 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 0.88rem;
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .hero__trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero__trust :global(svg) {
+    color: var(--color-heading);
+    flex-shrink: 0;
+  }
+
+  .hero__media :global(img) {
+    filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
+  }
+
+  /* Staggered Hero-Load */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__eyebrow,
+    .hero__title,
+    .hero__lead,
+    .hero__actions,
+    .hero__trust,
+    .hero__media {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: hero-in 0.75s var(--ease-out) forwards;
+    }
+
+    .hero__title { animation-delay: 0.08s; }
+    .hero__lead { animation-delay: 0.16s; }
+    .hero__actions { animation-delay: 0.24s; }
+    .hero__trust { animation-delay: 0.34s; }
+    .hero__media { animation-delay: 0.18s; }
+
+    @keyframes hero-in {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+
+  /* ── Branchen-Grid ── */
+  .branchen-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.1rem;
+  }
+
+  .branche {
+    position: relative;
+    display: block;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    text-decoration: none;
+    outline-offset: 4px;
+  }
+
+  .branche :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .branche:hover :global(img) {
+    transform: scale(1.06);
+  }
+
+  .branche::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6, 33, 52, 0.85) 0%, transparent 55%);
+    transition: background var(--transition);
+  }
+
+  .branche__label {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 0.75rem;
+    z-index: 1;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: #fff;
+  }
+
+  .branchen-cta {
+    text-align: center;
+    margin-top: 2.4rem;
+  }
+
+  /* ── Support-Karte ── */
+  .support-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 2.6rem 2rem;
+    text-align: center;
+    color: var(--color-brand);
+    max-width: 24rem;
+    margin-inline: auto;
+  }
+
+  .support-card__phone {
+    margin: 1rem 0 0.2rem;
+  }
+
+  .support-card__phone a {
+    font-family: var(--font-heading);
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--color-navy);
+    text-decoration: none;
+  }
+
+  .support-card__phone a:hover {
+    color: var(--color-brand);
+  }
+
+  .support-card__note {
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    margin: 0;
+  }
+
+  .support-card__rule {
+    border: 0;
+    border-top: 2px dashed var(--color-line);
+    margin: 1.3rem 0;
+  }
+
+  .support-card__channels {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* ── Funktionen / Testimonials ── */
+  .funktionen-cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .testimonial__quote {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .testimonial__name {
+    margin: 0;
+  }
+
+  .testimonial__name strong {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--color-navy);
+  }
+
+  .testimonials__cta {
+    text-align: center;
+    margin: 2.6rem 0 0;
+  }
+
+  /* ── Medien-Details ── */
+  .photo-rounded {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
+  }
+
+  .split-video {
+    margin-inline: auto;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1000px) {
+    .branchen-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__media {
+      max-width: 26rem;
+      margin-inline: auto;
+    }
+
+    .testimonials {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .branchen-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

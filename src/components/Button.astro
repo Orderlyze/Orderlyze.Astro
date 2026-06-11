@@ -1,0 +1,106 @@
+---
+/**
+ * CTA-Button/Link. `event` taggt den Klick als Plausible-Goal
+ * (tagged-events-Script, siehe planning/seo-tools.md).
+ */
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'ghost' | 'on-dark';
+  size?: 'md' | 'lg';
+  /** Plausible-Event-Name, z. B. EVENTS.ctaAngebot */
+  event?: string;
+  class?: string;
+}
+
+const { href, variant = 'primary', size = 'md', event, class: className } = Astro.props;
+
+const eventClass = event ? `plausible-event-name=${event.replaceAll(' ', '+')}` : '';
+---
+
+<a href={href} class:list={['btn', `btn--${variant}`, `btn--${size}`, eventClass, className]}>
+  <slot />
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55em;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border-radius: var(--radius-button);
+    border: 2px solid transparent;
+    transition:
+      background var(--transition),
+      color var(--transition),
+      border-color var(--transition),
+      transform var(--transition),
+      box-shadow var(--transition);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn--md {
+    font-size: 0.95rem;
+    padding: 0.72em 1.5em;
+  }
+
+  .btn--lg {
+    font-size: 1.05rem;
+    padding: 0.95em 2.1em;
+  }
+
+  .btn--primary {
+    background: var(--color-brand);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(6, 89, 169, 0.32);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-brand-dark);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(6, 89, 169, 0.4);
+  }
+
+  .btn--secondary {
+    background: transparent;
+    color: var(--color-brand);
+    border-color: var(--color-brand);
+  }
+
+  .btn--secondary:hover {
+    background: var(--color-brand);
+    color: #fff;
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-brand);
+    padding-inline: 0.4em;
+  }
+
+  .btn--ghost:hover {
+    color: var(--color-brand-dark);
+  }
+
+  /* Auf Navy-/Orange-Flächen */
+  .btn--on-dark {
+    background: #fff;
+    color: var(--color-navy);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  }
+
+  .btn--on-dark:hover {
+    background: var(--color-surface);
+    color: var(--color-navy);
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+</style>

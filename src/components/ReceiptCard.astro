@@ -1,0 +1,90 @@
+---
+/**
+ * Design-Signatur „Kassenbon“: Karte mit perforierter Abrisskante,
+ * gestrichelten Trennlinien und Mono-Ziffern. Für Testimonials,
+ * Preis-Karten und Zahlen-Highlights.
+ *
+ * Aufbau: clip-path schneidet die Abrisskante am Inner-Element,
+ * der Schatten liegt als drop-shadow am Outer (clip-path würde
+ * box-shadow abschneiden).
+ */
+interface Props {
+  class?: string;
+  /** leicht gedreht für lebendige Galerie-Anordnung */
+  tilt?: 'left' | 'right' | 'none';
+}
+
+const { class: className, tilt = 'none' } = Astro.props;
+---
+
+<article class:list={['receipt', `receipt--tilt-${tilt}`, className]}>
+  <div class="receipt__paper">
+    <div class="receipt__inner">
+      <slot />
+    </div>
+  </div>
+</article>
+
+<style>
+  .receipt {
+    filter: drop-shadow(0 2px 4px rgba(6, 33, 52, 0.08)) drop-shadow(0 16px 28px rgba(6, 33, 52, 0.14));
+    transition: transform var(--transition);
+  }
+
+  .receipt--tilt-left {
+    transform: rotate(-1.2deg);
+  }
+
+  .receipt--tilt-right {
+    transform: rotate(1.2deg);
+  }
+
+  .receipt:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+
+  .receipt__paper {
+    background: #fff;
+    border-radius: 6px 6px 0 0;
+    /* Abrisskante unten */
+    --zz: 9px;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--zz)),
+      96% 100%, 92% calc(100% - var(--zz)), 88% 100%, 84% calc(100% - var(--zz)),
+      80% 100%, 76% calc(100% - var(--zz)), 72% 100%, 68% calc(100% - var(--zz)),
+      64% 100%, 60% calc(100% - var(--zz)), 56% 100%, 52% calc(100% - var(--zz)),
+      48% 100%, 44% calc(100% - var(--zz)), 40% 100%, 36% calc(100% - var(--zz)),
+      32% 100%, 28% calc(100% - var(--zz)), 24% 100%, 20% calc(100% - var(--zz)),
+      16% 100%, 12% calc(100% - var(--zz)), 8% 100%, 4% calc(100% - var(--zz)),
+      0 100%
+    );
+  }
+
+  .receipt__inner {
+    padding: 1.8rem 1.7rem 2.5rem;
+  }
+
+  /* Bon-Typo-Hilfsklassen (global nutzbar innerhalb der Karte) */
+  .receipt :global(.receipt-rule) {
+    border: 0;
+    border-top: 2px dashed var(--color-line);
+    margin: 1.1rem 0;
+  }
+
+  .receipt :global(.receipt-mono) {
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .receipt :global(.receipt-row) {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+</style>

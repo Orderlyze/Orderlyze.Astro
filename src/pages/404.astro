@@ -1,0 +1,71 @@
+---
+/**
+ * 404 — Seite nicht gefunden
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import { SITE } from '../config/site';
+
+const meta = {
+  title: 'Seite nicht gefunden | Orderlyze',
+  description: 'Diese Seite gibt es leider nicht (mehr). Hier geht es zurück zum Orderlyze Kassensystem.',
+  noindex: true,
+};
+---
+
+<BaseLayout {...meta}>
+  <Section variant="navy">
+    <div class="nf">
+      <p class="nf__code">404</p>
+      <h1>Diese Seite gibt es leider nicht (mehr).</h1>
+      <p class="nf__text">
+        Vielleicht hilft dir eine dieser Seiten weiter — oder ruf uns einfach an:
+        <a href={SITE.phoneHref}>{SITE.phone}</a>
+      </p>
+      <div class="nf__actions">
+        <Button href="/" variant="on-dark">Zur Startseite</Button>
+        <Button href="/funktionen" variant="on-dark">Funktionen</Button>
+        <Button href="/preise" variant="on-dark">Preise</Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .nf {
+    text-align: center;
+    max-width: 42rem;
+    margin-inline: auto;
+    padding-block: clamp(2rem, 6vh, 5rem);
+  }
+
+  .nf__code {
+    font-family: var(--font-mono);
+    font-size: clamp(4rem, 10vw, 7rem);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+    margin: 0 0 0.5rem;
+  }
+
+  .nf h1 {
+    color: #fff;
+  }
+
+  .nf__text {
+    color: var(--color-text-on-dark-muted);
+    margin-bottom: 2rem;
+  }
+
+  .nf__text a {
+    color: #fff;
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+</style>

@@ -1,0 +1,199 @@
+---
+/**
+ * /bestellen — Bestellanfrage-Formular
+ * Inhalt: planning/content/pages/bestellen.md
+ * Submit: PLATZHALTER (src/lib/lead-submit.ts, Anbindung offen)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import FormField from '../components/FormField.astro';
+import Icon from '../components/Icon.astro';
+
+const meta = {
+  title: 'Bestellen | Orderlyze',
+  description:
+    'Bestelle dir ganz einfach dein Kassensystem nach Hause. Einfach Formular ausfüllen, beraten lassen und schon ist deine Kasse auf den Weg zu dir.',
+  canonical: 'https://www.orderlyze.com/bestellen',
+};
+
+const branchen = [
+  'Gastronomie (z.b. Bar, Cafe, Restaurant)',
+  'Dienstleistung (z.b. Friseur, Beauty, Physio)',
+];
+---
+
+<BaseLayout {...meta}>
+  <Section variant="surface">
+    <div class="bestellen">
+      <header class="bestellen__head reveal">
+        <h1>Kassensystem Bestellanfrage</h1>
+        <p>
+          Einfach ausfüllen und in Kürze meldet sich ein Mitarbeiter bezüglich Ihrer Bestellung.
+          <strong>Unverbindlich.</strong>
+        </p>
+      </header>
+
+      <form class="bestellen__form reveal" id="bestell-form" novalidate>
+        <div class="bestellen__grid">
+          <FormField name="unternehmensname" label="Unternehmensname" required autocomplete="organization" class="span-2" />
+          <FormField name="vorname" label="Vorname" required autocomplete="given-name" />
+          <FormField name="nachname" label="Nachname" required autocomplete="family-name" />
+          <FormField name="email" label="E-Mail-Adresse" type="email" required autocomplete="email" />
+          <FormField name="telefon" label="Telefon" type="tel" required autocomplete="tel" hint="Ohne Leerzeichen, z. B. 06601234567" />
+          <FormField name="branche" label="Wähle deine Branche aus" type="select" options={branchen} required class="span-2" />
+          <FormField name="strasse" label="Straße und Hausnummer" required autocomplete="street-address" class="span-2" />
+          <FormField name="adresszusatz" label="Adresszusatz" autocomplete="address-line2" class="span-2" />
+          <FormField name="stadt" label="Stadt" required autocomplete="address-level2" />
+          <FormField name="plz" label="Postleitzahl" required autocomplete="postal-code" />
+          <FormField name="bundesland" label="Bundesland" autocomplete="address-level1" />
+          <FormField name="land" label="Land" type="select" options={['Österreich', 'Deutschland']} required />
+          <FormField name="ustid" label="USt-ID oder Steuer-ID" class="span-2" />
+        </div>
+
+        <button type="submit" class="bestellen__submit">Jetzt bestellen</button>
+        <p class="bestellen__note">Unverbindliche Anfrage — wir melden uns persönlich bei dir.</p>
+      </form>
+
+      <div class="bestellen__danke" id="bestell-danke" hidden>
+        <Icon name="check" size={56} />
+        <h2>Vielen Dank für deine Bestellanfrage!</h2>
+        <p>In Kürze meldet sich ein Mitarbeiter bezüglich deiner Bestellung.</p>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  import { submitLead, trackGoal } from '../lib/lead-submit';
+
+  const form = document.getElementById('bestell-form') as HTMLFormElement | null;
+  const danke = document.getElementById('bestell-danke');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    button.disabled = true;
+    button.textContent = 'Wird gesendet …';
+
+    const data = new FormData(form);
+    const fields = [...data.entries()].map(([label, value]) => ({ label, value: String(value) }));
+    const result = await submitLead('Bestellanfrage', fields);
+
+    if (result.ok) {
+      trackGoal('Bestellanfrage abgeschickt');
+      form.hidden = true;
+      if (danke) danke.hidden = false;
+      danke?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    } else {
+      button.disabled = false;
+      button.textContent = 'Jetzt bestellen';
+    }
+  });
+</script>
+
+<style>
+  .bestellen {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  .bestellen__head {
+    text-align: center;
+    margin-bottom: 2.2rem;
+  }
+
+  .bestellen__head h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.35em;
+  }
+
+  .bestellen__head p {
+    color: var(--color-text-muted);
+    font-size: var(--text-lead);
+    margin: 0;
+  }
+
+  .bestellen__form {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: clamp(1.6rem, 3vw, 2.6rem);
+    box-shadow: var(--shadow-card);
+  }
+
+  .bestellen__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem 1.3rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .bestellen__grid :global(.span-2) {
+    grid-column: span 2;
+  }
+
+  .bestellen__submit {
+    width: 100%;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    color: #fff;
+    background: var(--color-brand);
+    border: 0;
+    border-radius: var(--radius-button);
+    padding: 0.95em 2em;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+  }
+
+  .bestellen__submit:hover {
+    background: var(--color-brand-dark);
+    transform: translateY(-2px);
+  }
+
+  .bestellen__submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+  }
+
+  .bestellen__note {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0.9rem 0 0;
+  }
+
+  .bestellen__danke {
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 3rem 2rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .bestellen__danke :global(svg) {
+    color: var(--color-brand);
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
+
+  .bestellen__danke p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .bestellen__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bestellen__grid :global(.span-2) {
+      grid-column: span 1;
+    }
+  }
+</style>

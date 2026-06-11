@@ -1,0 +1,77 @@
+---
+/**
+ * Sektions-Kopf: Eyebrow + Heading + Lead, zentriert oder linksbündig.
+ * `level` steuert die Heading-Ebene (genau eine H1 pro Seite!).
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  level?: 1 | 2 | 3;
+  align?: 'center' | 'left';
+  /** Wort(e) im Titel, die den Orange-Akzent bekommen */
+  mark?: string;
+}
+
+const { eyebrow, title, lead, level = 2, align = 'center', mark } = Astro.props;
+const Tag = `h${level}` as 'h1' | 'h2' | 'h3';
+
+/* mark="Wort" hebt dieses Wort im Titel hervor */
+const parts = mark && title.includes(mark) ? title.split(mark) : null;
+---
+
+<div class:list={['section-head', `section-head--${align}`, 'reveal']}>
+  {eyebrow && <p class="section-head__eyebrow">{eyebrow}</p>}
+  <Tag class="section-head__title">
+    {parts ? (
+      <>
+        {parts[0]}<span class="mark">{mark}</span>{parts[1]}
+      </>
+    ) : (
+      title
+    )}
+  </Tag>
+  {lead && <p class="section-head__lead">{lead}</p>}
+  <slot />
+</div>
+
+<style>
+  .section-head {
+    max-width: 46rem;
+    margin-bottom: clamp(2.2rem, 1.6rem + 2.5vw, 3.6rem);
+  }
+
+  .section-head--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section-head__eyebrow {
+    font-family: var(--font-heading);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-accent-deep);
+    margin: 0 0 0.9rem;
+  }
+
+  :global(.section--navy) .section-head__eyebrow {
+    color: var(--color-accent);
+  }
+
+  .section-head__title {
+    margin-bottom: 0.45em;
+  }
+
+  .section-head__lead {
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  :global(.section--navy) .section-head__lead {
+    color: var(--color-text-on-dark-muted);
+  }
+</style>

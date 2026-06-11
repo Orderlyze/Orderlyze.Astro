@@ -1,0 +1,106 @@
+---
+/**
+ * Formularfeld im Brand-Stil (Text/E-Mail/Tel/Select/Number).
+ */
+interface Option {
+  value: string;
+  label?: string;
+}
+
+interface Props {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'number' | 'select';
+  required?: boolean;
+  options?: (string | Option)[];
+  placeholder?: string;
+  autocomplete?: string;
+  min?: number;
+  /** Hinweis unter dem Feld (z. B. Format-Hilfe) */
+  hint?: string;
+  class?: string;
+}
+
+const {
+  name,
+  label,
+  type = 'text',
+  required = false,
+  options = [],
+  placeholder,
+  autocomplete,
+  min,
+  hint,
+  class: className,
+} = Astro.props;
+
+const id = `field-${name}`;
+const normalized = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : { label: o.value, ...o }));
+---
+
+<div class:list={['field', className]}>
+  <label class="field__label" for={id}>
+    {label}
+    {required && <span class="field__req" aria-hidden="true">*</span>}
+  </label>
+  {
+    type === 'select' ? (
+      <select class="field__input" {id} {name} {required}>
+        <option value="" disabled selected>
+          {placeholder ?? 'Bitte wählen …'}
+        </option>
+        {normalized.map((o) => (
+          <option value={o.value}>{o.label}</option>
+        ))}
+      </select>
+    ) : (
+      <input class="field__input" {id} {name} {type} {required} {placeholder} {autocomplete} {min} inputmode={type === 'number' ? 'numeric' : undefined} />
+    )
+  }
+  {hint && <p class="field__hint">{hint}</p>}
+</div>
+
+<style>
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .field__label {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--color-navy);
+  }
+
+  .field__req {
+    color: var(--color-accent-deep);
+  }
+
+  .field__input {
+    font: inherit;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--color-line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--color-text);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    width: 100%;
+  }
+
+  .field__input:focus {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgba(6, 89, 169, 0.15);
+  }
+
+  .field__input:user-invalid {
+    border-color: #c0392b;
+  }
+
+  .field__hint {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+</style>

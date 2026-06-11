@@ -1,0 +1,562 @@
+---
+/**
+ * Gemeinsames Template der vier Keyword-Landingpages
+ * /kassensystem, /kassensoftware, /registrierkasse, /bestellsystem —
+ * die Live-Seiten sind inhaltsgleich bis auf das Keyword
+ * (planning/content/pages/{kassensystem,kassensoftware,registrierkasse,bestellsystem}.md).
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../Button.astro';
+import Section from '../Section.astro';
+import SectionHead from '../SectionHead.astro';
+import FeatureSplit from '../FeatureSplit.astro';
+import Card from '../Card.astro';
+import CardGrid from '../CardGrid.astro';
+import Checklist from '../Checklist.astro';
+import Icon from '../Icon.astro';
+import ReceiptCard from '../ReceiptCard.astro';
+import CtaBanner from '../CtaBanner.astro';
+import DeviceMockup from '../DeviceMockup.astro';
+import { EVENTS } from '../../config/site';
+
+import heroDevices from '../../assets/screenshots/kassensystem-geraete-bondrucker-showcase.png';
+import kassieren from '../../assets/screenshots/kassieren-rechnung-tablet.png';
+import bedienung from '../../assets/screenshots/kassensystem-kinderleichte-bedienung.png';
+import verwaltungMac from '../../assets/screenshots/verwaltung-dashboard-mac.png';
+import monatsbericht from '../../assets/screenshots/monatsbericht.png';
+import kueche from '../../assets/screenshots/kommunikation-kueche-funkbonieren.png';
+import bezahlungTheke from '../../assets/branchen/cafe-bezahlung-theke.jpg';
+
+interface Props {
+  /** z. B. "Kassensystem" */
+  keyword: string;
+  /** "Das" | "Die" — Artikel fürs Keyword */
+  artikel: 'Das' | 'Die';
+  /** "dem" | "der" — Dativ für „Mit … Orderlyze-…“ */
+  dativ: 'dem' | 'der';
+  title: string;
+  description: string;
+  canonical: string;
+  /* Optionale Varianten (Branchen-Ausprägungen wie /gastronomie, /friseure) */
+  /** H1-Zusatz statt „für jeden Bedarf“, z. B. "für die Gastronomie" */
+  heroSuffix?: string;
+  /** Hero-Absatz; Default = generischer „Egal ob Gastronomie …“-Text */
+  heroText?: string;
+  /** Überschrift der 3-Karten-Sektion */
+  cardsEyebrow?: string;
+  cardsTitle?: string;
+  /** Satz „… ist optimiert für jeden Bedarf.“ in Karte 2 */
+  cardsSizeText?: string;
+  /** Einleitung der Buchhaltungs-Sektion */
+  buchhaltungIntro?: string;
+  /** Küchen-Sektion zeigen (Gastro-relevant) */
+  showKueche?: boolean;
+  /** Abschluss-CTA-Titel */
+  finalCtaTitle?: string;
+  finalCtaMark?: string;
+}
+
+const {
+  keyword,
+  artikel,
+  dativ,
+  title,
+  description,
+  canonical,
+  heroSuffix = 'für jeden Bedarf',
+  heroText = `Egal ob Gastronomie, Friseursalon oder eine sonstige Dienstleistung. Mit ${dativ} Orderlyze ${keyword} arbeitest du einfach und schnell, damit du dich auf das Wichtigste konzentrieren kannst:`,
+  cardsEyebrow = 'Wir haben genau das Richtige für dich',
+  cardsTitle,
+  cardsSizeText,
+  buchhaltungIntro = 'Im stressigen Alltag auch noch die Buchhaltung machen? Nicht bei uns.',
+  showKueche = true,
+  finalCtaTitle,
+  finalCtaMark,
+} = Astro.props;
+
+const resolvedCardsTitle =
+  cardsTitle ?? `Für jeden ${artikel === 'Das' ? 'das' : 'die'} passende ${keyword}`;
+const resolvedCardsSizeText =
+  cardsSizeText ??
+  `${artikel === 'Das' ? 'Unser' : 'Unsere'} ${keyword} ist optimiert für jeden Bedarf.`;
+const resolvedFinalTitle =
+  finalCtaTitle ??
+  `Hol dir ein individuelles Angebot für ${artikel === 'Das' ? 'das' : 'die'} ${keyword}`;
+const resolvedFinalMark = finalCtaMark ?? keyword;
+
+const funktionen = [
+  'Rechnungen erstellen',
+  'Rechnungen verwalten',
+  'Stammkunden',
+  'Reservierungen erstellen',
+  'Statistiken und Analysen',
+  'Synchronisation zwischen mehreren Geräten',
+  'Tages-, Monats- und Jahresberichte',
+  'Produkte und vieles mehr verwalten',
+  'Individuelles Design',
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <!-- ── Hero ── -->
+  <section class="kw-hero">
+    <div class="container kw-hero__inner">
+      <div class="kw-hero__text reveal">
+        <p class="kw-hero__badge"><Icon name="shield" size={16} /> 100% finanzamtkonform</p>
+        <h1>
+          {artikel} Nr. 1 <span class="mark">{keyword}</span> {heroSuffix}
+        </h1>
+        <p class="kw-hero__lead">
+          {heroText}
+          <strong>Deine Kunden!</strong>
+        </p>
+        <div class="kw-hero__actions">
+          <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+          <span class="kw-hero__note">Kostenlos und unverbindlich.</span>
+        </div>
+      </div>
+      <div class="kw-hero__media reveal">
+        <Image
+          src={heroDevices}
+          alt={`Orderlyze ${keyword} auf Smartphone und Tablet mit Bondrucker`}
+          widths={[480, 760, 1200]}
+          sizes="(max-width: 860px) 92vw, 46vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Drei Stärken ── -->
+  <Section variant="paper">
+    <SectionHead eyebrow={cardsEyebrow} title={resolvedCardsTitle} />
+    <CardGrid columns={3}>
+      <Card title="Kassieren, egal wo" level={3}>
+        <Icon name="pin" slot="icon" size={30} />
+        <p>
+          Ob unterwegs oder im eigenen Gebäude, ob große Distanz zwischen deinen Geräten ist oder
+          nicht, Rechnungen erstellen ist nie ein Problem.
+        </p>
+      </Card>
+      <Card title="Für jede Unternehmensgröße" level={3}>
+        <Icon name="users" slot="icon" size={30} />
+        <p>
+          Egal ob Einzelunternehmen oder Großbetrieb, wir haben für alle eine individuelle Lösung.
+          {resolvedCardsSizeText}
+        </p>
+      </Card>
+      <Card title="Verwalten, und zwar alles" level={3}>
+        <Icon name="settings" slot="icon" size={30} />
+        <p>
+          Steuere dein Unternehmen von überall aus, analysiere deine Geschäftszahlen und verwalte
+          deine Mitarbeiter sowie die Finanzamteinstellungen für deinen Steuerberater.
+        </p>
+      </Card>
+    </CardGrid>
+  </Section>
+
+  <!-- ── Kassieren ── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Kassieren" title="Sekundenschnell kassieren" mark="Sekundenschnell">
+      <Fragment slot="text">
+        <p>
+          Mit {dativ} Orderlyze {keyword} kannst du Rechnungen in Sekundenschnelle erstellen, ganz
+          ohne langes Einarbeiten. Produkte mit nur zwei Klicks hinzufügen, löschen und bearbeiten,
+          sowie Extras und Kommentare beifügen. Schnell und unkompliziert abrechnen. Bestellungen
+          ganz einfach stornieren. So geht Kassieren heute!
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/so-funktionierts" variant="secondary">So funktioniert's</Button>
+      </Fragment>
+      <Image
+        src={kassieren}
+        alt="Rechnung erstellen am Tablet mit Orderlyze"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+        class="photo-rounded"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Bedienung ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Bedienung" title="Bequem und mühelos bedienen" mark="mühelos" reverse>
+      <Fragment slot="text">
+        <p>
+          Eine App, wie sie sein sollte: Sofort zu verstehen, einfach zu bedienen, effizient und
+          das Wichtigste, immer auf dem neuesten Stand.
+        </p>
+        <p>
+          Orderlyze hilft dir, indem es deinen Alltag erleichtert und vereinfacht. Sei es durch
+          Rechnungen erstellen, neue Produkte hinzufügen oder Mitarbeiter verwalten. Alles
+          funktioniert bequem und mühelos.
+        </p>
+      </Fragment>
+      <Image
+        src={bedienung}
+        alt="Kinderleichte Bedienung der Orderlyze App am Tablet"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Verwaltung ── -->
+  <Section variant="surface">
+    <FeatureSplit eyebrow="Verwaltung" title="Übersichtlich und transparent" mark="transparent">
+      <Fragment slot="text">
+        <p>
+          Orderlyze bietet dir die Möglichkeit, dein Unternehmen zu verwalten, zu analysieren und
+          zu organisieren, und zwar alles individuell und nach deinem Geschmack.
+        </p>
+        <p>
+          Mitarbeiter verwalten, Umsätze analysieren oder ganz einfach Tages-, Monats- oder
+          Jahresberichte unkompliziert downloaden.
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/verwaltung" variant="secondary">Zur Verwaltung</Button>
+      </Fragment>
+      <Image
+        src={verwaltungMac}
+        alt="Orderlyze Verwaltungs-Dashboard am Laptop"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Buchhaltung ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Buchhaltung" title="Buchhaltung ohne viel Mühe" mark="ohne viel Mühe" reverse>
+      <Fragment slot="text">
+        <p>
+          {buchhaltungIntro} Mit wenigen Klicks kannst du schnell und einfach diverse Berichte für
+          die Steuerberaterin oder den Steuerberater exportieren. Außerdem stehen dir Exporte für
+          Buchhaltungsprogramme zur Verfügung!
+        </p>
+        <Checklist
+          items={[
+            'Tages-, Monats- und Jahresberichte als PDF',
+            'Kategorieberichte, Produktberichte, Berichte nach Zahlungsart uvm.',
+            'CSV-Exporte für Buchhaltungsprogramme BMD und RZL',
+          ]}
+        />
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/datenexport-steuerberater" variant="secondary">Mehr erfahren</Button>
+      </Fragment>
+      <DeviceMockup type="browser">
+        <Image
+          src={monatsbericht}
+          alt="Monatsbericht für den Steuerberater im Orderlyze Dashboard"
+          widths={[480, 760, 1100]}
+          sizes="(max-width: 860px) 92vw, 50vw"
+        />
+      </DeviceMockup>
+    </FeatureSplit>
+  </Section>
+
+  <!-- ── Kartenzahlung (Statement-Sektion) ── -->
+  <Section variant="navy" size="sm">
+    <div class="kw-karten reveal">
+      <div class="kw-karten__head">
+        <p class="kw-karten__eyebrow">Integrierte Kartenzahlung.</p>
+        <h2 class="kw-karten__title">
+          Für schnelles und effizientes Abrechnen.<br />
+          Für mehr <span class="kw-karten__accent">Umsatz</span>.<br />
+          Für mehr <span class="kw-karten__accent">Flexibilität</span>.
+        </h2>
+        <Button href="/kartenzahlung" variant="on-dark">Zur Kartenzahlung</Button>
+      </div>
+      <Image
+        src={bezahlungTheke}
+        alt="Kontaktlose Kartenzahlung an der Theke"
+        widths={[420, 640, 900]}
+        sizes="(max-width: 860px) 92vw, 40vw"
+        class="kw-karten__img"
+      />
+    </div>
+  </Section>
+
+  <!-- ── Küche ── -->
+  {showKueche && (
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Gastronomie" title="Kommunikation mit der Küche" mark="Küche">
+      <Fragment slot="text">
+        <p>
+          Mit nur einem Klick kannst du die gerade eben aufgenommenen Bestellungen an die Küche
+          senden. Diese können dann auf einem Tablet oder größeren Bildschirm angezeigt werden, was
+          ganz automatisch funktioniert. Natürlich können die Bestellungen auch in der Küche als
+          Belege gedruckt werden. So sparst du dir enorm viele Wege für die KellnerInnen, Zeit und
+          Geld.
+        </p>
+      </Fragment>
+      <Fragment slot="actions">
+        <Button href="/funkbonieren" variant="secondary">Zum Funkbonieren</Button>
+      </Fragment>
+      <Image
+        src={kueche}
+        alt="Bestellungen werden per Funk an die Küche gesendet"
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 860px) 92vw, 50vw"
+      />
+    </FeatureSplit>
+  </Section>
+  )}
+
+  <CtaBanner title="Hol dir ein kostenloses Angebot" mark="kostenloses" />
+
+  <!-- ── Konformität & Sicherheit ── -->
+  <Section variant="surface">
+    <SectionHead
+      eyebrow="Sicherheit"
+      title="Bei uns sind deine Daten sicher und konform"
+      mark="sicher"
+    />
+    <CardGrid columns={2}>
+      <Card title="GoBD, RKSV und KassenSichV" href="/finanzamt-konform">
+        <Icon name="shield" slot="icon" size={30} />
+        <p>
+          Erfahre, was GoBD, RKSV und KassenSichV bedeutet, und welche Vorteile unsere
+          Zertifizierungen haben.
+        </p>
+      </Card>
+      <Card title="Datenschutz und Sicherheit" href="/technische-sicherheitseinrichtung">
+        <Icon name="check" slot="icon" size={30} />
+        <p>Deine sensiblen Daten sind bei uns in den besten Händen!</p>
+      </Card>
+    </CardGrid>
+  </Section>
+
+  <!-- ── Testimonial ── -->
+  <Section variant="paper" size="sm">
+    <SectionHead
+      eyebrow="Kundenstimmen"
+      title="Unzählige KundInnen schenken uns ihr Vertrauen"
+      mark="Vertrauen"
+      lead="Sieh dir an, was sie zu sagen haben."
+    />
+    <div class="kw-testimonial">
+      <ReceiptCard tilt="left" class="reveal">
+        <p class="receipt-mono">— Kundenstimme —</p>
+        <hr class="receipt-rule" />
+        <blockquote class="kw-testimonial__quote">
+          Orderlyze hat mir den Alltag wirklich sehr erleichtert. Ich gewinne sehr viel Zeit und
+          keiner meiner MitarbeiterInnen hat Probleme bei der Bedienung. Außerdem ist die Hardware
+          sehr günstig gewesen.
+        </blockquote>
+        <hr class="receipt-rule" />
+        <p class="receipt-row">
+          <strong>Verena S.</strong>
+          <span class="receipt-mono">Verifizierte Kundin</span>
+        </p>
+      </ReceiptCard>
+    </div>
+  </Section>
+
+  <!-- ── Funktionen ── -->
+  <Section variant="navy">
+    <SectionHead
+      eyebrow="Entdecke eine bessere Art zu arbeiten"
+      title="Viele Funktionen warten auf dich"
+    />
+    <ul class="kw-funktionen">
+      {
+        funktionen.map((f) => (
+          <li class="reveal">
+            <Icon name="check" size={20} />
+            {f}
+          </li>
+        ))
+      }
+    </ul>
+    <div class="kw-funktionen__cta">
+      <Button href="/funktionen" variant="on-dark">Alle Funktionen ansehen</Button>
+    </div>
+  </Section>
+
+  <!-- ── Support ── -->
+  <Section variant="paper">
+    <FeatureSplit eyebrow="Support" title="Kostenloser Premium-Support für alle" mark="Kostenloser" reverse>
+      <Fragment slot="text">
+        <p>
+          Egal ob du Unterstützung bei der Einrichtung oder Hilfe beim laufenden Betrieb benötigst.
+          Wir sind stets erreichbar und unterstützen dich völlig kostenlos.
+        </p>
+        <Checklist
+          items={[
+            'Telefonisch, per E-Mail und WhatsApp erreichbar',
+            'Keine zusätzlichen Kosten',
+            'Wir unterstützen dich von Anfang an',
+          ]}
+        />
+      </Fragment>
+      <div class="kw-support-icon">
+        <Icon name="support" size={120} />
+      </div>
+    </FeatureSplit>
+  </Section>
+
+  <CtaBanner title={resolvedFinalTitle} mark={resolvedFinalMark} buttonLabel="Angebot anfordern" />
+</BaseLayout>
+
+<style>
+  .kw-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .kw-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
+  }
+
+  .kw-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 0.95rem;
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-brand);
+    margin: 0 0 1.3rem;
+  }
+
+  .kw-hero__text h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.5em;
+  }
+
+  .kw-hero__lead {
+    font-size: var(--text-lead);
+    color: var(--color-text-muted);
+    margin-bottom: 1.8rem;
+    max-width: 36rem;
+  }
+
+  .kw-hero__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+  }
+
+  .kw-hero__note {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .photo-rounded {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
+  }
+
+  /* Kartenzahlung-Statement */
+  .kw-karten {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .kw-karten__eyebrow {
+    font-family: var(--font-heading);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-heading);
+    margin: 0 0 1rem;
+  }
+
+  .kw-karten__title {
+    font-size: var(--text-h2);
+    line-height: 1.25;
+    margin-bottom: 1.6rem;
+  }
+
+  .kw-karten__accent {
+    color: var(--color-accent);
+  }
+
+  .kw-karten__img {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
+  }
+
+  /* Funktionen-Liste */
+  .kw-funktionen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem 2rem;
+    max-width: 58rem;
+    margin-inline: auto;
+  }
+
+  .kw-funktionen li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--color-navy-2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    color: var(--color-text-on-dark-muted);
+    font-size: 0.97rem;
+  }
+
+  .kw-funktionen li :global(svg) {
+    color: var(--color-heading);
+    flex-shrink: 0;
+  }
+
+  .kw-funktionen__cta {
+    text-align: center;
+    margin-top: 2.4rem;
+  }
+
+  .kw-testimonial {
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .kw-testimonial__quote {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  .kw-support-icon {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    color: var(--color-heading);
+  }
+
+  @media (max-width: 860px) {
+    .kw-hero__inner,
+    .kw-karten {
+      grid-template-columns: 1fr;
+    }
+
+    .kw-funktionen {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

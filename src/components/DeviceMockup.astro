@@ -1,0 +1,91 @@
+---
+/**
+ * Geräte-Rahmen für App-Screenshots (PLAN.md Anforderung 6 /
+ * bilder-strategie.md: Screenshots auf Geräte-Mockups).
+ * Der Screenshot kommt als <Image>/<Picture> in den Default-Slot.
+ */
+interface Props {
+  type?: 'tablet' | 'phone' | 'browser';
+  class?: string;
+}
+
+const { type = 'tablet', class: className } = Astro.props;
+---
+
+<div class:list={['device', `device--${type}`, className]}>
+  {
+    type === 'browser' && (
+      <div class="device__browser-bar" aria-hidden="true">
+        <span /><span /><span />
+      </div>
+    )
+  }
+  <div class="device__screen">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .device {
+    box-shadow: var(--shadow-device);
+    overflow: hidden;
+  }
+
+  .device__screen :global(img),
+  .device__screen :global(video) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Tablet: dunkler Rahmen rundum */
+  .device--tablet {
+    border: clamp(8px, 1.2vw, 14px) solid var(--color-navy);
+    border-radius: clamp(16px, 2vw, 26px);
+    background: var(--color-navy);
+  }
+
+  .device--tablet .device__screen {
+    border-radius: clamp(8px, 1vw, 13px);
+    overflow: hidden;
+  }
+
+  /* Phone: schmaler, höherer Rahmen */
+  .device--phone {
+    border: 9px solid var(--color-navy);
+    border-radius: 30px;
+    background: var(--color-navy);
+    max-width: 280px;
+  }
+
+  .device--phone .device__screen {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  /* Browser-Fenster für Dashboard-Screenshots */
+  .device--browser {
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--color-line);
+  }
+
+  .device__browser-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 14px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .device__browser-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-line);
+  }
+
+  .device__browser-bar span:first-child {
+    background: var(--color-accent);
+  }
+</style>

@@ -1,0 +1,192 @@
+---
+/**
+ * /hardware — Hardware-Pakete, Zubehör, All-in-One-Geräte
+ * Inhalt: planning/content/pages/hardware.md
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import HardwareBundles from '../components/HardwareBundles.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+
+import staender from '../assets/hardware/tablet-staender.png';
+import kassenladeK2 from '../assets/hardware/kassenlade-k2.png';
+import sunmiT2s from '../assets/hardware/sunmi-t2s-standkasse.png';
+import sunmiP2 from '../assets/hardware/sunmi-p2-pro-mobiles-kassengeraet.png';
+
+const meta = {
+  title: 'Hardware | Orderlyze',
+  description:
+    'Du benötigst ein Kassensystem? Finde hier heraus, welche Hardware wir anbieten und wieviel diese kostet.',
+  canonical: 'https://www.orderlyze.com/hardware',
+};
+
+const zubehoer = [
+  { img: staender, alt: 'Tablet-Ständer in grau', name: 'Tablet Ständer', preis: '22,90€', detail: '' },
+  { img: kassenladeK2, alt: 'Kassenlade K-2', name: 'Kassenlade K-2', preis: '85,60€', detail: '330 × 101 × 330 mm · 8 Münz-, 4 Scheinfächer' },
+];
+
+const allInOne = [
+  { img: sunmiT2s, alt: 'Sunmi T2s Standkasse mit integriertem Bondrucker', name: 'Sunmi T2s', preis: '685,90€', detail: 'inkl. Bondrucker' },
+  { img: sunmiP2, alt: 'Sunmi P2 Pro mobiles Kassengerät', name: 'Sunmi P2 Pro', preis: '499,00€', detail: 'inkl. Bondrucker und Kartenlesegerät' },
+];
+---
+
+<BaseLayout {...meta}>
+  <!-- ── Kopf ── -->
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>Die passende <span class="mark">Hardware</span> für dein Unternehmen</h1>
+      <p class="page-hero__lead">
+        Tablets, Bondrucker, Kassenladen und All-In-One-Geräte — fertig geschnürte Pakete,
+        sofort einsatzbereit mit Orderlyze.
+      </p>
+      <Button href="/bestellen" size="lg">Jetzt bestellen</Button>
+    </div>
+  </section>
+
+  <!-- ── Pakete ── -->
+  <Section variant="surface">
+    <SectionHead eyebrow="Pakete" title="Tablet Kassensystem" lead="Unsere beliebtesten Kombinationen — vom Einzelgerät bis zum Komplettpaket mit Kassenlade." />
+    <HardwareBundles />
+  </Section>
+
+  <!-- ── Zubehör ── -->
+  <Section variant="paper">
+    <SectionHead eyebrow="Erweiterungen" title="Zubehör" />
+    <div class="produkte produkte--2">
+      {
+        zubehoer.map((p) => (
+          <article class="produkt reveal">
+            <div class="produkt__img">
+              <Image src={p.img} alt={p.alt} widths={[240, 480]} sizes="200px" />
+            </div>
+            <h3 class="produkt__name">{p.name}</h3>
+            {p.detail && <p class="produkt__detail">{p.detail}</p>}
+            <p class="produkt__preis">{p.preis}</p>
+            <Button href="/bestellen" variant="secondary">Jetzt bestellen</Button>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- ── All-In-One ── -->
+  <Section variant="surface">
+    <SectionHead
+      eyebrow="Alles in einem Gerät"
+      title="All-In-One Geräte"
+      lead="Kassensystem, Bondrucker und Kartenzahlung in einem Gerät — ideal für mobiles Arbeiten."
+    />
+    <div class="produkte produkte--2">
+      {
+        allInOne.map((p) => (
+          <article class="produkt reveal">
+            <div class="produkt__img">
+              <Image src={p.img} alt={p.alt} widths={[240, 480]} sizes="200px" />
+            </div>
+            <h3 class="produkt__name">{p.name}</h3>
+            <p class="produkt__detail">{p.detail}</p>
+            <p class="produkt__preis">{p.preis}</p>
+            <Button href="/bestellen" variant="secondary">Jetzt bestellen</Button>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Nicht sicher, welche Hardware du brauchst? Hol dir ein kostenloses Angebot!"
+    mark="kostenloses"
+    buttonLabel="Angebot anfordern"
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(180deg, var(--color-surface) 0%, #fff 100%);
+    border-bottom: 1px solid var(--color-line);
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+    max-width: 50rem;
+  }
+
+  .page-hero h1 {
+    font-size: var(--text-h1);
+    margin-bottom: 0.35em;
+  }
+
+  .page-hero__lead {
+    font-size: var(--text-lead);
+    color: var(--color-text-muted);
+    margin-bottom: 1.8rem;
+  }
+
+  .produkte {
+    display: grid;
+    gap: clamp(1.3rem, 2vw, 2rem);
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .produkte--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .produkt {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.8rem;
+    text-align: center;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .produkt:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+  }
+
+  .produkt__img {
+    display: grid;
+    place-items: center;
+    height: 190px;
+    margin-bottom: 1.1rem;
+  }
+
+  .produkt__img :global(img) {
+    max-height: 190px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .produkt__name {
+    font-size: 1.2rem;
+    margin-bottom: 0.2em;
+  }
+
+  .produkt__detail {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .produkt__preis {
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin: 0.4rem 0 1.2rem;
+  }
+
+  @media (max-width: 700px) {
+    .produkte--2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
