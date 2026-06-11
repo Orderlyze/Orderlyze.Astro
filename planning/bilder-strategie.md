@@ -7,9 +7,8 @@ Ergänzt um die Analyse der vorhandenen Bild-Assets (hilfe.orderlyze.com).
 ## TL;DR — Empfehlung
 
 > **Update 2026-06-11:** Sämtliche Medien der alten Webseite (370 Bilder + 21 Videos,
-> Originalauflösung) liegen jetzt lokal in `planning/assets/wix-media/` (gitignored,
-> neu beziehbar via `node planning/scripts/wix-media-download.mjs`). **Das ist die primäre
-> Bildquelle für den Bau der neuen Seite** — siehe PLAN.md Anforderung 6.
+> Originalauflösung) liegen in `planning/assets/wix-media/` (im Repo committet).
+> **Das ist die primäre Bildquelle für den Bau der neuen Seite** — siehe PLAN.md Anforderung 6.
 
 1. **Echte App-Screenshots auf Geräte-Mockups sind das Rückgrat** — einzigartig (kein
    Duplicate-Problem), authentisch, rechtlich sauber, und das Rohmaterial existiert schon:

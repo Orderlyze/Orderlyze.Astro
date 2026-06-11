@@ -28,7 +28,3 @@ pnpm-debug.log*
 
 # secrets — niemals committen
 wixkey.txt
-
-# heruntergeladene Wix-Medien (~475 MB — zu groß für Git; bei Bedarf via
-# `node planning/scripts/wix-media-download.mjs` jederzeit neu beziehbar)
-planning/assets/wix-media/

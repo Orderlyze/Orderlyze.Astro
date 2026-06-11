@@ -26,7 +26,7 @@ von der Live-Seite muss erneut gescrapt werden.
 | `planning/bilder-strategie.md` | Bild-Beschaffung, Dateinamen-Konvention, Astro-`<Picture/>`-Vorgaben |
 | `planning/seo-tools.md` | Plausible/Ahrefs/Bing-Anforderungen + Bau-Checkliste |
 | `planning/angebot-flow.md` | Backend-Logik des Angebots-Formulars (einzige echte Logik der Seite) |
-| `planning/assets/wix-media/` | **Alle Medien der alten Webseite, lokal:** 370 Bilder (`images/`) + 21 Videos (`videos/`) in Originalauflösung. Gitignored — falls der Ordner fehlt: `node planning/scripts/wix-media-download.mjs` lädt alles neu |
+| `planning/assets/wix-media/` | **Alle Medien der alten Webseite (im Repo committet):** 370 Bilder (`images/`) + 21 Videos (`videos/`) in Originalauflösung |
 | `planning/wix-media-inventory.json` | Inventar dazu (Name, URL, Auflösung, Größe je Datei) |
 
 ## Harte Anforderungen
