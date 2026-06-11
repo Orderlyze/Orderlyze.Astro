@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://orderlyze.github.io/Orderlyze.Astro/sitemap-index.xml

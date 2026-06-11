@@ -1,8 +1,0 @@
-interface:
-  display_name: "Orderlyze Growth System"
-  short_description: "Plan scalable Orderlyze growth pages"
-  brand_color: "#111827"
-  default_prompt: "Use $orderlyze-growth-system to plan the next scalable marketing page cluster for Orderlyze."
-
-policy:
-  allow_implicit_invocation: true

@@ -8,28 +8,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "check": "astro check",
-    "scrape:orderlyze": "node scripts/scrape-orderlyze-content.mjs",
-    "verify:seo": "node scripts/verify-seo.mjs",
-    "verify:skill-seo": "node .codex/skills/astro-seo-governor/scripts/audit-astro-site.mjs",
-    "verify:orderlyze": "node scripts/verify-orderlyze-routes.mjs",
-    "verify": "npm run check && npm run build && npm run verify:seo && npm run verify:skill-seo && npm run verify:orderlyze",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.6",
-    "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.8",
-    "tailwindcss": "^4.3.0"
-  },
-  "overrides": {
-    "yaml": "^2.9.0"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.9",
-    "playwright": "^1.60.0",
-    "typescript": "^6.0.3"
+    "astro": "^6.4.4"
   }
 }

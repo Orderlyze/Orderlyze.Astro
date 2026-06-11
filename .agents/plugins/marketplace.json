@@ -1,0 +1,20 @@
+{
+  "name": "orderlyze-local",
+  "interface": {
+    "displayName": "Orderlyze Local"
+  },
+  "plugins": [
+    {
+      "name": "playwright-mcp",
+      "source": {
+        "source": "local",
+        "path": "./plugins/playwright-mcp"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

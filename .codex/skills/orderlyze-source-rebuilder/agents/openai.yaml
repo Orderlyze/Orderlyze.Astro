@@ -1,8 +1,0 @@
-interface:
-  display_name: "Orderlyze Source Rebuilder"
-  short_description: "Rebuild orderlyze.com into Astro pages"
-  brand_color: "#111827"
-  default_prompt: "Use $orderlyze-source-rebuilder to create a German SEO page cluster from orderlyze.com."
-
-policy:
-  allow_implicit_invocation: true

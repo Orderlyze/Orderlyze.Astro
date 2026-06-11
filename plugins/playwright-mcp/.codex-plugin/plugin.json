@@ -1,0 +1,34 @@
+{
+  "name": "playwright-mcp",
+  "version": "0.1.0",
+  "description": "Local Playwright MCP plugin for browser automation from Codex.",
+  "author": {
+    "name": "Orderlyze Local"
+  },
+  "license": "MIT",
+  "keywords": [
+    "playwright",
+    "mcp",
+    "browser",
+    "testing",
+    "automation"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Playwright MCP",
+    "shortDescription": "Use Playwright browser automation through a local MCP definition.",
+    "longDescription": "Playwright MCP connects Codex to the official Playwright MCP server for browser navigation, screenshots, and UI inspection during local development.",
+    "developerName": "Orderlyze Local",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Inspect the local Astro app with Playwright."
+    ],
+    "brandColor": "#2EAD33",
+    "screenshots": []
+  }
+}
