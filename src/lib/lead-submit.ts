@@ -1,27 +1,58 @@
 /**
- * ⚠️ PLATZHALTER — Lead-/Formular-Submit.
+ * Lead-/Formular-Submit.
  *
- * 🔴 OFFENE ENTSCHEIDUNG (planning/angebot-flow.md, PLAN.md Punkt 4):
- * Wie die neue Seite die Formulare ans Backend anbindet, ist bewusst offen:
- *   Variante 1: Wix-Site über die freie *.wixsite.com-URL weiter ansprechen
- *               (GET /_api/v1/access-tokens → POST /_api/wix-forms/v1/submit-form,
- *               Payload-Struktur und fieldIds dokumentiert in angebot-flow.md)
- *   Variante 2: Wix Headless REST API
- *               (POST https://www.wixapis.com/form-submission-service/v4/submissions, API-Key nötig)
- *   Variante 3: Eigenes Backend / CRM-Webhook
+ * Angebotsformular: angebunden an den Orderlyze RestService
+ * (POST /api/users/registerSellerAngebot, anonym). Der Service speichert die
+ * Anfrage als OfferRequest und legt automatisch einen Testaccount an
+ * (Entscheidung "Variante 3 — eigenes Backend", siehe planning/angebot-flow.md).
  *
- * Bis zur Entscheidung simuliert dieses Modul einen erfolgreichen Submit,
- * damit der Funnel (inkl. Redirect auf die Danke-Seite und Plausible-Goal)
- * vollständig testbar ist. NICHT live schalten, bevor die Anbindung steht!
+ * Übrige Formulare (/bestellen, /testen) laufen weiterhin über den
+ * Platzhalter submitLead(), bis deren Anbindung entschieden ist.
  */
+
+import { API_BASE_URL } from '../config/site';
 
 export interface LeadField {
   label: string;
   value: string;
 }
 
+/** Payload für POST /api/users/registerSellerAngebot (RegisterSellerAngebot-DTO) */
+export interface AngebotFormData {
+  name: string;
+  email: string;
+  telefon: string;
+  unternehmensname: string;
+  branche: string;
+  land: string;
+  mitarbeiter: string;
+  standgeraete: number;
+  mobilgeraete: number;
+  drucker: number;
+}
+
+export async function submitAngebot(data: AngebotFormData): Promise<{ ok: boolean }> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/users/registerSellerAngebot`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      console.error(`[Orderlyze] Angebot-Submit fehlgeschlagen (HTTP ${res.status})`);
+    }
+    return { ok: res.ok };
+  } catch (err) {
+    console.error('[Orderlyze] Angebot-Submit fehlgeschlagen', err);
+    return { ok: false };
+  }
+}
+
+/**
+ * ⚠️ PLATZHALTER für die übrigen Formulare (/bestellen, /testen) —
+ * Anbindung offen, siehe planning/angebot-flow.md.
+ */
 export async function submitLead(formName: string, fields: LeadField[]): Promise<{ ok: boolean }> {
-  // TODO(ANBINDUNG OFFEN): echten Submit gemäß gewählter Variante implementieren.
   console.warn(
     `[Orderlyze] Formular "${formName}" — Submit ist ein PLATZHALTER (Anbindung offen, siehe planning/angebot-flow.md).`,
     fields
