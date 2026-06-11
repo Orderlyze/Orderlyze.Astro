@@ -9,7 +9,7 @@ interface Props {
   lead?: string;
   level?: 1 | 2 | 3;
   align?: 'center' | 'left';
-  /** Wort(e) im Titel, die den Orange-Akzent bekommen */
+  /** Wort(e) im Titel, die den Blau-Akzent bekommen */
   mark?: string;
 }
 
@@ -56,10 +56,6 @@ const parts = mark && title.includes(mark) ? title.split(mark) : null;
     margin: 0 0 0.9rem;
   }
 
-  :global(.section--navy) .section-head__eyebrow {
-    color: var(--color-accent);
-  }
-
   .section-head__title {
     margin-bottom: 0.45em;
   }
@@ -71,7 +67,4 @@ const parts = mark && title.includes(mark) ? title.split(mark) : null;
     margin: 0;
   }
 
-  :global(.section--navy) .section-head__lead {
-    color: var(--color-text-on-dark-muted);
-  }
 </style>

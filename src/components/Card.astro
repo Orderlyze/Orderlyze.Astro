@@ -1,6 +1,6 @@
 ---
 /**
- * Inhalts-Karte: Icon-Slot + Titel + Text. Auf hellen wie dunklen Flächen.
+ * Inhalts-Karte: Icon-Slot + Titel + Text.
  */
 interface Props {
   title: string;
@@ -41,11 +41,6 @@ const Tag = `h${level}` as 'h3' | 'h4';
     transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   }
 
-  :global(.section--navy) .card {
-    background: var(--color-navy-2);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
   .card--linked:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-card);
@@ -59,10 +54,6 @@ const Tag = `h${level}` as 'h3' | 'h4';
 
   .card__icon:empty {
     display: none;
-  }
-
-  :global(.section--navy) .card__icon {
-    color: var(--color-heading);
   }
 
   .card__title {
@@ -86,10 +77,6 @@ const Tag = `h${level}` as 'h3' | 'h4';
     color: var(--color-text-muted);
     font-size: 0.97rem;
     line-height: 1.65;
-  }
-
-  :global(.section--navy) .card__body {
-    color: var(--color-text-on-dark-muted);
   }
 
   .card__body :global(p:last-child) {

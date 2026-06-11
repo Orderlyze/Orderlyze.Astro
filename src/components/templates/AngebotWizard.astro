@@ -13,7 +13,7 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../Icon.astro';
-import logoWhite from '../../assets/logos/orderlyze-logo-weiss.png';
+import logo from '../../assets/logos/orderlyze-logo.png';
 import { SITE, EVENTS } from '../../config/site';
 
 interface Props {
@@ -64,7 +64,7 @@ const marketingSlides = [
     <header class="wizard-header">
       <div class="container wizard-header__inner">
         <a href="/" class="wizard-header__back" aria-label="Zur Startseite">
-          <Image src={logoWhite} alt="Orderlyze Logo" width={140} densities={[1, 2]} loading="eager" />
+          <Image src={logo} alt="Orderlyze Logo" width={140} densities={[1, 2]} loading="eager" />
         </a>
         <a href={SITE.phoneHref} class:list={['wizard-header__phone', phoneEventClass]}>
           <Icon name="phone" size={15} />
@@ -318,15 +318,16 @@ const marketingSlides = [
     display: flex;
     flex-direction: column;
     background:
-      radial-gradient(ellipse 100% 60% at 50% -10%, rgba(6, 89, 169, 0.5), transparent 60%),
-      radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      var(--color-navy);
+      radial-gradient(ellipse 100% 60% at 50% -10%, rgba(110, 164, 202, 0.22), transparent 60%),
+      radial-gradient(rgba(6, 89, 169, 0.08) 1px, transparent 1px),
+      var(--color-surface);
     background-size: auto, 26px 26px, auto;
   }
 
   /* Header */
   .wizard-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--color-line);
+    background: #fff;
   }
 
   .wizard-header__inner {
@@ -353,7 +354,7 @@ const marketingSlides = [
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    color: #fff;
+    color: var(--color-navy);
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 0.95rem;
@@ -361,7 +362,7 @@ const marketingSlides = [
   }
 
   .wizard-header__phone:hover {
-    color: var(--color-heading);
+    color: var(--color-brand);
   }
 
   /* Fortschritt */
@@ -374,7 +375,7 @@ const marketingSlides = [
 
   .wizard-progress {
     height: 5px;
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--color-line);
     border-radius: 99px;
     max-width: 34rem;
     margin: 0 auto clamp(1.5rem, 4vh, 3rem);
@@ -384,7 +385,7 @@ const marketingSlides = [
   .wizard-progress__bar {
     height: 100%;
     width: 14.3%;
-    background: var(--color-accent);
+    background: var(--color-brand);
     border-radius: 99px;
     transition: width 0.4s var(--ease-out);
   }
@@ -597,7 +598,7 @@ const marketingSlides = [
 
   /* Footer */
   .wizard-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--color-line);
     padding-block: 1.1rem;
   }
 
@@ -612,12 +613,12 @@ const marketingSlides = [
   }
 
   .wizard-footer a {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     font-size: 0.85rem;
     text-decoration: none;
   }
 
   .wizard-footer a:hover {
-    color: #fff;
+    color: var(--color-brand);
   }
 </style>

@@ -59,7 +59,7 @@ const zahlarten = ['EC', 'Maestro / V Pay', 'MasterCard', 'Visa', 'Apple Pay', '
   </section>
 
   <!-- ── Zahlungsarten ── -->
-  <Section variant="navy" size="sm">
+  <Section variant="tint" size="sm">
     <SectionHead eyebrow="Alle Zahlungsmethoden" title="Kartenzahlung? Kein Problem" mark="Kein Problem" />
     <ul class="zahlarten reveal">
       {
@@ -200,23 +200,24 @@ const zahlarten = ['EC', 'Maestro / V Pay', 'MasterCard', 'Visa', 'Apple Pay', '
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
-    background: var(--color-navy-2);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #fff;
+    border: 1px solid var(--color-line);
     border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-card);
     padding: 0.65rem 1.25rem;
-    color: #fff;
+    color: var(--color-navy);
     font-family: var(--font-heading);
     font-weight: 600;
     font-size: 0.95rem;
   }
 
   .zahlarten :global(svg) {
-    color: var(--color-heading);
+    color: var(--color-brand);
   }
 
   .zahlarten__note {
     text-align: center;
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     margin: 1.6rem 0 0;
     font-size: 0.95rem;
   }

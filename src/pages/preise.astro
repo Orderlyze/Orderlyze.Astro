@@ -197,9 +197,10 @@ const kassenbuchLeistungen = [
 
 <style>
   .page-hero {
-    background: var(--color-navy);
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background: #fff;
+    background-image: radial-gradient(rgba(6, 89, 169, 0.08) 1px, transparent 1px);
     background-size: 26px 26px;
+    border-bottom: 1px solid var(--color-line);
     text-align: center;
   }
 
@@ -208,19 +209,19 @@ const kassenbuchLeistungen = [
   }
 
   .page-hero h1 {
-    color: #fff;
+    color: var(--color-navy);
     font-size: var(--text-h1);
     margin-bottom: 0.3em;
   }
 
   .page-hero__lead {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     font-size: var(--text-lead);
     margin-bottom: 2rem;
   }
 
   .page-hero__lead strong {
-    color: var(--color-accent);
+    color: var(--color-brand);
   }
 
   .kosten-teile {
@@ -234,9 +235,10 @@ const kassenbuchLeistungen = [
     display: grid;
     justify-items: center;
     gap: 0.2rem;
-    background: var(--color-navy-2);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: #fff;
+    border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
     padding: 1.4rem 2.2rem;
     text-decoration: none;
     transition: border-color var(--transition), transform var(--transition);
@@ -244,7 +246,7 @@ const kassenbuchLeistungen = [
   }
 
   .kosten-teil:hover {
-    border-color: var(--color-heading);
+    border-color: var(--color-brand);
     transform: translateY(-3px);
   }
 
@@ -253,8 +255,8 @@ const kassenbuchLeistungen = [
     height: 2.2rem;
     display: grid;
     place-items: center;
-    background: var(--color-accent);
-    color: var(--color-navy);
+    background: var(--color-brand);
+    color: #fff;
     font-family: var(--font-heading);
     font-weight: 800;
     border-radius: 50%;
@@ -265,12 +267,12 @@ const kassenbuchLeistungen = [
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 1.1rem;
-    color: #fff;
+    color: var(--color-navy);
   }
 
   .kosten-teil__sub {
     font-size: 0.85rem;
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
   }
 
   /* Pakete */

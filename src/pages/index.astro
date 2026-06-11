@@ -188,17 +188,16 @@ const jsonLd = {
       <Fragment slot="actions">
         <Button href="/so-funktionierts" variant="secondary">So funktioniert's</Button>
       </Fragment>
-      <DeviceMockup type="phone" class="split-video">
-        <video
-          src="/videos/schnell-kassieren.mp4"
-          muted
-          loop
-          playsinline
-          autoplay
-          preload="none"
-          aria-label="Video: Sekundenschnell kassieren mit Orderlyze"
-        ></video>
-      </DeviceMockup>
+      <video
+        class="split-video"
+        src="/videos/sekundenschnell-kassieren.mp4"
+        muted
+        loop
+        playsinline
+        autoplay
+        preload="none"
+        aria-label="Video: Sekundenschnell kassieren mit Orderlyze im Restaurant"
+      ></video>
     </FeatureSplit>
   </Section>
 
@@ -257,7 +256,7 @@ const jsonLd = {
   </Section>
 
   <!-- ── Branchen ─────────────────────────────────────────────────────── -->
-  <Section variant="navy">
+  <Section variant="tint">
     <SectionHead
       eyebrow="Branchen"
       title="Perfekt für die Gastronomie und Dienstleistungen"
@@ -279,7 +278,7 @@ const jsonLd = {
       }
     </div>
     <div class="branchen-cta">
-      <Button href="/branchen" variant="on-dark">Alle Branchen ansehen</Button>
+      <Button href="/branchen" variant="secondary">Alle Branchen ansehen</Button>
     </div>
   </Section>
 
@@ -441,11 +440,12 @@ const jsonLd = {
 <style>
   /* ── Hero ── */
   .hero {
-    background: var(--color-navy);
+    background: #fff;
     background-image:
-      radial-gradient(ellipse 90% 70% at 75% 10%, rgba(6, 89, 169, 0.45), transparent 60%),
-      radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      radial-gradient(ellipse 90% 70% at 75% 10%, rgba(110, 164, 202, 0.22), transparent 60%),
+      radial-gradient(rgba(6, 89, 169, 0.08) 1px, transparent 1px);
     background-size: auto, 26px 26px;
+    border-bottom: 1px solid var(--color-line);
     overflow: hidden;
   }
 
@@ -463,13 +463,13 @@ const jsonLd = {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--color-heading);
+    color: var(--color-brand);
     margin: 0 0 1.2rem;
   }
 
   .hero__title {
     font-size: var(--text-display);
-    color: #fff;
+    color: var(--color-navy);
     margin-bottom: 1.2rem;
     line-height: 1.04;
   }
@@ -483,12 +483,12 @@ const jsonLd = {
   }
 
   .hero__word--accent {
-    color: var(--color-accent);
+    color: var(--color-brand);
   }
 
   .hero__lead {
     font-size: var(--text-lead);
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     max-width: 34rem;
     margin-bottom: 2rem;
   }
@@ -501,7 +501,7 @@ const jsonLd = {
   }
 
   .hero__note {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     font-size: 0.9rem;
   }
 
@@ -512,9 +512,9 @@ const jsonLd = {
     list-style: none;
     margin: 2.4rem 0 0;
     padding: 1.1rem 0 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-top: 1px solid var(--color-line);
     font-size: 0.88rem;
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
   }
 
   .hero__trust li {
@@ -524,12 +524,12 @@ const jsonLd = {
   }
 
   .hero__trust :global(svg) {
-    color: var(--color-heading);
+    color: var(--color-brand);
     flex-shrink: 0;
   }
 
   .hero__media :global(img) {
-    filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
+    filter: drop-shadow(0 24px 44px rgba(6, 33, 52, 0.28));
   }
 
   /* Staggered Hero-Load */
@@ -703,6 +703,9 @@ const jsonLd = {
 
   .split-video {
     margin-inline: auto;
+    width: 100%;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card-lg);
   }
 
   /* ── Responsive ── */

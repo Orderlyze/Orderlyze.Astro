@@ -280,7 +280,7 @@ const funktionen = [
   </Section>
 
   <!-- ── Kartenzahlung (Statement-Sektion) ── -->
-  <Section variant="navy" size="sm">
+  <Section variant="tint" size="sm">
     <div class="kw-karten reveal">
       <div class="kw-karten__head">
         <p class="kw-karten__eyebrow">Integrierte Kartenzahlung.</p>
@@ -289,7 +289,7 @@ const funktionen = [
           Für mehr <span class="kw-karten__accent">Umsatz</span>.<br />
           Für mehr <span class="kw-karten__accent">Flexibilität</span>.
         </h2>
-        <Button href="/kartenzahlung" variant="on-dark">Zur Kartenzahlung</Button>
+        <Button href="/kartenzahlung" variant="secondary">Zur Kartenzahlung</Button>
       </div>
       <Image
         src={bezahlungTheke}
@@ -378,7 +378,7 @@ const funktionen = [
   </Section>
 
   <!-- ── Funktionen ── -->
-  <Section variant="navy">
+  <Section variant="tint">
     <SectionHead
       eyebrow="Entdecke eine bessere Art zu arbeiten"
       title="Viele Funktionen warten auf dich"
@@ -394,7 +394,7 @@ const funktionen = [
       }
     </ul>
     <div class="kw-funktionen__cta">
-      <Button href="/funktionen" variant="on-dark">Alle Funktionen ansehen</Button>
+      <Button href="/funktionen" variant="secondary">Alle Funktionen ansehen</Button>
     </div>
   </Section>
 
@@ -495,7 +495,7 @@ const funktionen = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--color-heading);
+    color: var(--color-accent-deep);
     margin: 0 0 1rem;
   }
 
@@ -506,7 +506,7 @@ const funktionen = [
   }
 
   .kw-karten__accent {
-    color: var(--color-accent);
+    color: var(--color-brand);
   }
 
   .kw-karten__img {
@@ -530,16 +530,17 @@ const funktionen = [
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    background: var(--color-navy-2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #fff;
+    border: 1px solid var(--color-line);
     border-radius: 10px;
+    box-shadow: var(--shadow-card);
     padding: 0.85rem 1.1rem;
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text);
     font-size: 0.97rem;
   }
 
   .kw-funktionen li :global(svg) {
-    color: var(--color-heading);
+    color: var(--color-brand);
     flex-shrink: 0;
   }
 
@@ -569,7 +570,7 @@ const funktionen = [
     background: var(--color-surface);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
-    color: var(--color-heading);
+    color: var(--color-brand);
   }
 
   @media (max-width: 860px) {

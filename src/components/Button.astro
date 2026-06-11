@@ -5,7 +5,7 @@
  */
 interface Props {
   href: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'on-dark';
+  variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'md' | 'lg';
   /** Plausible-Event-Name, z. B. EVENTS.ctaAngebot */
   event?: string;
@@ -83,18 +83,6 @@ const eventClass = event ? `plausible-event-name=${event.replaceAll(' ', '+')}` 
 
   .btn--ghost:hover {
     color: var(--color-brand-dark);
-  }
-
-  /* Auf Navy-Flächen */
-  .btn--on-dark {
-    background: #fff;
-    color: var(--color-navy);
-  }
-
-  .btn--on-dark:hover {
-    background: var(--color-surface);
-    color: var(--color-navy);
-    transform: translateY(-2px);
   }
 
   .btn:active {

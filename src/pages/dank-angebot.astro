@@ -21,7 +21,7 @@ const meta = {
 ---
 
 <BaseLayout {...meta}>
-  <Section variant="navy">
+  <Section variant="tint">
     <div class="dank reveal">
       <p class="dank__icon"><Icon name="check" size={64} /></p>
       <h1>Vielen Dank für dein Interesse!</h1>
@@ -85,7 +85,7 @@ const meta = {
   }
 
   .dank__icon {
-    color: var(--color-accent);
+    color: var(--color-cta);
     margin-bottom: 1rem;
   }
 
@@ -94,12 +94,12 @@ const meta = {
   }
 
   .dank h1 {
-    color: #fff;
+    color: var(--color-navy);
     margin-bottom: 0.4em;
   }
 
   .dank__lead {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     font-size: var(--text-lead);
   }
 

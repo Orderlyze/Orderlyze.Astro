@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import logoWhite from '../assets/logos/orderlyze-logo-weiss.png';
+import logo from '../assets/logos/orderlyze-logo.png';
 import badgeRksv from '../assets/logos/badge-rksv-2025.png';
 import badgeKassenSichV from '../assets/logos/badge-kassensichv-2025.png';
 import badgeSicherheit from '../assets/logos/badge-sicherheit.png';
@@ -21,7 +21,7 @@ const columns = [
   <div class="container">
     <div class="footer__top">
       <div class="footer__brand">
-        <Image src={logoWhite} alt="Orderlyze Logo" width={190} densities={[1, 2]} loading="lazy" />
+        <Image src={logo} alt="Orderlyze Logo" width={190} densities={[1, 2]} loading="lazy" />
         <p class="footer__claim">Das Kassensystem für Gastronomie und Dienstleister.<br />einfach. schnell. effizient.</p>
         <a href={SITE.phoneHref} class:list={['footer__phone', phoneEventClass]}>
           {SITE.phone}
@@ -75,12 +75,13 @@ const columns = [
 
 <style>
   .footer {
-    background: var(--color-navy);
-    color: var(--color-text-on-dark-muted);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
     padding: clamp(3rem, 2rem + 4vw, 5rem) 0 2rem;
     /* feine Punktraster-Textur */
-    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(6, 89, 169, 0.07) 1px, transparent 1px);
     background-size: 26px 26px;
+    border-top: 1px solid var(--color-line);
   }
 
   .footer__top {
@@ -88,7 +89,7 @@ const columns = [
     grid-template-columns: 1.3fr 2.4fr 0.9fr;
     gap: clamp(2rem, 4vw, 4rem);
     padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid var(--color-line);
   }
 
   .footer__brand img {
@@ -106,13 +107,13 @@ const columns = [
     font-family: var(--font-heading);
     font-size: 1.55rem;
     font-weight: 800;
-    color: #fff;
+    color: var(--color-navy);
     text-decoration: none;
     letter-spacing: 0.01em;
   }
 
   .footer__phone:hover {
-    color: var(--color-heading);
+    color: var(--color-brand);
   }
 
   .footer__phone-note {
@@ -133,7 +134,7 @@ const columns = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    color: var(--color-heading);
+    color: var(--color-brand);
     margin: 0 0 1rem;
   }
 
@@ -146,14 +147,14 @@ const columns = [
   }
 
   .footer__col a {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color var(--transition);
   }
 
   .footer__col a:hover {
-    color: #fff;
+    color: var(--color-brand);
   }
 
   .footer__badge-row {
@@ -191,12 +192,12 @@ const columns = [
   }
 
   .footer__legal a {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     text-decoration: none;
   }
 
   .footer__legal a:hover {
-    color: #fff;
+    color: var(--color-brand);
   }
 
   @media (max-width: 920px) {

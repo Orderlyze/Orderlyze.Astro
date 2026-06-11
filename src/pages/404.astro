@@ -15,7 +15,7 @@ const meta = {
 ---
 
 <BaseLayout {...meta}>
-  <Section variant="navy">
+  <Section variant="tint">
     <div class="nf">
       <p class="nf__code">404</p>
       <h1>Diese Seite gibt es leider nicht (mehr).</h1>
@@ -24,9 +24,9 @@ const meta = {
         <a href={SITE.phoneHref}>{SITE.phone}</a>
       </p>
       <div class="nf__actions">
-        <Button href="/" variant="on-dark">Zur Startseite</Button>
-        <Button href="/funktionen" variant="on-dark">Funktionen</Button>
-        <Button href="/preise" variant="on-dark">Preise</Button>
+        <Button href="/" variant="secondary">Zur Startseite</Button>
+        <Button href="/funktionen" variant="secondary">Funktionen</Button>
+        <Button href="/preise" variant="secondary">Preise</Button>
       </div>
     </div>
   </Section>
@@ -44,22 +44,22 @@ const meta = {
     font-family: var(--font-mono);
     font-size: clamp(4rem, 10vw, 7rem);
     font-weight: 700;
-    color: var(--color-accent);
+    color: var(--color-brand);
     line-height: 1;
     margin: 0 0 0.5rem;
   }
 
   .nf h1 {
-    color: #fff;
+    color: var(--color-navy);
   }
 
   .nf__text {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     margin-bottom: 2rem;
   }
 
   .nf__text a {
-    color: #fff;
+    color: var(--color-brand);
   }
 
   .nf__actions {

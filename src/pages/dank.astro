@@ -25,7 +25,7 @@ const teaser = [
 ---
 
 <BaseLayout {...meta}>
-  <Section variant="navy">
+  <Section variant="tint">
     <div class="dank reveal">
       <p class="dank__icon"><Icon name="check" size={64} /></p>
       <h1>DANKE!</h1>
@@ -58,7 +58,7 @@ const teaser = [
   }
 
   .dank__icon {
-    color: var(--color-accent);
+    color: var(--color-cta);
     margin-bottom: 1rem;
   }
 
@@ -67,14 +67,14 @@ const teaser = [
   }
 
   .dank h1 {
-    color: #fff;
+    color: var(--color-navy);
     font-size: var(--text-display);
     letter-spacing: 0.04em;
     margin-bottom: 0.3em;
   }
 
   .dank__lead {
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     font-size: var(--text-lead);
     margin: 0;
   }

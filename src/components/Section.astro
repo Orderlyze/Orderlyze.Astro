@@ -1,11 +1,11 @@
 ---
 /**
  * Sektions-Container mit Farbflächen-Varianten.
- * `paper` = weiß, `surface` = helles Blaugrau, `navy` = dunkel (mit
- * Punktraster-Textur), `accent` = Orange.
+ * `paper` = weiß, `surface` = helles Blaugrau, `tint` = helles Blaugrau
+ * mit blauem Punktraster (Signatur-Textur), `accent` = sehr helles Blau.
  */
 interface Props {
-  variant?: 'paper' | 'surface' | 'navy' | 'accent';
+  variant?: 'paper' | 'surface' | 'tint' | 'accent';
   size?: 'md' | 'sm';
   id?: string;
   class?: string;
@@ -33,21 +33,15 @@ const { variant = 'paper', size = 'md', id, class: className } = Astro.props;
     background: var(--color-surface);
   }
 
-  .section--navy {
-    background: var(--color-navy);
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  .section--tint {
+    background: var(--color-surface);
+    background-image: radial-gradient(rgba(6, 89, 169, 0.09) 1px, transparent 1px);
     background-size: 26px 26px;
-    color: var(--color-text-on-dark-muted);
-  }
-
-  .section--navy :global(h1),
-  .section--navy :global(h2),
-  .section--navy :global(h3) {
-    color: #fff;
+    border-block: 1px solid var(--color-line);
   }
 
   .section--accent {
-    background: var(--color-accent);
+    background: color-mix(in srgb, var(--color-heading) 18%, #fff);
     color: var(--color-navy);
   }
 </style>

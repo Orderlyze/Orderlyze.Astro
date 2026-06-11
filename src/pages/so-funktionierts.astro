@@ -170,7 +170,7 @@ const schritte = [
   </Section>
 
   <!-- ── Finanzamtkonform ── -->
-  <Section variant="navy" size="sm">
+  <Section variant="tint" size="sm">
     <div class="konform reveal">
       <Icon name="shield" size={56} />
       <h2>Mit Orderlyze bist du zu <span class="konform__accent">100% finanzamtkonform</span></h2>
@@ -179,7 +179,7 @@ const schritte = [
         eingestellt, werden alle Daten automatisch übermittelt und du musst dich um nichts mehr
         kümmern.
       </p>
-      <Button href="/angebot" variant="on-dark" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      <Button href="/angebot" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
     </div>
   </Section>
 
@@ -334,22 +334,22 @@ const schritte = [
     max-width: 44rem;
     margin-inline: auto;
     text-align: center;
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
   }
 
   .konform :global(svg) {
-    color: var(--color-heading);
+    color: var(--color-brand);
     margin-inline: auto;
     margin-bottom: 1rem;
   }
 
   .konform h2 {
-    color: #fff;
+    color: var(--color-navy);
     margin-bottom: 0.5em;
   }
 
   .konform__accent {
-    color: var(--color-accent);
+    color: var(--color-brand);
   }
 
   .konform p {

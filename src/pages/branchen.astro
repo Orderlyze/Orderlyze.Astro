@@ -116,7 +116,7 @@ const vorteile = [
   </Section>
 
   <!-- ── Vorteile ── -->
-  <Section variant="navy">
+  <Section variant="tint">
     <SectionHead eyebrow="Deine Vorteile" title="Das bedeutet Arbeiten mit Orderlyze" mark="Orderlyze" />
     <ul class="vorteile">
       {
@@ -247,17 +247,18 @@ const vorteile = [
     display: flex;
     align-items: center;
     gap: 0.9rem;
-    background: var(--color-navy-2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #fff;
+    border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
     padding: 1.1rem 1.3rem;
-    color: #fff;
+    color: var(--color-navy);
     font-family: var(--font-heading);
     font-weight: 600;
   }
 
   .vorteile :global(svg) {
-    color: var(--color-heading);
+    color: var(--color-brand);
     flex-shrink: 0;
   }
 

@@ -74,7 +74,7 @@ const fuerGastro = [
   </Section>
 
   <!-- ── Für die Gastronomie ── -->
-  <Section variant="navy" size="sm">
+  <Section variant="tint" size="sm">
     <SectionHead eyebrow="Speziell für Gastro" title="Für die Gastronomie" />
     <CardGrid columns={4}>
       {
@@ -197,7 +197,7 @@ const fuerGastro = [
         Spar dir deine Sorgen und Mühen. Mit Orderlyze bist du zu
         <strong>100% finanzamtkonform</strong> und musst dich um nichts kümmern.
       </h2>
-      <Button href="/angebot" variant="on-dark" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
+      <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
     </div>
   </Section>
 
@@ -243,9 +243,10 @@ const fuerGastro = [
 
 <style>
   .page-hero {
-    background: var(--color-navy);
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background: #fff;
+    background-image: radial-gradient(rgba(6, 89, 169, 0.08) 1px, transparent 1px);
     background-size: 26px 26px;
+    border-bottom: 1px solid var(--color-line);
     text-align: center;
   }
 
@@ -254,14 +255,14 @@ const fuerGastro = [
   }
 
   .page-hero h1 {
-    color: #fff;
+    color: var(--color-navy);
     font-size: var(--text-h1);
     margin-bottom: 0.3em;
   }
 
   .page-hero__lead {
     font-size: var(--text-lead);
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
     margin-bottom: 1.8rem;
   }
 

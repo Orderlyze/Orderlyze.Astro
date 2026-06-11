@@ -62,7 +62,7 @@ const meta = {
   </Section>
 
   <!-- ── Lösung ── -->
-  <Section variant="navy">
+  <Section variant="tint">
     <div class="tse-loesung reveal">
       <Icon name="check" size={52} />
       <h2>Wir bieten dir alles, was du brauchst</h2>
@@ -76,7 +76,7 @@ const meta = {
         einen Experten.
       </p>
       <div class="tse-loesung__actions">
-        <Button href="/angebot" size="lg" variant="on-dark" event={EVENTS.ctaAngebot}>
+        <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>
           Beratungsgespräch buchen
         </Button>
         <a href="/preise" class="tse-loesung__preise">Hier findest du alle Preise!</a>
@@ -151,21 +151,21 @@ const meta = {
     max-width: 44rem;
     margin-inline: auto;
     text-align: center;
-    color: var(--color-text-on-dark-muted);
+    color: var(--color-text-muted);
   }
 
   .tse-loesung :global(svg) {
-    color: var(--color-accent);
+    color: var(--color-brand);
     margin-inline: auto;
     margin-bottom: 1rem;
   }
 
   .tse-loesung h2 {
-    color: #fff;
+    color: var(--color-navy);
   }
 
   .tse-loesung strong {
-    color: #fff;
+    color: var(--color-navy);
   }
 
   .tse-loesung__actions {
@@ -177,7 +177,7 @@ const meta = {
   }
 
   .tse-loesung__preise {
-    color: var(--color-heading);
+    color: var(--color-heading-dark);
     font-weight: 600;
   }
 </style>
