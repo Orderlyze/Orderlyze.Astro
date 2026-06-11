@@ -52,6 +52,11 @@ von der Live-Seite muss erneut gescrapt werden.
    `#F6F9FC` Flächen; Raleway für Headings, Open Sans für Fließtext; Buttons 5px Radius).
    Es ist ein **Redesign erlaubt und erwünscht** (moderner, schneller, sauberer als Wix),
    aber im bestehenden Markenbild.
+   **Verbindlich: Für JEDE Seite ist der `frontend-design`-Skill (Claude-Code-Skill
+   `frontend-design:frontend-design`) zu verwenden.** Keine Shortcuts, kein generisches
+   Schnell-Layout, kein Copy-Paste-Design von Seite zu Seite ohne gestalterische Durcharbeitung —
+   jede Seite wird als cleanes, produktionsreifes Design ausgearbeitet (Spacing, Typografie,
+   visuelle Hierarchie, Sektions-Rhythmus), konsistent über die ganze Site.
 6. **Bilder & Videos: primär aus `planning/assets/wix-media/` nehmen** (alle 370 Bilder +
    21 Videos der alten Webseite liegen dort lokal in Originalauflösung; sprechende Dateinamen,
    Inventar in `planning/wix-media-inventory.json`). Passende Dateien von dort nach
@@ -91,12 +96,17 @@ Compliance-Badges. Der Menüpunkt "Hilfe" zeigt künftig auf https://hilfe.order
 ### Phase 2: Komponenten & Layout
 - Header/Nav (Desktop + Mobile), Footer, CTA-Button (mit Plausible-Event-Prop),
   Sektions-/Karten-Komponenten, Geräte-Mockup-Komponente für Screenshots
+- Komponenten und Startseite mit dem **`frontend-design`-Skill** entwerfen (siehe harte
+  Anforderung 5) — cleanes, hochwertiges Design, keine Abkürzungen
 - Review-Punkt: Startseite als Design-Referenz bauen und abnehmen lassen, BEVOR die
   restlichen Seiten produziert werden
 
 ### Phase 3: Seiten-Produktion
 - Alle 35 Seiten aus `content/pages/` umsetzen (Inhalte/Headings aus den MD-Dateien,
   redaktionelle Glättung erlaubt, Kerninhalte und Keywords beibehalten)
+- **Jede einzelne Seite mit dem `frontend-design`-Skill gestalten** — keine Shortcuts:
+  auch "kleine" Seiten (Rechtliches, Danke-Seiten) bekommen ein sauberes, durchgestaltetes
+  Layout statt rohem Text
 - Interne Verlinkung wie dokumentiert (Links-Sektionen der Content-Dateien), Links auf
   entfallene Seiten auf deren Redirect-Ziele umbiegen
 
@@ -132,4 +142,6 @@ Compliance-Badges. Der Menüpunkt "Hilfe" zeigt künftig auf https://hilfe.order
 - [ ] `/angebot`-Wizard funktioniert bis zum Platzhalter-Submit inkl. `/dank-angebot`
 - [ ] sitemap.xml + robots.txt korrekt, Plausible feuert, Verify-Slots vorhanden
 - [ ] Lighthouse Performance/SEO/Accessibility ≥ 95 auf Startseite + 3 Stichproben-Seiten
+- [ ] Jede Seite mit dem `frontend-design`-Skill gestaltet — cleanes, konsistentes,
+      produktionsreifes Design ohne Shortcuts
 - [ ] Liste benötigter Bilder + offene Entscheidungen im Abschlussbericht
