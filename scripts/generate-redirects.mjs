@@ -1,7 +1,8 @@
 /**
  * Erzeugt Hosting-Redirect-Dateien aus redirects.config.mjs (Quelle der Wahrheit):
- *   - public/_redirects  → Netlify / Cloudflare Pages (301)
- *   - vercel.json        → Vercel (permanent: true)
+ *   - public/_redirects                 → Netlify / Cloudflare Pages (301)
+ *   - vercel.json                       → Vercel (permanent: true)
+ *   - public/staticwebapp.config.json   → Azure Static Web Apps (301 + 404-Seite)
  *
  * Das Deploy-Ziel ist eine OFFENE ENTSCHEIDUNG — beide Formate liegen bereit,
  * das jeweils ungenutzte ist auf anderen Hosts wirkungslos.
@@ -31,4 +32,17 @@ const vercel = {
 };
 writeFileSync(join(root, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n');
 
-console.log(`✓ ${lines.length} Redirects → public/_redirects + vercel.json`);
+/* Azure Static Web Apps: routes mit 301 + 404-Override (landet via public/ im Build) */
+const swa = {
+  routes: Object.entries(redirects).map(([route, redirect]) => ({
+    route,
+    redirect,
+    statusCode: 301,
+  })),
+  responseOverrides: {
+    404: { rewrite: '/404.html' },
+  },
+};
+writeFileSync(join(root, 'public/staticwebapp.config.json'), JSON.stringify(swa, null, 2) + '\n');
+
+console.log(`✓ ${lines.length} Redirects → public/_redirects + vercel.json + public/staticwebapp.config.json`);

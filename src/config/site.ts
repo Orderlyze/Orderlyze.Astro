@@ -14,9 +14,11 @@ export const SITE = {
 
 /** Plausible Analytics (cookielos, kein Consent-Banner nötig) */
 export const PLAUSIBLE = {
-  domain: 'orderlyze.com',
-  /* tagged-events + outbound-links: CTA-/Tel-Klicks als Goals trackbar */
-  src: 'https://plausible.io/js/script.tagged-events.outbound-links.js',
+  /* Neues Script-Format: Site-ID steckt in der URL (Site "orderlyze.com" der
+     Self-hosted-Instanz, tools-vm). Tagged Events sind automatisch aktiv,
+     Outbound-Links werden im Dashboard geschaltet (Site Settings → General →
+     Site Installation). Nach DNS-Umstellung Host → analytics.orderlyze.com */
+  src: 'https://orderlyze-tools.westeurope.cloudapp.azure.com/js/pa-bZJChA_ymwJKzDN3Gq8Fq.js',
 } as const;
 
 /**

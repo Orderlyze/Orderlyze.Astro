@@ -5,6 +5,7 @@ dist/
 
 # aus redirects.config.mjs generiert (npm run build)
 public/_redirects
+public/staticwebapp.config.json
 vercel.json
 
 # dependencies
@@ -29,6 +30,9 @@ pnpm-debug.log*
 
 # playwright-mcp session artifacts
 .playwright-mcp/
+
+# Claude Code: lokale Einstellungen
+.claude/settings.local.json
 
 # secrets — niemals committen
 wixkey.txt

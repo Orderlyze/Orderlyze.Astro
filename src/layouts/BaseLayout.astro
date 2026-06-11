@@ -73,8 +73,23 @@ const ogImageUrl = ogImage ? new URL(ogImage, SITE.url).href : undefined;
     {VERIFICATION.bing && <meta name="msvalidate.01" content={VERIFICATION.bing} />}
     {VERIFICATION.google && <meta name="google-site-verification" content={VERIFICATION.google} />}
 
-    <!-- Plausible Analytics (cookielos) -->
-    <script defer data-domain={PLAUSIBLE.domain} src={PLAUSIBLE.src}></script>
+    <!-- Plausible Analytics (cookielos), neues Script-Format: pa-Script + init.
+         Der Inline-Stub stellt window.plausible() sofort bereit (lead-submit.ts
+         und die plausible-event-name-Klassen funktionieren unverändert). -->
+    <script async src={PLAUSIBLE.src}></script>
+    <script is:inline>
+      window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        };
+      plausible.init =
+        plausible.init ||
+        function (i) {
+          plausible.o = i || {};
+        };
+      plausible.init();
+    </script>
 
     <!-- Slot für seitenspezifische Head-Einträge (z. B. JSON-LD) -->
     <slot name="head" />
