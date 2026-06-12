@@ -14,6 +14,10 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../Icon.astro';
 import logo from '../../assets/logos/orderlyze-logo.png';
+import introBild from '../../assets/screenshots/kassensystem-angebot-smartphone-tablet-drucker.png';
+import umsaetzeBild from '../../assets/screenshots/umsaetze-dashboard.png';
+import restaurantBild from '../../assets/branchen/restaurant-service.jpg';
+import sorgenfreiBild from '../../assets/screenshots/verwaltung-dashboard-mac.png';
 import { SITE, EVENTS } from '../../config/site';
 
 interface Props {
@@ -39,19 +43,26 @@ const branchen = [
 const standorte = ['Österreich', 'Deutschland'];
 const mitarbeiter = ['0-4', '5-9', '10-19', '20+'];
 
+/* Bilder wie auf der alten Wix-Seite (orderlyze.com/angebot, Slide 2–4) */
 const marketingSlides = [
   {
-    icon: 'chart',
+    image: umsaetzeBild,
+    imageAlt: 'Orderlyze Kassensystem — Umsätze auf dem Smartphone',
+    phone: true,
     title: 'Höhere Umsätze',
     text: 'Mit integrierter Kartenzahlung und Funkbonieren bedienst du mehr Gäste in kürzerer Zeit — weniger Wartezeit, mehr Bestellungen, mehr Umsatz.',
   },
   {
-    icon: 'clock',
+    image: restaurantBild,
+    imageAlt: 'Service im Restaurant — mehr Zeit für deine Gäste',
+    phone: false,
     title: 'Mehr Zeit für deine KundInnen',
     text: 'Kassieren in Sekunden, Berichte mit einem Klick: Orderlyze nimmt dir die lästige Verwaltungsarbeit ab, damit du dich um das Wichtigste kümmern kannst.',
   },
   {
-    icon: 'shield',
+    image: sorgenfreiBild,
+    imageAlt: 'Orderlyze Verwaltung am Mac — sorgenfrei arbeiten',
+    phone: false,
     title: 'Sorgenfrei arbeiten',
     text: 'RKSV- und KassenSichV-konform, automatische Übermittlung ans Finanzamt und kostenloser Support — du musst dich um nichts kümmern.',
   },
@@ -95,6 +106,14 @@ const marketingSlides = [
                 </li>
               ))}
             </ul>
+            <Image
+              src={introBild}
+              alt="Orderlyze Kassensystem auf Smartphone und Tablet mit Bondrucker"
+              class="slide__img"
+              width={520}
+              densities={[1, 2]}
+              loading="eager"
+            />
             <button class="wizard-next" data-next>Weiter</button>
           </div>
 
@@ -102,11 +121,15 @@ const marketingSlides = [
           {
             marketingSlides.map((s, i) => (
               <div class="slide" data-step={i + 2}>
-                <p class="slide__icon">
-                  <Icon name={s.icon} size={54} />
-                </p>
                 <h2 class="slide__title">{s.title}</h2>
                 <p class="slide__text">{s.text}</p>
+                <Image
+                  src={s.image}
+                  alt={s.imageAlt}
+                  class:list={['slide__img', { 'slide__img--phone': s.phone }]}
+                  width={s.phone ? 240 : 520}
+                  densities={[1, 2]}
+                />
                 <div class="slide__nav">
                   <button class="wizard-back" data-back>Zurück</button>
                   <button class="wizard-next" data-next>Weiter</button>
@@ -442,13 +465,16 @@ const marketingSlides = [
     margin: 0 0 0.3rem;
   }
 
-  .slide__icon {
-    color: var(--color-brand);
-    margin: 0 0 1rem;
+  .slide :global(.slide__img) {
+    display: block;
+    width: min(100%, 26rem);
+    height: auto;
+    margin: 0 auto 1.8rem;
+    border-radius: 12px;
   }
 
-  .slide__icon :global(svg) {
-    margin-inline: auto;
+  .slide :global(.slide__img--phone) {
+    width: min(60%, 13rem);
   }
 
   .slide__title {
