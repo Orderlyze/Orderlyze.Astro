@@ -200,10 +200,10 @@ const marketingSlides = [
                   type="tel"
                   required
                   autocomplete="tel"
-                  pattern="[0-9]{6,15}"
-                  placeholder="06601234567"
+                  pattern="[+]?[0-9][0-9 ]{4,18}[0-9]"
+                  placeholder="+43 660 1234567"
                 />
-                <p class="wfield__hint">Nur Ziffern, ohne Leerzeichen und ohne „+“ (z. B. 06601234567)</p>
+                <p class="wfield__hint">Mit oder ohne Ländervorwahl (z. B. +43 660 1234567 oder 06601234567)</p>
               </div>
               <p class="wizard-error" id="wizard-error" hidden>
                 Das hat leider nicht geklappt. Bitte prüfe deine Angaben oder ruf uns an:
@@ -295,7 +295,7 @@ const marketingSlides = [
       drucker: Number(value('w-drucker')) || 0,
       name: value('w-name'),
       email: value('w-email'),
-      telefon: value('w-telefon'),
+      telefon: value('w-telefon').replace(/\s+/g, ''),
     });
 
     if (result.ok) {
