@@ -12,6 +12,15 @@ export const SITE = {
   helpUrl: 'https://hilfe.orderlyze.com',
 } as const;
 
+/**
+ * Orderlyze RestService — Ziel für Formular-Submits (z. B. Angebotsformular).
+ * Per PUBLIC_API_BASE_URL (Build-Env) übersteuerbar; Default ist die
+ * Dev-Instanz, solange der Angebots-Endpoint nicht auf Produktion läuft.
+ * Produktion: https://orderlyzeservice.azurewebsites.net
+ */
+export const API_BASE_URL =
+  import.meta.env.PUBLIC_API_BASE_URL ?? 'https://orderlyzeservicedev.azurewebsites.net';
+
 /** Plausible Analytics (cookielos, kein Consent-Banner nötig) */
 export const PLAUSIBLE = {
   /* Neues Script-Format: Site-ID steckt in der URL (Site "orderlyze.com" der

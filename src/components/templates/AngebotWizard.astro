@@ -200,10 +200,10 @@ const marketingSlides = [
                   type="tel"
                   required
                   autocomplete="tel"
-                  pattern="[0-9]{6,15}"
-                  placeholder="06601234567"
+                  pattern="[+]?[0-9][0-9 ]{4,18}[0-9]"
+                  placeholder="+43 660 1234567"
                 />
-                <p class="wfield__hint">Nur Ziffern, ohne Leerzeichen und ohne „+“ (z. B. 06601234567)</p>
+                <p class="wfield__hint">Mit oder ohne Ländervorwahl (z. B. +43 660 1234567 oder 06601234567)</p>
               </div>
               <p class="wizard-error" id="wizard-error" hidden>
                 Das hat leider nicht geklappt. Bitte prüfe deine Angaben oder ruf uns an:
@@ -233,7 +233,7 @@ const marketingSlides = [
 </BaseLayout>
 
 <script>
-  import { submitLead, trackGoal } from '../../lib/lead-submit';
+  import { submitAngebot, trackGoal } from '../../lib/lead-submit';
 
   const wizard = document.getElementById('wizard')!;
   const slides = [...wizard.querySelectorAll<HTMLElement>('.slide')];
@@ -281,24 +281,22 @@ const marketingSlides = [
     button.textContent = 'Wird gesendet …';
     errorBox.hidden = true;
 
-    /* Felder analog zur dokumentierten Wix-Payload (planning/angebot-flow.md) */
+    /* Payload für POST /api/users/registerSellerAngebot (RestService) */
     const value = (id: string) =>
       (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value;
 
-    const fields = [
-      { label: 'Unternehmensname', value: value('w-unternehmen') },
-      { label: 'Branche', value: value('w-branche') },
-      { label: 'Unternehmensstandort', value: value('w-standort') },
-      { label: 'Wieviele Mitarbeiter*innen sind im Betrieb beschäftigt?', value: value('w-mitarbeiter') },
-      { label: 'Wie viele Standgeräte benötigst du? (Tablet Kasse)', value: value('w-standgeraete') },
-      { label: 'Wieviele mobile Geräte möchtest du verwenden?', value: value('w-mobil') },
-      { label: 'Wieviele Bar- oder Küchendrucker benötigst du?', value: value('w-drucker') },
-      { label: 'Vor- und Nachname', value: value('w-name') },
-      { label: 'E-Mail Adresse', value: value('w-email') },
-      { label: 'Telefon', value: value('w-telefon') },
-    ];
-
-    const result = await submitLead('Angebot', fields);
+    const result = await submitAngebot({
+      unternehmensname: value('w-unternehmen'),
+      branche: value('w-branche'),
+      land: value('w-standort'),
+      mitarbeiter: value('w-mitarbeiter'),
+      standgeraete: Number(value('w-standgeraete')) || 0,
+      mobilgeraete: Number(value('w-mobil')) || 0,
+      drucker: Number(value('w-drucker')) || 0,
+      name: value('w-name'),
+      email: value('w-email'),
+      telefon: value('w-telefon').replace(/\s+/g, ''),
+    });
 
     if (result.ok) {
       trackGoal('Angebot abgeschickt');
