@@ -63,4 +63,7 @@ export const redirects = {
   '/product-page/thermorollen-50': '/hardware',
   '/product-page/25-thermorollen': '/hardware',
   '/product-page/30-thermorollen-ökopapier': '/hardware',
+
+  // ── Sitemap: alte (bei Google registrierte) Wix-URL → neue Astro-Sitemap ──
+  '/sitemap.xml': '/sitemap-index.xml',
 };
