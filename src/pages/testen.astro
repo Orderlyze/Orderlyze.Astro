@@ -39,9 +39,11 @@ const branchen = [
 
       <div class="testen__formwrap">
         <form class="testen__form reveal" id="testen-form" novalidate>
+          <FormField name="name" label="Name" required autocomplete="name" />
           <FormField name="branche" label="Deine Branche" type="select" options={branchen} required />
           <FormField name="standort" label="Dein Unternehmensstandort" type="select" options={['Österreich', 'Deutschland']} required />
           <FormField name="email" label="E-Mail-Adresse" type="email" required autocomplete="email" />
+          <FormField name="telefon" label="Telefon" type="tel" required autocomplete="tel" hint="Ohne Leerzeichen, z. B. 06601234567" />
           <button type="submit" class="testen__submit">Kostenlos testen</button>
           <p class="testen__note">Kostenlos und unverbindlich.</p>
         </form>
@@ -79,7 +81,7 @@ const branchen = [
 </BaseLayout>
 
 <script>
-  import { submitLead, trackGoal } from '../lib/lead-submit';
+  import { submitAngebot, trackGoal } from '../lib/lead-submit';
 
   const form = document.getElementById('testen-form') as HTMLFormElement | null;
   const danke = document.getElementById('testen-danke');
@@ -93,8 +95,22 @@ const branchen = [
     button.textContent = 'Wird gesendet …';
 
     const data = new FormData(form);
-    const fields = [...data.entries()].map(([label, value]) => ({ label, value: String(value) }));
-    const result = await submitLead('Testen', fields);
+    const g = (k: string) => String(data.get(k) ?? '').trim();
+    // Testanfrage läuft über registerSellerAngebot (legt Testaccount an); der
+    // dedizierte registerSellerWixTestAccount ist serverseitig defekt (500).
+    // Gerätezahlen/Unternehmensname fragt /testen nicht ab → leer/0.
+    const result = await submitAngebot({
+      name: g('name'),
+      email: g('email'),
+      telefon: g('telefon'),
+      unternehmensname: '',
+      branche: g('branche'),
+      land: g('standort'),
+      mitarbeiter: '',
+      standgeraete: 0,
+      mobilgeraete: 0,
+      drucker: 0,
+    });
 
     if (result.ok) {
       trackGoal('Test angefordert');

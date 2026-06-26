@@ -1,21 +1,18 @@
 /**
  * Lead-/Formular-Submit.
  *
- * Angebotsformular: angebunden an den Orderlyze RestService
- * (POST /api/users/registerSellerAngebot, anonym). Der Service speichert die
- * Anfrage als OfferRequest und legt automatisch einen Testaccount an
- * (Entscheidung "Variante 3 — eigenes Backend", siehe planning/angebot-flow.md).
+ * Alle Lead-Formulare (/angebot, /bestellen, /testen) sind an den Orderlyze
+ * RestService angebunden (POST /api/users/registerSellerAngebot, anonym). Der
+ * Service speichert die Anfrage als OfferRequest und legt automatisch einen
+ * Testaccount an (Entscheidung "Variante 3 — eigenes Backend", siehe
+ * planning/angebot-flow.md).
  *
- * Übrige Formulare (/bestellen, /testen) laufen weiterhin über den
- * Platzhalter submitLead(), bis deren Anbindung entschieden ist.
+ * Hinweis: /testen sollte eigentlich registerSellerWixTestAccount nutzen, der
+ * Endpoint ist aber serverseitig defekt (500 NullReference) — bis zum Backend-Fix
+ * läuft auch /testen über registerSellerAngebot.
  */
 
 import { API_BASE_URL } from '../config/site';
-
-export interface LeadField {
-  label: string;
-  value: string;
-}
 
 /** Payload für POST /api/users/registerSellerAngebot (RegisterSellerAngebot-DTO) */
 export interface AngebotFormData {
@@ -46,20 +43,6 @@ export async function submitAngebot(data: AngebotFormData): Promise<{ ok: boolea
     console.error('[Orderlyze] Angebot-Submit fehlgeschlagen', err);
     return { ok: false };
   }
-}
-
-/**
- * ⚠️ PLATZHALTER für die übrigen Formulare (/bestellen, /testen) —
- * Anbindung offen, siehe planning/angebot-flow.md.
- */
-export async function submitLead(formName: string, fields: LeadField[]): Promise<{ ok: boolean }> {
-  console.warn(
-    `[Orderlyze] Formular "${formName}" — Submit ist ein PLATZHALTER (Anbindung offen, siehe planning/angebot-flow.md).`,
-    fields
-  );
-  // Simulierte Latenz, damit Lade-Zustände der UI sichtbar/testbar sind
-  await new Promise((resolve) => setTimeout(resolve, 600));
-  return { ok: true };
 }
 
 /** Plausible-Custom-Event feuern (window.plausible kommt vom Script-Snippet) */

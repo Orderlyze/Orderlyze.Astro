@@ -64,7 +64,7 @@ const branchen = [
 </BaseLayout>
 
 <script>
-  import { submitLead, trackGoal } from '../lib/lead-submit';
+  import { submitAngebot, trackGoal } from '../lib/lead-submit';
 
   const form = document.getElementById('bestell-form') as HTMLFormElement | null;
   const danke = document.getElementById('bestell-danke');
@@ -78,8 +78,22 @@ const branchen = [
     button.textContent = 'Wird gesendet …';
 
     const data = new FormData(form);
-    const fields = [...data.entries()].map(([label, value]) => ({ label, value: String(value) }));
-    const result = await submitLead('Bestellanfrage', fields);
+    const g = (k: string) => String(data.get(k) ?? '').trim();
+    // Bestellanfrage läuft über denselben RestService-Endpoint wie /angebot
+    // (registerSellerAngebot). Hinweis: Adressfelder (Straße, PLZ, Stadt, USt-ID)
+    // werden vom Endpoint nicht gespeichert — siehe planning/angebot-flow.md.
+    const result = await submitAngebot({
+      name: `${g('vorname')} ${g('nachname')}`.trim(),
+      email: g('email'),
+      telefon: g('telefon'),
+      unternehmensname: g('unternehmensname'),
+      branche: g('branche'),
+      land: g('land'),
+      mitarbeiter: '',
+      standgeraete: 0,
+      mobilgeraete: 0,
+      drucker: 0,
+    });
 
     if (result.ok) {
       trackGoal('Bestellanfrage abgeschickt');
