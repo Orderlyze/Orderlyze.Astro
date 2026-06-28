@@ -30,9 +30,11 @@ interface Props {
   introKicker?: string;
   introText: string;
   chips: string[];
+  /** Kampagnen-Landingpages aus dem Index halten (Werbe-Traffic, kein SEO) */
+  noindex?: boolean;
 }
 
-const { title, description, canonical, introTitle, introKicker, introText, chips } = Astro.props;
+const { title, description, canonical, introTitle, introKicker, introText, chips, noindex = false } = Astro.props;
 
 const phoneEventClass = `plausible-event-name=${EVENTS.ctaPhone.replaceAll(' ', '+')}`;
 
@@ -69,7 +71,7 @@ const marketingSlides = [
 ] as const;
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} chrome={false}>
+<BaseLayout title={title} description={description} canonical={canonical} noindex={noindex} chrome={false}>
   <div class="wizard-page">
     <!-- Minimal-Header im Fokus-Modus -->
     <header class="wizard-header">

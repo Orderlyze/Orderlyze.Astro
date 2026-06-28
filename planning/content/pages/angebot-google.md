@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/angebot-google
 slug: angebot-google
-title: "Angebot | Orderlyze"
+title: "Angebot anfordern | Orderlyze"
 description: ""
-og_title: "Angebot | Orderlyze"
+og_title: "Angebot anfordern | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/angebot-google

@@ -17,9 +17,13 @@ export default defineConfig({
   redirects,
   integrations: [
     sitemap({
-      // /dank-angebot war auch auf der alten Seite nicht in der Sitemap
-      // (planning/sitemaps/additional-pages.xml); /dank dagegen schon.
-      filter: (page) => new URL(page).pathname !== '/dank-angebot',
+      // Aus der Sitemap ausgeschlossen (alle bewusst noindex):
+      // - /dank & /dank-angebot sind Danke-/Conversion-Seiten (Plausible-Goals),
+      //   kein SEO-Wert.
+      // - /angebot-de|-gastro|-google sind Werbe-Landingpages (Google Ads etc.),
+      //   kein SEO-Ziel.
+      filter: (page) => !['/dank', '/dank-angebot', '/angebot-de', '/angebot-gastro', '/angebot-google']
+        .includes(new URL(page).pathname),
     }),
   ],
   image: {
