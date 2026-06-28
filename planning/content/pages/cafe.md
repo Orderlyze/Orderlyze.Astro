@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/cafe
 slug: cafe
-title: "Cafe | Orderlyze"
+title: "Kassensystem fürs Café | Orderlyze"
 description: ""
-og_title: "Cafe | Orderlyze"
+og_title: "Kassensystem fürs Café | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/cafe

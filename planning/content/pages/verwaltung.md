@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/verwaltung
 slug: verwaltung
-title: "Verwaltung | Orderlyze"
+title: "Kassen-Verwaltung: Umsätze & Berichte | Orderlyze"
 description: ""
-og_title: "Verwaltung | Orderlyze"
+og_title: "Kassen-Verwaltung: Umsätze & Berichte | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/verwaltung

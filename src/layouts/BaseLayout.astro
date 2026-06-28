@@ -39,6 +39,33 @@ const {
 const pathname = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '');
 const canonicalUrl = canonical ?? `${SITE.url}${pathname}`;
 const ogImageUrl = ogImage ? new URL(ogImage, SITE.url).href : undefined;
+
+/* Strukturierte Daten: Organization (Entität) — seitenweit, damit Such- und
+   KI-Engines Orderlyze als eindeutige, vertrauenswürdige Entität erkennen.
+   Produkt-/SoftwareApplication-Schema setzen einzelne Seiten zusätzlich
+   (Homepage, /preise) und referenzieren diese Org per @id. */
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE.url}/#organization`,
+  name: 'Orderlyze GmbH',
+  url: SITE.url,
+  logo: `${SITE.url}/apple-touch-icon.png`,
+  description:
+    'Kassensystem und Registrierkasse für Gastronomie und Dienstleister – einfach, schnell eingerichtet und 100% finanzamtkonform (RKSV & KassenSichV).',
+  telephone: '+43 800 400 4511',
+  email: SITE.email,
+  vatID: 'ATU80336806',
+  areaServed: ['AT', 'DE'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Oberer Stadtplatz 9/2',
+    postalCode: '4710',
+    addressLocality: 'Grieskirchen',
+    addressCountry: 'AT',
+  },
+  // sameAs: Social-/Profil-URLs hier ergänzen, sobald vorhanden (LinkedIn, Facebook, Instagram …)
+};
 ---
 
 <!doctype html>
@@ -90,6 +117,9 @@ const ogImageUrl = ogImage ? new URL(ogImage, SITE.url).href : undefined;
         };
       plausible.init();
     </script>
+
+    <!-- Organisation (Entität) — seitenweit für Such- & KI-Suche -->
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} is:inline />
 
     <!-- Slot für seitenspezifische Head-Einträge (z. B. JSON-LD) -->
     <slot name="head" />

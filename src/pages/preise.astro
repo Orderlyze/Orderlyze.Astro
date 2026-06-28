@@ -20,10 +20,34 @@ import kassenladeK4 from '../assets/hardware/kassenlade-k4.png';
 import cloudDrucker from '../assets/hardware/bondrucker.png';
 
 const meta = {
-  title: 'Preise | Orderlyze',
+  title: 'Kassensystem Preise & Kosten | Orderlyze',
   description:
-    'Transparente Preise für das Orderlyze Kassensystem: Software ab 39€ pro Monat inkl. Finanzamt-Signatur und Support, dazu einmalige Hardware-Kosten.',
+    'Transparente Preise & Kosten für das Orderlyze Kassensystem – für Gastronomie und Dienstleister: Software ab 39 €/Monat inkl. Finanzamt-Signatur und Support.',
   canonical: 'https://www.orderlyze.com/preise',
+};
+
+/* Strukturierte Daten: Produkt-Angebote (Pakete) — verweist auf die seitenweite
+   Organization-Entität aus BaseLayout. Preise exkl. MwSt., monatlich. */
+const monatlich = (preis: string) => ({
+  '@type': 'UnitPriceSpecification',
+  price: preis,
+  priceCurrency: 'EUR',
+  unitText: 'pro Monat',
+});
+const priceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Orderlyze Kassensystem',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Android, iOS, Web',
+  description:
+    'Kassensystem-Software für Gastronomie und Dienstleister, monatlich abrechenbar – inkl. Finanzamt-Signatur (RKSV/KassenSichV) und kostenlosem Support.',
+  offers: [
+    { '@type': 'Offer', name: 'Dienstleistungen', price: '39', priceCurrency: 'EUR', priceSpecification: monatlich('39') },
+    { '@type': 'Offer', name: 'Gastronomie', price: '49', priceCurrency: 'EUR', priceSpecification: monatlich('49') },
+    { '@type': 'Offer', name: 'Gastronomie +', price: '75', priceCurrency: 'EUR', priceSpecification: monatlich('75') },
+  ],
+  publisher: { '@id': 'https://www.orderlyze.com/#organization' },
 };
 
 const pakete = [
@@ -89,6 +113,8 @@ const kassenbuchLeistungen = [
 ---
 
 <BaseLayout {...meta}>
+  <script type="application/ld+json" set:html={JSON.stringify(priceSchema)} slot="head" is:inline />
+
   <!-- ── Kopf ── -->
   <section class="page-hero">
     <div class="container page-hero__inner reveal">

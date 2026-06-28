@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/kartenzahlung
 slug: kartenzahlung
-title: "Kartenzahlung | Orderlyze"
+title: "Kartenzahlung im Kassensystem | Orderlyze"
 description: ""
-og_title: "Kartenzahlung | Orderlyze"
+og_title: "Kartenzahlung im Kassensystem | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/kartenzahlung

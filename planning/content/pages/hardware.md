@@ -1,10 +1,10 @@
 ---
 url: https://www.orderlyze.com/hardware
 slug: hardware
-title: "Hardware | Orderlyze"
-description: "Du benötigst ein Kassensystem? Finde hier heraus, welche Hardware wir anbieten und wieviel diese kostet."
-og_title: "Hardware | Orderlyze"
-og_description: "Du benötigst ein Kassensystem? Finde hier heraus, welche Hardware wir anbieten und wieviel diese kostet."
+title: "Kassen-Hardware: Bondrucker, Kassenlade & Geräte | Orderlyze"
+description: "Kassen-Hardware für dein Orderlyze-Kassensystem: Bondrucker (Bluetooth & Sunmi), Kassenladen, Tablet-Ständer und All-in-One-Kassengeräte – inkl. Preisen."
+og_title: "Kassen-Hardware: Bondrucker, Kassenlade & Geräte | Orderlyze"
+og_description: "Kassen-Hardware für dein Orderlyze-Kassensystem: Bondrucker (Bluetooth & Sunmi), Kassenladen, Tablet-Ständer und All-in-One-Kassengeräte – inkl. Preisen."
 og_image: ""
 canonical: https://www.orderlyze.com/hardware
 robots: ""

@@ -21,11 +21,17 @@ export const redirects = {
   // Hub: Hilfe lebt künftig extern auf hilfe.orderlyze.com
   '/support': 'https://hilfe.orderlyze.com/',
 
-  // Drucker/Hardware-Themen → /hardware
+  // ── SEO: doppelte Friseur-Seite konsolidiert (Keyword-Kannibalisierung) ──
+  // /friseure (Keyword-Landing) → /friseur (Branchen-Seite, behalten)
+  '/friseure': '/friseur',
+
+  // Drucker-Setup/How-to → Hilfe-Artikel (Such-Intent = Anleitung, nicht Kauf)
+  '/drucker-verbinden': 'https://hilfe.orderlyze.com/app/drucker/',
+  '/kopie-von-drucker-verbinden': 'https://hilfe.orderlyze.com/app/drucker/', // versehentliche Wix-Kopie
+
+  // Drucker-Produkte/Hardware → /hardware (kommerzielle Absicht)
   '/bluetooth-drucker': '/hardware',
   '/cloud-drucker': '/hardware',
-  '/drucker-verbinden': '/hardware',
-  '/kopie-von-drucker-verbinden': '/hardware', // versehentliche Wix-Kopie (Duplicate)
   '/sunmi-drucker': '/hardware',
 
   // Zahlung → /kartenzahlung

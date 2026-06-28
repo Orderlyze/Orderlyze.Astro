@@ -1,0 +1,48 @@
+# Orderlyze
+
+> Orderlyze ist ein Kassensystem bzw. eine Registrierkasse für Gastronomie und Dienstleister in Österreich und Deutschland. Einfach zu bedienen, schnell eingerichtet und 100% finanzamtkonform (RKSV in Österreich, KassenSichV in Deutschland). Die App läuft auf Android, iOS und im Web. Software ab 39 € pro Monat (exkl. MwSt.), inkl. Finanzamt-Signatur und kostenlosem Support.
+
+## Eckdaten
+
+- Anbieter: Orderlyze GmbH, Oberer Stadtplatz 9/2, 4710 Grieskirchen, Österreich (UID ATU80336806)
+- Kontakt: 0800 400 4511, office@orderlyze.com
+- Plattformen: Android, iOS, Web-Dashboard
+- Konformität: RKSV (Österreich) und KassenSichV (Deutschland)
+- Preise: Dienstleistungen 39 €/Monat, Gastronomie 49 €/Monat, Gastronomie + 75 €/Monat (jeweils exkl. MwSt.); einmalige Aktivierungsgebühr 199 €
+
+## Produkt & Kernseiten
+
+- [Kassensystem](https://www.orderlyze.com/kassensystem): Überblick über das Orderlyze Kassensystem – einfach, schnell, finanzamtkonform.
+- [Registrierkasse](https://www.orderlyze.com/registrierkasse): Finanzamtkonforme Registrierkasse als App für Android, iOS und Web.
+- [Kassensoftware](https://www.orderlyze.com/kassensoftware): Die Kassensoftware von Orderlyze und ihre Funktionen.
+- [Bestellsystem](https://www.orderlyze.com/bestellsystem): Bestell- und Boniersystem für die Gastronomie.
+- [Preise](https://www.orderlyze.com/preise): Monatliche Pakete ab 39 €/Monat plus einmalige Hardware-Kosten.
+- [Funktionen](https://www.orderlyze.com/funktionen): Alle Funktionen – Rechnungen, Kartenzahlung, Verwaltung, Datenexport, Gutscheine u. v. m.
+- [Funkbonieren](https://www.orderlyze.com/funkbonieren): Mobiles Bonieren am Tisch mit Tischplan und Küchenkommunikation.
+- [Kartenzahlung](https://www.orderlyze.com/kartenzahlung): Integrierte Kartenzahlung und unterstützte Zahlungsarten.
+- [Verwaltung](https://www.orderlyze.com/verwaltung): Berichte, Umsätze, Kassenbuch und Auswertungen.
+- [Hardware](https://www.orderlyze.com/hardware): Bondrucker (Bluetooth & Sunmi), Kassenladen, Tablet-Ständer und All-in-One-Kassengeräte inkl. Preisen.
+- [So funktioniert's](https://www.orderlyze.com/so-funktionierts): In vier Schritten zum eigenen Kassensystem.
+
+## Recht & Finanzamt
+
+- [Finanzamtkonform](https://www.orderlyze.com/finanzamt-konform): Wie Orderlyze RKSV/KassenSichV erfüllt und Berichte an den Steuerberater liefert.
+- [Technische Sicherheitseinrichtung (TSE)](https://www.orderlyze.com/technische-sicherheitseinrichtung): Was die TSE ist, wer sie braucht und ab wann sie gilt.
+- [Datenexport für Steuerberater](https://www.orderlyze.com/datenexport-steuerberater): Export aller relevanten Daten für die Steuerberatung.
+
+## Branchen
+
+- [Gastronomie](https://www.orderlyze.com/gastronomie): Kassensystem für die Gastronomie.
+- [Restaurant](https://www.orderlyze.com/restaurant): Kassensystem für Restaurants.
+- [Cafe](https://www.orderlyze.com/cafe): Kassensystem für Cafés.
+- [Bar](https://www.orderlyze.com/bar): Kassensystem für Bars.
+- [Friseur](https://www.orderlyze.com/friseur): Kassensystem für Friseure und Barbershops.
+- [Beauty](https://www.orderlyze.com/beauty): Kassensystem für Beauty- und Kosmetikstudios.
+- [Sonstige Dienstleistungen](https://www.orderlyze.com/sonstige): Kassensystem für weitere Dienstleistungsbranchen.
+
+## Unternehmen
+
+- [Impressum](https://www.orderlyze.com/impressum)
+- [Datenschutzerklärung](https://www.orderlyze.com/datenschutzerklaerung)
+- [AGB](https://www.orderlyze.com/agb)
+- [Hilfe-Center](https://hilfe.orderlyze.com/): Anleitungen und Support für Orderlyze.

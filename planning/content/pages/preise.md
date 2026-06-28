@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/preise
 slug: preise
-title: "Preise | Orderlyze"
+title: "Kassensystem Preise & Kosten | Orderlyze"
 description: ""
-og_title: "Preise | Orderlyze"
+og_title: "Kassensystem Preise & Kosten | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/preise

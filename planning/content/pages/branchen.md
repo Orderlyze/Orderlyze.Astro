@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/branchen
 slug: branchen
-title: "Branchen | Orderlyze"
+title: "Kassensystem für deine Branche | Orderlyze"
 description: ""
-og_title: "Branchen | Orderlyze"
+og_title: "Kassensystem für deine Branche | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/branchen

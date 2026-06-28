@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/funkbonieren
 slug: funkbonieren
-title: "Funkbonieren | Orderlyze"
+title: "Funkboniersystem – mobil am Tisch bonieren | Orderlyze"
 description: ""
-og_title: "Funkbonieren | Orderlyze"
+og_title: "Funkboniersystem – mobil am Tisch bonieren | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/funkbonieren

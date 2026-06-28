@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/friseur
 slug: friseur
-title: "Friseur | Orderlyze"
+title: "Kassensystem für Friseure & Barbershops | Orderlyze"
 description: ""
-og_title: "Friseur | Orderlyze"
+og_title: "Kassensystem für Friseure & Barbershops | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/friseur

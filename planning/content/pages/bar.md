@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/bar
 slug: bar
-title: "Bar | Orderlyze"
+title: "Kassensystem für Bars | Orderlyze"
 description: ""
-og_title: "Bar | Orderlyze"
+og_title: "Kassensystem für Bars | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/bar

@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/restaurant
 slug: restaurant
-title: "Restaurant | Orderlyze"
+title: "Kassensystem für Restaurants | Orderlyze"
 description: ""
-og_title: "Restaurant | Orderlyze"
+og_title: "Kassensystem für Restaurants | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/restaurant

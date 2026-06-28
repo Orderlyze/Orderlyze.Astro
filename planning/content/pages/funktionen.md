@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/funktionen
 slug: funktionen
-title: "Funktionen | Orderlyze"
+title: "Kassensystem-Funktionen im Überblick | Orderlyze"
 description: ""
-og_title: "Funktionen | Orderlyze"
+og_title: "Kassensystem-Funktionen im Überblick | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/funktionen

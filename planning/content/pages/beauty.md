@@ -1,9 +1,9 @@
 ---
 url: https://www.orderlyze.com/beauty
 slug: beauty
-title: "Beauty | Orderlyze"
+title: "Kassensystem für Beauty- & Kosmetikstudios | Orderlyze"
 description: ""
-og_title: "Beauty | Orderlyze"
+og_title: "Kassensystem für Beauty- & Kosmetikstudios | Orderlyze"
 og_description: ""
 og_image: ""
 canonical: https://www.orderlyze.com/beauty

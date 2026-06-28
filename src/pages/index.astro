@@ -54,47 +54,27 @@ const funktionenTeaser = [
   { icon: 'export', title: 'Datenexporte für Steuerberater' },
 ] as const;
 
-/* Strukturierte Daten: Organization + SoftwareApplication (PLAN.md Phase 5) */
+/* Strukturierte Daten: SoftwareApplication (Organisation kommt seitenweit aus BaseLayout) */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      '@id': 'https://www.orderlyze.com/#organization',
-      name: 'Orderlyze GmbH',
-      url: 'https://www.orderlyze.com',
-      logo: 'https://www.orderlyze.com/apple-touch-icon.png',
-      telephone: '+43 800 400 4511',
-      email: 'office@orderlyze.com',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Oberer Stadtplatz 9/2',
-        postalCode: '4710',
-        addressLocality: 'Grieskirchen',
-        addressCountry: 'AT',
-      },
+  '@type': 'SoftwareApplication',
+  name: 'Orderlyze Kassensystem',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Android, iOS, Web',
+  description:
+    'Kassensystem für Gastronomie und Dienstleister. Einfach zu bedienen, schnell eingerichtet, 100% finanzamtkonform (RKSV, KassenSichV).',
+  offers: {
+    '@type': 'Offer',
+    price: '39',
+    priceCurrency: 'EUR',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: '39',
+      priceCurrency: 'EUR',
+      unitText: 'pro Monat',
     },
-    {
-      '@type': 'SoftwareApplication',
-      name: 'Orderlyze Kassensystem',
-      applicationCategory: 'BusinessApplication',
-      operatingSystem: 'Android, iOS, Web',
-      description:
-        'Kassensystem für Gastronomie und Dienstleister. Einfach zu bedienen, schnell eingerichtet, 100% finanzamtkonform (RKSV, KassenSichV).',
-      offers: {
-        '@type': 'Offer',
-        price: '39',
-        priceCurrency: 'EUR',
-        priceSpecification: {
-          '@type': 'UnitPriceSpecification',
-          price: '39',
-          priceCurrency: 'EUR',
-          unitText: 'pro Monat',
-        },
-      },
-      publisher: { '@id': 'https://www.orderlyze.com/#organization' },
-    },
-  ],
+  },
+  publisher: { '@id': 'https://www.orderlyze.com/#organization' },
 };
 ---
 
