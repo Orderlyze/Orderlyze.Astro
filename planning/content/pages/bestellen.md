@@ -1,7 +1,7 @@
 ---
 url: https://www.orderlyze.com/bestellen
 slug: bestellen
-title: "Bestellen | Orderlyze"
+title: "Kassensystem & Hardware bestellen | Orderlyze"
 description: "Bestelle dir ganz einfach dein Kassensystem nach Hause. Einfach Formular ausfüllen, beraten lassen und schon ist deine Kasse auf den Weg zu dir."
 og_title: "Bestellen | Orderlyze"
 og_description: "Bestelle dir ganz einfach dein Kassensystem nach Hause. Einfach Formular ausfüllen, beraten lassen und schon ist deine Kasse auf den Weg zu dir."

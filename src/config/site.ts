@@ -48,6 +48,7 @@ export const VERIFICATION = {
 /** Plausible-Event-Namen (in Plausible als Goals anlegen) */
 export const EVENTS = {
   ctaAngebot: 'CTA Angebot',
+  ctaTesten: 'CTA Testen',
   ctaPhone: 'Anruf',
   ctaWhatsApp: 'WhatsApp',
   angebotSubmit: 'Angebot abgeschickt',

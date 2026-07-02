@@ -10,8 +10,10 @@
   --color-brand-deep: #0c3c60;     /* dunkles Markenblau (Wix color_15) */
   --color-heading: #6ea4ca;        /* helles Heading-Blau (Eyebrows, Display auf Navy) */
   --color-heading-dark: #39729b;   /* mittleres Blau (sekundäre Headings, Text) */
-  --color-cta: #00b531;            /* Orderlyze-Grün (Buttons, App MainGreen) */
-  --color-cta-dark: #009328;       /* Button hover */
+  /* Abgedunkeltes Orderlyze-Grün: App-MainGreen #00b531 erreicht mit weißem
+     Text nur 2,7:1 — #00871f hält WCAG AA (4,68:1), Hover 6,5:1. */
+  --color-cta: #00871f;
+  --color-cta-dark: #006e19;       /* Button hover */
   --color-accent: #6ea4ca;         /* heller Blau-Akzent (auf Navy, Marker) */
   --color-accent-deep: #0659a9;    /* Akzent-Text auf hellem Grund (≥4.5:1 AA) */
   --color-navy: #062134;           /* dunkle Sektionen / Hero */

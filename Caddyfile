@@ -1,0 +1,13 @@
+# Caddy Reverse Proxy für externes Testen
+# Start:  ~/bin/caddy start --config Caddyfile
+# Stop:   ~/bin/caddy stop
+# Port 8000 ist in der Azure-NSG (claude-vmNSG) freigegeben und ohne Root bindbar.
+{
+	auto_https off
+	admin localhost:2019
+}
+
+# Externer Zugriff: http://131.189.222.117:8000 → Astro Dev-Server (inkl. HMR-Websocket)
+:8000 {
+	reverse_proxy localhost:4321
+}

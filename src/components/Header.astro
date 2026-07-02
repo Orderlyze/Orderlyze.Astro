@@ -126,6 +126,9 @@ const isGroupActive = (group: (typeof NAV)[number]) =>
       </ul>
       <div class="mobile__actions">
         <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Kostenloses Angebot</Button>
+        <Button href="/testen" size="lg" variant="secondary" event={EVENTS.ctaTesten}>
+          30 Tage kostenlos testen
+        </Button>
         <a href={SITE.phoneHref} class:list={['mobile__phone', phoneEventClass]}>
           {SITE.phone} – kostenlos anrufen
         </a>

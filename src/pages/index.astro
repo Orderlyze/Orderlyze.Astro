@@ -100,8 +100,11 @@ const jsonLd = {
         </p>
         <div class="hero__actions">
           <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Kostenloses Angebot</Button>
-          <span class="hero__note">Kostenlos und unverbindlich.</span>
+          <Button href="/testen" size="lg" variant="secondary" event={EVENTS.ctaTesten}>
+            30 Tage kostenlos testen
+          </Button>
         </div>
+        <span class="hero__note">Kostenlos und unverbindlich.</span>
         <ul class="hero__trust">
           <li><Icon name="shield" size={18} /> 100% finanzamtkonform (RKSV &amp; KassenSichV)</li>
           <li><Icon name="support" size={18} /> Kostenloser Support</li>
@@ -112,7 +115,7 @@ const jsonLd = {
         <Image
           src={heroDevices}
           alt="Orderlyze Kassensystem App auf Smartphone und Tablet"
-          widths={[480, 760, 1200]}
+          widths={[480, 760, 1200]} width={1200}
           sizes="(max-width: 860px) 92vw, 46vw"
           loading="eager"
           fetchpriority="high"
@@ -198,7 +201,7 @@ const jsonLd = {
       <Image
         src={bedienung}
         alt="Kinderleichte Bedienung des Orderlyze Kassensystems am Tablet"
-        widths={[480, 760, 1100]}
+        widths={[480, 760, 1100]} width={1100}
         sizes="(max-width: 860px) 92vw, 50vw"
       />
     </FeatureSplit>
@@ -228,7 +231,7 @@ const jsonLd = {
       <Image
         src={bezahlungTheke}
         alt="Kundin bezahlt kontaktlos an der Theke eines Cafés"
-        widths={[480, 760, 1100]}
+        widths={[480, 760, 1100]} width={1100}
         sizes="(max-width: 860px) 92vw, 50vw"
         class="photo-rounded"
       />
@@ -249,7 +252,7 @@ const jsonLd = {
             <Image
               src={b.image}
               alt={b.alt}
-              widths={[320, 480, 640]}
+              widths={[320, 480, 640]} width={640}
               sizes="(max-width: 640px) 46vw, (max-width: 1000px) 30vw, 220px"
             />
             <span class="branche__label">{b.label}</span>
@@ -285,7 +288,7 @@ const jsonLd = {
       <Image
         src={webappGeraete}
         alt="Orderlyze Kassensystem auf Tablet, Smartphone und Laptop"
-        widths={[480, 760, 1100]}
+        widths={[480, 760, 1100]} width={1100}
         sizes="(max-width: 860px) 92vw, 50vw"
       />
     </FeatureSplit>
@@ -315,7 +318,7 @@ const jsonLd = {
         <Image
           src={monatsbericht}
           alt="Monatsbericht im Orderlyze Verwaltungs-Dashboard"
-          widths={[480, 760, 1100]}
+          widths={[480, 760, 1100]} width={1100}
           sizes="(max-width: 860px) 92vw, 50vw"
         />
       </DeviceMockup>
@@ -481,6 +484,8 @@ const jsonLd = {
   }
 
   .hero__note {
+    display: block;
+    margin-top: 0.7rem;
     color: var(--color-text-muted);
     font-size: 0.9rem;
   }
@@ -518,6 +523,7 @@ const jsonLd = {
     .hero__title,
     .hero__lead,
     .hero__actions,
+    .hero__note,
     .hero__trust,
     .hero__media {
       opacity: 0;
@@ -528,6 +534,7 @@ const jsonLd = {
     .hero__title { animation-delay: 0.08s; }
     .hero__lead { animation-delay: 0.16s; }
     .hero__actions { animation-delay: 0.24s; }
+    .hero__note { animation-delay: 0.28s; }
     .hero__trust { animation-delay: 0.34s; }
     .hero__media { animation-delay: 0.18s; }
 

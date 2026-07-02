@@ -239,6 +239,10 @@ const marketingSlides = [
               <button class="wizard-back" data-back>Zurück</button>
               <button class="wizard-next wizard-submit" id="wizard-submit">Zum Angebot</button>
             </div>
+            <p class="wizard-privacy">
+              Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Angebotserstellung
+              zu. Details in der <a href="/datenschutzerklaerung">Datenschutzerklärung</a>.
+            </p>
           </div>
         </section>
       </div>
@@ -564,6 +568,17 @@ const marketingSlides = [
     font-size: 0.8rem;
     color: var(--color-text-muted);
     margin: 0;
+  }
+
+  .wizard-privacy {
+    margin: 0.9rem 0 0;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .wizard-privacy a {
+    color: inherit;
+    text-decoration: underline;
   }
 
   .wizard-error {

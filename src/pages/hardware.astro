@@ -61,7 +61,7 @@ const allInOne = [
         zubehoer.map((p) => (
           <article class="produkt reveal">
             <div class="produkt__img">
-              <Image src={p.img} alt={p.alt} widths={[240, 480]} sizes="200px" />
+              <Image src={p.img} alt={p.alt} widths={[240, 480]} width={480} sizes="200px" />
             </div>
             <h3 class="produkt__name">{p.name}</h3>
             {p.detail && <p class="produkt__detail">{p.detail}</p>}
@@ -85,7 +85,7 @@ const allInOne = [
         allInOne.map((p) => (
           <article class="produkt reveal">
             <div class="produkt__img">
-              <Image src={p.img} alt={p.alt} widths={[240, 480]} sizes="200px" />
+              <Image src={p.img} alt={p.alt} widths={[240, 480]} width={480} sizes="200px" />
             </div>
             <h3 class="produkt__name">{p.name}</h3>
             <p class="produkt__detail">{p.detail}</p>

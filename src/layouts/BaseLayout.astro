@@ -7,6 +7,10 @@
  */
 import '@fontsource-variable/raleway';
 import '@fontsource-variable/open-sans';
+// Latin-Subsets vorladen (die einzigen, die de-Text tatsächlich braucht) —
+// sonst entdeckt der Browser die Fonts erst nach dem CSS-Download.
+import ralewayLatinWoff2 from '@fontsource-variable/raleway/files/raleway-latin-wght-normal.woff2?url';
+import openSansLatinWoff2 from '@fontsource-variable/open-sans/files/open-sans-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -31,7 +35,9 @@ const {
   description,
   ogTitle = title,
   ogDescription = description,
-  ogImage,
+  // Site-weites Default-Sharing-Bild (WhatsApp/Facebook/LinkedIn);
+  // Seiten können ein eigenes 1200×630-Bild übergeben.
+  ogImage = '/og/orderlyze-og.jpg',
   canonical,
   noindex = false,
   chrome = true,
@@ -89,7 +95,13 @@ const orgSchema = {
     <meta property="og:description" content={ogDescription} />
     <meta property="og:url" content={canonicalUrl} />
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    {ogImageUrl && <meta property="og:image:width" content="1200" />}
+    {ogImageUrl && <meta property="og:image:height" content="630" />}
     <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+
+    <link rel="preload" href={ralewayLatinWoff2} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={openSansLatinWoff2} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />

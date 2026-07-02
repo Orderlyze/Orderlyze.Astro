@@ -1,7 +1,7 @@
 ---
 url: https://www.orderlyze.com/testen
 slug: testen
-title: "Testen | Orderlyze"
+title: "Kassensystem 30 Tage kostenlos testen | Orderlyze"
 description: ""
 og_title: "Testen | Orderlyze"
 og_description: ""

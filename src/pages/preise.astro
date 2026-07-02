@@ -202,7 +202,7 @@ const kassenbuchLeistungen = [
         zubehoer.map((p) => (
           <article class="zubehoer__item reveal">
             <div class="zubehoer__img">
-              <Image src={p.img} alt={p.alt} widths={[200, 400]} sizes="150px" />
+              <Image src={p.img} alt={p.alt} widths={[200, 400]} width={400} sizes="150px" />
             </div>
             <h4 class="zubehoer__name">{p.name}</h4>
             {p.detail && <p class="zubehoer__detail">{p.detail}</p>}

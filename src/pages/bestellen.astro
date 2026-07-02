@@ -10,7 +10,7 @@ import FormField from '../components/FormField.astro';
 import Icon from '../components/Icon.astro';
 
 const meta = {
-  title: 'Bestellen | Orderlyze',
+  title: 'Kassensystem & Hardware bestellen | Orderlyze',
   description:
     'Bestelle dir ganz einfach dein Kassensystem nach Hause. Einfach Formular ausfüllen, beraten lassen und schon ist deine Kasse auf den Weg zu dir.',
   canonical: 'https://www.orderlyze.com/bestellen',
@@ -52,6 +52,10 @@ const branchen = [
 
         <button type="submit" class="bestellen__submit">Jetzt bestellen</button>
         <p class="bestellen__note">Unverbindliche Anfrage — wir melden uns persönlich bei dir.</p>
+        <p class="bestellen__privacy">
+          Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Kontaktaufnahme zu.
+          Details in der <a href="/datenschutzerklaerung">Datenschutzerklärung</a>.
+        </p>
       </form>
 
       <div class="bestellen__danke" id="bestell-danke" hidden>
@@ -179,6 +183,18 @@ const branchen = [
     font-size: 0.85rem;
     color: var(--color-text-muted);
     margin: 0.9rem 0 0;
+  }
+
+  .bestellen__privacy {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 0.4rem 0 0;
+  }
+
+  .bestellen__privacy a {
+    color: inherit;
+    text-decoration: underline;
   }
 
   .bestellen__danke {

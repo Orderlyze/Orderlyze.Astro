@@ -67,7 +67,7 @@ const vorteile = [
   <Section variant="paper">
     <div class="bereich reveal">
       <div class="bereich__intro">
-        <Image src={gastroImg} alt="Service am Tisch im Restaurant" widths={[480, 760, 1000]} sizes="(max-width: 860px) 92vw, 38vw" class="bereich__img" />
+        <Image src={gastroImg} alt="Service am Tisch im Restaurant" widths={[480, 760, 1000]} width={1000} sizes="(max-width: 860px) 92vw, 38vw" class="bereich__img" />
         <div>
           <h2 class="bereich__title">Gastronomie</h2>
           <p class="bereich__text">
@@ -80,7 +80,7 @@ const vorteile = [
         {
           gastro.map((b) => (
             <a href={b.href} class="branche">
-              <Image src={b.image} alt={b.alt} widths={[320, 480, 700]} sizes="(max-width: 640px) 92vw, 30vw" />
+              <Image src={b.image} alt={b.alt} widths={[320, 480, 700]} width={700} sizes="(max-width: 640px) 92vw, 30vw" />
               <span class="branche__label">{b.label} <Icon name="arrow" size={16} /></span>
             </a>
           ))
@@ -93,7 +93,7 @@ const vorteile = [
   <Section variant="surface">
     <div class="bereich reveal">
       <div class="bereich__intro">
-        <Image src={dienstImg} alt="Friseur arbeitet mit der Orderlyze App" widths={[480, 760, 1000]} sizes="(max-width: 860px) 92vw, 38vw" class="bereich__img" />
+        <Image src={dienstImg} alt="Friseur arbeitet mit der Orderlyze App" widths={[480, 760, 1000]} width={1000} sizes="(max-width: 860px) 92vw, 38vw" class="bereich__img" />
         <div>
           <h2 class="bereich__title">Dienstleistungen</h2>
           <p class="bereich__text">
@@ -106,7 +106,7 @@ const vorteile = [
         {
           dienstleistungen.map((b) => (
             <a href={b.href} class="branche">
-              <Image src={b.image} alt={b.alt} widths={[320, 480, 700]} sizes="(max-width: 640px) 92vw, 30vw" />
+              <Image src={b.image} alt={b.alt} widths={[320, 480, 700]} width={700} sizes="(max-width: 640px) 92vw, 30vw" />
               <span class="branche__label">{b.label} <Icon name="arrow" size={16} /></span>
             </a>
           ))

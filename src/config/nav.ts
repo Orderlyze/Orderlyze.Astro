@@ -43,6 +43,7 @@ export const NAV: NavGroup[] = [
     ],
   },
   { label: 'Preise', href: '/preise' },
+  { label: 'Kostenlos testen', href: '/testen' },
 ];
 
 export const NAV_EXTRA: NavLink[] = [
@@ -52,6 +53,7 @@ export const NAV_EXTRA: NavLink[] = [
 export const FOOTER_NAV = {
   kassensystem: [
     { label: 'Preise', href: '/preise' },
+    { label: 'Kostenlos testen', href: '/testen' },
     { label: "So funktioniert's", href: '/so-funktionierts' },
     { label: 'Funktionen', href: '/funktionen' },
     { label: 'Kartenzahlung', href: '/kartenzahlung' },

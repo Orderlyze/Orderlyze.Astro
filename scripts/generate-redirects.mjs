@@ -34,11 +34,19 @@ writeFileSync(join(root, 'vercel.json'), JSON.stringify(vercel, null, 2) + '\n')
 
 /* Azure Static Web Apps: routes mit 301 + 404-Override (landet via public/ im Build) */
 const swa = {
-  routes: Object.entries(redirects).map(([route, redirect]) => ({
-    route,
-    redirect,
-    statusCode: 301,
-  })),
+  routes: [
+    ...Object.entries(redirects).map(([route, redirect]) => ({
+      route,
+      redirect,
+      statusCode: 301,
+    })),
+    // Astro-Assets tragen einen Content-Hash im Dateinamen → dauerhaft cachen
+    // (SWA-Default wäre nur max-age=30).
+    {
+      route: '/_astro/*',
+      headers: { 'cache-control': 'public, max-age=31536000, immutable' },
+    },
+  ],
   responseOverrides: {
     404: { rewrite: '/404.html' },
   },

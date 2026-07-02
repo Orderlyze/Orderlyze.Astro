@@ -11,7 +11,7 @@ import ReceiptCard from '../components/ReceiptCard.astro';
 import Icon from '../components/Icon.astro';
 
 const meta = {
-  title: 'Testen | Orderlyze',
+  title: 'Kassensystem 30 Tage kostenlos testen | Orderlyze',
   description:
     'Teste das Orderlyze Kassensystem 30 Tage kostenlos: Formular ausfüllen, kostenlosen Testaccount erhalten und unverbindlich von einem Experten beraten lassen.',
   canonical: 'https://www.orderlyze.com/testen',
@@ -46,6 +46,10 @@ const branchen = [
           <FormField name="telefon" label="Telefon" type="tel" required autocomplete="tel" hint="Ohne Leerzeichen, z. B. 06601234567" />
           <button type="submit" class="testen__submit">Kostenlos testen</button>
           <p class="testen__note">Kostenlos und unverbindlich.</p>
+          <p class="testen__privacy">
+            Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Kontaktaufnahme zu.
+            Details in der <a href="/datenschutzerklaerung">Datenschutzerklärung</a>.
+          </p>
         </form>
 
         <div class="testen__danke" id="testen-danke" hidden>
@@ -220,6 +224,18 @@ const branchen = [
     font-size: 0.85rem;
     color: var(--color-text-muted);
     margin: 0;
+  }
+
+  .testen__privacy {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 0.4rem 0 0;
+  }
+
+  .testen__privacy a {
+    color: inherit;
+    text-decoration: underline;
   }
 
   .testen__danke {
