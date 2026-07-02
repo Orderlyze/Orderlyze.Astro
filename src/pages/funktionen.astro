@@ -28,44 +28,44 @@ const meta = {
   canonical: 'https://www.orderlyze.com/funktionen',
 };
 
-const fuerAlle = [
-  { icon: 'receipt', title: 'Rechnungen erstellen und bearbeiten' },
-  { icon: 'card', title: 'Kartenzahlung und Kassenlade' },
-  { icon: 'settings', title: 'Verwaltung von Produkten etc.' },
-  { icon: 'export', title: 'Datenexporte für Steuerberater' },
-  { icon: 'star', title: 'Gutscheine & Rabatte' },
-  { icon: 'users', title: 'Kundenmanagement' },
-  { icon: 'users', title: 'Mitarbeiterverwaltung' },
-  { icon: 'sync', title: 'Stornobuchungen' },
-] as const;
-
 const fuerGastro = [
   { icon: 'wifi', title: 'Funkbonieren', href: '/funkbonieren' },
   { icon: 'devices', title: 'Tischplan' },
   { icon: 'clock', title: 'Gängesystem' },
   { icon: 'printer', title: 'Bewirtungsbeleg' },
+  { icon: 'phone', title: 'E-Beleg per QR-Code' },
+  { icon: 'receipt', title: 'Rechnungen erstellen und bearbeiten' },
+  { icon: 'card', title: 'Kartenzahlung und Kassenlade' },
+  { icon: 'star', title: 'Gutscheine & Rabatte' },
+  { icon: 'sync', title: 'Stornobuchungen' },
+] as const;
+
+const fuerDienstleistung = [
+  { icon: 'receipt', title: 'Rechnungen erstellen und bearbeiten' },
+  { icon: 'card', title: 'Kartenzahlung und Kassenlade' },
+  { icon: 'phone', title: 'E-Beleg per QR-Code' },
+  { icon: 'users', title: 'Kundenmanagement' },
+  { icon: 'star', title: 'Gutscheine & Rabatte' },
+  { icon: 'users', title: 'Mitarbeiterverwaltung' },
+  { icon: 'settings', title: 'Verwaltung von Produkten & Leistungen' },
+  { icon: 'export', title: 'Datenexporte für Steuerberater' },
 ] as const;
 ---
 
 <BaseLayout {...meta}>
-  <!-- ── Kopf ── -->
-  <section class="page-hero">
-    <div class="container page-hero__inner">
-      <div class="reveal">
-        <h1>Funktionen</h1>
-        <p class="page-hero__lead">All das, was du <span class="mark">wirklich</span> brauchst.</p>
-        <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Für alle ── -->
+  <!-- ── Für die Gastronomie ── -->
   <Section variant="paper">
-    <SectionHead eyebrow="Für alle Branchen" title="Für alle" lead="Die Basis-Funktionen, auf die sich jeder Betrieb verlassen kann." />
+    <SectionHead
+      level={1}
+      eyebrow="Für die Gastronomie"
+      title="Funktionen für die Gastronomie"
+      mark="Gastronomie"
+      lead="Für den Gastro-Alltag gebaut — von Funkbonieren bis Tischplan."
+    />
     <CardGrid columns={4}>
       {
-        fuerAlle.map((f) => (
-          <Card title={f.title} level={3}>
+        fuerGastro.map((f) => (
+          <Card title={f.title} level={3} href={'href' in f ? f.href : undefined}>
             <Icon name={f.icon} slot="icon" size={28} />
           </Card>
         ))
@@ -73,13 +73,18 @@ const fuerGastro = [
     </CardGrid>
   </Section>
 
-  <!-- ── Für die Gastronomie ── -->
+  <!-- ── Für Dienstleister ── -->
   <Section variant="tint" size="sm">
-    <SectionHead eyebrow="Speziell für Gastro" title="Für die Gastronomie" />
+    <SectionHead
+      eyebrow="Für Dienstleister"
+      title="Funktionen für Dienstleistung"
+      mark="Dienstleistung"
+      lead="Termin abgeschlossen, Beleg gedruckt oder als E-Beleg per QR-Code — so einfach kassierst du."
+    />
     <CardGrid columns={4}>
       {
-        fuerGastro.map((f) => (
-          <Card title={f.title} level={3} href={'href' in f ? f.href : undefined}>
+        fuerDienstleistung.map((f) => (
+          <Card title={f.title} level={3}>
             <Icon name={f.icon} slot="icon" size={28} />
           </Card>
         ))
@@ -242,30 +247,6 @@ const fuerGastro = [
 </BaseLayout>
 
 <style>
-  .page-hero {
-    background: #fff;
-    background-image: radial-gradient(rgba(6, 89, 169, 0.08) 1px, transparent 1px);
-    background-size: 26px 26px;
-    border-bottom: 1px solid var(--color-line);
-    text-align: center;
-  }
-
-  .page-hero__inner {
-    padding-block: clamp(3rem, 2rem + 4vw, 5.5rem);
-  }
-
-  .page-hero h1 {
-    color: var(--color-navy);
-    font-size: var(--text-h1);
-    margin-bottom: 0.3em;
-  }
-
-  .page-hero__lead {
-    font-size: var(--text-lead);
-    color: var(--color-text-muted);
-    margin-bottom: 1.8rem;
-  }
-
   .photo-rounded {
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-card-lg);

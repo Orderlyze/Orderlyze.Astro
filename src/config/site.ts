@@ -8,6 +8,9 @@ export const SITE = {
   url: 'https://www.orderlyze.com',
   phone: '0800 400 4511',
   phoneHref: 'tel:08004004511',
+  /** WhatsApp-Support: Anzeige-Nummer + wa.me-Link (ohne + und Leerzeichen) */
+  whatsapp: '+43 677 61068190',
+  whatsappHref: 'https://wa.me/4367761068190',
   email: 'office@orderlyze.com',
   helpUrl: 'https://hilfe.orderlyze.com',
 } as const;
@@ -46,5 +49,6 @@ export const VERIFICATION = {
 export const EVENTS = {
   ctaAngebot: 'CTA Angebot',
   ctaPhone: 'Anruf',
+  ctaWhatsApp: 'WhatsApp',
   angebotSubmit: 'Angebot abgeschickt',
 } as const;
