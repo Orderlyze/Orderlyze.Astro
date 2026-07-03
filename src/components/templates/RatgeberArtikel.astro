@@ -1,0 +1,264 @@
+---
+/**
+ * Template der Ratgeber-Artikel (/ratgeber/<slug>).
+ * Inhalt: src/content/ratgeber/*.md (Frontmatter + Markdown-Body).
+ * SEO: Article- + BreadcrumbList-Schema, verweist auf die seitenweite
+ * Organization-Entität aus BaseLayout.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBanner from '../CtaBanner.astro';
+import Icon from '../Icon.astro';
+import { SITE } from '../../config/site';
+
+export interface RatgeberFrontmatter {
+  title: string;
+  description: string;
+  h1: string;
+  teaser: string;
+  datePublished: string;
+  dateModified: string;
+  order?: number;
+}
+
+interface Props {
+  frontmatter: RatgeberFrontmatter;
+  slug: string;
+  /** weitere Artikel für die "Weiterlesen"-Box: [{slug, h1, teaser}] */
+  weitere?: { slug: string; h1: string; teaser: string }[];
+}
+
+const { frontmatter: fm, slug, weitere = [] } = Astro.props;
+const canonical = `${SITE.url}/ratgeber/${slug}`;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: fm.h1,
+  description: fm.description,
+  inLanguage: 'de',
+  datePublished: fm.datePublished,
+  dateModified: fm.dateModified,
+  mainEntityOfPage: canonical,
+  author: { '@id': `${SITE.url}/#organization` },
+  publisher: { '@id': `${SITE.url}/#organization` },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Ratgeber', item: `${SITE.url}/ratgeber` },
+    { '@type': 'ListItem', position: 3, name: fm.h1, item: canonical },
+  ],
+};
+
+const datumFmt = (iso: string) =>
+  new Date(iso).toLocaleDateString('de-AT', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout title={fm.title} description={fm.description} canonical={canonical}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} slot="head" is:inline />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" is:inline />
+
+  <header class="rat-hero">
+    <div class="container rat-hero__inner">
+      <nav class="rat-hero__crumbs" aria-label="Breadcrumb">
+        <a href="/ratgeber">Ratgeber</a>
+        <Icon name="arrow" size={14} />
+      </nav>
+      <h1>{fm.h1}</h1>
+      <p class="rat-hero__meta">
+        Aktualisiert am <time datetime={fm.dateModified}>{datumFmt(fm.dateModified)}</time>
+      </p>
+    </div>
+  </header>
+
+  <div class="container rat-body">
+    <article class="rat-prose">
+      <slot />
+    </article>
+
+    {
+      weitere.length > 0 && (
+        <aside class="rat-weiter">
+          <h2 class="rat-weiter__title">Weiterlesen im Ratgeber</h2>
+          <ul class="rat-weiter__list">
+            {weitere.map((w) => (
+              <li>
+                <a href={`/ratgeber/${w.slug}`} class="rat-weiter__link">
+                  <strong>{w.h1}</strong>
+                  <span>{w.teaser}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )
+    }
+  </div>
+
+  <CtaBanner
+    title="Bereit für ein Kassensystem ohne Kopfzerbrechen? Hol dir ein kostenloses Angebot!"
+    mark="kostenloses"
+    buttonLabel="Angebot anfordern"
+  />
+</BaseLayout>
+
+<style>
+  .rat-hero {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .rat-hero__inner {
+    max-width: var(--container-narrow);
+    padding-block: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  }
+
+  .rat-hero__crumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.7rem;
+    color: var(--color-heading-dark);
+  }
+
+  .rat-hero__crumbs a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .rat-hero__crumbs a:hover {
+    text-decoration: underline;
+  }
+
+  .rat-hero h1 {
+    margin-bottom: 0;
+    max-width: 26ch;
+  }
+
+  .rat-hero__meta {
+    margin: 0.8rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .rat-body {
+    max-width: var(--container-narrow);
+    padding-block: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  }
+
+  .rat-prose :global(h2) {
+    font-size: 1.5rem;
+    margin-top: 2.2em;
+  }
+
+  .rat-prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .rat-prose :global(h3) {
+    font-size: 1.15rem;
+    margin-top: 1.6em;
+  }
+
+  .rat-prose :global(p),
+  .rat-prose :global(li) {
+    color: var(--color-text);
+    line-height: 1.75;
+  }
+
+  .rat-prose :global(ul),
+  .rat-prose :global(ol) {
+    padding-left: 1.3rem;
+  }
+
+  .rat-prose :global(li) {
+    margin-bottom: 0.4em;
+  }
+
+  .rat-prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0;
+    font-size: 0.95rem;
+  }
+
+  .rat-prose :global(th),
+  .rat-prose :global(td) {
+    border: 1px solid var(--color-line);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .rat-prose :global(th) {
+    background: var(--color-surface);
+    font-family: var(--font-heading);
+  }
+
+  .rat-prose :global(blockquote) {
+    margin: 1.4em 0;
+    padding: 0.9rem 1.2rem;
+    background: var(--color-surface);
+    border-left: 3px solid var(--color-brand);
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .rat-prose :global(blockquote p) {
+    margin: 0;
+    color: inherit;
+  }
+
+  .rat-weiter {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .rat-weiter__title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .rat-weiter__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .rat-weiter__link {
+    display: grid;
+    gap: 0.2rem;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 1rem 1.3rem;
+    text-decoration: none;
+    transition: border-color var(--transition);
+  }
+
+  .rat-weiter__link:hover {
+    border-color: var(--color-brand);
+  }
+
+  .rat-weiter__link strong {
+    color: var(--color-navy);
+    font-family: var(--font-heading);
+  }
+
+  .rat-weiter__link span {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+</style>

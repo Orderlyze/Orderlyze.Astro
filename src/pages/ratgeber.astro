@@ -1,0 +1,148 @@
+---
+/**
+ * /ratgeber — Übersicht des Kassensystem-Ratgebers.
+ * Artikel kommen aus src/content/ratgeber/*.md (Frontmatter: h1, teaser, order).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import type { RatgeberFrontmatter } from '../components/templates/RatgeberArtikel.astro';
+
+const meta = {
+  title: 'Kassensystem-Ratgeber: Registrierkasse, RKSV & Kosten | Orderlyze',
+  description:
+    'Der Orderlyze-Ratgeber rund um Registrierkasse und Kassensystem: Registrierkassenpflicht, RKSV & KassenSichV, Kleinunternehmer, Kassenbuch und was ein Kassensystem kostet.',
+  canonical: 'https://www.orderlyze.com/ratgeber',
+};
+
+const modules = import.meta.glob('../content/ratgeber/*.md', { eager: true }) as Record<
+  string,
+  { frontmatter: RatgeberFrontmatter }
+>;
+const artikel = Object.entries(modules)
+  .map(([path, mod]) => ({
+    slug: path.split('/').pop()!.replace('.md', ''),
+    ...mod.frontmatter,
+  }))
+  .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+
+const datumFmt = (iso: string) =>
+  new Date(iso).toLocaleDateString('de-AT', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout {...meta}>
+  <section class="page-hero">
+    <div class="container page-hero__inner reveal">
+      <h1>Kassensystem-Ratgeber</h1>
+      <p class="page-hero__lead">
+        Registrierkassenpflicht, RKSV, Kosten: Antworten auf die Fragen, die vor der
+        Kassen-Entscheidung wirklich zählen — ohne Amtsdeutsch.
+      </p>
+    </div>
+  </section>
+
+  <Section variant="surface">
+    <div class="artikel-liste">
+      {
+        artikel.map((a) => (
+          <a href={`/ratgeber/${a.slug}`} class="artikel reveal">
+            <p class="artikel__datum">
+              Aktualisiert am <time datetime={a.dateModified}>{datumFmt(a.dateModified)}</time>
+            </p>
+            <h2 class="artikel__titel">{a.h1}</h2>
+            <p class="artikel__teaser">{a.teaser}</p>
+            <span class="artikel__mehr">
+              Weiterlesen <Icon name="arrow" size={16} />
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="Lieber gleich loslegen? Hol dir ein kostenloses Angebot!"
+    mark="kostenloses"
+    buttonLabel="Angebot anfordern"
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: #fff;
+    background-image: radial-gradient(rgba(6, 89, 169, 0.08) 1px, transparent 1px);
+    background-size: 26px 26px;
+    border-bottom: 1px solid var(--color-line);
+    text-align: center;
+  }
+
+  .page-hero__inner {
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+
+  .page-hero h1 {
+    color: var(--color-navy);
+    font-size: var(--text-h1);
+    margin-bottom: 0.3em;
+  }
+
+  .page-hero__lead {
+    color: var(--color-text-muted);
+    font-size: var(--text-lead);
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+
+  .artikel-liste {
+    max-width: 46rem;
+    margin-inline: auto;
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .artikel {
+    display: grid;
+    gap: 0.35rem;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 1.6rem 1.8rem;
+    text-decoration: none;
+    transition: border-color var(--transition), transform var(--transition);
+  }
+
+  .artikel:hover {
+    border-color: var(--color-brand);
+    transform: translateY(-2px);
+  }
+
+  .artikel__datum {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .artikel__titel {
+    font-size: 1.3rem;
+    color: var(--color-navy);
+    margin: 0;
+  }
+
+  .artikel__teaser {
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .artikel__mehr {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-brand);
+    margin-top: 0.4rem;
+  }
+</style>

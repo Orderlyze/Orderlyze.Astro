@@ -30,6 +30,16 @@
 - [Technische Sicherheitseinrichtung (TSE)](https://www.orderlyze.com/technische-sicherheitseinrichtung): Was die TSE ist, wer sie braucht und ab wann sie gilt.
 - [Datenexport für Steuerberater](https://www.orderlyze.com/datenexport-steuerberater): Export aller relevanten Daten für die Steuerberatung.
 
+## Ratgeber
+
+- [Ratgeber-Übersicht](https://www.orderlyze.com/ratgeber): Kassensystem-Wissen ohne Amtsdeutsch.
+- [Registrierkassenpflicht in Österreich](https://www.orderlyze.com/ratgeber/registrierkassenpflicht-oesterreich): Umsatzgrenzen (15.000 €/7.500 € bar), Belegpflicht und Ausnahmen.
+- [RKSV einfach erklärt](https://www.orderlyze.com/ratgeber/rksv-konforme-registrierkasse): Signatur, Startbeleg, Jahresbeleg und DEP — Pflichten in Österreich.
+- [KassenSichV & TSE (Deutschland)](https://www.orderlyze.com/ratgeber/kassensichv-tse-deutschland): TSE-Pflicht, Bonpflicht und Kassenmeldepflicht über ELSTER.
+- [Registrierkasse für Kleinunternehmer](https://www.orderlyze.com/ratgeber/registrierkasse-kleinunternehmer): Warum die Kleinunternehmerregelung nicht von der Kassenpflicht befreit.
+- [Kassenbuch führen](https://www.orderlyze.com/ratgeber/kassenbuch-fuehren): Wer ein Kassenbuch braucht, Formvorschriften und typische Fehler.
+- [Was kostet ein Kassensystem?](https://www.orderlyze.com/ratgeber/kassensystem-kosten): Alle Kostenbausteine mit Beispielrechnungen.
+
 ## Branchen
 
 - [Gastronomie](https://www.orderlyze.com/gastronomie): Kassensystem für die Gastronomie.
