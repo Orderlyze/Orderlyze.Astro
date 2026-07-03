@@ -43,11 +43,14 @@ export const NAV: NavGroup[] = [
     ],
   },
   { label: 'Preise', href: '/preise' },
+  { label: 'Ratgeber', href: '/ratgeber' },
   { label: 'Kostenlos testen', href: '/testen' },
 ];
 
 export const NAV_EXTRA: NavLink[] = [
   { label: 'Hilfe', href: SITE.helpUrl, external: true },
+  // Login für Bestandskunden (Suchintention „orderlyze login" — GSC: Pos 1, bisher 0 Klicks mangels Link)
+  { label: 'Login', href: 'https://web.orderlyze.com/', external: true },
 ];
 
 export const FOOTER_NAV = {
@@ -73,7 +76,9 @@ export const FOOTER_NAV = {
     { label: 'Finanzamtkonform', href: '/finanzamt-konform' },
     { label: 'Technische Sicherheitseinrichtung', href: '/technische-sicherheitseinrichtung' },
     { label: 'Datenexport für Steuerberater', href: '/datenexport-steuerberater' },
+    { label: 'Kassensystem-Ratgeber', href: '/ratgeber' },
     { label: 'Hilfe & Support', href: SITE.helpUrl, external: true },
+    { label: 'Login – orderlyze web', href: 'https://web.orderlyze.com/', external: true },
   ],
   rechtliches: [
     { label: 'AGB', href: '/agb' },
