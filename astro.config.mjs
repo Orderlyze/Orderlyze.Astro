@@ -22,7 +22,8 @@ export default defineConfig({
       //   kein SEO-Wert.
       // - /angebot-de|-gastro|-google sind Werbe-Landingpages (Google Ads etc.),
       //   kein SEO-Ziel.
-      filter: (page) => !['/dank', '/dank-angebot', '/angebot-de', '/angebot-gastro', '/angebot-google']
+      // - /intern ist die Team-Hilfsseite (plausible_ignore), rein intern.
+      filter: (page) => !['/dank', '/dank-angebot', '/angebot-de', '/angebot-gastro', '/angebot-google', '/intern']
         .includes(new URL(page).pathname),
     }),
   ],

@@ -1,0 +1,112 @@
+---
+/**
+ * /intern — interne Hilfsseite: nimmt das eigene Gerät aus der
+ * Plausible-Statistik (localStorage-Flag `plausible_ignore`, das das
+ * Plausible-Script von Haus aus respektiert). Einmal pro Gerät/Browser
+ * aufrufen. noindex + nicht in Sitemap/Nav.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+
+const meta = {
+  title: 'Interne Seite: Eigenes Tracking deaktivieren | Orderlyze',
+  description: 'Interne Hilfsseite für das Orderlyze-Team.',
+  canonical: 'https://www.orderlyze.com/intern',
+  noindex: true,
+};
+---
+
+<BaseLayout {...meta}>
+  <Section variant="surface">
+    <div class="intern reveal">
+      <h1>Team-Gerät von der Statistik ausnehmen</h1>
+      <p>
+        Damit Tests und eigene Besuche die Web-Statistik nicht verfälschen: Einmal pro Gerät und
+        Browser den Schalter unten aktivieren. Das setzt nur ein lokales Merkzeichen
+        (<code>plausible_ignore</code>) — es werden keine Daten übertragen.
+      </p>
+      <p class="intern__status" id="status" aria-live="polite">Prüfe Status …</p>
+      <div class="intern__actions">
+        <button class="intern__btn" id="toggle" type="button">…</button>
+      </div>
+      <p class="intern__hint">
+        Gilt pro Browser: Wer z. B. mit Chrome <em>und</em> Safari testet, aktiviert es in beiden.
+        Nach dem Löschen von Website-Daten muss es neu gesetzt werden.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script is:inline>
+  const status = document.getElementById('status');
+  const btn = document.getElementById('toggle');
+  function render() {
+    const off = localStorage.getItem('plausible_ignore') === 'true';
+    status.textContent = off
+      ? '✅ Dieses Gerät wird NICHT mitgezählt.'
+      : '📊 Dieses Gerät wird aktuell mitgezählt.';
+    btn.textContent = off ? 'Wieder mitzählen' : 'Dieses Gerät nicht mehr mitzählen';
+  }
+  btn.addEventListener('click', () => {
+    if (localStorage.getItem('plausible_ignore') === 'true') {
+      localStorage.removeItem('plausible_ignore');
+    } else {
+      localStorage.setItem('plausible_ignore', 'true');
+    }
+    render();
+  });
+  render();
+</script>
+
+<style>
+  .intern {
+    max-width: 38rem;
+    margin-inline: auto;
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: clamp(1.8rem, 3vw, 3rem);
+  }
+
+  .intern h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.6em;
+  }
+
+  .intern p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .intern__status {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-navy);
+    margin: 1.4rem 0;
+  }
+
+  .intern__btn {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    background: var(--color-brand);
+    border: 0;
+    border-radius: var(--radius-pill);
+    padding: 0.9rem 1.8rem;
+    cursor: pointer;
+    transition: filter var(--transition);
+  }
+
+  .intern__btn:hover {
+    filter: brightness(1.1);
+  }
+
+  .intern__hint {
+    font-size: 0.85rem;
+    margin-top: 1.4rem;
+  }
+</style>
