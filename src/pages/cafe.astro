@@ -1,6 +1,29 @@
 ---
 import BranchePage from '../components/templates/BranchePage.astro';
 import heroImage from '../assets/branchen/cafe-kassensystem.jpg';
+
+const faqs = [
+  {
+    q: 'Eignet sich Orderlyze auch für ein kleines Café?',
+    a: 'Ja. Orderlyze ist ein App-Kassensystem — du installierst die App auf deinem eigenen Android- oder iOS-Tablet und kannst sofort loslegen, ohne teure Spezial-Hardware. Wie der Einstieg abläuft, zeigt <a href="/so-funktionierts">So funktioniert’s</a>.',
+  },
+  {
+    q: 'Was kostet das Kassensystem fürs Café?',
+    a: 'Das Gastronomie-Paket kostet 49 € pro Monat (exkl. MwSt.) — mit allen Funktionen, kostenlosem Support und Finanzamt-Signatur. Einmalig kommen Aktivierung und optionale Hardware dazu. Details auf der <a href="/preise">Preisseite</a>.',
+  },
+  {
+    q: 'Funktioniert Kartenzahlung auch bei kleinen Beträgen?',
+    a: 'Ja. Orderlyze unterstützt <a href="/kartenzahlung">kontaktloses Bezahlen per NFC</a>, EC, Maestro/V Pay, Mastercard, Visa und Apple Pay — auch für den schnellen Kaffee zwischendurch.',
+  },
+  {
+    q: 'Kann ich im Gastgarten mobil bonieren?',
+    a: 'Ja. Mit <a href="/funkbonieren">Funkbonieren</a> nimmst du Bestellungen per Smartphone auf — sie werden sofort an Theke oder Küche gedruckt, ohne unnötige Wege.',
+  },
+  {
+    q: 'Ab wann brauche ich in Österreich eine Registrierkasse?',
+    a: 'Registrierkassenpflicht besteht ab 15.000 € Jahresumsatz je Betrieb, wenn davon über 7.500 € Barumsätze sind. Alle Details erklärt unser <a href="/ratgeber/registrierkassenpflicht-oesterreich">Ratgeber zur Registrierkassenpflicht</a>.',
+  },
+];
 ---
 
 <BranchePage
@@ -12,4 +35,7 @@ import heroImage from '../assets/branchen/cafe-kassensystem.jpg';
   heroImage={heroImage}
   heroAlt="Barista an der Kaffeemaschine im Café"
   gastro
+  faqs={faqs}
+  faqTitle="Häufige Fragen zum Kassensystem fürs Café"
+  faqMark="Café"
 />

@@ -10,6 +10,7 @@ import Section from '../components/Section.astro';
 import SectionHead from '../components/SectionHead.astro';
 import HardwareBundles from '../components/HardwareBundles.astro';
 import CtaBanner from '../components/CtaBanner.astro';
+import Faq from '../components/Faq.astro';
 
 import staender from '../assets/hardware/tablet-staender.png';
 import kassenladeK2 from '../assets/hardware/kassenlade-k2.png';
@@ -22,6 +23,30 @@ const meta = {
     'Kassen-Hardware für dein Orderlyze-Kassensystem: Bondrucker (Bluetooth & Sunmi), Kassenladen, Tablet-Ständer und All-in-One-Kassengeräte – inkl. Preisen.',
   canonical: 'https://www.orderlyze.com/hardware',
 };
+
+/* FAQ (FAQPage-Schema): Drucker-Queries landen hier (GSC: 'sunmi drucker' Pos ~5) */
+const faqs = [
+  {
+    q: 'Welche Bondrucker funktionieren mit Orderlyze?',
+    a: 'Orderlyze unterstützt Bluetooth-Bondrucker (220 €), Cloud-Drucker (265 €) und die Sunmi-Kassengeräte mit integriertem Drucker. Wie du deinen Drucker verbindest, zeigt Schritt für Schritt unsere <a href="https://hilfe.orderlyze.com/app/drucker/" rel="noopener">Drucker-Anleitung im Hilfe-Center</a>.',
+  },
+  {
+    q: 'Was sind die Sunmi All-in-One-Geräte?',
+    a: 'Kassengeräte, die alles vereinen: Die <strong>Sunmi T2s</strong> (685,90 €) ist eine Standkasse mit integriertem Bondrucker, das <strong>Sunmi P2 Pro</strong> (499 €) ein mobiles Gerät mit Bondrucker und Kartenlesegerät — ideal fürs Bonieren und Kassieren direkt am Tisch.',
+  },
+  {
+    q: 'Kann ich mein eigenes Tablet oder Smartphone verwenden?',
+    a: 'Ja. Orderlyze läuft als App auf allen Android- und iOS-Geräten — du brauchst kein neues Tablet zu kaufen. Die fertigen Pakete sind für alle gedacht, die komplett ausgestattet starten wollen.',
+  },
+  {
+    q: 'Brauche ich überhaupt einen Bondrucker?',
+    a: 'Nicht zwingend: Belege kannst du auch als E-Beleg per QR-Code ausstellen — besonders bei Dienstleistern beliebt. In der Gastronomie sind Bon- und Küchendruck aber meist die praktischere Wahl.',
+  },
+  {
+    q: 'Was kostet die komplette Kassen-Hardware?',
+    a: 'Das Einsteiger-Paket aus Samsung-Tablet und Bluetooth-Bondrucker kostet 425,90 €; größere Pakete mit Ständer und Kassenlade entsprechend mehr. Die laufenden Kosten der Software findest du auf der <a href="/preise">Preisseite</a>, eine Gesamtrechnung im <a href="/ratgeber/kassensystem-kosten">Kosten-Ratgeber</a>.',
+  },
+];
 
 const zubehoer = [
   { img: staender, alt: 'Tablet-Ständer in grau', name: 'Tablet Ständer', preis: '22,90€', detail: '' },
@@ -96,6 +121,8 @@ const allInOne = [
       }
     </div>
   </Section>
+
+  <Faq faqs={faqs} title="Häufige Fragen zur Hardware" mark="Hardware" variant="paper" />
 
   <CtaBanner
     title="Nicht sicher, welche Hardware du brauchst? Hol dir ein kostenloses Angebot!"

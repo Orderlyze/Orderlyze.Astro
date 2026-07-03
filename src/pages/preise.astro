@@ -13,6 +13,7 @@ import HardwareBundles from '../components/HardwareBundles.astro';
 import Checklist from '../components/Checklist.astro';
 import Icon from '../components/Icon.astro';
 import CtaBanner from '../components/CtaBanner.astro';
+import Faq from '../components/Faq.astro';
 
 import staender from '../assets/hardware/tablet-staender.png';
 import kassenladeK2 from '../assets/hardware/kassenlade-k2.png';
@@ -96,6 +97,34 @@ const zubehoer = [
   { img: kassenladeK4, alt: 'Kassenlade K-4', name: 'Kassenlade K-4', detail: '245 × 320 × 105 mm, 3 kg · 3 Münzfächer, 3 Scheinfächer', preis: '69,90€' },
   { img: cloudDrucker, alt: 'Cloud-Bondrucker', name: 'Cloud Drucker', detail: '', preis: '265,00€' },
   { img: kassenladeK2, alt: 'Kassenlade K-2', name: 'Kassenlade K-2', detail: '330 × 101 × 330 mm, 5,2 kg · 8 Münz-, 4 Scheinfächer, 1 Scheckfach', preis: '85,60€' },
+];
+
+/* FAQ (FAQPage-Schema): Fragen entlang echter Suchanfragen „kassensystem preise/kosten" */
+const faqs = [
+  {
+    q: 'Was kostet das Orderlyze Kassensystem pro Monat?',
+    a: 'Die Software kostet je nach Paket 39 € (Dienstleistungen), 49 € (Gastronomie) oder 75 € pro Monat (Gastronomie + mit Küchenkommunikation und unbegrenzt vielen Geräten) — jeweils exkl. MwSt. In jedem Paket sind alle Funktionen, kostenloser Support und die Finanzamt-Signatur enthalten.',
+  },
+  {
+    q: 'Welche einmaligen Kosten kommen dazu?',
+    a: 'Einmalig fallen die Aktivierungsgebühr von 199 € und — je nach Bedarf — die Kosten für Hardware an, etwa Tablet, Bondrucker oder Kassenlade. Alle Geräte und Preise findest du auf der <a href="/hardware">Hardware-Seite</a>.',
+  },
+  {
+    q: 'Gibt es versteckte Kosten oder Gebühren pro Beleg?',
+    a: 'Nein. Es gibt keine Kosten pro Beleg, keine Update-Gebühren und keine Zusatzkosten für Support oder Finanzamt-Signatur — nur den monatlichen Paketpreis und die einmaligen Anschaffungen.',
+  },
+  {
+    q: 'Kann ich mein eigenes Tablet oder Smartphone verwenden?',
+    a: 'Ja. Orderlyze ist ein App-Kassensystem für Android und iOS — du kannst die App auf deinen vorhandenen Geräten installieren und musst keine neue Hardware kaufen.',
+  },
+  {
+    q: 'Ist die Finanzamt-Signatur im Preis enthalten?',
+    a: 'Ja, in allen Paketen. Orderlyze ist zu 100 % <a href="/finanzamt-konform">finanzamtkonform</a>: RKSV in Österreich, KassenSichV inkl. TSE in Deutschland — ohne Aufpreis.',
+  },
+  {
+    q: 'Was kostet das Kassenbuch-Add-on?',
+    a: 'Das integrierte Kassenbuch mit finanzamtkonformer Kassenbuchführung und Daten-Export zur Steuerberatung kostet 13 € pro Monat zusätzlich zum Paket.',
+  },
 ];
 
 const kassenbuchLeistungen = [
@@ -213,6 +242,13 @@ const kassenbuchLeistungen = [
       }
     </div>
   </Section>
+
+  <Faq
+    faqs={faqs}
+    title="Häufige Fragen zu Preisen & Kosten"
+    mark="Preisen & Kosten"
+    variant="paper"
+  />
 
   <CtaBanner
     title="Unsicher, welches Paket passt? Hol dir ein kostenloses Angebot!"

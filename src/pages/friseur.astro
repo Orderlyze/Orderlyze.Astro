@@ -1,6 +1,29 @@
 ---
 import BranchePage from '../components/templates/BranchePage.astro';
 import heroImage from '../assets/branchen/friseur-barbershop-tablet.jpg';
+
+const faqs = [
+  {
+    q: 'Was kostet ein Kassensystem für den Friseursalon?',
+    a: 'Das Paket Dienstleistungen kostet 39 € pro Monat (exkl. MwSt.) — mit allen Funktionen, kostenlosem Support und Finanzamt-Signatur. Einmalig kommen 199 € Aktivierung und optionale Hardware dazu. Details auf der <a href="/preise">Preisseite</a>.',
+  },
+  {
+    q: 'Brauche ich als Friseur eine Registrierkasse?',
+    a: 'In Österreich ja, sobald dein Jahresumsatz 15.000 € übersteigt und davon mehr als 7.500 € bar bezahlt werden. Einen Beleg musst du ab dem ersten Barumsatz ausstellen. Alle Details im <a href="/ratgeber/registrierkassenpflicht-oesterreich">Ratgeber zur Registrierkassenpflicht</a>.',
+  },
+  {
+    q: 'Kann ich Belege digital ausstellen?',
+    a: 'Ja. Deine Kundschaft bekommt den Beleg wahlweise gedruckt oder als E-Beleg per QR-Code direkt aufs Handy — ganz ohne Papier.',
+  },
+  {
+    q: 'Kann ich Gutscheine verkaufen und Stammkunden verwalten?',
+    a: 'Ja. Gutscheine & Rabatte sowie Kundenmanagement sind in jedem Paket enthalten — genau wie die Mitarbeiterverwaltung für dein Team. Mehr auf der <a href="/funktionen">Funktionsseite</a>.',
+  },
+  {
+    q: 'Wie komme ich zu meinen Zahlen für die Steuerberatung?',
+    a: 'Mit wenigen Klicks: Tages-, Monats- und Jahresberichte plus <a href="/datenexport-steuerberater">Exporte für Buchhaltungsprogramme</a> wie DATEV, BMD und RZL.',
+  },
+];
 ---
 
 <BranchePage
@@ -12,4 +35,7 @@ import heroImage from '../assets/branchen/friseur-barbershop-tablet.jpg';
   heroImage={heroImage}
   heroAlt="Friseur bedient das Kassensystem am Tablet im Barbershop"
   gastro={false}
+  faqs={faqs}
+  faqTitle="Häufige Fragen zum Kassensystem für Friseure"
+  faqMark="Friseure"
 />

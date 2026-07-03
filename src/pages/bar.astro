@@ -1,6 +1,29 @@
 ---
 import BranchePage from '../components/templates/BranchePage.astro';
 import heroImage from '../assets/branchen/bar-cocktails.jpg';
+
+const faqs = [
+  {
+    q: 'Wie schnell kann ich in der Bar kassieren?',
+    a: 'Sekundenschnell: Produkte mit zwei Klicks auf die Rechnung, Stornos genauso einfach — gebaut für den Abend mit vollem Tresen. Wie das aussieht, zeigt <a href="/so-funktionierts">So funktioniert’s</a>.',
+  },
+  {
+    q: 'Können mehrere Mitarbeiter gleichzeitig bonieren?',
+    a: 'Ja. Dein Team boniert parallel auf mehreren Smartphones oder Tablets, mit Mitarbeiterverwaltung im System. Im Paket Gastronomie + sind unbegrenzt viele Geräte enthalten — Details auf der <a href="/preise">Preisseite</a>.',
+  },
+  {
+    q: 'Was kostet das Kassensystem für die Bar?',
+    a: 'Das Gastronomie-Paket kostet 49 € pro Monat, Gastronomie + 75 € pro Monat (exkl. MwSt.) — alle Funktionen, Support und Finanzamt-Signatur inklusive, plus einmalige Aktivierung und Hardware nach Bedarf.',
+  },
+  {
+    q: 'Unterstützt Orderlyze Kartenzahlung?',
+    a: 'Ja: <a href="/kartenzahlung">EC, Maestro/V Pay, Mastercard, Visa und Apple Pay</a>, kontaktlos per NFC — schnelleres Abrechnen, weniger Wartezeit am Tresen.',
+  },
+  {
+    q: 'Ist das Kassensystem finanzamtkonform?',
+    a: 'Ja, zu 100 %: <a href="/finanzamt-konform">RKSV-konform</a> in Österreich, KassenSichV- und TSE-konform in Deutschland — die Signatur ist in jedem Paket enthalten.',
+  },
+];
 ---
 
 <BranchePage
@@ -12,4 +35,7 @@ import heroImage from '../assets/branchen/bar-cocktails.jpg';
   heroImage={heroImage}
   heroAlt="Bartender richtet Cocktails an der Bar an"
   gastro
+  faqs={faqs}
+  faqTitle="Häufige Fragen zum Kassensystem für die Bar"
+  faqMark="Bar"
 />

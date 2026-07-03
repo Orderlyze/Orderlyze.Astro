@@ -1,0 +1,125 @@
+---
+/**
+ * FAQ-Sektion mit FAQPage-Schema (SEO/GEO-Hebel A).
+ * Rendert ein Accordion (native <details>) und das zugehörige
+ * FAQPage-JSON-LD direkt in der Sektion (von Google auch im Body gelesen).
+ * Max. 1 FAQ-Sektion pro Seite (Google erlaubt nur ein FAQPage-Markup).
+ * Antworten dürfen einfache HTML-Links enthalten (interne Verlinkung).
+ */
+import Section from './Section.astro';
+import SectionHead from './SectionHead.astro';
+
+export interface FaqItem {
+  q: string;
+  /** Antwort; darf <a href>-Links und <strong> enthalten */
+  a: string;
+}
+
+interface Props {
+  faqs: FaqItem[];
+  title?: string;
+  mark?: string;
+  lead?: string;
+  variant?: 'paper' | 'surface' | 'tint' | 'accent';
+}
+
+const {
+  faqs,
+  title = 'Häufige Fragen',
+  mark = 'Fragen',
+  lead,
+  variant = 'surface',
+} = Astro.props;
+
+/* FAQPage-Schema: Fragen als Klartext, Antworten inkl. Links (von Google erlaubt) */
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Section variant={variant} id="faq">
+  <SectionHead eyebrow="FAQ" title={title} mark={mark} lead={lead} />
+  <div class="faq reveal">
+    {
+      faqs.map((f) => (
+        <details class="faq__item">
+          <summary class="faq__question">
+            {f.q}
+            <span class="faq__chevron" aria-hidden="true" />
+          </summary>
+          <div class="faq__answer" set:html={f.a} />
+        </details>
+      ))
+    }
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
+</Section>
+
+<style>
+  .faq {
+    max-width: 46rem;
+    margin-inline: auto;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .faq__item {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--transition);
+  }
+
+  .faq__item[open],
+  .faq__item:hover {
+    border-color: var(--color-brand);
+  }
+
+  .faq__question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    list-style: none;
+    padding: 1.1rem 1.4rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__chevron {
+    flex-shrink: 0;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-right: 2px solid var(--color-brand);
+    border-bottom: 2px solid var(--color-brand);
+    transform: rotate(45deg);
+    transition: transform var(--transition);
+  }
+
+  .faq__item[open] .faq__chevron {
+    transform: rotate(225deg);
+  }
+
+  .faq__answer {
+    padding: 0 1.4rem 1.2rem;
+    color: var(--color-text);
+    line-height: 1.7;
+  }
+
+  .faq__answer :global(a) {
+    color: var(--color-brand);
+  }
+</style>

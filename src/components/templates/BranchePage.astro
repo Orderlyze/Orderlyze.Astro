@@ -14,6 +14,8 @@ import Checklist from '../Checklist.astro';
 import Icon from '../Icon.astro';
 import CtaBanner from '../CtaBanner.astro';
 import DeviceMockup from '../DeviceMockup.astro';
+import Faq from '../Faq.astro';
+import type { FaqItem } from '../Faq.astro';
 import { EVENTS } from '../../config/site';
 
 import kassierenTablet from '../../assets/screenshots/kassieren-rechnung-tablet.png';
@@ -33,9 +35,15 @@ interface Props {
   heroAlt: string;
   /** Gastro-Variante (Funkbonieren-Sektion + Gastro-Claim) */
   gastro: boolean;
+  /** Branchenspezifische FAQ (rendert Sektion + FAQPage-Schema) */
+  faqs?: FaqItem[];
+  /** FAQ-Überschrift, z. B. "Häufige Fragen zum Kassensystem fürs Restaurant" */
+  faqTitle?: string;
+  faqMark?: string;
 }
 
-const { h1, h1Mark, title, description, canonical, heroImage, heroAlt, gastro } = Astro.props;
+const { h1, h1Mark, title, description, canonical, heroImage, heroAlt, gastro, faqs, faqTitle, faqMark } =
+  Astro.props;
 
 const parts = h1.includes(h1Mark) ? h1.split(h1Mark) : null;
 
@@ -218,6 +226,8 @@ const kassierenText = gastro
       </Section>
     )
   }
+
+  {faqs && faqs.length > 0 && <Faq faqs={faqs} title={faqTitle} mark={faqMark} variant="paper" />}
 
   <CtaBanner title="Interessiert? Dann hol dir ein unverbindliches Angebot!" mark="unverbindliches" />
 </BaseLayout>

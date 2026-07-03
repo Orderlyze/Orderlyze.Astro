@@ -1,6 +1,29 @@
 ---
 import BranchePage from '../components/templates/BranchePage.astro';
 import heroImage from '../assets/branchen/restaurant-gaeste.jpg';
+
+const faqs = [
+  {
+    q: 'Was kostet ein Kassensystem fürs Restaurant?',
+    a: 'Das Gastronomie-Paket kostet 49 € pro Monat, Gastronomie + mit Küchenkommunikation und unbegrenzt vielen Geräten 75 € pro Monat (exkl. MwSt.) — alle Funktionen, Support und Finanzamt-Signatur inklusive. Dazu kommen einmalig die Aktivierung und die Hardware. Alle Details auf der <a href="/preise">Preisseite</a>.',
+  },
+  {
+    q: 'Kann mein Serviceteam direkt am Tisch bonieren?',
+    a: 'Ja. Mit <a href="/funkbonieren">Funkbonieren</a> nimmt dein Team Bestellungen per Smartphone oder All-in-One-Gerät auf — mit einem Fingertipp werden sie sofort bei Bar und Küche gedruckt. Das spart Wege und steigert den Umsatz.',
+  },
+  {
+    q: 'Gibt es Tischplan und Gängesystem?',
+    a: 'Ja. Orderlyze bietet Tischplan, Gängesystem, Bewirtungsbeleg und Stornobuchungen — alles, was der Restaurant-Alltag braucht. Einen Überblick gibt die <a href="/funktionen">Funktionsseite</a>.',
+  },
+  {
+    q: 'Welche Hardware brauche ich im Restaurant?',
+    a: 'Ein Tablet oder Smartphone (Android oder iOS — auch dein eigenes Gerät funktioniert), dazu je nach Bedarf Bondrucker und Kassenlade. Die Geräte findest du auf der <a href="/hardware">Hardware-Seite</a>.',
+  },
+  {
+    q: 'Ist das Kassensystem finanzamtkonform?',
+    a: 'Ja, zu 100 %: <a href="/finanzamt-konform">RKSV-konform</a> in Österreich, KassenSichV- und TSE-konform in Deutschland. Die Finanzamt-Signatur ist in jedem Paket enthalten.',
+  },
+];
 ---
 
 <BranchePage
@@ -12,4 +35,7 @@ import heroImage from '../assets/branchen/restaurant-gaeste.jpg';
   heroImage={heroImage}
   heroAlt="Servicekraft mit Tablet im gut besuchten Restaurant"
   gastro
+  faqs={faqs}
+  faqTitle="Häufige Fragen zum Kassensystem fürs Restaurant"
+  faqMark="Restaurant"
 />

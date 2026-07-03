@@ -1,6 +1,29 @@
 ---
 import BranchePage from '../components/templates/BranchePage.astro';
 import heroImage from '../assets/branchen/friseurin-salon.jpg';
+
+const faqs = [
+  {
+    q: 'Was kostet ein Kassensystem fürs Kosmetikstudio?',
+    a: 'Das Paket Dienstleistungen kostet 39 € pro Monat (exkl. MwSt.) — alle Funktionen, kostenloser Support und Finanzamt-Signatur inklusive. Einmalig kommen 199 € Aktivierung und optionale Hardware dazu. Details auf der <a href="/preise">Preisseite</a>.',
+  },
+  {
+    q: 'Kann ich mein eigenes Tablet oder Handy verwenden?',
+    a: 'Ja. Orderlyze ist ein App-Kassensystem für Android und iOS — du installierst die App auf deinem vorhandenen Gerät und richtest dein Studio in kurzer Zeit selbst ein.',
+  },
+  {
+    q: 'Kann ich Gutscheine und Stammkundschaft verwalten?',
+    a: 'Ja. Gutscheine & Rabatte und das Kundenmanagement sind in jedem Paket enthalten — ideal für Treue-Aktionen im Studio. Mehr auf der <a href="/funktionen">Funktionsseite</a>.',
+  },
+  {
+    q: 'Ab wann brauche ich eine Registrierkasse?',
+    a: 'In Österreich ab 15.000 € Jahresumsatz, wenn davon über 7.500 € bar bezahlt werden — ein Beleg ist ab dem ersten Barumsatz Pflicht. Alle Details im <a href="/ratgeber/registrierkassenpflicht-oesterreich">Ratgeber zur Registrierkassenpflicht</a>.',
+  },
+  {
+    q: 'Unterstützt Orderlyze Kartenzahlung?',
+    a: 'Ja: <a href="/kartenzahlung">EC, Maestro/V Pay, Mastercard, Visa und Apple Pay</a>, kontaktlos per NFC — deine Kundschaft zahlt, wie sie möchte.',
+  },
+];
 ---
 
 <BranchePage
@@ -12,4 +35,7 @@ import heroImage from '../assets/branchen/friseurin-salon.jpg';
   heroImage={heroImage}
   heroAlt="Stylistin mit Werkzeugen im Beauty-Salon"
   gastro={false}
+  faqs={faqs}
+  faqTitle="Häufige Fragen zum Kassensystem fürs Beauty-Studio"
+  faqMark="Beauty-Studio"
 />

@@ -16,6 +16,7 @@ import Icon from '../components/Icon.astro';
 import ReceiptCard from '../components/ReceiptCard.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 import DeviceMockup from '../components/DeviceMockup.astro';
+import Faq from '../components/Faq.astro';
 import { EVENTS } from '../config/site';
 
 import bezahlungTheke from '../assets/branchen/cafe-bezahlung-theke.jpg';
@@ -50,6 +51,34 @@ const fuerDienstleistung = [
   { icon: 'settings', title: 'Verwaltung von Produkten & Leistungen' },
   { icon: 'export', title: 'Datenexporte für Steuerberater' },
 ] as const;
+
+/* FAQ (FAQPage-Schema): typische Fragen vor der Kassensystem-Entscheidung */
+const faqs = [
+  {
+    q: 'Welche Funktionen sind im Orderlyze Kassensystem enthalten?',
+    a: 'Alle — in jedem Paket: Rechnungen erstellen und bearbeiten, Kartenzahlung, E-Beleg per QR-Code, Gutscheine & Rabatte, Stornobuchungen, Kunden- und Mitarbeiterverwaltung sowie Datenexporte für die Steuerberatung. Es gibt keine abgespeckten Einstiegspakete, die Pakete unterscheiden sich nur nach Branche. Details auf der <a href="/preise">Preisseite</a>.',
+  },
+  {
+    q: 'Welche Gastro-Funktionen bietet Orderlyze?',
+    a: 'Für die Gastronomie gibt es <a href="/funkbonieren">Funkbonieren</a> direkt am Tisch, Tischplan, Gängesystem, Bewirtungsbeleg und Küchenkommunikation (im Paket Gastronomie +) — Bestellungen werden mit einem Fingertipp an Bar und Küche gedruckt.',
+  },
+  {
+    q: 'Kann ich mit Orderlyze Kartenzahlungen annehmen?',
+    a: 'Ja. Das Kassensystem unterstützt <a href="/kartenzahlung">Kartenzahlung</a> mit EC, Maestro/V Pay, Mastercard und Visa sowie Apple Pay und kontaktloses Bezahlen per NFC.',
+  },
+  {
+    q: 'Gibt es Berichte und Exporte für die Steuerberatung?',
+    a: 'Ja: Tages-, Monats- und Jahresberichte, Produktberichte und Berichte nach Zahlungsart — inklusive <a href="/datenexport-steuerberater">Exporten für Buchhaltungsprogramme</a> wie DATEV, BMD und RZL.',
+  },
+  {
+    q: 'Auf welchen Geräten läuft das Kassensystem?',
+    a: 'Orderlyze ist ein App-Kassensystem für Android- und iOS-Smartphones und -Tablets. Die Verwaltung läuft zusätzlich im Browser (orderlyze web) — von jedem Gerät aus. Wie der Einstieg abläuft, zeigt <a href="/so-funktionierts">So funktioniert’s</a>.',
+  },
+  {
+    q: 'Ist das Kassensystem finanzamtkonform?',
+    a: 'Ja, zu 100 %: <a href="/finanzamt-konform">RKSV-konform</a> in Österreich, KassenSichV- und TSE-konform in Deutschland — die Finanzamt-Signatur ist in jedem Paket enthalten.',
+  },
+];
 ---
 
 <BaseLayout {...meta}>
@@ -242,6 +271,13 @@ const fuerDienstleistung = [
       <Button href="/angebot" event={EVENTS.ctaAngebot}>Hol dir auch ein Angebot</Button>
     </p>
   </Section>
+
+  <Faq
+    faqs={faqs}
+    title="Häufige Fragen zu den Funktionen"
+    mark="Funktionen"
+    variant="surface"
+  />
 
   <CtaBanner title="Interessiert? Dann hol dir ein unverbindliches Angebot" mark="unverbindliches" />
 </BaseLayout>
