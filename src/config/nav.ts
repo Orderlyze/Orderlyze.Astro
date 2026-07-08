@@ -44,7 +44,7 @@ export const NAV: NavGroup[] = [
   },
   { label: 'Preise', href: '/preise' },
   { label: 'Ratgeber', href: '/ratgeber' },
-  { label: 'Kostenlos testen', href: '/testen' },
+  { label: 'Testen', href: '/testen' },
 ];
 
 export const NAV_EXTRA: NavLink[] = [
