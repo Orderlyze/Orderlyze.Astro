@@ -1,46 +1,83 @@
-Informationspflicht laut &sect;5 E-Commerce Gesetz, &sect;14 Unternehmensgesetzbuch, &sect;63 Gewerbeordnung und Offenlegungspflicht laut &sect;25 Mediengesetz.
+## Angaben gemäß § 5 ECG, § 14 UGB, § 25 MedienG und § 5 DDG
+
+Medieninhaberin, Diensteanbieterin und Anbieterin dieser Website:
 
 Orderlyze GmbH
+
 Oberer Stadtplatz 9/2
+
 4710 Grieskirchen
+
 Österreich
 
-Unternehmensgegenstand: Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnologie
-UID-Nummer: ATU80336806
+Telefon: 0800 400 4511
 
-Tel.: 0800 400 4511
 E-Mail: office@orderlyze.com
 
-Mitglied bei: WKO
-Berufsrecht: Gewerbeordnung: www.ris.bka.gv.at
+Website: https://www.orderlyze.com
+
+## Unternehmensdaten
+
+Rechtsform: Gesellschaft mit beschränkter Haftung
+
+Sitz: Grieskirchen, Österreich
+
+Firmenbuchnummer: FN 619950t
+
+Firmenbuchgericht: Landesgericht Wels
+
+UID-Nummer: ATU80336806
+
+Geschäftszweig: IT-Dienstleistungen
+
+Geschäftsführer: Simon Söllinger, Elias Roitinger
+
+Gesellschafter: Daniel Hufnagl, Simon Söllinger, Elias Roitinger
+
+## Gewerbe und Berufsrecht
+
+Gewerbe: Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnologie
+
+Mitgliedschaft: Wirtschaftskammer Österreich (WKO)
 
 Aufsichtsbehörde/Gewerbebehörde: Bezirkshauptmannschaft Grieskirchen
-Berufsbezeichnung: Softwareentwickler, Kassensystemhersteller
-Verleihungsstaat: Österreich
 
-## EU-Streitschlichtung
+Anwendbare berufsrechtliche Vorschriften: Gewerbeordnung 1994, abrufbar unter https://www.ris.bka.gv.at/
 
-Gemäß Verordnung über Online-Streitbeilegung in Verbraucherangelegenheiten (ODR-Verordnung) möchten wir Sie über die Online-Streitbeilegungsplattform (OS-Plattform) informieren.
-Verbraucher haben die Möglichkeit, Beschwerden an die Online Streitbeilegungsplattform der Europäischen Kommission unter http://ec.europa.eu/odr?tid=221119213 zu richten. Die dafür notwendigen Kontaktdaten finden Sie oberhalb in unserem Impressum.
+## Verantwortlich für den Inhalt
 
-Wir möchten Sie jedoch darauf hinweisen, dass wir nicht bereit oder verpflichtet sind, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+Verantwortlich für den Inhalt dieser Website ist die Orderlyze GmbH, Oberer Stadtplatz 9/2, 4710 Grieskirchen, Österreich.
 
-## Haftung für Inhalte dieser Webseite
+Inhaltlich verantwortlich im Sinne des § 18 Abs. 2 MStV, soweit anwendbar: Simon Söllinger, Anschrift wie oben.
 
-Wir entwickeln die Inhalte dieser Webseite ständig weiter und bemühen uns korrekte und aktuelle Informationen bereitzustellen. Leider können wir keine Haftung für die Korrektheit aller Inhalte auf dieser Webseite übernehmen, speziell für jene die seitens Dritter bereitgestellt wurden.
+## Ausrichtung der Website
 
-Sollten Ihnen problematische oder rechtswidrige Inhalte auffallen, bitten wir Sie uns umgehend zu kontaktieren, Sie finden die Kontaktdaten im Impressum.
+Diese Website informiert über Produkte und Dienstleistungen der Orderlyze GmbH, insbesondere Kassensysteme, Registrierkassen, Bestellsysteme, Hardware und ergänzende Leistungen für Unternehmen in Österreich und Deutschland.
 
-## Haftung für Links auf dieser Webseite
+## Verbraucherstreitbeilegung
 
-Unsere Webseite enthält Links zu anderen Webseiten für deren Inhalt wir nicht verantwortlich sind. Haftung für verlinkte Websites besteht laut &sect; 17 ECG für uns nicht, da wir keine Kenntnis rechtswidriger Tätigkeiten hatten und haben, uns solche Rechtswidrigkeiten auch bisher nicht aufgefallen sind und wir Links sofort entfernen würden, wenn uns Rechtswidrigkeiten bekannt werden.
+Die Europäische Online-Streitbeilegungsplattform (OS-/ODR-Plattform) wurde von der Europäischen Kommission mit 20.07.2025 eingestellt. Beschwerden können daher nicht mehr über diese Plattform eingebracht werden.
 
-Wenn Ihnen rechtswidrige Links auf unserer Website auffallen, bitten wir Sie uns zu kontaktieren, Sie finden die Kontaktdaten im Impressum.
+Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
 
-## Urheberrechtshinweis
+## Haftung für eigene Inhalte
 
-Alle Inhalte dieser Webseite (Bilder, Fotos, Texte, Videos) unterliegen dem Urheberrecht. Falls notwendig, werden wir die unerlaubte Nutzung von Teilen der Inhalte unserer Seite rechtlich verfolgen.
+Wir erstellen die Inhalte dieser Website mit Sorgfalt. Trotzdem können wir keine Gewähr dafür übernehmen, dass alle Informationen jederzeit vollständig, richtig und aktuell sind. Gesetzliche Haftungstatbestände bleiben unberührt.
 
-## Bildernachweis
+## Links zu externen Websites
 
-Die Bilder, Fotos und Grafiken auf dieser Webseite sind urheberrechtlich geschützt.
+Diese Website kann Links zu externen Websites enthalten. Für deren Inhalte sind ausschließlich die jeweiligen Betreiber verantwortlich. Wenn uns rechtswidrige Inhalte auf verlinkten Seiten bekannt werden, entfernen wir die betroffenen Links unverzüglich.
+
+## Urheberrecht
+
+Die auf dieser Website veröffentlichten Inhalte, Bilder, Grafiken und sonstigen Materialien sind urheberrechtlich geschützt, soweit sie nicht ausdrücklich anders gekennzeichnet sind. Jede Nutzung außerhalb der gesetzlichen Grenzen des Urheberrechts bedarf der vorherigen Zustimmung der jeweiligen Rechteinhaber.
+
+## Quellen
+
+Dieses Impressum wurde eigenständig für die Orderlyze-Website erstellt. Verwendete rechtliche und registerbezogene Grundlagen:
+
+- Firmenbuchdaten der Orderlyze GmbH über evi.gv.at: https://www.evi.gv.at/f/619950t
+- Firmenbuchnummer und UID über FirmenABC/Creditreform: https://www.firmenabc.at/orderlyze-gmbh_BBHGl
+- E-Commerce-Gesetz, Unternehmensgesetzbuch, Gewerbeordnung und Mediengesetz über RIS: https://www.ris.bka.gv.at/
+- Digitale-Dienste-Gesetz (Deutschland), insbesondere § 5 DDG: https://www.gesetze-im-internet.de/ddg/
+- Hinweis der Europäischen Kommission zur eingestellten ODR-Plattform: https://consumer-redress.ec.europa.eu/site-relocation_en
