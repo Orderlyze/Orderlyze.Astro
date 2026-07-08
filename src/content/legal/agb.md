@@ -1,6 +1,6 @@
 ## 1. Allgemeines
 
-1.1 Für den Geschäftsverkehr von Orderlyze GmbH, Inhaber Simon Söllinger, Oberer Stadtplatz 9/2, A-4710 Grieskirchen, (im Folgenden "wir", oder "uns") gelten ausschließlich die nachstehenden Allgemeinen Geschäftsbedingungen (im Folgenden "AGB"). Unser Vertragspartner wird nachfolgend "Vertragspartner" genannt. Die AGB sind verbindlich für den gesamten gegenwärtigen und zukünftigen Geschäftsverkehr mit uns, auch wenn darauf nicht ausdrücklich Bezug genommen wird.
+1.1 Für den Geschäftsverkehr der Orderlyze GmbH, Oberer Stadtplatz 9/2, A-4710 Grieskirchen, Firmenbuchnummer FN 619950t, Firmenbuchgericht Landesgericht Wels, UID-Nummer ATU80336806, vertreten durch die Geschäftsführer Simon Söllinger und Elias Roitinger, (im Folgenden "wir", oder "uns") gelten ausschließlich die nachstehenden Allgemeinen Geschäftsbedingungen (im Folgenden "AGB"). Unser Vertragspartner wird nachfolgend "Vertragspartner" genannt. Die AGB sind verbindlich für den gesamten gegenwärtigen und zukünftigen Geschäftsverkehr mit uns, auch wenn darauf nicht ausdrücklich Bezug genommen wird.
 
 1.2 Von diesen AGB abweichende oder ergänzende Regelungen, insbesondere Allgemeine Geschäftsbedingungen des Vertragspartners, werden nur dann Vertragsbestandteil, wenn dies von uns ausdrücklich schriftlich bestätigt wurde.
 
@@ -430,9 +430,9 @@ Hinweise zum Datenschutz finden Sie in unserer separaten Datenschutzerklärung u
 
 22.1 Dieser Vertrag unterliegt dem österreichischen Recht unter Ausschluss der Verweisungsnormen des Internationalen Privatrechts und des UN-Kaufrechts (CISG).
 
-22.2 Erfüllungsort der Leistungen ist Laakirchen.
+22.2 Erfüllungsort der Leistungen ist Grieskirchen.
 
-22.3 Für sämtliche gegenwärtigen und zukünftigen Ansprüche aus oder im Zusammenhang mit diesem Vertrag ist ausschließlicher Gerichtsstand A-4810 Gmunden.
+22.3 Für sämtliche gegenwärtigen und zukünftigen Ansprüche aus oder im Zusammenhang mit diesem Vertrag ist, soweit gesetzlich zulässig, ausschließlicher Gerichtsstand das sachlich zuständige Gericht für A-4710 Grieskirchen.
 
 ## 23 Salvatorische Klausel
 
