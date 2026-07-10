@@ -13,17 +13,41 @@ import Checklist from '../components/Checklist.astro';
 import Icon from '../components/Icon.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 import DeviceMockup from '../components/DeviceMockup.astro';
+import Faq from '../components/Faq.astro';
 import { EVENTS } from '../config/site';
 
 import kueche from '../assets/screenshots/kommunikation-kueche-funkbonieren.png';
 import sunmiV2 from '../assets/hardware/sunmi-v2-pro-mobiles-kassengeraet.png';
 
 const meta = {
-  title: 'Funkboniersystem – mobil am Tisch bonieren | Orderlyze',
+  title: 'Funkboniersystem für Gastronomie | Orderlyze',
   description:
-    'Mehr Erfolg mit Funkbonieren: Bestellungen per Smartphone aufnehmen und sofort in Küche und Bar drucken. Umsatz steigern, Wartezeiten und Personalkosten senken.',
+    'Mobiles Funkboniersystem für Restaurants, Cafés und Bars: Bestellungen am Tisch aufnehmen und direkt an Küche oder Bar übermitteln.',
   canonical: 'https://www.orderlyze.com/funkbonieren',
 };
+
+const faqs = [
+  {
+    q: 'Was ist ein Funkboniersystem?',
+    a: 'Ein Funkboniersystem übermittelt Bestellungen vom mobilen Gerät des Servicepersonals direkt an Kasse, Küche oder Bar. Die Bestellung muss dadurch nicht noch einmal vom Kellnerblock in die Kasse übertragen werden.',
+  },
+  {
+    q: 'Welche Geräte kann ich zum mobilen Bonieren verwenden?',
+    a: 'Orderlyze läuft auf Android- und iOS-Smartphones und Tablets. Zusätzlich können kompatible All-in-One-Geräte mit integriertem Drucker und Kartenleser eingesetzt werden.',
+  },
+  {
+    q: 'Können Bestellungen gleichzeitig an Küche und Bar gesendet werden?',
+    a: 'Ja. Du legst fest, an welchem Drucker eine Produktgruppe ausgegeben wird. Getränke können beispielsweise an der Bar und Speisen am Küchendrucker ankommen.',
+  },
+  {
+    q: 'Ist ein Tischplan im Funkboniersystem enthalten?',
+    a: 'Ja. Mit dem digitalen Tischplan ordnest du Bestellungen einem Tisch zu und behältst offene Rechnungen im Blick. Details findest du im <a href="https://hilfe.orderlyze.com/funktionen/tischplan/">Hilfe-Center zum Tischplan</a>.',
+  },
+  {
+    q: 'Was kostet Funkbonieren mit Orderlyze?',
+    a: 'Das Paket Gastronomie + kostet 75 € pro Monat exkl. MwSt. und enthält Küchenkommunikation sowie unbegrenzt viele Geräte. Einmalig fallen 199 € für die Aktivierung an; benötigte Hardware kommt je nach Ausstattung hinzu. Alle Details stehen auf der <a href="/preise">Preisseite</a>.',
+  },
+];
 
 /* Funk-Netzwerk-Diagramm: Geräte der alten Seite */
 const geraete = [
@@ -41,21 +65,19 @@ const geraete = [
   <!-- ── Kopf ── -->
   <section class="page-hero">
     <div class="container page-hero__inner reveal">
-      <h1>Funkbonieren</h1>
+      <h1>Funkboniersystem für die Gastronomie</h1>
       <p class="page-hero__lead">
-        Mehr <span class="mark">Erfolg</span> mit Funkbonieren
+        Bestellungen <span class="mark">mobil am Tisch</span> aufnehmen
       </p>
       <p class="page-hero__text">
-        Damit dein Unternehmen gut läuft, ist es wichtig, dass alles beim Bedienen der Gäste und in
-        der Küche reibungslos funktioniert. Wenn alles schnell und einfach geht, sind die Gäste
-        glücklicher und kommen gerne wieder. Eine Gastronomie, die gut läuft, spart Zeit und Geld
-        und macht mehr Gewinn.
+        Dein Service nimmt Bestellungen per Smartphone, Tablet oder All-in-One-Gerät auf. Orderlyze
+        übermittelt sie direkt an die Kasse und an die zugewiesenen Drucker in Küche oder Bar.
       </p>
       <ul class="page-hero__benefits">
-        <li><Icon name="clock" size={18} /> Mehr Zeit</li>
-        <li><Icon name="chart" size={18} /> Höherer Umsatz</li>
-        <li><Icon name="euro" size={18} /> Geringere Kosten</li>
-        <li><Icon name="users" size={18} /> Zufriedene KundInnen</li>
+        <li><Icon name="phone" size={18} /> Mobil bonieren</li>
+        <li><Icon name="printer" size={18} /> Küche &amp; Bar ansteuern</li>
+        <li><Icon name="devices" size={18} /> Android &amp; iOS</li>
+        <li><Icon name="receipt" size={18} /> Tischrechnungen verwalten</li>
       </ul>
       <Button href="/angebot" size="lg" event={EVENTS.ctaAngebot}>Angebot anfordern</Button>
     </div>
@@ -66,11 +88,10 @@ const geraete = [
     <FeatureSplit eyebrow="Grundlagen" title="Was ist Funkbonieren?" mark="Funkbonieren">
       <Fragment slot="text">
         <p>
-          Stift und Kellnerblock gehören der Vergangenheit an. Heute nimmst du die Bestellungen
-          ganz einfach per Smartphone oder All-In-One Gerät (integrierter Drucker &amp;
-          Kartenzahlung) auf. Mit einem Fingertipp werden die Bestellungen des Tisches sofort bei
-          der Bar und in der Küche gedruckt. So können viele Wege vermieden, Zeit gespart und der
-          Umsatz gesteigert werden.
+          Beim Funkbonieren erfasst das Servicepersonal die Bestellung direkt am Tisch. Produkte,
+          Mengen, Gänge und Hinweise werden digital gespeichert und ohne erneutes Abtippen an die
+          zuständige Station übermittelt. Getränke landen am Bardrucker, Speisen in der Küche und
+          die offene Rechnung bleibt dem richtigen Tisch zugeordnet.
         </p>
       </Fragment>
       <Fragment slot="actions">
@@ -88,6 +109,22 @@ const geraete = [
         ></video>
       </DeviceMockup>
     </FeatureSplit>
+  </Section>
+
+  <!-- ── Paket & Kosten ── -->
+  <Section variant="paper">
+    <div class="preis-info reveal">
+      <div>
+        <p class="preis-info__eyebrow">Paket Gastronomie +</p>
+        <h2>Funkbonieren ab 75 € pro Monat</h2>
+        <p>
+          Enthalten sind Küchenkommunikation, Tischplan, alle Orderlyze-Funktionen und unbegrenzt
+          viele Geräte. Die Preise verstehen sich exkl. MwSt.; Aktivierung und benötigte Hardware
+          werden separat berechnet.
+        </p>
+      </div>
+      <Button href="/preise" variant="secondary">Alle Preise ansehen</Button>
+    </div>
   </Section>
 
   <!-- ── Geräte-Netzwerk ── -->
@@ -117,34 +154,30 @@ const geraete = [
   <Section variant="surface">
     <div class="stats">
       <article class="stat reveal">
-        <p class="stat__nr">+20<span>%</span></p>
-        <h2 class="stat__title">Umsatz um bis zu 20% steigern</h2>
+        <p class="stat__nr"><Icon name="bolt" size={40} /></p>
+        <h2 class="stat__title">Mehr Bestellungen direkt am Tisch aufnehmen</h2>
         <p class="stat__text">
-          Mobiles Bonieren hilft dabei, schnelleren Service für Gäste, zufriedenere Mitarbeiter und
-          einen erfolgreichen Betrieb für Gastronomen zu erreichen. Durch die reduzierten
-          Wartezeiten kannst du schneller Tische wechseln und mehr Umsatz in Stoßzeiten erzielen.
-          Deine Mitarbeiter haben dadurch mehr Zeit für die Gästebewirtung und steigern das
-          Serviceerlebnis, was wiederum zu höheren Bestellungen führt.
+          Bestellungen werden direkt während des Gesprächs erfasst und an die richtige Station
+          geschickt. Das erspart den Zwischenschritt über einen handschriftlichen Kellnerblock und
+          reduziert Rückfragen zwischen Service, Küche und Bar.
         </p>
       </article>
       <article class="stat reveal">
         <p class="stat__nr"><Icon name="star" size={40} /></p>
         <h2 class="stat__title">Bester Service für deine Gäste</h2>
         <p class="stat__text">
-          Erhöhe die Zufriedenheit deiner Gäste mit Orderlyze. Durch die mobile Bestellaufnahme
-          werden lange Wartezeiten und Laufwege vermieden, wodurch deine Gäste schneller und
-          effizienter bedient werden. Nie wieder vergebliches Warten oder falsch ausgelieferte
-          Bestellungen!
+          Servicekräfte sehen offene Tische und Rechnungen auf ihrem Gerät. Ergänzungen und
+          Sonderwünsche werden gemeinsam mit der Bestellung übertragen, damit Küche und Bar die
+          benötigten Informationen direkt erhalten.
         </p>
       </article>
       <article class="stat reveal">
-        <p class="stat__nr">−50<span>%</span></p>
-        <h2 class="stat__title">Personalkosten um 50% senken</h2>
+        <p class="stat__nr"><Icon name="clock" size={40} /></p>
+        <h2 class="stat__title">Laufwege und manuelle Arbeit reduzieren</h2>
         <p class="stat__text">
-          Mit dem Funkboniersystem kannst du dank besserer Arbeitsteilung des Personals Geld
-          sparen. Mobiles Bonieren ermöglicht es, erfahrene Servicekräfte direkt am Gast arbeiten
-          zu lassen, während Einsteiger als Runner agieren. Das führt zu besserem Service und
-          glücklicheren Gästen sowie höherer Auslastung der Tische und Umsatzsteigerungen.
+          Weil Bestellungen vom Tisch aus übermittelt werden, entfallen zusätzliche Wege zur
+          Standkasse. Runner können fertige Bestellungen ausgeben, während das Servicepersonal die
+          nächsten Tische betreut.
         </p>
       </article>
     </div>
@@ -156,9 +189,9 @@ const geraete = [
   <!-- ── Einrichtung ── -->
   <Section variant="paper">
     <FeatureSplit
-      eyebrow="Wenige Minuten Einarbeitungszeit"
-      title="Funkbonieren super schnell einrichten"
-      mark="super schnell"
+      eyebrow="Einrichtung"
+      title="Funkbonieren Schritt für Schritt einrichten"
+      mark="Schritt für Schritt"
       reverse
     >
       <Fragment slot="text">
@@ -179,9 +212,16 @@ const geraete = [
     </FeatureSplit>
   </Section>
 
+  <Faq
+    faqs={faqs}
+    title="Häufige Fragen zum Funkboniersystem"
+    mark="Funkboniersystem"
+    variant="surface"
+  />
+
   <CtaBanner
-    title="Bringe dein Unternehmen mit Funkbonieren auf das nächste Level!"
-    mark="nächste Level"
+    title="Funkboniersystem passend zu deinem Betrieb zusammenstellen"
+    mark="deinem Betrieb"
     buttonLabel="Angebot anfordern"
   />
 </BaseLayout>
@@ -239,6 +279,36 @@ const geraete = [
 
   .page-hero__benefits :global(svg) {
     color: var(--color-brand);
+  }
+
+  .preis-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .preis-info h2 {
+    margin-bottom: 0.4em;
+  }
+
+  .preis-info p:last-child {
+    max-width: 48rem;
+    margin-bottom: 0;
+  }
+
+  .preis-info__eyebrow {
+    color: var(--color-brand);
+    font-family: var(--font-heading);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
   }
 
   /* ── Funk-Netzwerk ── */
@@ -343,6 +413,11 @@ const geraete = [
   @media (max-width: 900px) {
     .stats {
       grid-template-columns: 1fr;
+    }
+
+    .preis-info {
+      align-items: flex-start;
+      flex-direction: column;
     }
   }
 </style>

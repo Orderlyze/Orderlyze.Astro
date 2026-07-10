@@ -1,10 +1,10 @@
 ---
-title: 'KassenSichV & TSE einfach erklärt: Pflichten in Deutschland | Orderlyze'
+title: 'KassenSichV & TSE: Pflichten in Deutschland | Orderlyze'
 description: 'KassenSichV, TSE, Bonpflicht und Kassenmeldepflicht: Was für Kassensysteme in Deutschland gilt, welche Fristen laufen und was dein Kassensystem davon übernimmt.'
 h1: 'KassenSichV & TSE einfach erklärt: Das gilt für Kassen in Deutschland'
 teaser: 'TSE-Pflicht, Bonpflicht, Kassenmeldung über ELSTER: die deutschen Kassen-Regeln im Überblick — und was davon automatisch läuft.'
 datePublished: '2026-07-03'
-dateModified: '2026-07-03'
+dateModified: '2026-07-10'
 order: 4
 ---
 
@@ -52,5 +52,11 @@ Kassendaten und Belege müssen während der gesamten Aufbewahrungsfrist lesbar u
 | Aufbewahrung 8–10 Jahre | laufend | Kassensystem + Ablage |
 
 Der Großteil hängt also an der Kasse selbst. Mit einem konformen System bleibt für dich im Alltag fast nichts übrig — und genau so sollte es sein. Übrigens: Für Österreich gelten eigene Regeln, die [RKSV erklären wir hier](/ratgeber/rksv-konforme-registrierkasse).
+
+## Offizielle Quellen
+
+- [Bundesfinanzministerium: FAQ zum Kassengesetz, TSE und zur Belegausgabe](https://www.bundesfinanzministerium.de/Content/DE/FAQ/FAQ-steuergerechtigkeit-belegpflicht.html)
+- [Kassensicherungsverordnung in der geltenden Fassung](https://www.gesetze-im-internet.de/kassensichv/BJNR351500017.html)
+- [Bundesfinanzministerium: Mitteilung elektronischer Aufzeichnungssysteme](https://www.bundesfinanzministerium.de/Content/DE/Downloads/Steuern/FAQ-Ausfuellanleitung.html)
 
 Du suchst eine Kasse, die KassenSichV und TSE ohne Extrakosten mitbringt? [Hol dir ein kostenloses Angebot](/angebot) — Orderlyze gibt es [ab 39 € im Monat](/preise), Konformität inklusive.

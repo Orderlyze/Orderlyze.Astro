@@ -1,10 +1,10 @@
 ---
-title: 'Kassenbuch führen: Pflichten, Regeln & typische Fehler | Orderlyze'
-description: 'Kassenbuch richtig führen in Österreich: wer dazu verpflichtet ist, welche formalen Regeln gelten, warum Excel problematisch ist und wie es automatisch aus der Kasse läuft.'
+title: 'Kassenbuch führen in Österreich: Regeln & Fehler | Orderlyze'
+description: 'Kassenbuch in Österreich richtig führen: Wer verpflichtet ist, welche formalen Regeln gelten und welche typischen Fehler du vermeiden solltest.'
 h1: 'Kassenbuch führen: Wer muss, was gilt und wie es ohne Mühe geht'
 teaser: 'Wer ein Kassenbuch braucht, welche Formvorschriften gelten und welche Fehler bei Prüfungen am teuersten werden.'
 datePublished: '2026-07-03'
-dateModified: '2026-07-03'
+dateModified: '2026-07-10'
 order: 6
 ---
 
@@ -54,5 +54,11 @@ Der letzte Punkt zeigt die eigentliche Lösung: Das Kassenbuch gehört **in das 
 | Kernregeln | täglich, einzeln, unveränderbar, kassasturzfähig |
 | Aufbewahrung | AT: 7 Jahre · DE: 10 Jahre |
 | Häufigster Fehler | Excel & negative Kassenstände |
+
+## Offizielle Quellen
+
+- [Unternehmensserviceportal: Buchführungspflicht und Umsatzgrenzen](https://www.usp.gv.at/themen/steuern-finanzen/steuerliche-gewinnermittlung/weitere-informationen-zur-steuerlichen-gewinnermittlung/betriebliches-rechnungswesen/buchfuehrungspflicht-und-buchfuehrung.html)
+- [Unternehmensserviceportal: Siebenjährige Aufbewahrungspflicht in Österreich](https://www.usp.gv.at/themen/steuern-finanzen/steuerliche-gewinnermittlung/weitere-informationen-zur-steuerlichen-gewinnermittlung/betriebliches-rechnungswesen/aufbewahrungspflicht.html)
+- [Unternehmensserviceportal: Einzelaufzeichnung von Bareingängen und Barausgängen](https://www.usp.gv.at/themen/steuern-finanzen/steuerliche-rechte-und-pflichten/registrierkassen.html)
 
 Du willst Kassa und Kassenbuch aus einem Guss? [Hol dir ein kostenloses Angebot](/angebot) — das Kassenbuch-Add-on lässt sich jederzeit dazubuchen.

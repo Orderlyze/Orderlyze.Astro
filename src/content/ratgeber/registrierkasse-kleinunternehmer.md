@@ -1,10 +1,10 @@
 ---
-title: 'Registrierkasse für Kleinunternehmer: Pflicht oder nicht? | Orderlyze'
-description: 'Kleinunternehmer und Registrierkasse in Österreich: Warum die Umsatzsteuer-Befreiung nicht von der Kassenpflicht befreit, welche Grenzen gelten und wann sich eine Kasse trotzdem lohnt.'
+title: 'Registrierkasse für Kleinunternehmer: Pflicht? | Orderlyze'
+description: 'Registrierkasse für Kleinunternehmer in Österreich: Welche Umsatzgrenzen gelten, wann die Kassenpflicht greift und wann eine Kasse freiwillig sinnvoll ist.'
 h1: 'Registrierkasse für Kleinunternehmer: Brauchst du wirklich eine?'
 teaser: 'Kleinunternehmerregelung heißt nicht kassenfrei: welche Grenzen wirklich zählen und wann sich eine Kasse auch freiwillig rechnet.'
 datePublished: '2026-07-03'
-dateModified: '2026-07-03'
+dateModified: '2026-07-10'
 order: 5
 ---
 
@@ -31,7 +31,7 @@ Selbst unterhalb der Kassenpflicht-Grenzen gilt die **Belegerteilungspflicht ab 
 | Nebenberuflich, 8.000 € Umsatz, viel bar | Nein — aber Belegpflicht gilt |
 | EPU-Kosmetikstudio, 25.000 € Umsatz, Kartenzahlung im Studio | Ja |
 | Onlineshop ohne Barzahlung, 40.000 € Umsatz | Nein (reine Online-Umsätze) |
-| Marktstand im Freien, 20.000 € Umsatz | Nein — „Kalte-Hände"-Regelung bis 30.000 € |
+| Marktstand im Freien, 20.000 € Umsatz | Unter Voraussetzungen nein — „Kalte-Hände"-Regelung bis 45.000 € netto |
 
 ## Wann sich die Kasse auch freiwillig lohnt
 
@@ -45,3 +45,8 @@ Viele Kleinbetriebe steigen bewusst früher um, weil eine Kasse mehr ist als ein
 ## Kurz zusammengefasst
 
 Kleinunternehmer zu sein befreit dich **nicht** von der Registrierkassenpflicht — es zählen allein die 15.000/7.500-€-Grenzen. Und einen Beleg musst du ab dem ersten Barumsatz ohnehin ausstellen. Wenn du unsicher bist, wo dein Betrieb steht: [Hol dir ein kostenloses, unverbindliches Angebot](/angebot) — wir rechnen gemeinsam durch, was für dich passt.
+
+## Offizielle Quellen
+
+- [Unternehmensserviceportal: Kleinunternehmerregelung seit 2025](https://www.usp.gv.at/themen/steuern-finanzen/umsatzsteuer-ueberblick/weitere-informationen-zur-umsatzsteuer/weitere-steuertatbestaende-und-befreiungen/kleinunternehmen.html)
+- [Unternehmensserviceportal: Registrierkassenpflicht](https://www.usp.gv.at/themen/steuern-finanzen/steuerliche-rechte-und-pflichten/registrierkassen.html)

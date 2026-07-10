@@ -1,8 +1,8 @@
 ---
 url: https://www.orderlyze.com/funkbonieren
 slug: funkbonieren
-title: "Funkboniersystem – mobil am Tisch bonieren | Orderlyze"
-description: ""
+title: "Funkboniersystem für Gastronomie | Orderlyze"
+description: "Mobiles Funkboniersystem für Restaurants, Cafés und Bars: Bestellungen am Tisch aufnehmen und direkt an Küche oder Bar übermitteln."
 og_title: "Funkboniersystem – mobil am Tisch bonieren | Orderlyze"
 og_description: ""
 og_image: ""

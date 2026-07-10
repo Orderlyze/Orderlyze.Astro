@@ -2,7 +2,7 @@
 url: https://www.orderlyze.com/registrierkasse
 slug: registrierkasse
 title: "Orderlyze - Registrierkasse - Einfach und Schnell"
-description: "Die Nr. 1 Registrierkasse für jeden Bedarf. Intuitive Benutzeroberfläche. Kinderleichte Bedienung. 100% finanzamtkonform."
+description: "Registrierkasse für Gastronomie und Dienstleister: intuitive Bedienung, schnell eingerichtet sowie RKSV- und KassenSichV-konform."
 og_title: "Orderlyze - Registrierkasse - Einfach und Schnell"
 og_description: "Die Nr. 1 Registrierkasse für jeden Bedarf. Intuitive Benutzeroberfläche. Kinderleichte Bedienung. 100% finanzamtkonform."
 og_image: ""

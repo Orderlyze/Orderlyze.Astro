@@ -4,7 +4,7 @@ description: 'Kassensystem-Kosten transparent aufgeschlüsselt: Software-Abo, Ha
 h1: 'Was kostet ein Kassensystem? Alle Kostenpunkte im Überblick'
 teaser: 'Software, Hardware, Aktivierung, Kartenterminal: Aus diesen Bausteinen setzen sich die Kosten zusammen — mit Beispielrechnungen.'
 datePublished: '2026-07-02'
-dateModified: '2026-07-02'
+dateModified: '2026-07-10'
 order: 3
 ---
 
@@ -47,7 +47,7 @@ Macht im ersten Jahr **667 €** (danach 468 €/Jahr) — Signatur, Support und
 - Tablet-Bundle + Cloud-Drucker + Kassenlade: einmalig je nach Auswahl, grob **500–800 €**
 - Aktivierung: **199 € einmalig**
 
-Im ersten Jahr also rund **1.600–1.900 €**, danach 900 €/Jahr. Bestellungen per [Funkbonieren](/funkbonieren) sparen dabei täglich Wege und bringen erfahrungsgemäß mehr Umsatz pro Schicht.
+Im ersten Jahr also rund **1.600–1.900 €**, danach 900 €/Jahr. Mit [Funkbonieren](/funkbonieren) übermittelt das Servicepersonal Bestellungen direkt vom Tisch an Küche oder Bar.
 
 ## Worauf du beim Vergleichen achten solltest
 
@@ -60,5 +60,7 @@ Im ersten Jahr also rund **1.600–1.900 €**, danach 900 €/Jahr. Bestellunge
 ## Fazit
 
 Realistisch kostet ein vollwertiges, finanzamtkonformes Kassensystem **ab etwa 40 € im Monat** plus einmalige Hardware nach Bedarf. Entscheidend ist weniger der Monatspreis als die Frage, was alles drin ist — Signatur, Support, Updates und Funktionen.
+
+Die genannten Orderlyze-Preise entsprechen dem Stand Juli 2026. Die jeweils aktuellen Paket- und Hardwarepreise findest du auf der [Preisseite](/preise) und der [Hardware-Seite](/hardware).
 
 Du willst wissen, was es für deinen Betrieb konkret kostet? [Fordere ein kostenloses, unverbindliches Angebot an](/angebot) — zugeschnitten auf Branche, Geräte und Team.

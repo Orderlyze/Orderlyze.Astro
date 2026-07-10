@@ -43,23 +43,12 @@ const articleSchema = {
   publisher: { '@id': `${SITE.url}/#organization` },
 };
 
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url },
-    { '@type': 'ListItem', position: 2, name: 'Ratgeber', item: `${SITE.url}/ratgeber` },
-    { '@type': 'ListItem', position: 3, name: fm.h1, item: canonical },
-  ],
-};
-
 const datumFmt = (iso: string) =>
   new Date(iso).toLocaleDateString('de-AT', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
 <BaseLayout title={fm.title} description={fm.description} canonical={canonical}>
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} slot="head" is:inline />
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" is:inline />
 
   <header class="rat-hero">
     <div class="container rat-hero__inner">

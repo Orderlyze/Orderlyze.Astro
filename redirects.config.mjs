@@ -29,35 +29,35 @@ export const redirects = {
   '/drucker-verbinden': 'https://hilfe.orderlyze.com/app/drucker/',
   '/kopie-von-drucker-verbinden': 'https://hilfe.orderlyze.com/app/drucker/', // versehentliche Wix-Kopie
 
-  // Drucker-Produkte/Hardware → /hardware (kommerzielle Absicht)
-  '/bluetooth-drucker': '/hardware',
-  '/cloud-drucker': '/hardware',
-  '/sunmi-drucker': '/hardware',
+  // Alte Drucker-Anleitungen → exakte Hilfe-Seite (Such-Intent = Einrichtung)
+  '/bluetooth-drucker': 'https://hilfe.orderlyze.com/app/drucker/',
+  '/cloud-drucker': 'https://hilfe.orderlyze.com/app/drucker/',
+  '/sunmi-drucker': 'https://hilfe.orderlyze.com/app/drucker/',
 
-  // Zahlung → /kartenzahlung
-  '/zahlungsarten': '/kartenzahlung',
+  // Funktions-Anleitungen → exakte Artikel im Hilfe-Center
+  '/zahlungsarten': 'https://hilfe.orderlyze.com/funktionen/zahlungsarten/',
 
-  // Buchhaltung/Berichte/Verwaltung → /verwaltung bzw. /datenexport-steuerberater
-  '/berichte': '/verwaltung',
-  '/umsaetze': '/verwaltung',
-  '/steuer-aendern': '/verwaltung',
-  '/kassenbuch': '/verwaltung',
-  '/buchungskonten': '/datenexport-steuerberater',
+  // Buchhaltung/Berichte → exakte Hilfe-Seiten
+  '/berichte': 'https://hilfe.orderlyze.com/auswertung/berichte/',
+  '/umsaetze': 'https://hilfe.orderlyze.com/auswertung/weitere-berichte/tagesumsatzbericht/',
+  '/steuer-aendern': 'https://hilfe.orderlyze.com/funktionen/steuer-aendern/',
+  '/kassenbuch': 'https://hilfe.orderlyze.com/funktionen/kassenbuch/',
+  '/buchungskonten': 'https://hilfe.orderlyze.com/einstellungen/buchungskonten/',
 
   // Bonieren/Gastro-Ablauf → /funkbonieren
   '/gaengesystem': '/funkbonieren',
-  '/tischplan': '/funkbonieren',
+  '/tischplan': 'https://hilfe.orderlyze.com/funktionen/tischplan/',
 
-  // Funktions-Anleitungen → /funktionen
-  '/abholung': '/funktionen',
-  '/bewirtungsbeleg': '/funktionen',
-  '/dynamisches-produkt': '/funktionen',
-  '/einstellungen-synchronisieren': '/funktionen',
+  // Weitere Funktions-Anleitungen → möglichst exakte Hilfe-Seiten
+  '/abholung': 'https://hilfe.orderlyze.com/funktionen/abholung/',
+  '/bewirtungsbeleg': 'https://hilfe.orderlyze.com/funktionen/bewirtungsbeleg/',
+  '/dynamisches-produkt': 'https://hilfe.orderlyze.com/funktionen/dynamisches-produkt/',
+  '/einstellungen-synchronisieren': 'https://hilfe.orderlyze.com/app/einstellungen/',
   '/farbeinstellungen': '/funktionen',
-  '/gutscheine': '/funktionen',
-  '/pfand': '/funktionen',
-  '/rechnungen-bearbeiten': '/funktionen',
-  '/stammkunden': '/funktionen',
+  '/gutscheine': 'https://hilfe.orderlyze.com/stammdaten/gutscheine/',
+  '/pfand': 'https://hilfe.orderlyze.com/funktionen/pfand/',
+  '/rechnungen-bearbeiten': 'https://hilfe.orderlyze.com/funktionen/rechnungen-bearbeiten/',
+  '/stammkunden': 'https://hilfe.orderlyze.com/personal/kunden/',
 
   // Live, aber ohne Sitemap-Eintrag (vom Support-Hub verlinkt)
   '/erste-schritte': '/so-funktionierts',

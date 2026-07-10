@@ -36,3 +36,4 @@ pnpm-debug.log*
 
 # secrets — niemals committen
 wixkey.txt
+.secrets/

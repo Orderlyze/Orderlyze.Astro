@@ -2,7 +2,7 @@
 url: https://www.orderlyze.com/gastronomie
 slug: gastronomie
 title: "Orderlyze - Das Kassensystem für deine Gastronomie"
-description: "Das Nr. 1 Kassensystem für die Gastronomie. Intuitive Benutzeroberfläche. Kinderleichte Bedienung. 100% finanzamtkonform."
+description: "Kassensystem für die Gastronomie: intuitive Bedienung, schnell eingerichtet sowie RKSV- und KassenSichV-konform."
 og_title: "Orderlyze - Das Kassensystem für deine Gastronomie"
 og_description: "Das Nr. 1 Kassensystem für die Gastronomie. Intuitive Benutzeroberfläche. Kinderleichte Bedienung. 100% finanzamtkonform."
 og_image: ""

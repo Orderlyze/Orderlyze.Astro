@@ -1,7 +1,7 @@
 ---
 url: https://www.orderlyze.com/angebot
 slug: angebot
-title: "Angebot | Orderlyze"
+title: "Kassensystem-Angebot kostenlos anfordern | Orderlyze"
 description: ""
 og_title: "Angebot | Orderlyze"
 og_description: ""

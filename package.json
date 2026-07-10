@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "check:meta": "node scripts/check-meta.mjs",
-    "check:redirects": "node scripts/check-redirects.mjs"
+    "check:redirects": "node scripts/check-redirects.mjs",
+    "seo:gsc": "node scripts/gsc-relaunch-report.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "latest",

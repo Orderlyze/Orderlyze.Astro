@@ -1,7 +1,7 @@
 ---
 url: https://www.orderlyze.com/dank-angebot
 slug: dank-angebot
-title: "dank-angebot | Orderlyze"
+title: "Danke für deine Anfrage | Orderlyze"
 description: ""
 og_title: "dank-angebot | Orderlyze"
 og_description: ""

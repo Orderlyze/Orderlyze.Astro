@@ -24,7 +24,7 @@ import bezahlungTheke from '../../assets/branchen/cafe-bezahlung-theke.jpg';
 import monatsbericht from '../../assets/screenshots/monatsbericht.png';
 
 interface Props {
-  /** H1, z. B. "Das Nr. 1 Kassensystem für dein Restaurant" */
+  /** H1, z. B. "Das Kassensystem für dein Restaurant" */
   h1: string;
   /** markiertes Wort in der H1 */
   h1Mark: string;
@@ -226,6 +226,9 @@ const kassierenText = gastro
       </Section>
     )
   }
+
+  <!-- Optionaler branchenspezifischer Inhalt der einzelnen Seite -->
+  <slot />
 
   {faqs && faqs.length > 0 && <Faq faqs={faqs} title={faqTitle} mark={faqMark} variant="paper" />}
 

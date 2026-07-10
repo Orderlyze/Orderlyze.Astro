@@ -1,10 +1,10 @@
 ---
-title: 'Registrierkassenpflicht in Österreich: Ab wann gilt sie? | Orderlyze'
-description: 'Registrierkassenpflicht einfach erklärt: ab welchem Umsatz du in Österreich eine Registrierkasse brauchst, welche Ausnahmen gelten und was ab dem ersten Beleg Pflicht ist.'
+title: 'Registrierkassenpflicht Österreich 2026 | Orderlyze'
+description: 'Registrierkassenpflicht in Österreich: Erfahre, welche Umsatzgrenzen und Ausnahmen gelten und was bei der Belegerteilung zu beachten ist.'
 h1: 'Registrierkassenpflicht in Österreich – ab wann du eine Registrierkasse brauchst'
 teaser: 'Die Umsatzgrenzen, die Belegpflicht und die wichtigsten Ausnahmen — kompakt erklärt für Gastronomie und Dienstleister.'
 datePublished: '2026-07-02'
-dateModified: '2026-07-02'
+dateModified: '2026-07-10'
 order: 1
 ---
 
@@ -33,7 +33,7 @@ Unabhängig von den Umsatzgrenzen gilt die **Belegerteilungspflicht** (§ 132a B
 
 ## Die wichtigsten Ausnahmen
 
-- **„Kalte-Hände"-Regelung:** Für Umsätze im Freien (z. B. Marktstände, Schneebars, mobile Verkaufsstände) gilt bis **30.000 € Jahresumsatz** eine vereinfachte Losungsermittlung per Kassasturz.
+- **„Kalte-Hände"-Regelung:** Für bestimmte Umsätze im Freien (z. B. Marktstände) gilt bis **45.000 € Netto-Jahresumsatz** eine vereinfachte Losungsermittlung. Ob die Voraussetzungen im konkreten Fall erfüllt sind, sollte mit der Steuerberatung geklärt werden.
 - **Onlineshops:** Reine Online-Umsätze ohne Barzahlung fallen nicht unter die Registrierkassenpflicht.
 - **Kleine Vereinsfeste** und bestimmte Automaten-Umsätze sind ebenfalls ausgenommen.
 
@@ -43,7 +43,7 @@ Für die klassische Gastronomie und Dienstleistungsbetriebe wie Friseure oder Ko
 
 Seit 1. April 2017 muss jede Registrierkasse in Österreich einen **Manipulationsschutz nach RKSV** haben: eine Signaturerstellungseinheit, ein Datenerfassungsprotokoll und einen QR-Code auf jedem Beleg. Was das im Detail bedeutet und welche Pflichten (Startbeleg, Jahresbeleg & Co.) dazugehören, erklären wir im Artikel [RKSV einfach erklärt](/ratgeber/rksv-konforme-registrierkasse).
 
-Mit einem modernen Cloud-Kassensystem musst du dich darum kaum kümmern: Bei [Orderlyze](/finanzamt-konform) ist die Finanzamt-Signatur in jedem Paket enthalten — das System ist zu 100 % RKSV-konform, und in Deutschland KassenSichV- und TSE-konform.
+Mit einem modernen Cloud-Kassensystem musst du dich darum kaum kümmern: Bei [Orderlyze](/finanzamt-konform) ist die Finanzamt-Signatur in jedem Paket enthalten — das System ist in Österreich RKSV-konform und in Deutschland KassenSichV- und TSE-konform.
 
 ## Was passiert, wenn ich keine Kasse habe?
 
@@ -56,6 +56,12 @@ Wer trotz Pflicht keine (konforme) Registrierkasse einsetzt, riskiert eine Finan
 | Ab wann Registrierkassenpflicht? | Ab 15.000 € Jahresumsatz, davon über 7.500 € bar (inkl. Kartenzahlung vor Ort) |
 | Ab wann Belegpflicht? | Ab dem ersten Barumsatz |
 | Welcher Standard? | RKSV-Manipulationsschutz (seit 1.4.2017) |
-| Wichtigste Ausnahme | „Kalte Hände" bis 30.000 € Jahresumsatz |
+| Wichtigste Ausnahme | Bestimmte Umsätze im Freien bis 45.000 € netto |
+
+## Offizielle Quellen
+
+- [Unternehmensserviceportal: Registrierkassenpflicht, Umsatzgrenzen und Ausnahmen](https://www.usp.gv.at/themen/steuern-finanzen/steuerliche-rechte-und-pflichten/registrierkassen.html)
+- [BMF: Elektronischer Beleg und digitale Belegmitnahme](https://www.bmf.gv.at/public/top-themen/Elektronischer-Beleg-und-digitale-Belegmitnahme-.html)
+- [BMF Findok: Erlass zur Einzelaufzeichnungs-, Registrierkassen- und Belegerteilungspflicht](https://findok.bmf.gv.at/findok/volltext?segmentId=6510d076-4bb4-4fe0-8484-f03375eb19a3)
 
 Du bist dir nicht sicher, was das für deinen Betrieb heißt? [Hol dir ein kostenloses, unverbindliches Angebot](/angebot) — wir helfen dir bei der Einrichtung, die Signatur ist inklusive.

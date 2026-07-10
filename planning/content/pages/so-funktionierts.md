@@ -1,8 +1,8 @@
 ---
 url: https://www.orderlyze.com/so-funktionierts
 slug: so-funktionierts
-title: "So funktioniert's | Orderlyze"
-description: "In nur 4 Schritten zu deinem Kassensystem. Hier kannst du dir durchlesen, wie einfach du mit Orderlyze losglegen kannst."
+title: "In 4 Schritten zum Kassensystem | Orderlyze"
+description: "Angebot anfordern, App laden, einrichten, loslegen: In 4 einfachen Schritten zu deinem Orderlyze Kassensystem — mit kostenlosem Testaccount und Support."
 og_title: "So funktioniert"
 og_description: "In nur 4 Schritten zu deinem Kassensystem. Hier kannst du dir durchlesen, wie einfach du mit Orderlyze losglegen kannst."
 og_image: ""

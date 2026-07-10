@@ -16,6 +16,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { SITE, PLAUSIBLE, VERIFICATION } from '../config/site';
+import organizationLogo from '../assets/logos/orderlyze-logo.png';
 
 interface Props {
   title: string;
@@ -46,6 +47,7 @@ const {
 const pathname = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '');
 const canonicalUrl = canonical ?? `${SITE.url}${pathname}`;
 const ogImageUrl = ogImage ? new URL(ogImage, SITE.url).href : undefined;
+const pageName = title.replace(/\s*[|–-]\s*Orderlyze\s*$/, '');
 
 /* Strukturierte Daten: Organization (Entität) — seitenweit, damit Such- und
    KI-Engines Orderlyze als eindeutige, vertrauenswürdige Entität erkennen.
@@ -57,9 +59,9 @@ const orgSchema = {
   '@id': `${SITE.url}/#organization`,
   name: 'Orderlyze GmbH',
   url: SITE.url,
-  logo: `${SITE.url}/apple-touch-icon.png`,
+  logo: new URL(organizationLogo.src, SITE.url).href,
   description:
-    'Kassensystem und Registrierkasse für Gastronomie und Dienstleister – einfach, schnell eingerichtet und 100% finanzamtkonform (RKSV & KassenSichV).',
+    'Kassensystem und Registrierkasse für Gastronomie und Dienstleister – einfach, schnell eingerichtet sowie RKSV- und KassenSichV-konform.',
   telephone: '+43 800 400 4511',
   email: SITE.email,
   vatID: 'ATU80336806',
@@ -73,6 +75,34 @@ const orgSchema = {
   },
   // sameAs: Social-/Profil-URLs hier ergänzen, sobald vorhanden (LinkedIn, Facebook, Instagram …)
 };
+
+const branchPaths = new Set(['/bar', '/beauty', '/cafe', '/friseur', '/gastronomie', '/restaurant', '/sonstige']);
+const systemPaths = new Set([
+  '/bestellsystem', '/datenexport-steuerberater', '/funkbonieren', '/funktionen', '/hardware',
+  '/kartenzahlung', '/kassensoftware', '/kassensystem', '/registrierkasse', '/so-funktionierts',
+  '/technische-sicherheitseinrichtung', '/verwaltung',
+]);
+
+const breadcrumbItems = [{ '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE.url }];
+if (!noindex && pathname && pathname !== '/') {
+  if (pathname.startsWith('/ratgeber/')) {
+    breadcrumbItems.push({ '@type': 'ListItem', position: 2, name: 'Ratgeber', item: `${SITE.url}/ratgeber` });
+  } else if (branchPaths.has(pathname)) {
+    breadcrumbItems.push({ '@type': 'ListItem', position: 2, name: 'Branchen', item: `${SITE.url}/branchen` });
+  } else if (systemPaths.has(pathname) && pathname !== '/kassensystem') {
+    breadcrumbItems.push({ '@type': 'ListItem', position: 2, name: 'Kassensystem', item: `${SITE.url}/kassensystem` });
+  }
+  breadcrumbItems.push({
+    '@type': 'ListItem',
+    position: breadcrumbItems.length + 1,
+    name: pageName,
+    item: canonicalUrl,
+  });
+}
+
+const breadcrumbSchema = breadcrumbItems.length > 1
+  ? { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: breadcrumbItems }
+  : undefined;
 ---
 
 <!doctype html>
@@ -98,6 +128,8 @@ const orgSchema = {
     {ogImageUrl && <meta property="og:image:width" content="1200" />}
     {ogImageUrl && <meta property="og:image:height" content="630" />}
     <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
     {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
 
     <link rel="preload" href={ralewayLatinWoff2} as="font" type="font/woff2" crossorigin />
@@ -133,6 +165,7 @@ const orgSchema = {
 
     <!-- Organisation (Entität) — seitenweit für Such- & KI-Suche -->
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} is:inline />
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} is:inline />}
 
     <!-- Slot für seitenspezifische Head-Einträge (z. B. JSON-LD) -->
     <slot name="head" />

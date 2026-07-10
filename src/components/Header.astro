@@ -16,7 +16,7 @@ const isGroupActive = (group: (typeof NAV)[number]) =>
 <header class="header">
   <div class="container header__inner">
     <a href="/" class="header__logo" aria-label="Orderlyze – zur Startseite">
-      <Image src={logo} alt="Orderlyze Logo" width={164} densities={[1, 2]} loading="eager" />
+      <Image src={logo} alt="Orderlyze Logo" width={164} densities={[1, 2]} loading="eager" fetchpriority="high" />
     </a>
 
     <nav class="nav" aria-label="Hauptnavigation">

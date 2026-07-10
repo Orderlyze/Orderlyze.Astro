@@ -4,7 +4,7 @@ description: 'Was die Registrierkassensicherheitsverordnung (RKSV) verlangt: Sig
 h1: 'RKSV einfach erklärt: Was eine konforme Registrierkasse können muss'
 teaser: 'Signatur, Startbeleg, Jahresbeleg, DEP — welche Pflichten die RKSV bringt und was davon dein Kassensystem für dich erledigt.'
 datePublished: '2026-07-02'
-dateModified: '2026-07-02'
+dateModified: '2026-07-10'
 order: 2
 ---
 
@@ -46,5 +46,11 @@ Auch praktisch: Berichte und [Datenexporte für die Steuerberatung](/datenexport
 ## Ab wann brauchst du das alles überhaupt?
 
 Die RKSV betrifft dich, sobald dein Betrieb registrierkassenpflichtig ist — also ab 15.000 € Jahresumsatz mit über 7.500 € Barumsätzen. Die Grenzen und Ausnahmen erklärt unser Artikel zur [Registrierkassenpflicht in Österreich](/ratgeber/registrierkassenpflicht-oesterreich).
+
+## Offizielle Quellen
+
+- [Unternehmensserviceportal: Registrierkassenpflicht und RKSV](https://www.usp.gv.at/themen/steuern-finanzen/steuerliche-rechte-und-pflichten/registrierkassen.html)
+- [BMF: Technische Informationen zur Registrierkassensicherheitsverordnung](https://www.bmf.gv.at/public/informationen/registrierkassen-beispiele-detailspezifikation.html)
+- [BMF Findok: Start-, Monats-, Jahres- und Schlussbelege](https://findok.bmf.gv.at/findok/volltext?segmentId=eb956de0-96fa-4659-8475-219aaa155221)
 
 Wenn du gerade ein Kassensystem suchst, das RKSV-Konformität ohne Extrakosten mitbringt: [Hol dir ein kostenloses Angebot](/angebot) — Einrichtung und Signatur sind inklusive.

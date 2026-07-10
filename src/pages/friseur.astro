@@ -1,5 +1,9 @@
 ---
 import BranchePage from '../components/templates/BranchePage.astro';
+import Section from '../components/Section.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
 import heroImage from '../assets/branchen/friseur-barbershop-tablet.jpg';
 
 const faqs = [
@@ -27,7 +31,7 @@ const faqs = [
 ---
 
 <BranchePage
-  h1="Das Nr. 1 Kassensystem für deinen Friseursalon"
+  h1="Das Kassensystem für deinen Friseursalon"
   h1Mark="Friseursalon"
   title="Kassensystem für Friseure & Barbershops | Orderlyze"
   description="Das Kassensystem für deinen Friseursalon: Dienstleistungen sekundenschnell kassieren, E-Beleg per QR-Code, Kartenzahlung und Buchhaltung ohne Mühe."
@@ -38,4 +42,193 @@ const faqs = [
   faqs={faqs}
   faqTitle="Häufige Fragen zum Kassensystem für Friseure"
   faqMark="Friseure"
-/>
+>
+  <Section variant="tint" id="friseur-buchhaltung">
+    <SectionHead
+      eyebrow="Buchhaltung im Salon"
+      title="Vom Tagesabschluss bis zur Steuerberatung"
+      mark="Steuerberatung"
+      lead="Orderlyze trennt Dienstleistungen, Produkte und Zahlungsarten und bereitet die Kassendaten für deine Auswertung und Steuerberatung auf."
+    />
+    <div class="salon-ablauf">
+      <article class="salon-schritt reveal">
+        <span class="salon-schritt__nr">1</span>
+        <Icon name="receipt" size={30} />
+        <h3>Haarschnitt und Produkte getrennt erfassen</h3>
+        <p>
+          Lege Haarschnitt, Farbe, Pflege und Verkaufsprodukte als eigene Positionen an. Preise,
+          Steuersätze, Rabatte und Mitarbeiterzuordnung werden beim Kassieren mitgeführt.
+        </p>
+      </article>
+      <article class="salon-schritt reveal">
+        <span class="salon-schritt__nr">2</span>
+        <Icon name="chart" size={30} />
+        <h3>Tages- und Monatsberichte abrufen</h3>
+        <p>
+          Werte Umsätze nach Zeitraum, Produkt, Dienstleistung, Zahlungsart oder Mitarbeiter aus.
+          Tages-, Monats- und Jahresberichte stehen in orderlyze web bereit.
+        </p>
+      </article>
+      <article class="salon-schritt reveal">
+        <span class="salon-schritt__nr">3</span>
+        <Icon name="export" size={30} />
+        <h3>Daten an die Steuerberatung übergeben</h3>
+        <p>
+          Exportiere Kassendaten für DATEV, BMD oder RZL. So erhält deine Steuerberatung
+          strukturierte Daten, ohne dass du einzelne Tagesabschlüsse manuell zusammensuchen musst.
+        </p>
+      </article>
+    </div>
+    <p class="salon-aktion">
+      <Button href="/datenexport-steuerberater" variant="secondary">
+        Berichte und Datenexporte ansehen
+      </Button>
+    </p>
+  </Section>
+
+  <Section variant="paper" id="kassenpflicht-friseur">
+    <SectionHead
+      eyebrow="Österreich & Deutschland"
+      title="Welche Kassenregeln gelten für Friseursalons?"
+      mark="Kassenregeln"
+      lead="Die Pflichten unterscheiden sich nach Land. Maßgeblich sind dein Betriebsstandort und die Art des eingesetzten Kassensystems."
+    />
+    <div class="laender-grid">
+      <article class="land-card reveal">
+        <p class="land-card__code">AT</p>
+        <h3>Friseursalon in Österreich</h3>
+        <p>
+          Eine Registrierkasse ist grundsätzlich erforderlich, wenn der Jahresumsatz je Betrieb
+          15.000&nbsp;€ und die Barumsätze 7.500&nbsp;€ im Jahr überschreiten. Beide Grenzen müssen
+          überschritten sein. Die Belegerteilungspflicht gilt unabhängig davon weiterhin.
+        </p>
+        <ul>
+          <li>RKSV-konforme Signatur und Manipulationsschutz</li>
+          <li>Beleg bei Barzahlungen; Kartenzahlungen zählen zu den Barumsätzen</li>
+          <li>Registrierung und Startbeleg über FinanzOnline</li>
+        </ul>
+        <p class="land-card__source">
+          Offizielle Grundlage:
+          <a href="https://www.usp.gv.at/themen/steuern-finanzen/steuerliche-rechte-und-pflichten/registrierkassen.html">
+            Unternehmensserviceportal Österreich
+          </a>
+        </p>
+      </article>
+      <article class="land-card reveal">
+        <p class="land-card__code">DE</p>
+        <h3>Friseursalon in Deutschland</h3>
+        <p>
+          Eine allgemeine Pflicht zur Anschaffung einer elektronischen Registrierkasse besteht
+          nicht. Verwendest du jedoch ein elektronisches Kassensystem, muss es die Vorgaben von
+          §&nbsp;146a AO und KassenSichV erfüllen und mit einer zertifizierten TSE abgesichert sein.
+        </p>
+        <ul>
+          <li>TSE-Schutz für elektronische Kassensysteme</li>
+          <li>Belegausgabe bei Nutzung eines elektronischen Aufzeichnungssystems</li>
+          <li>Mitteilung des Kassensystems nach § 146a Abs. 4 AO</li>
+        </ul>
+        <p class="land-card__source">
+          Offizielle Grundlage:
+          <a href="https://www.bundesfinanzministerium.de/Content/DE/FAQ/FAQ-steuergerechtigkeit-belegpflicht.html">
+            Bundesfinanzministerium zum Kassengesetz
+          </a>
+        </p>
+      </article>
+    </div>
+    <p class="rechts-hinweis">
+      Stand: Juli 2026. Die Übersicht ist eine allgemeine Orientierung und ersetzt keine Steuer-
+      oder Rechtsberatung. Verbindliche Auskünfte erteilen Finanzverwaltung und Steuerberatung.
+    </p>
+  </Section>
+</BranchePage>
+
+<style>
+  .salon-ablauf,
+  .laender-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+  }
+
+  .salon-schritt,
+  .land-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 1.5rem;
+  }
+
+  .salon-schritt :global(svg) {
+    color: var(--color-brand);
+    margin-bottom: 0.8rem;
+  }
+
+  .salon-schritt__nr {
+    position: absolute;
+    right: 1rem;
+    top: 0.8rem;
+    color: var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .salon-schritt h3,
+  .land-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .salon-schritt p,
+  .land-card p,
+  .land-card li {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .salon-aktion {
+    margin: 1.6rem 0 0;
+    text-align: center;
+  }
+
+  .laender-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .land-card__code {
+    color: var(--color-brand) !important;
+    font-family: var(--font-mono);
+    font-size: 1.5rem !important;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .land-card ul {
+    padding-left: 1.2rem;
+  }
+
+  .land-card__source {
+    border-top: 1px solid var(--color-line);
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+  }
+
+  .land-card__source a {
+    color: var(--color-brand);
+  }
+
+  .rechts-hinweis {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin: 1.2rem 0 0;
+    text-align: center;
+  }
+
+  @media (max-width: 820px) {
+    .salon-ablauf,
+    .laender-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

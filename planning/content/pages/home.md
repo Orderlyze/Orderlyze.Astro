@@ -2,7 +2,7 @@
 url: https://www.orderlyze.com
 slug: home
 title: "Orderlyze Kassensystem – einfach. schnell. effizient."
-description: "Orderlyze Registrierkasse. Einfach zu bedienen, schnell eingerichtet und so effizient, dass du viel mehr Zeit für deine KundInnen hast. 100% finanzamtkonform."
+description: "Orderlyze Registrierkasse für Gastronomie und Dienstleister: einfach zu bedienen, schnell eingerichtet sowie RKSV- und KassenSichV-konform."
 og_title: "Orderlyze Kassensystem – einfach. schnell. effizient."
 og_description: "Orderlyze Registrierkasse. Einfach zu bedienen, schnell eingerichtet und so effizient, dass du viel mehr Zeit für deine KundInnen hast. 100% finanzamtkonform."
 og_image: ""

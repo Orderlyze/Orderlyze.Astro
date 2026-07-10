@@ -1,7 +1,7 @@
 ---
 url: https://www.orderlyze.com/angebot-de
 slug: angebot-de
-title: "Angebot-DE | Orderlyze"
+title: "Kassensystem mit TSE – Angebot anfordern | Orderlyze"
 description: ""
 og_title: "Angebot-DE | Orderlyze"
 og_description: ""

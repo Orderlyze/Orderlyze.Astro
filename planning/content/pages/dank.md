@@ -1,7 +1,7 @@
 ---
 url: https://www.orderlyze.com/dank
 slug: dank
-title: "Dank | Orderlyze"
+title: "Danke für dein Interesse | Orderlyze"
 description: ""
 og_title: "Dank | Orderlyze"
 og_description: ""

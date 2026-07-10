@@ -39,7 +39,9 @@ for (const [from, to] of Object.entries(redirects)) {
       console.error(`✗ Redirect-KETTE: ${from} → ${to} (selbst Redirect-Quelle!)`);
       errors++;
     }
-    if (!existsSync(join(dist, `${to.slice(1)}.html`))) {
+    const targetPath = to.slice(1);
+    const targetExists = existsSync(join(dist, targetPath)) || existsSync(join(dist, `${targetPath}.html`));
+    if (!targetExists) {
       console.error(`✗ ${from}: Ziel ${to} existiert nicht im Build`);
       errors++;
     }

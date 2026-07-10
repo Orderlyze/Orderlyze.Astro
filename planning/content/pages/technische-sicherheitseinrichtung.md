@@ -1,8 +1,8 @@
 ---
 url: https://www.orderlyze.com/technische-sicherheitseinrichtung
 slug: technische-sicherheitseinrichtung
-title: "Was ist die TSE und ab wann gilt diese?"
-description: "Laut der Kassensicherungsverordnung (KassenSichV) muss ab Januar 2023 jede Registrierkasse mit einer Technischen Sicherheitseinrichtung (TSE) ausgestattet sein. Erfahre hier, was du dabei beachten solltest."
+title: "TSE für Kassensysteme: Pflicht & Funktion | Orderlyze"
+description: "Was ist eine Technische Sicherheitseinrichtung? Erfahre, für welche elektronischen Kassensysteme die TSE-Pflicht gilt und wie sie Kassendaten schützt."
 og_title: "Was ist die TSE und ab wann gilt diese?"
 og_description: "Laut der Kassensicherungsverordnung (KassenSichV) muss ab Januar 2023 jede Registrierkasse mit einer Technischen Sicherheitseinrichtung (TSE) ausgestattet sein. Erfahre hier, was du dabei beachten solltest."
 og_image: ""

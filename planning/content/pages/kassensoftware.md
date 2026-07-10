@@ -2,7 +2,7 @@
 url: https://www.orderlyze.com/kassensoftware
 slug: kassensoftware
 title: "Orderlyze - Kassensoftware - Einfach und Schnell"
-description: "Die Nr. 1 Kassensoftware für jeden Bedarf. Intuitive Benutzeroberfläche. Kinderleichte Bedienung. 100% finanzamtkonform."
+description: "Kassensoftware für Gastronomie und Dienstleister: intuitive Bedienung, schnell eingerichtet sowie RKSV- und KassenSichV-konform."
 og_title: "Orderlyze - Kassensoftware - Einfach und Schnell"
 og_description: "Die Nr. 1 Kassensoftware für jeden Bedarf. Intuitive Benutzeroberfläche. Kinderleichte Bedienung. 100% finanzamtkonform."
 og_image: ""
