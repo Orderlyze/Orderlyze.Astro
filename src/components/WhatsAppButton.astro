@@ -99,6 +99,9 @@ const eventClass = `plausible-event-name=${EVENTS.ctaWhatsApp.replaceAll(' ', '+
     padding: 0;
     width: 56px;
     justify-content: center;
+    /* Das Label bleibt als 0px-Flex-Item vorhanden. Ohne gap: 0 würde
+       dessen halber Abstand das sichtbare Icon um 4px nach links schieben. */
+    gap: 0;
   }
 
   .whatsapp-fab.is-compact:not(:hover):not(:focus-visible) .whatsapp-fab__label {
@@ -114,6 +117,7 @@ const eventClass = `plausible-event-name=${EVENTS.ctaWhatsApp.replaceAll(' ', '+
       padding: 0;
       width: 56px;
       justify-content: center;
+      gap: 0;
     }
     .whatsapp-fab__label {
       display: none;
