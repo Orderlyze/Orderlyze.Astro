@@ -4,18 +4,29 @@
  * Alle Lead-Formulare (/angebot, /bestellen, /testen) sind an den Orderlyze
  * RestService angebunden (POST /api/users/registerSellerAngebot, anonym). Der
  * Service speichert die Anfrage als OfferRequest und legt automatisch einen
- * Testaccount an (Entscheidung "Variante 3 — eigenes Backend", siehe
- * planning/angebot-flow.md).
+ * Testaccount an.
  *
- * Hinweis: /testen sollte eigentlich registerSellerWixTestAccount nutzen, der
- * Endpoint ist aber serverseitig defekt (500 NullReference) — bis zum Backend-Fix
- * läuft auch /testen über registerSellerAngebot.
+ * Spam-Signale (Honeypot + Ausfüllzeit) werden hier zentral ergänzt, damit jedes
+ * Formular, das <HoneypotField /> rendert, automatisch geschützt ist — kein Caller
+ * muss sie selbst mitgeben.
  */
 
 import { API_BASE_URL } from '../config/site';
 
-/** Ladezeitpunkt des Formular-Scripts — Basis für die Ausfüllzeit-Bot-Heuristik */
-const formLoadedAt = Date.now();
+/**
+ * Zeit ab der ersten echten Nutzer-Interaktion (Fokus/Eingabe), NICHT ab Seiten-Load:
+ * sonst würde ein schneller Autofill-Nutzer fälschlich als Bot eingestuft. Bleibt null,
+ * bis ein Mensch das Formular anfasst; ein Bot, der das Script gar nicht ausführt, sendet
+ * ohnehin keinen Wert.
+ */
+let firstInteractionAt: number | null = null;
+if (typeof document !== 'undefined') {
+  const mark = () => {
+    if (firstInteractionAt === null) firstInteractionAt = Date.now();
+  };
+  document.addEventListener('focusin', mark, { once: true, capture: true });
+  document.addEventListener('input', mark, { once: true, capture: true });
+}
 
 /** Payload für POST /api/users/registerSellerAngebot (RegisterSellerAngebot-DTO) */
 export interface AngebotFormData {
@@ -29,18 +40,22 @@ export interface AngebotFormData {
   standgeraete: number;
   mobilgeraete: number;
   drucker: number;
-  /** Honeypot (HoneypotField.astro) — bleibt bei echten Nutzern leer */
-  website?: string;
 }
 
 export async function submitAngebot(data: AngebotFormData): Promise<{ ok: boolean }> {
-  /* Spam-Signale für den RestService: Honeypot + Ausfüllzeit. Submits mit
-     befülltem Honeypot oder unter 5 Sekunden verwirft der Service still. */
-  const payload = {
-    website: '',
+  /* Honeypot (HoneypotField.astro) zentral auslesen und die Ausfüllzeit ergänzen. Submits
+     mit befülltem Honeypot oder unter der Mindestzeit behandelt der Service als Bot. */
+  const honeypot =
+    typeof document !== 'undefined'
+      ? (document.querySelector('input[name="website"]') as HTMLInputElement | null)?.value ?? ''
+      : '';
+  const payload: Record<string, unknown> = {
     ...data,
-    formFillDurationMs: Date.now() - formLoadedAt,
+    website: honeypot,
   };
+  if (firstInteractionAt !== null) {
+    payload.formFillDurationMs = Date.now() - firstInteractionAt;
+  }
   try {
     const res = await fetch(`${API_BASE_URL}/api/users/registerSellerAngebot`, {
       method: 'POST',

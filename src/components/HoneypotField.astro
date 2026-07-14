@@ -1,26 +1,28 @@
 ---
 /**
- * Honeypot gegen Formular-Bots: unsichtbares Feld, das echte Nutzer nie sehen
- * und daher nie ausfüllen (offscreen statt display:none, weil manche Bots
- * display:none erkennen). Der RestService verwirft Submits mit befülltem
- * "website"-Feld still — siehe UserService.CreateSellerAngebot.
+ * Honeypot gegen Formular-Bots: für Menschen unsichtbares Feld, das nur Bots ausfüllen.
+ * Der RestService verwirft Submits mit befülltem "website"-Feld (kein Account/keine Mail),
+ * speichert den Lead aber trotzdem — siehe UserService.CreateSellerAngebot.
  *
- * Wert beim Submit mitschicken: website: <Wert von #hp-website>
- * (bei FormData-Formularen automatisch über name="website" enthalten).
+ * Der Wert wird zentral in src/lib/lead-submit.ts ausgelesen (input[name="website"]),
+ * kein Caller muss ihn selbst mitgeben.
+ *
+ * Nutzt die globale .visually-hidden-Utility (offscreen statt display:none, weil manche
+ * Bots display:none erkennen). data-1p-ignore / data-lpignore / data-form-type halten
+ * 1Password, LastPass & Co. davon ab, das Feld versehentlich per Autofill zu befüllen.
  */
 ---
 
-<div class="hp" aria-hidden="true">
+<div class="visually-hidden" aria-hidden="true">
   <label for="hp-website">Website</label>
-  <input id="hp-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+  <input
+    id="hp-website"
+    name="website"
+    type="text"
+    tabindex="-1"
+    autocomplete="off"
+    data-1p-ignore
+    data-lpignore="true"
+    data-form-type="other"
+  />
 </div>
-
-<style>
-  .hp {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }
-</style>
