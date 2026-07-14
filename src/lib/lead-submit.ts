@@ -14,6 +14,9 @@
 
 import { API_BASE_URL } from '../config/site';
 
+/** Ladezeitpunkt des Formular-Scripts — Basis für die Ausfüllzeit-Bot-Heuristik */
+const formLoadedAt = Date.now();
+
 /** Payload für POST /api/users/registerSellerAngebot (RegisterSellerAngebot-DTO) */
 export interface AngebotFormData {
   name: string;
@@ -26,14 +29,23 @@ export interface AngebotFormData {
   standgeraete: number;
   mobilgeraete: number;
   drucker: number;
+  /** Honeypot (HoneypotField.astro) — bleibt bei echten Nutzern leer */
+  website?: string;
 }
 
 export async function submitAngebot(data: AngebotFormData): Promise<{ ok: boolean }> {
+  /* Spam-Signale für den RestService: Honeypot + Ausfüllzeit. Submits mit
+     befülltem Honeypot oder unter 5 Sekunden verwirft der Service still. */
+  const payload = {
+    website: '',
+    ...data,
+    formFillDurationMs: Date.now() - formLoadedAt,
+  };
   try {
     const res = await fetch(`${API_BASE_URL}/api/users/registerSellerAngebot`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       console.error(`[Orderlyze] Angebot-Submit fehlgeschlagen (HTTP ${res.status})`);

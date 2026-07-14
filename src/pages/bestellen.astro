@@ -2,11 +2,12 @@
 /**
  * /bestellen — Bestellanfrage-Formular
  * Inhalt: planning/content/pages/bestellen.md
- * Submit: PLATZHALTER (src/lib/lead-submit.ts, Anbindung offen)
+ * Submit: src/lib/lead-submit.ts → RestService registerSellerAngebot
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import FormField from '../components/FormField.astro';
+import HoneypotField from '../components/HoneypotField.astro';
 import Icon from '../components/Icon.astro';
 
 const meta = {
@@ -49,6 +50,7 @@ const branchen = [
           <FormField name="land" label="Land" type="select" options={['Österreich', 'Deutschland']} required />
           <FormField name="ustid" label="USt-ID oder Steuer-ID" class="span-2" />
         </div>
+        <HoneypotField />
 
         <button type="submit" class="bestellen__submit">Jetzt bestellen</button>
         <p class="bestellen__note">Unverbindliche Anfrage — wir melden uns persönlich bei dir.</p>
@@ -97,6 +99,7 @@ const branchen = [
       standgeraete: 0,
       mobilgeraete: 0,
       drucker: 0,
+      website: g('website'),
     });
 
     if (result.ok) {

@@ -2,11 +2,12 @@
 /**
  * /testen — 30 Tage kostenlos testen
  * Inhalt: planning/content/pages/testen.md
- * Submit: PLATZHALTER (src/lib/lead-submit.ts, Anbindung offen)
+ * Submit: src/lib/lead-submit.ts → RestService registerSellerAngebot
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import FormField from '../components/FormField.astro';
+import HoneypotField from '../components/HoneypotField.astro';
 import ReceiptCard from '../components/ReceiptCard.astro';
 import Icon from '../components/Icon.astro';
 
@@ -44,6 +45,7 @@ const branchen = [
           <FormField name="standort" label="Dein Unternehmensstandort" type="select" options={['Österreich', 'Deutschland']} required />
           <FormField name="email" label="E-Mail-Adresse" type="email" required autocomplete="email" />
           <FormField name="telefon" label="Telefon" type="tel" required autocomplete="tel" hint="Ohne Leerzeichen, z. B. 06601234567" />
+          <HoneypotField />
           <button type="submit" class="testen__submit">Kostenlos testen</button>
           <p class="testen__note">Kostenlos und unverbindlich.</p>
           <p class="testen__privacy">
@@ -114,6 +116,7 @@ const branchen = [
       standgeraete: 0,
       mobilgeraete: 0,
       drucker: 0,
+      website: g('website'),
     });
 
     if (result.ok) {

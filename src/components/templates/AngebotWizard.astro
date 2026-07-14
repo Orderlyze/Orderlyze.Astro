@@ -5,13 +5,14 @@
  * Ablauf laut planning/angebot-flow.md:
  *   4 Intro-Slides → 3 Formular-Schritte → Submit → Redirect /dank-angebot
  *
- * 🔴 Der Submit läuft gegen den PLATZHALTER in src/lib/lead-submit.ts —
- * die API-Anbindung (Variante 1/2/3) ist eine OFFENE ENTSCHEIDUNG des Nutzers.
+ * Der Submit läuft über src/lib/lead-submit.ts gegen den Orderlyze RestService
+ * (POST /api/users/registerSellerAngebot, inkl. Honeypot + Ausfüllzeit als Spam-Signale).
  *
  * Die Seiten unterscheiden sich nur im ersten Intro-Slide (Props).
  */
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HoneypotField from '../HoneypotField.astro';
 import Icon from '../Icon.astro';
 import logo from '../../assets/logos/orderlyze-logo.png';
 import introBild from '../../assets/screenshots/kassensystem-angebot-smartphone-tablet-drucker.png';
@@ -230,6 +231,7 @@ const marketingSlides = [
                 />
                 <p class="wfield__hint">Mit oder ohne Ländervorwahl (z. B. +43 660 1234567 oder 06601234567)</p>
               </div>
+              <HoneypotField />
               <p class="wizard-error" id="wizard-error" hidden>
                 Das hat leider nicht geklappt. Bitte prüfe deine Angaben oder ruf uns an:
                 <a href={SITE.phoneHref}>{SITE.phone}</a>
@@ -325,6 +327,7 @@ const marketingSlides = [
       name: value('w-name'),
       email: value('w-email'),
       telefon: value('w-telefon').replace(/\s+/g, ''),
+      website: value('hp-website'),
     });
 
     if (result.ok) {

@@ -1,0 +1,26 @@
+---
+/**
+ * Honeypot gegen Formular-Bots: unsichtbares Feld, das echte Nutzer nie sehen
+ * und daher nie ausfüllen (offscreen statt display:none, weil manche Bots
+ * display:none erkennen). Der RestService verwirft Submits mit befülltem
+ * "website"-Feld still — siehe UserService.CreateSellerAngebot.
+ *
+ * Wert beim Submit mitschicken: website: <Wert von #hp-website>
+ * (bei FormData-Formularen automatisch über name="website" enthalten).
+ */
+---
+
+<div class="hp" aria-hidden="true">
+  <label for="hp-website">Website</label>
+  <input id="hp-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+</div>
+
+<style>
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>
