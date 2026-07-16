@@ -45,6 +45,88 @@ export async function submitAngebot(data: AngebotFormData): Promise<{ ok: boolea
   }
 }
 
+/* ── Website-Konfigurator (Sofort-Angebot) ─────────────────────────────────
+ * POST /api/WebsiteOffer erstellt Lead + Testaccount wie registerSellerAngebot,
+ * löst die Paket-/Hardware-Auswahl serverseitig gegen SevDesk-Produkte auf und
+ * versendet das Angebot inkl. Bestelllink (E-Mail + WhatsApp). Mode "instant"
+ * liefert Angebot + Link direkt zurück; "manual" = Fallback auf den bisherigen
+ * Prozess (Vertrieb erstellt das Angebot, Kunde bekommt es per E-Mail).
+ * Antwort-Felder sind PascalCase (Newtonsoft DefaultContractResolver).
+ */
+
+export interface WebsiteOfferPayload extends AngebotFormData {
+  paket: string;
+  addons: string[];
+  hardware: { key: string; quantity: number }[];
+}
+
+export interface WebsiteOfferPosition {
+  ProductName: string;
+  Quantity: number;
+  PriceNet: number;
+  PriceGross: number;
+  TaxRate: number;
+  IsRecurring: boolean;
+  IsYearlyPayment: boolean;
+}
+
+export interface WebsiteOfferResult {
+  Mode: 'instant' | 'manual';
+  QuoteNumber?: string;
+  Link?: string;
+  EmailSent?: boolean;
+  WhatsAppSent?: boolean;
+  Positions?: WebsiteOfferPosition[];
+}
+
+export async function submitWebsiteOffer(
+  data: WebsiteOfferPayload,
+): Promise<{ ok: boolean; result?: WebsiteOfferResult }> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/WebsiteOffer`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      console.error(`[Orderlyze] WebsiteOffer-Submit fehlgeschlagen (HTTP ${res.status})`);
+      return { ok: false };
+    }
+    return { ok: true, result: (await res.json()) as WebsiteOfferResult };
+  } catch (err) {
+    console.error('[Orderlyze] WebsiteOffer-Submit fehlgeschlagen', err);
+    return { ok: false };
+  }
+}
+
+export interface WebsiteOfferCatalogEntry {
+  Key: string;
+  DisplayName: string;
+  Branche?: string;
+  PriceNet: number;
+  PriceGross: number;
+  Available: boolean;
+}
+
+export interface WebsiteOfferCatalog {
+  Packages: WebsiteOfferCatalogEntry[];
+  Addons: WebsiteOfferCatalogEntry[];
+  Hardware: WebsiteOfferCatalogEntry[];
+  ActivationFeeNet?: number;
+  ActivationFeeGross?: number;
+}
+
+/** Live-Preise für den Konfigurator; null bei Netzwerk-/Serverfehler (dann statische Preise nutzen) */
+export async function fetchWebsiteOfferCatalog(): Promise<WebsiteOfferCatalog | null> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/WebsiteOffer/Catalog`);
+    if (!res.ok) return null;
+    return (await res.json()) as WebsiteOfferCatalog;
+  } catch {
+    return null;
+  }
+}
+
 /** Plausible-Custom-Event feuern (window.plausible kommt vom Script-Snippet) */
 export function trackGoal(name: string, props?: Record<string, string>) {
   const w = window as typeof window & {

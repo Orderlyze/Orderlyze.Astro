@@ -1,23 +1,22 @@
 ---
 /**
- * Angebots-Funnel-Wizard (/angebot, /angebot-de, /angebot-gastro, /angebot-google).
+ * Angebots-Konfigurator (/angebot, /angebot-de, /angebot-gastro, /angebot-google).
  *
- * Ablauf laut planning/angebot-flow.md:
- *   4 Intro-Slides → 3 Formular-Schritte → Submit → Redirect /dank-angebot
+ * Ablauf: Intro → Land & Branche → Paket → Kassen & Hardware → Kontakt →
+ * Ergebnis-Slide mit dem fertigen Angebot + Bestelllink (POST /api/WebsiteOffer).
+ * Der Server löst die Auswahl gegen SevDesk-Produkte auf und versendet das
+ * Angebot zusätzlich per E-Mail/WhatsApp — Mode "manual" ist der Fallback auf
+ * den bisherigen Prozess (Angebot kommt per E-Mail vom Vertrieb).
  *
- * 🔴 Der Submit läuft gegen den PLATZHALTER in src/lib/lead-submit.ts —
- * die API-Anbindung (Variante 1/2/3) ist eine OFFENE ENTSCHEIDUNG des Nutzers.
- *
- * Die Seiten unterscheiden sich nur im ersten Intro-Slide (Props).
+ * Preise: statische Werte (wie /preise) als Startzustand, live überschrieben
+ * durch GET /api/WebsiteOffer/Catalog. Die Seiten unterscheiden sich nur im
+ * ersten Intro-Slide und optionalen Vorauswahlen (Props).
  */
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../Icon.astro';
 import logo from '../../assets/logos/orderlyze-logo.png';
 import introBild from '../../assets/screenshots/kassensystem-angebot-smartphone-tablet-drucker.png';
-import umsaetzeBild from '../../assets/screenshots/umsaetze-dashboard.png';
-import restaurantBild from '../../assets/branchen/restaurant-service.jpg';
-import sorgenfreiBild from '../../assets/screenshots/verwaltung-dashboard-mac.png';
 import { SITE, EVENTS } from '../../config/site';
 
 interface Props {
@@ -32,43 +31,71 @@ interface Props {
   chips: string[];
   /** Kampagnen-Landingpages aus dem Index halten (Werbe-Traffic, kein SEO) */
   noindex?: boolean;
+  /** Vorauswahl Land, z. B. "Deutschland" auf /angebot-de */
+  presetLand?: string;
+  /** Vorauswahl Branche (exakter Formularwert), z. B. auf /angebot-gastro */
+  presetBranche?: string;
 }
 
-const { title, description, canonical, introTitle, introKicker, introText, chips, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  canonical,
+  introTitle,
+  introKicker,
+  introText,
+  chips,
+  noindex = false,
+  presetLand,
+  presetBranche,
+} = Astro.props;
 
 const phoneEventClass = `plausible-event-name=${EVENTS.ctaPhone.replaceAll(' ', '+')}`;
 
-const branchen = [
-  'Dienstleistung (z.b. Friseur, Beauty, Physio)',
-  'Gastronomie (z.b. Bar, Cafe, Restaurant)',
-];
-const standorte = ['Österreich', 'Deutschland'];
+const BRANCHE_DIENSTLEISTUNG = 'Dienstleistung (z.b. Friseur, Beauty, Physio)';
+const BRANCHE_GASTRONOMIE = 'Gastronomie (z.b. Bar, Cafe, Restaurant)';
 const mitarbeiter = ['0-4', '5-9', '10-19', '20+'];
 
-/* Bilder wie auf der alten Wix-Seite (orderlyze.com/angebot, Slide 2–4) */
-const marketingSlides = [
+/* Statische Startpreise (netto, wie /preise) — werden live vom Catalog-Endpoint überschrieben */
+const pakete = [
   {
-    image: umsaetzeBild,
-    imageAlt: 'Orderlyze Kassensystem — Umsätze auf dem Smartphone',
-    phone: true,
-    title: 'Höhere Umsätze',
-    text: 'Mit integrierter Kartenzahlung und Funkbonieren bedienst du mehr Gäste in kürzerer Zeit — weniger Wartezeit, mehr Bestellungen, mehr Umsatz.',
+    key: 'dienstleistung',
+    name: 'Dienstleistungen',
+    branche: 'Dienstleistung',
+    price: 39,
+    features: ['Alle Funktionen', 'Finanzamt Signatur inkl.', 'Kostenloser Support'],
   },
   {
-    image: restaurantBild,
-    imageAlt: 'Service im Restaurant — mehr Zeit für deine Gäste',
-    phone: false,
-    title: 'Mehr Zeit für deine KundInnen',
-    text: 'Kassieren in Sekunden, Berichte mit einem Klick: Orderlyze nimmt dir die lästige Verwaltungsarbeit ab, damit du dich um das Wichtigste kümmern kannst.',
+    key: 'gastronomie',
+    name: 'Gastronomie',
+    branche: 'Gastronomie',
+    price: 49,
+    features: ['Alle Funktionen', 'Finanzamt Signatur inkl.', 'Kostenloser Support'],
   },
   {
-    image: sorgenfreiBild,
-    imageAlt: 'Orderlyze Verwaltung am Mac — sorgenfrei arbeiten',
-    phone: false,
-    title: 'Sorgenfrei arbeiten',
-    text: 'RKSV- und KassenSichV-konform, automatische Übermittlung ans Finanzamt und kostenloser Support — du musst dich um nichts kümmern.',
+    key: 'gastronomie-plus',
+    name: 'Gastronomie +',
+    branche: 'Gastronomie',
+    price: 75,
+    features: ['Mit Küchenkommunikation', 'Unbegrenzt viele Geräte', 'Finanzamt Signatur inkl.'],
+    highlight: true,
   },
-] as const;
+];
+
+const hardwareOptionen = [
+  { key: '', name: 'Eigene Geräte nutzen', hint: 'Tablet/iPad vorhanden', price: 0 },
+  { key: 'tablet-kasse', name: 'Samsung Kassensystem', hint: 'Tablet + Bondrucker, je Kasse', price: 425.9 },
+  { key: 'ipad-kasse', name: 'iPad Kassensystem', hint: 'iPad + Bondrucker, je Kasse', price: 589.9 },
+];
+
+const KASSENBUCH_PREIS = 13;
+const AKTIVIERUNG_PREIS = 199;
+const STAENDER_PREIS = 22.9;
+const KASSENLADE_PREIS = 69.9;
+const DRUCKER_PREIS = 265;
+
+/* Preisformat wie die Live-Hydration (euro.format ohne €-Zeichen): 425.9 → "425,90" */
+const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} noindex={noindex} chrome={false}>
@@ -93,7 +120,21 @@ const marketingSlides = [
           <div class="wizard-progress__bar" id="wizard-bar"></div>
         </div>
 
-        <section class="wizard" id="wizard" data-total-steps="7">
+        <!-- Live-Preisleiste (sichtbar ab Paket-Slide) -->
+        <div class="wizard-summary" id="wizard-summary" hidden>
+          <span>monatlich <b id="sum-monthly">0 €</b></span>
+          <span class="wizard-summary__sep" aria-hidden="true">·</span>
+          <span>einmalig <b id="sum-onetime">0 €</b></span>
+          <span class="wizard-summary__note">exkl. USt.</span>
+        </div>
+
+        <section
+          class="wizard"
+          id="wizard"
+          data-total-steps="6"
+          data-preset-land={presetLand}
+          data-preset-branche={presetBranche}
+        >
           <!-- ── Slide 1: Intro (variantenspezifisch) ── -->
           <div class="slide is-active" data-step="1">
             <p class="slide__kicker">kostenlos und unverbindlich</p>
@@ -116,99 +157,162 @@ const marketingSlides = [
               densities={[1, 2]}
               loading="eager"
             />
-            <button class="wizard-next" data-next>Weiter</button>
+            <button class="wizard-next" data-next>Angebot konfigurieren</button>
+            <p class="slide__duration">Dauert keine 2 Minuten — Angebot & Bestelllink sofort</p>
           </div>
 
-          <!-- ── Slides 2–4: Marketing ── -->
-          {
-            marketingSlides.map((s, i) => (
-              <div class="slide" data-step={i + 2}>
-                <h2 class="slide__title">{s.title}</h2>
-                <p class="slide__text">{s.text}</p>
-                <Image
-                  src={s.image}
-                  alt={s.imageAlt}
-                  class:list={['slide__img', { 'slide__img--phone': s.phone }]}
-                  width={s.phone ? 240 : 520}
-                  densities={[1, 2]}
-                />
-                <div class="slide__nav">
-                  <button class="wizard-back" data-back>Zurück</button>
-                  <button class="wizard-next" data-next>Weiter</button>
+          <!-- ── Slide 2: Land & Branche ── -->
+          <div class="slide" data-step="2">
+            <h2 class="slide__title slide__title--form">Wo und was ist dein Betrieb?</h2>
+            <p class="cardgroup__label">Standort</p>
+            <div class="cardgrid" data-group="land">
+              <label class="cardpick">
+                <input type="radio" name="land" value="Österreich" />
+                <span class="cardpick__name">Österreich</span>
+                <span class="cardpick__hint">RKSV-konform</span>
+              </label>
+              <label class="cardpick">
+                <input type="radio" name="land" value="Deutschland" />
+                <span class="cardpick__name">Deutschland</span>
+                <span class="cardpick__hint">KassenSichV & TSE</span>
+              </label>
+            </div>
+            <p class="cardgroup__label">Branche</p>
+            <div class="cardgrid" data-group="branche">
+              <label class="cardpick">
+                <input type="radio" name="branche" value={BRANCHE_DIENSTLEISTUNG} />
+                <span class="cardpick__name">Dienstleistung</span>
+                <span class="cardpick__hint">Friseur, Beauty, Physio …</span>
+              </label>
+              <label class="cardpick">
+                <input type="radio" name="branche" value={BRANCHE_GASTRONOMIE} />
+                <span class="cardpick__name">Gastronomie</span>
+                <span class="cardpick__hint">Bar, Café, Restaurant …</span>
+              </label>
+            </div>
+            <p class="wizard-error" id="error-step2" hidden>Bitte wähle Standort und Branche.</p>
+            <div class="slide__nav">
+              <button class="wizard-back" data-back>Zurück</button>
+              <button class="wizard-next" data-next data-require="land,branche">Weiter</button>
+            </div>
+          </div>
+
+          <!-- ── Slide 3: Paket ── -->
+          <div class="slide" data-step="3">
+            <h2 class="slide__title slide__title--form">Wähle dein Paket</h2>
+            <div class="cardgrid cardgrid--stack" data-group="paket">
+              {
+                pakete.map((p) => (
+                  <label class:list={['cardpick', 'cardpick--paket', { 'cardpick--highlight': p.highlight }]} data-branche={p.branche} hidden>
+                    <input type="radio" name="paket" value={p.key} />
+                    <span class="cardpick__row">
+                      <span class="cardpick__name">{p.name}</span>
+                      <span class="cardpick__price">
+                        <b data-price={p.key}>{fmt(p.price)}</b> €<small>/Monat</small>
+                      </span>
+                    </span>
+                    <span class="cardpick__hint">{p.features.join(' · ')}</span>
+                  </label>
+                ))
+              }
+              <label class="cardpick cardpick--paket cardpick--addon">
+                <input type="checkbox" name="kassenbuch" value="kassenbuch" />
+                <span class="cardpick__row">
+                  <span class="cardpick__name">+ Kassenbuch</span>
+                  <span class="cardpick__price"><b data-price="kassenbuch">{fmt(KASSENBUCH_PREIS)}</b> €<small>/Monat</small></span>
+                </span>
+                <span class="cardpick__hint">Finanzamtkonforme Kassenbuchführung & Export zur Steuerberatung</span>
+              </label>
+            </div>
+            <p class="slide__footnote">
+              Alle Preise exkl. USt. · zzgl. einmalige Aktivierungsgebühr <b data-price="aktivierung">{fmt(AKTIVIERUNG_PREIS)}</b> €
+            </p>
+            <p class="wizard-error" id="error-step3" hidden>Bitte wähle ein Paket.</p>
+            <div class="slide__nav">
+              <button class="wizard-back" data-back>Zurück</button>
+              <button class="wizard-next" data-next data-require="paket">Weiter</button>
+            </div>
+          </div>
+
+          <!-- ── Slide 4: Kassen & Hardware ── -->
+          <div class="slide" data-step="4">
+            <h2 class="slide__title slide__title--form">Kassen & Hardware</h2>
+            <div class="steppers">
+              <div class="stepper">
+                <label for="w-kassen">Kassenplätze<small>Tablet-Kassen im Betrieb</small></label>
+                <div class="stepper__ctl">
+                  <button type="button" data-minus="w-kassen" aria-label="weniger">−</button>
+                  <input id="w-kassen" name="standgeraete" type="number" min="1" max="99" value="1" inputmode="numeric" />
+                  <button type="button" data-plus="w-kassen" aria-label="mehr">+</button>
                 </div>
               </div>
-            ))
-          }
+              <div class="stepper">
+                <label for="w-mobil">Mobile Geräte<small>Smartphones fürs Bonieren</small></label>
+                <div class="stepper__ctl">
+                  <button type="button" data-minus="w-mobil" aria-label="weniger">−</button>
+                  <input id="w-mobil" name="mobilgeraete" type="number" min="0" max="99" value="0" inputmode="numeric" />
+                  <button type="button" data-plus="w-mobil" aria-label="mehr">+</button>
+                </div>
+              </div>
+              <div class="stepper">
+                <label for="w-drucker">Bar-/Küchendrucker<small>Cloud Drucker von uns, <b data-price="cloud-drucker">{fmt(DRUCKER_PREIS)}</b> €/Stück</small></label>
+                <div class="stepper__ctl">
+                  <button type="button" data-minus="w-drucker" aria-label="weniger">−</button>
+                  <input id="w-drucker" name="drucker" type="number" min="0" max="99" value="0" inputmode="numeric" />
+                  <button type="button" data-plus="w-drucker" aria-label="mehr">+</button>
+                </div>
+              </div>
+            </div>
 
-          <!-- ── Slide 5: Formular 1 — Unternehmen ── -->
+            <p class="cardgroup__label">Hardware dazu?</p>
+            <div class="cardgrid cardgrid--stack" data-group="hardware">
+              {
+                hardwareOptionen.map((h, i) => (
+                  <label class="cardpick cardpick--paket">
+                    <input type="radio" name="hardware" value={h.key} checked={i === 0} />
+                    <span class="cardpick__row">
+                      <span class="cardpick__name">{h.name}</span>
+                      <span class="cardpick__price">
+                        {h.key ? (
+                          <>
+                            <b data-price={h.key}>{fmt(h.price)}</b> €<small>/Kasse</small>
+                          </>
+                        ) : (
+                          <b>0 €</b>
+                        )}
+                      </span>
+                    </span>
+                    <span class="cardpick__hint">{h.hint}</span>
+                  </label>
+                ))
+              }
+            </div>
+
+            <div class="extras" id="hardware-extras" hidden>
+              <label class="extra">
+                <input type="checkbox" name="staender" />
+                <span>+ Tablet Ständer (<b data-price="tablet-staender">{fmt(STAENDER_PREIS)}</b> € je Kasse)</span>
+              </label>
+              <label class="extra">
+                <input type="checkbox" name="kassenlade" />
+                <span>+ Kassenlade (<b data-price="kassenlade">{fmt(KASSENLADE_PREIS)}</b> €)</span>
+              </label>
+            </div>
+
+            <div class="slide__nav">
+              <button class="wizard-back" data-back>Zurück</button>
+              <button class="wizard-next" data-next data-validate>Weiter</button>
+            </div>
+          </div>
+
+          <!-- ── Slide 5: Kontakt + Submit ── -->
           <div class="slide" data-step="5">
-            <h2 class="slide__title slide__title--form">Infos zu deinem Unternehmen</h2>
+            <h2 class="slide__title slide__title--form">Gleich siehst du dein Angebot</h2>
             <div class="slide__form">
               <div class="wfield">
                 <label for="w-unternehmen">Unternehmensname</label>
                 <input id="w-unternehmen" name="unternehmensname" type="text" required autocomplete="organization" />
               </div>
-              <div class="wfield">
-                <label for="w-branche">Branche</label>
-                <select id="w-branche" name="branche" required>
-                  <option value="" disabled selected>Bitte wählen …</option>
-                  {branchen.map((b) => (
-                    <option value={b}>{b}</option>
-                  ))}
-                </select>
-              </div>
-              <div class="wfield">
-                <label for="w-standort">Unternehmensstandort</label>
-                <select id="w-standort" name="standort" required>
-                  <option value="" disabled selected>Bitte wählen …</option>
-                  {standorte.map((s) => (
-                    <option value={s}>{s}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div class="slide__nav">
-              <button class="wizard-back" data-back>Zurück</button>
-              <button class="wizard-next" data-next data-validate>Weiter</button>
-            </div>
-          </div>
-
-          <!-- ── Slide 6: Formular 2 — Bedarf ── -->
-          <div class="slide" data-step="6">
-            <h2 class="slide__title slide__title--form">Was benötigst du?</h2>
-            <div class="slide__form">
-              <div class="wfield">
-                <label for="w-mitarbeiter">Wieviele Mitarbeiter*innen sind im Betrieb beschäftigt?</label>
-                <select id="w-mitarbeiter" name="mitarbeiter" required>
-                  <option value="" disabled selected>Bitte wählen …</option>
-                  {mitarbeiter.map((m) => (
-                    <option value={m}>{m}</option>
-                  ))}
-                </select>
-              </div>
-              <div class="wfield">
-                <label for="w-standgeraete">Wie viele Standgeräte benötigst du? (Tablet Kasse)</label>
-                <input id="w-standgeraete" name="standgeraete" type="number" min="0" value="1" required />
-              </div>
-              <div class="wfield">
-                <label for="w-mobil">Wieviele mobile Geräte möchtest du verwenden?</label>
-                <input id="w-mobil" name="mobilgeraete" type="number" min="0" value="0" required />
-              </div>
-              <div class="wfield">
-                <label for="w-drucker">Wieviele Bar- oder Küchendrucker benötigst du?</label>
-                <input id="w-drucker" name="drucker" type="number" min="0" value="0" required />
-              </div>
-            </div>
-            <div class="slide__nav">
-              <button class="wizard-back" data-back>Zurück</button>
-              <button class="wizard-next" data-next data-validate>Weiter</button>
-            </div>
-          </div>
-
-          <!-- ── Slide 7: Formular 3 — Kontakt + Submit ── -->
-          <div class="slide" data-step="7">
-            <h2 class="slide__title slide__title--form">Gleich erhältst du dein Angebot</h2>
-            <div class="slide__form">
               <div class="wfield">
                 <label for="w-name">Vor- und Nachname</label>
                 <input id="w-name" name="name" type="text" required autocomplete="name" />
@@ -228,7 +332,16 @@ const marketingSlides = [
                   pattern="[+]?[0-9][0-9 ]{4,18}[0-9]"
                   placeholder="+43 660 1234567"
                 />
-                <p class="wfield__hint">Mit oder ohne Ländervorwahl (z. B. +43 660 1234567 oder 06601234567)</p>
+                <p class="wfield__hint">Für deinen Bestelllink per WhatsApp (z. B. +43 660 1234567)</p>
+              </div>
+              <div class="wfield">
+                <label for="w-mitarbeiter">Mitarbeiter*innen im Betrieb</label>
+                <select id="w-mitarbeiter" name="mitarbeiter" required>
+                  <option value="" disabled selected>Bitte wählen …</option>
+                  {mitarbeiter.map((m) => (
+                    <option value={m}>{m}</option>
+                  ))}
+                </select>
               </div>
               <p class="wizard-error" id="wizard-error" hidden>
                 Das hat leider nicht geklappt. Bitte prüfe deine Angaben oder ruf uns an:
@@ -237,12 +350,44 @@ const marketingSlides = [
             </div>
             <div class="slide__nav">
               <button class="wizard-back" data-back>Zurück</button>
-              <button class="wizard-next wizard-submit" id="wizard-submit">Zum Angebot</button>
+              <button class="wizard-next wizard-submit" id="wizard-submit">Angebot anzeigen</button>
             </div>
             <p class="wizard-privacy">
               Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Angebotserstellung
               zu. Details in der <a href="/datenschutzerklaerung">Datenschutzerklärung</a>.
             </p>
+          </div>
+
+          <!-- ── Slide 6: Ergebnis ── -->
+          <div class="slide" data-step="6">
+            <!-- Sofort-Angebot (Mode "instant") -->
+            <div id="result-instant" hidden>
+              <p class="slide__kicker">Dein persönliches Angebot</p>
+              <h2 class="slide__title slide__title--form" id="result-quote">Dein Angebot</h2>
+              <div class="offer" id="offer-tables"></div>
+              <p class="slide__footnote">Alle Preise exkl. USt.</p>
+              <a class="wizard-next wizard-order" id="order-link" href="#" target="_blank" rel="noopener">
+                Jetzt bestellen
+              </a>
+              <p class="result-note" id="result-channels">
+                Dein Angebot & der Bestelllink wurden dir auch per E-Mail geschickt.
+              </p>
+              <p class="result-note result-note--muted">
+                Erst in Ruhe testen? Dein kostenloser Testzugang ist bereits unterwegs — Zugangsdaten
+                findest du in deinem Postfach.
+              </p>
+            </div>
+            <!-- Fallback (Mode "manual"): bisheriger Prozess -->
+            <div id="result-manual" hidden>
+              <p class="slide__kicker">Anfrage erhalten</p>
+              <h2 class="slide__title slide__title--form">Danke! Dein Angebot ist unterwegs</h2>
+              <p class="slide__text">
+                Wir erstellen dein persönliches Angebot und schicken es dir in Kürze per E-Mail —
+                inklusive Bestelllink. In der Zwischenzeit kannst du Orderlyze bereits kostenlos
+                testen: Dein Testzugang ist unterwegs.
+              </p>
+              <a class="wizard-next" href="/">Zur Startseite</a>
+            </div>
           </div>
         </section>
       </div>
@@ -262,21 +407,75 @@ const marketingSlides = [
 </BaseLayout>
 
 <script>
-  import { submitAngebot, trackGoal } from '../../lib/lead-submit';
+  import {
+    fetchWebsiteOfferCatalog,
+    submitWebsiteOffer,
+    trackGoal,
+    type WebsiteOfferPosition,
+  } from '../../lib/lead-submit';
 
   const wizard = document.getElementById('wizard')!;
   const slides = [...wizard.querySelectorAll<HTMLElement>('.slide')];
   const bar = document.getElementById('wizard-bar')!;
+  const summary = document.getElementById('wizard-summary')!;
   const errorBox = document.getElementById('wizard-error')!;
   const total = slides.length;
   let step = 1;
 
+  const euro = new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' });
+
+  /* Statische Startpreise (netto) — werden vom Catalog-Endpoint live überschrieben */
+  const prices: Record<string, number> = {
+    dienstleistung: 39,
+    gastronomie: 49,
+    'gastronomie-plus': 75,
+    kassenbuch: 13,
+    aktivierung: 199,
+    'tablet-kasse': 425.9,
+    'ipad-kasse': 589.9,
+    'tablet-staender': 22.9,
+    kassenlade: 69.9,
+    'cloud-drucker': 265,
+  };
+
+  const val = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value;
+  const num = (id: string) => Math.max(Number(val(id)) || 0, 0);
+  const picked = (name: string) =>
+    wizard.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
+
+  /* ── Live-Preisleiste ── */
+  function updateSummary() {
+    const paket = picked('paket');
+    let monthly = paket ? (prices[paket] ?? 0) : 0;
+    if (wizard.querySelector<HTMLInputElement>('input[name="kassenbuch"]')?.checked) {
+      monthly += prices.kassenbuch;
+    }
+
+    let onetime = prices.aktivierung;
+    const kassen = num('w-kassen');
+    const hw = picked('hardware');
+    if (hw) onetime += (prices[hw] ?? 0) * kassen;
+    if (hw && wizard.querySelector<HTMLInputElement>('input[name="staender"]')?.checked) {
+      onetime += prices['tablet-staender'] * kassen;
+    }
+    if (hw && wizard.querySelector<HTMLInputElement>('input[name="kassenlade"]')?.checked) {
+      onetime += prices.kassenlade;
+    }
+    onetime += prices['cloud-drucker'] * num('w-drucker');
+
+    document.getElementById('sum-monthly')!.textContent = euro.format(monthly);
+    document.getElementById('sum-onetime')!.textContent = euro.format(onetime);
+  }
+
+  /* ── Slide-Navigation ── */
   function show(next: number) {
     step = Math.min(Math.max(next, 1), total);
     for (const s of slides) {
       s.classList.toggle('is-active', Number(s.dataset.step) === step);
     }
     bar.style.width = `${(step / total) * 100}%`;
+    summary.hidden = step < 3 || step === total;
+    updateSummary();
     wizard.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
 
@@ -288,6 +487,14 @@ const marketingSlides = [
     return true;
   }
 
+  /* Karten-Pflichtauswahl (data-require="land,branche") mit Inline-Fehlertext */
+  function validateRequired(slide: HTMLElement, groups: string): boolean {
+    const missing = groups.split(',').some((g) => !picked(g.trim()));
+    const error = slide.querySelector<HTMLElement>('.wizard-error');
+    if (error) error.hidden = !missing;
+    return !missing;
+  }
+
   wizard.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     const slide = target.closest<HTMLElement>('.slide');
@@ -295,47 +502,205 @@ const marketingSlides = [
 
     if (target.matches('[data-next]:not(#wizard-submit)')) {
       if (target.hasAttribute('data-validate') && !validateSlide(slide)) return;
+      const require = target.getAttribute('data-require');
+      if (require && !validateRequired(slide, require)) return;
       show(step + 1);
     } else if (target.matches('[data-back]')) {
       show(step - 1);
+    } else if (target.matches('[data-plus], [data-minus]')) {
+      const input = document.getElementById(
+        target.getAttribute('data-plus') ?? target.getAttribute('data-minus')!,
+      ) as HTMLInputElement;
+      const delta = target.hasAttribute('data-plus') ? 1 : -1;
+      input.value = String(
+        Math.min(Math.max((Number(input.value) || 0) + delta, Number(input.min) || 0), 99),
+      );
+      updateSummary();
     }
   });
 
+  /* ── Kartenauswahl: Optik + Paketfilter nach Branche ── */
+  function syncCards() {
+    for (const card of wizard.querySelectorAll<HTMLElement>('.cardpick')) {
+      const input = card.querySelector<HTMLInputElement>('input');
+      card.classList.toggle('is-picked', !!input?.checked);
+    }
+  }
+
+  function filterPakete() {
+    const branche = picked('branche');
+    const isGastro = branche.includes('Gastronomie');
+    let firstVisible: HTMLInputElement | null = null;
+    let pickedVisible = false;
+
+    for (const card of wizard.querySelectorAll<HTMLElement>('[data-group="paket"] [data-branche]')) {
+      const match = branche !== '' && (card.dataset.branche === (isGastro ? 'Gastronomie' : 'Dienstleistung'));
+      card.hidden = !match;
+      const input = card.querySelector<HTMLInputElement>('input')!;
+      if (!match && input.checked) input.checked = false;
+      if (match && !firstVisible) firstVisible = input;
+      if (match && input.checked) pickedVisible = true;
+    }
+    // Erstes passendes Paket vorauswählen — bei Dienstleistung ist die Wahl damit schon erledigt
+    if (!pickedVisible && firstVisible) firstVisible.checked = true;
+    syncCards();
+  }
+
+  wizard.addEventListener('change', (e) => {
+    const input = e.target as HTMLInputElement;
+    if (input.name === 'branche') filterPakete();
+    if (input.name === 'hardware') {
+      document.getElementById('hardware-extras')!.hidden = !input.value;
+    }
+    syncCards();
+    updateSummary();
+  });
+  wizard.addEventListener('input', updateSummary);
+
+  /* Vorauswahlen der Kampagnen-Seiten (/angebot-de, /angebot-gastro) */
+  const presetLand = wizard.dataset.presetLand;
+  const presetBranche = wizard.dataset.presetBranche;
+  if (presetLand) {
+    const input = wizard.querySelector<HTMLInputElement>(`input[name="land"][value="${presetLand}"]`);
+    if (input) input.checked = true;
+  }
+  if (presetBranche) {
+    const input = wizard.querySelector<HTMLInputElement>(`input[name="branche"][value="${presetBranche}"]`);
+    if (input) input.checked = true;
+  }
+  filterPakete();
+
+  /* ── Live-Preise vom RestService (statisch gebundelte Preise als Fallback) ── */
+  fetchWebsiteOfferCatalog().then((catalog) => {
+    if (!catalog) return;
+    const entries = [...(catalog.Packages ?? []), ...(catalog.Addons ?? []), ...(catalog.Hardware ?? [])];
+    for (const entry of entries) {
+      if (entry.Available && entry.PriceNet > 0) prices[entry.Key] = entry.PriceNet;
+    }
+    if (catalog.ActivationFeeNet) prices.aktivierung = catalog.ActivationFeeNet;
+    for (const el of wizard.querySelectorAll<HTMLElement>('[data-price]')) {
+      const key = el.dataset.price!;
+      if (prices[key] !== undefined) {
+        el.textContent = euro.format(prices[key]).replace('€', '').trim();
+      }
+    }
+    updateSummary();
+  });
+
+  /* ── Ergebnis-Rendering ── */
+  function renderOffer(positions: WebsiteOfferPosition[]) {
+    const container = document.getElementById('offer-tables')!;
+    container.textContent = '';
+
+    const groups: [string, WebsiteOfferPosition[]][] = [
+      ['Einmalige Kosten', positions.filter((p) => !p.IsRecurring)],
+      ['Laufende Kosten (monatlich)', positions.filter((p) => p.IsRecurring && !p.IsYearlyPayment)],
+      ['Jahreslizenzen', positions.filter((p) => p.IsRecurring && p.IsYearlyPayment)],
+    ];
+
+    for (const [title, items] of groups) {
+      if (!items.length) continue;
+      const table = document.createElement('table');
+      table.className = 'offer__table';
+
+      const caption = document.createElement('caption');
+      caption.textContent = title;
+      table.append(caption);
+
+      let sum = 0;
+      for (const p of items) {
+        sum += p.PriceNet * p.Quantity;
+        const tr = document.createElement('tr');
+        const name = document.createElement('td');
+        name.textContent = p.Quantity > 1 ? `${p.Quantity}× ${p.ProductName}` : p.ProductName;
+        const price = document.createElement('td');
+        price.textContent = euro.format(p.PriceNet * p.Quantity);
+        tr.append(name, price);
+        table.append(tr);
+      }
+
+      const trSum = document.createElement('tr');
+      trSum.className = 'offer__sum';
+      const sumLabel = document.createElement('td');
+      sumLabel.textContent = 'Gesamt';
+      const sumValue = document.createElement('td');
+      sumValue.textContent = euro.format(sum);
+      trSum.append(sumLabel, sumValue);
+      table.append(trSum);
+
+      container.append(table);
+    }
+  }
+
+  /* ── Submit ── */
   document.getElementById('wizard-submit')?.addEventListener('click', async () => {
-    const lastSlide = slides[slides.length - 1];
-    if (!validateSlide(lastSlide)) return;
+    const contactSlide = slides.find((s) => s.dataset.step === '5')!;
+    if (!validateSlide(contactSlide)) return;
 
     const button = document.getElementById('wizard-submit') as HTMLButtonElement;
     button.disabled = true;
-    button.textContent = 'Wird gesendet …';
+    button.textContent = 'Dein Angebot wird erstellt …';
     errorBox.hidden = true;
 
-    /* Payload für POST /api/users/registerSellerAngebot (RestService) */
-    const value = (id: string) =>
-      (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value;
+    const kassen = num('w-kassen');
+    const drucker = num('w-drucker');
+    const hw = picked('hardware');
+    const hardware: { key: string; quantity: number }[] = [];
+    if (hw) {
+      hardware.push({ key: hw, quantity: Math.max(kassen, 1) });
+      if (wizard.querySelector<HTMLInputElement>('input[name="staender"]')?.checked) {
+        hardware.push({ key: 'tablet-staender', quantity: Math.max(kassen, 1) });
+      }
+      if (wizard.querySelector<HTMLInputElement>('input[name="kassenlade"]')?.checked) {
+        hardware.push({ key: 'kassenlade', quantity: 1 });
+      }
+    }
+    if (drucker > 0) hardware.push({ key: 'cloud-drucker', quantity: drucker });
 
-    const result = await submitAngebot({
-      unternehmensname: value('w-unternehmen'),
-      branche: value('w-branche'),
-      land: value('w-standort'),
-      mitarbeiter: value('w-mitarbeiter'),
-      standgeraete: Number(value('w-standgeraete')) || 0,
-      mobilgeraete: Number(value('w-mobil')) || 0,
-      drucker: Number(value('w-drucker')) || 0,
-      name: value('w-name'),
-      email: value('w-email'),
-      telefon: value('w-telefon').replace(/\s+/g, ''),
+    const { ok, result } = await submitWebsiteOffer({
+      unternehmensname: val('w-unternehmen'),
+      branche: picked('branche'),
+      land: picked('land'),
+      mitarbeiter: val('w-mitarbeiter'),
+      standgeraete: kassen,
+      mobilgeraete: num('w-mobil'),
+      drucker,
+      name: val('w-name'),
+      email: val('w-email'),
+      telefon: val('w-telefon').replace(/\s+/g, ''),
+      paket: picked('paket'),
+      addons: wizard.querySelector<HTMLInputElement>('input[name="kassenbuch"]')?.checked
+        ? ['kassenbuch']
+        : [],
+      hardware,
     });
 
-    if (result.ok) {
-      trackGoal('Angebot abgeschickt');
-      // kleiner Puffer, damit das Plausible-Event rausgeht
-      setTimeout(() => window.location.assign('/dank-angebot'), 150);
-    } else {
+    if (!ok) {
       errorBox.hidden = false;
       button.disabled = false;
-      button.textContent = 'Zum Angebot';
+      button.textContent = 'Angebot anzeigen';
+      return;
     }
+
+    const instant = result?.Mode === 'instant' && !!result.Link;
+    trackGoal('Angebot abgeschickt', { modus: instant ? 'sofort' : 'manuell' });
+
+    if (instant) {
+      document.getElementById('result-quote')!.textContent = result!.QuoteNumber
+        ? `Dein Angebot (${result!.QuoteNumber})`
+        : 'Dein Angebot';
+      renderOffer(result!.Positions ?? []);
+      const orderLink = document.getElementById('order-link') as HTMLAnchorElement;
+      orderLink.href = result!.Link!;
+      orderLink.addEventListener('click', () => trackGoal('Bestelllink geklickt'));
+      document.getElementById('result-channels')!.textContent = result!.WhatsAppSent
+        ? 'Dein Angebot & der Bestelllink wurden dir auch per E-Mail und WhatsApp geschickt.'
+        : 'Dein Angebot & der Bestelllink wurden dir auch per E-Mail geschickt.';
+      document.getElementById('result-instant')!.hidden = false;
+    } else {
+      document.getElementById('result-manual')!.hidden = false;
+    }
+    show(total);
   });
 </script>
 
@@ -405,16 +770,54 @@ const marketingSlides = [
     background: var(--color-line);
     border-radius: 99px;
     max-width: 34rem;
-    margin: 0 auto clamp(1.5rem, 4vh, 3rem);
+    margin: 0 auto clamp(1rem, 2.5vh, 1.6rem);
     overflow: hidden;
   }
 
   .wizard-progress__bar {
     height: 100%;
-    width: 14.3%;
+    width: 16.7%;
     background: var(--color-brand);
     border-radius: 99px;
     transition: width 0.4s var(--ease-out);
+  }
+
+  /* display-Regeln dürfen das hidden-Attribut nicht aushebeln (Preisleiste, Paketfilter, Extras) */
+  .wizard-summary[hidden],
+  .cardpick[hidden],
+  .extras[hidden] {
+    display: none;
+  }
+
+  /* Live-Preisleiste */
+  .wizard-summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    max-width: 34rem;
+    margin: 0 auto clamp(1rem, 2.5vh, 1.6rem);
+    padding: 0.55rem 1.1rem;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    width: fit-content;
+  }
+
+  .wizard-summary b {
+    font-family: var(--font-mono);
+    color: var(--color-navy);
+  }
+
+  .wizard-summary__sep {
+    color: var(--color-line);
+  }
+
+  .wizard-summary__note {
+    font-size: 0.78rem;
   }
 
   /* Slides */
@@ -479,10 +882,6 @@ const marketingSlides = [
     border-radius: 12px;
   }
 
-  .slide :global(.slide__img--phone) {
-    width: min(60%, 13rem);
-  }
-
   .slide__title {
     font-size: clamp(1.6rem, 1.3rem + 1.6vw, 2.2rem);
     margin-bottom: 0.5em;
@@ -497,6 +896,18 @@ const marketingSlides = [
     color: var(--color-text-muted);
     line-height: 1.7;
     margin-bottom: 1.6rem;
+  }
+
+  .slide__duration {
+    margin: 0.9rem 0 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .slide__footnote {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin: 0 0 1.4rem;
   }
 
   .slide__chips {
@@ -525,6 +936,196 @@ const marketingSlides = [
 
   .slide__chips :global(svg) {
     color: var(--color-brand);
+  }
+
+  /* Kartenauswahl */
+  .cardgroup__label {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--color-navy);
+    text-align: left;
+    margin: 0 0 0.5rem;
+  }
+
+  .cardgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .cardgrid--stack {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 480px) {
+    .cardgrid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cardpick {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border: 1.5px solid var(--color-line);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .cardpick:hover {
+    border-color: var(--color-brand);
+  }
+
+  .cardpick.is-picked {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgba(6, 89, 169, 0.15);
+    background: linear-gradient(0deg, rgba(6, 89, 169, 0.04), rgba(6, 89, 169, 0.04)), #fff;
+  }
+
+  .cardpick--highlight {
+    border-color: var(--color-cta);
+  }
+
+  .cardpick input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .cardpick__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+
+  .cardpick__name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+
+  .cardpick__price {
+    font-family: var(--font-mono);
+    color: var(--color-navy);
+    white-space: nowrap;
+  }
+
+  .cardpick__price small {
+    color: var(--color-text-muted);
+    font-size: 0.75em;
+  }
+
+  .cardpick__hint {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Stepper */
+  .steppers {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem 0.9rem;
+    background: #fff;
+    border: 1.5px solid var(--color-line);
+    border-radius: 10px;
+  }
+
+  .stepper label {
+    display: grid;
+    text-align: left;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--color-navy);
+  }
+
+  .stepper label small {
+    font-family: var(--font-body, inherit);
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .stepper__ctl {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .stepper__ctl button {
+    width: 2.1rem;
+    height: 2.1rem;
+    border: 1.5px solid var(--color-line);
+    border-radius: 8px;
+    background: var(--color-surface);
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--color-navy);
+    cursor: pointer;
+  }
+
+  .stepper__ctl button:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+  }
+
+  .stepper__ctl input {
+    width: 3rem;
+    text-align: center;
+    font: inherit;
+    font-family: var(--font-mono);
+    border: 0;
+    background: none;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .stepper__ctl input::-webkit-outer-spin-button,
+  .stepper__ctl input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Extras */
+  .extras {
+    display: grid;
+    gap: 0.5rem;
+    margin: -0.6rem 0 1.4rem;
+    text-align: left;
+  }
+
+  .extra {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.9rem;
+    color: var(--color-navy);
+    cursor: pointer;
+  }
+
+  .extra input {
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--color-brand);
+  }
+
+  .extra b {
+    font-family: var(--font-mono);
+    font-weight: 600;
   }
 
   /* Formulare */
@@ -588,6 +1189,62 @@ const marketingSlides = [
     padding: 0.8rem 1rem;
     font-size: 0.9rem;
     color: #8c2f24;
+    margin-bottom: 1.2rem;
+  }
+
+  /* Ergebnis */
+  .offer {
+    display: grid;
+    gap: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .offer :global(.offer__table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.94rem;
+  }
+
+  .offer :global(caption) {
+    text-align: left;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-navy);
+    padding-bottom: 0.4rem;
+  }
+
+  .offer :global(td) {
+    padding: 0.45rem 0;
+    border-top: 1px solid var(--color-line);
+    text-align: left;
+  }
+
+  .offer :global(td + td) {
+    text-align: right;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+
+  .offer :global(.offer__sum td) {
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+
+  .wizard-order {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 0.4rem;
+  }
+
+  .result-note {
+    margin: 1.1rem 0 0;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+
+  .result-note--muted {
+    font-size: 0.8rem;
   }
 
   /* Navigation */
