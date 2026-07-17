@@ -70,29 +70,30 @@ const pakete = [
     name: 'Gastronomie',
     branche: 'Gastronomie',
     price: 49,
-    features: ['Alle Funktionen', 'Finanzamt Signatur inkl.', 'Kostenloser Support'],
+    features: ['1 Tablet/Handy', '1 Drucker', '1 Benutzer', 'Finanzamt Signatur inkl.'],
   },
   {
     key: 'gastronomie-plus',
     name: 'Gastronomie +',
     branche: 'Gastronomie',
     price: 75,
-    features: ['Mit Küchenkommunikation', 'Unbegrenzt viele Geräte', 'Finanzamt Signatur inkl.'],
+    features: ['Unbegrenzt Geräte, Drucker & Benutzer', 'Küchenkommunikation', 'Finanzamt Signatur inkl.'],
     highlight: true,
   },
 ];
 
-const hardwareOptionen = [
-  { key: '', name: 'Eigene Geräte nutzen', hint: 'Tablet/iPad vorhanden', price: 0 },
-  { key: 'tablet-kasse', name: 'Samsung Kassensystem', hint: 'Tablet + Bondrucker, je Kasse', price: 425.9 },
-  { key: 'ipad-kasse', name: 'iPad Kassensystem', hint: 'iPad + Bondrucker, je Kasse', price: 589.9 },
+/* Hardware-Einzelposten (netto, live überschrieben): Bondrucker kommt immer von uns, Rest optional */
+const hardwareItems = [
+  { key: 'bondrucker', id: 'w-drucker', name: 'Bondrucker', hint: 'Kommt von uns — geliefert & eingerichtet', price: 220, min: 1, value: 1 },
+  { key: 'samsung-tablet', id: 'w-samsung', name: 'Samsung Tablet', hint: 'Galaxy Tab A9+ als Kasse', price: 205.9, min: 0, value: 0 },
+  { key: 'ipad', id: 'w-ipad', name: 'iPad', hint: 'Apple iPad als Kasse', price: 369.9, min: 0, value: 0 },
+  { key: 'sunmi-handheld', id: 'w-sunmi', name: 'Sunmi Handheld', hint: 'Mobiles Gerät fürs Bonieren', price: 399, min: 0, value: 0 },
+  { key: 'tablet-staender', id: 'w-staender', name: 'Tablet Ständer', hint: 'Für Samsung & iPad', price: 22.9, min: 0, value: 0 },
+  { key: 'kassenlade', id: 'w-lade', name: 'Kassenlade', hint: 'Öffnet automatisch beim Kassieren', price: 69.9, min: 0, value: 0 },
 ];
 
 const KASSENBUCH_PREIS = 13;
 const AKTIVIERUNG_PREIS = 199;
-const STAENDER_PREIS = 22.9;
-const KASSENLADE_PREIS = 69.9;
-const DRUCKER_PREIS = 265;
 
 /* Preisformat wie die Live-Hydration (euro.format ohne €-Zeichen): 425.9 → "425,90" */
 const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -227,6 +228,10 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
             <p class="slide__footnote">
               Alle Preise exkl. USt. · zzgl. einmalige Aktivierungsgebühr <b data-price="aktivierung">{fmt(AKTIVIERUNG_PREIS)}</b> €
             </p>
+            <p class="wizard-hint paket-upgrade-hint" hidden>
+              Mehr als 1 Gerät oder Drucker gewählt: Dafür brauchst du <b>Gastronomie +</b>
+              (unbegrenzt Geräte, Drucker & Benutzer).
+            </p>
             <p class="wizard-error" id="error-step3" hidden>Bitte wähle ein Paket.</p>
             <div class="slide__nav">
               <button class="wizard-back" data-back>Zurück</button>
@@ -234,71 +239,37 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
             </div>
           </div>
 
-          <!-- ── Slide 4: Kassen & Hardware ── -->
+          <!-- ── Slide 4: Hardware ── -->
           <div class="slide" data-step="4">
-            <h2 class="slide__title slide__title--form">Kassen & Hardware</h2>
+            <h2 class="slide__title slide__title--form">Deine Hardware</h2>
+            <p class="slide__text">
+              Der Bondrucker kommt von uns. Tablets, Handhelds & Zubehör kannst du dazubestellen —
+              oder eigene Geräte nutzen.
+            </p>
             <div class="steppers">
-              <div class="stepper">
-                <label for="w-kassen">Kassenplätze<small>Tablet-Kassen im Betrieb</small></label>
-                <div class="stepper__ctl">
-                  <button type="button" data-minus="w-kassen" aria-label="weniger">−</button>
-                  <input id="w-kassen" name="standgeraete" type="number" min="1" max="99" value="1" inputmode="numeric" />
-                  <button type="button" data-plus="w-kassen" aria-label="mehr">+</button>
-                </div>
-              </div>
-              <div class="stepper">
-                <label for="w-mobil">Mobile Geräte<small>Smartphones fürs Bonieren</small></label>
-                <div class="stepper__ctl">
-                  <button type="button" data-minus="w-mobil" aria-label="weniger">−</button>
-                  <input id="w-mobil" name="mobilgeraete" type="number" min="0" max="99" value="0" inputmode="numeric" />
-                  <button type="button" data-plus="w-mobil" aria-label="mehr">+</button>
-                </div>
-              </div>
-              <div class="stepper">
-                <label for="w-drucker">Bar-/Küchendrucker<small>Cloud Drucker von uns, <b data-price="cloud-drucker">{fmt(DRUCKER_PREIS)}</b> €/Stück</small></label>
-                <div class="stepper__ctl">
-                  <button type="button" data-minus="w-drucker" aria-label="weniger">−</button>
-                  <input id="w-drucker" name="drucker" type="number" min="0" max="99" value="0" inputmode="numeric" />
-                  <button type="button" data-plus="w-drucker" aria-label="mehr">+</button>
-                </div>
-              </div>
-            </div>
-
-            <p class="cardgroup__label">Hardware dazu?</p>
-            <div class="cardgrid cardgrid--stack" data-group="hardware">
               {
-                hardwareOptionen.map((h, i) => (
-                  <label class="cardpick cardpick--paket">
-                    <input type="radio" name="hardware" value={h.key} checked={i === 0} />
-                    <span class="cardpick__row">
-                      <span class="cardpick__name">{h.name}</span>
-                      <span class="cardpick__price">
-                        {h.key ? (
-                          <>
-                            <b data-price={h.key}>{fmt(h.price)}</b> €<small>/Kasse</small>
-                          </>
-                        ) : (
-                          <b>0 €</b>
-                        )}
-                      </span>
-                    </span>
-                    <span class="cardpick__hint">{h.hint}</span>
-                  </label>
+                hardwareItems.map((h) => (
+                  <div class="stepper">
+                    <label for={h.id}>
+                      {h.name}
+                      <small>
+                        {h.hint} · <b data-price={h.key}>{fmt(h.price)}</b> €
+                      </small>
+                    </label>
+                    <div class="stepper__ctl">
+                      <button type="button" data-minus={h.id} aria-label="weniger">−</button>
+                      <input id={h.id} name={h.key} type="number" min={h.min} max="99" value={h.value} inputmode="numeric" />
+                      <button type="button" data-plus={h.id} aria-label="mehr">+</button>
+                    </div>
+                  </div>
                 ))
               }
             </div>
-
-            <div class="extras" id="hardware-extras" hidden>
-              <label class="extra">
-                <input type="checkbox" name="staender" />
-                <span>+ Tablet Ständer (<b data-price="tablet-staender">{fmt(STAENDER_PREIS)}</b> € je Kasse)</span>
-              </label>
-              <label class="extra">
-                <input type="checkbox" name="kassenlade" />
-                <span>+ Kassenlade (<b data-price="kassenlade">{fmt(KASSENLADE_PREIS)}</b> €)</span>
-              </label>
-            </div>
-
+            <p class="wizard-hint paket-upgrade-hint" hidden>
+              Mehr als 1 Gerät oder Drucker: Dafür brauchst du <b>Gastronomie +</b> (unbegrenzt
+              Geräte, Drucker & Benutzer) — wir haben dein Paket angepasst.
+            </p>
+            <p class="slide__footnote">Alle Preise exkl. USt. · zzgl. Versand</p>
             <div class="slide__nav">
               <button class="wizard-back" data-back>Zurück</button>
               <button class="wizard-next" data-next data-validate>Weiter</button>
@@ -431,11 +402,22 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
     'gastronomie-plus': 75,
     kassenbuch: 13,
     aktivierung: 199,
-    'tablet-kasse': 425.9,
-    'ipad-kasse': 589.9,
+    bondrucker: 220,
+    'samsung-tablet': 205.9,
+    ipad: 369.9,
+    'sunmi-handheld': 399,
     'tablet-staender': 22.9,
     kassenlade: 69.9,
-    'cloud-drucker': 265,
+  };
+
+  /* Hardware-Stepper: Katalog-Key → Input-Id */
+  const hardwareIds: Record<string, string> = {
+    bondrucker: 'w-drucker',
+    'samsung-tablet': 'w-samsung',
+    ipad: 'w-ipad',
+    'sunmi-handheld': 'w-sunmi',
+    'tablet-staender': 'w-staender',
+    kassenlade: 'w-lade',
   };
 
   const val = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value;
@@ -443,8 +425,28 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
   const picked = (name: string) =>
     wizard.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
 
+  /* ── Paket-Limits: Gastronomie deckt 1 Gerät + 1 Drucker ab, mehr braucht Gastronomie + ── */
+  function deviceCount() {
+    return num('w-samsung') + num('w-ipad') + num('w-sunmi');
+  }
+
+  function enforcePaketLimits() {
+    const exceeded = deviceCount() > 1 || num('w-drucker') > 1;
+    const isGastroBranche = picked('branche').includes('Gastronomie');
+    if (exceeded && picked('paket') === 'gastronomie') {
+      const plus = wizard.querySelector<HTMLInputElement>('input[name="paket"][value="gastronomie-plus"]');
+      if (plus) plus.checked = true;
+      syncCards();
+    }
+    for (const hint of wizard.querySelectorAll<HTMLElement>('.paket-upgrade-hint')) {
+      hint.hidden = !(exceeded && isGastroBranche);
+    }
+  }
+
   /* ── Live-Preisleiste ── */
   function updateSummary() {
+    enforcePaketLimits();
+
     const paket = picked('paket');
     let monthly = paket ? (prices[paket] ?? 0) : 0;
     if (wizard.querySelector<HTMLInputElement>('input[name="kassenbuch"]')?.checked) {
@@ -452,16 +454,9 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
     }
 
     let onetime = prices.aktivierung;
-    const kassen = num('w-kassen');
-    const hw = picked('hardware');
-    if (hw) onetime += (prices[hw] ?? 0) * kassen;
-    if (hw && wizard.querySelector<HTMLInputElement>('input[name="staender"]')?.checked) {
-      onetime += prices['tablet-staender'] * kassen;
+    for (const [key, id] of Object.entries(hardwareIds)) {
+      onetime += (prices[key] ?? 0) * num(id);
     }
-    if (hw && wizard.querySelector<HTMLInputElement>('input[name="kassenlade"]')?.checked) {
-      onetime += prices.kassenlade;
-    }
-    onetime += prices['cloud-drucker'] * num('w-drucker');
 
     document.getElementById('sum-monthly')!.textContent = euro.format(monthly);
     document.getElementById('sum-onetime')!.textContent = euro.format(onetime);
@@ -549,9 +544,6 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
   wizard.addEventListener('change', (e) => {
     const input = e.target as HTMLInputElement;
     if (input.name === 'branche') filterPakete();
-    if (input.name === 'hardware') {
-      document.getElementById('hardware-extras')!.hidden = !input.value;
-    }
     syncCards();
     updateSummary();
   });
@@ -642,29 +634,20 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
     button.textContent = 'Dein Angebot wird erstellt …';
     errorBox.hidden = true;
 
-    const kassen = num('w-kassen');
-    const drucker = num('w-drucker');
-    const hw = picked('hardware');
     const hardware: { key: string; quantity: number }[] = [];
-    if (hw) {
-      hardware.push({ key: hw, quantity: Math.max(kassen, 1) });
-      if (wizard.querySelector<HTMLInputElement>('input[name="staender"]')?.checked) {
-        hardware.push({ key: 'tablet-staender', quantity: Math.max(kassen, 1) });
-      }
-      if (wizard.querySelector<HTMLInputElement>('input[name="kassenlade"]')?.checked) {
-        hardware.push({ key: 'kassenlade', quantity: 1 });
-      }
+    for (const [key, id] of Object.entries(hardwareIds)) {
+      const quantity = num(id);
+      if (quantity > 0) hardware.push({ key, quantity });
     }
-    if (drucker > 0) hardware.push({ key: 'cloud-drucker', quantity: drucker });
 
     const { ok, result } = await submitWebsiteOffer({
       unternehmensname: val('w-unternehmen'),
       branche: picked('branche'),
       land: picked('land'),
       mitarbeiter: val('w-mitarbeiter'),
-      standgeraete: kassen,
-      mobilgeraete: num('w-mobil'),
-      drucker,
+      standgeraete: num('w-samsung') + num('w-ipad'),
+      mobilgeraete: num('w-sunmi'),
+      drucker: num('w-drucker'),
       name: val('w-name'),
       email: val('w-email'),
       telefon: val('w-telefon').replace(/\s+/g, ''),
@@ -784,8 +767,7 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
 
   /* display-Regeln dürfen das hidden-Attribut nicht aushebeln (Preisleiste, Paketfilter, Extras) */
   .wizard-summary[hidden],
-  .cardpick[hidden],
-  .extras[hidden] {
+  .cardpick[hidden] {
     display: none;
   }
 
@@ -1100,32 +1082,16 @@ const fmt = (n: number) => n.toLocaleString('de-AT', { minimumFractionDigits: 2,
     margin: 0;
   }
 
-  /* Extras */
-  .extras {
-    display: grid;
-    gap: 0.5rem;
-    margin: -0.6rem 0 1.4rem;
-    text-align: left;
-  }
-
-  .extra {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-size: 0.9rem;
+  /* Paket-Upgrade-Hinweis */
+  .wizard-hint {
+    background: #eef5fc;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 0.86rem;
     color: var(--color-navy);
-    cursor: pointer;
-  }
-
-  .extra input {
-    width: 1.05rem;
-    height: 1.05rem;
-    accent-color: var(--color-brand);
-  }
-
-  .extra b {
-    font-family: var(--font-mono);
-    font-weight: 600;
+    text-align: left;
+    margin: 0 0 1.2rem;
   }
 
   /* Formulare */
